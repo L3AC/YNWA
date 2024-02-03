@@ -62,16 +62,29 @@ estado varchar(1),
 PRIMARY KEY (id_marca)
 );
 
-CREATE TABLE ctg_modelos(
+CREATE TABLE prc_modelos(
 id_modelo int,
 id_marca int,
 descripcion varchar(255),
 stock int,
+foto LONGTEXT,
 estado varchar(1),
 PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE prc_comentarios (
+    id_comentario INT,
+    id_modelo INT,
+    id_cliente INT,
+    comentario TEXT,
+    puntuacion INT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_comentario),
+    FOREIGN KEY (id_modelo) REFERENCES prc_modelos(id_modelo),
+    FOREIGN KEY (id_cliente) REFERENCES prc_clientes(id_cliente)
+);
+
 create table ctg_tallas(
 id_talla int,
 descripcion varchar(255),
@@ -85,7 +98,7 @@ id_talla int,
 id_modelo int,
 precio float,
 primary key (id_modelotalla),
-FOREIGN KEY(id_modelo) REFERENCES ctg_modelos(id_modelo)
+FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
 ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -111,4 +124,3 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_modelo) REFERENCES ctg_modelos(id_modelo)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-

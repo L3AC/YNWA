@@ -73,6 +73,22 @@ PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE ctg_tiponoticias(
+    id_tiponoticia INT,
+    descripcion varchar(255),
+    PRIMARY KEY (id_comentario)
+);
+CREATE TABLE prc_noticias (
+    id_noticia INT PRIMARY KEY,
+    id_tiponoticia int,
+    titulo VARCHAR(255),
+    contenido TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_noticia),
+    FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia),
+);
+
 CREATE TABLE prc_comentarios (
     id_comentario INT,
     id_modelo INT,
@@ -107,6 +123,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 create table prc_pedidos(
 id_pedido int,
 id_cliente int,
+forma_pago varchar(30),
 fecha datetime,
 estado varchar(2),
 PRIMARY KEY (id_pedido),

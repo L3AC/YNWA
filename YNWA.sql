@@ -86,7 +86,7 @@ CREATE TABLE prc_noticias (
     contenido TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
-    FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia),
+    FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
 );
 
 CREATE TABLE prc_comentarios (

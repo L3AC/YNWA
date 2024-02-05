@@ -77,10 +77,10 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE ctg_tiponoticias(
     id_tiponoticia INT,
     descripcion varchar(255),
-    PRIMARY KEY (id_comentario)
+    PRIMARY KEY (id_tiponoticia)
 );
 CREATE TABLE prc_noticias (
-    id_noticia INT PRIMARY KEY,
+    id_noticia INT,
     id_tiponoticia int,
     titulo VARCHAR(255),
     contenido TEXT,
@@ -138,6 +138,6 @@ cantidad int,
 PRIMARY KEY (id_detalle),
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
 ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_modelo) REFERENCES ctg_modelos(id_modelo)
+FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
 ON DELETE CASCADE ON UPDATE CASCADE
 );

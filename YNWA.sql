@@ -83,6 +83,7 @@ CREATE TABLE prc_noticias (
     id_noticia INT,
     id_tiponoticia int,
     titulo VARCHAR(255),
+    foto LONGTEXT,
     contenido TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),

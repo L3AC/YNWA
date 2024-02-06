@@ -66,7 +66,6 @@ CREATE TABLE prc_modelos(
 id_modelo int,
 id_marca int,
 descripcion varchar(255),
-stock int,
 foto LONGTEXT,
 estado varchar(1),
 PRIMARY KEY(id_modelo),
@@ -85,42 +84,17 @@ CREATE TABLE prc_noticias (
     titulo VARCHAR(255),
     foto LONGTEXT,
     contenido TEXT,
+    estado varchar(1),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
     FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
 );
-
-CREATE TABLE prc_comentarios (
-    id_comentario INT,
-    id_modelo INT,
-    id_cliente INT,
-    comentario TEXT,
-    puntuacion INT,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id_comentario),
-    FOREIGN KEY (id_modelo) REFERENCES prc_modelos(id_modelo),
-    FOREIGN KEY (id_cliente) REFERENCES prc_clientes(id_cliente)
-);
-
 create table ctg_tallas(
 id_talla int,
 descripcion varchar(255),
 estado varchar(1),
 PRIMARY KEY (id_talla)
 );
-
-CREATE TABLE prc_modelo_tallas(
-id_modelotalla int,
-id_talla int,
-id_modelo int,
-precio float,
-primary key (id_modelotalla),
-FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
-ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
-ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 create table prc_pedidos(
 id_pedido int,
 id_cliente int,
@@ -131,14 +105,39 @@ PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE prc_modelo_tallas(
+id_modelotalla int,
+id_talla int,
+id_modelo int,
+stock int,
+precio float,
+primary key (id_modelotalla),
+FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
+ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 create table prc_detalle_pedidos(
 id_detalle int,
 id_pedido int,
-id_modelo int,
+id_modelotalla int,
 cantidad int,
 PRIMARY KEY (id_detalle),
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
 ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
+FOREIGN KEY(id_modelotalla) REFERENCES prc_modelo_tallas(id_modelotalla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE prc_comentarios (
+    id_comentario INT,
+    id_detalle INT ,
+    comentario TEXT,
+    puntuacion INT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_comentario),
+    FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
+);
+
+
+

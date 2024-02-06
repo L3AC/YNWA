@@ -9,12 +9,13 @@ use dbYNWA;
 CREATE TABLE sec_opciones(
 id_opc int,
 descripcion varchar(255),
+estado enum('A','I'),
 PRIMARY KEY (id_opc)
 );
 CREATE TABLE sec_roles(
 id_rol int,
 descripcion varchar(255),
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY (id_rol)
 );
 CREATE TABLE sec_opc_rol(
@@ -37,7 +38,7 @@ nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),
 pin varchar(6),
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -51,14 +52,14 @@ nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),
 pin varchar(6),
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY(id_cliente)
 );
 
 create table ctg_marcas(
 id_marca int,
 descripcion varchar(255),
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY (id_marca)
 );
 
@@ -67,7 +68,7 @@ id_modelo int,
 id_marca int,
 descripcion varchar(255),
 foto LONGTEXT,
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -76,6 +77,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE ctg_tiponoticias(
     id_tiponoticia INT,
     descripcion varchar(255),
+    estado enum('A','I'),
     PRIMARY KEY (id_tiponoticia)
 );
 CREATE TABLE prc_noticias (
@@ -84,7 +86,7 @@ CREATE TABLE prc_noticias (
     titulo VARCHAR(255),
     foto LONGTEXT,
     contenido TEXT,
-    estado varchar(1),
+    estado enum('A','I'),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
     FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
@@ -92,15 +94,15 @@ CREATE TABLE prc_noticias (
 create table ctg_tallas(
 id_talla int,
 descripcion varchar(255),
-estado varchar(1),
+estado enum('A','I'),
 PRIMARY KEY (id_talla)
 );
 create table prc_pedidos(
 id_pedido int,
 id_cliente int,
-forma_pago varchar(30),
-fecha datetime,
-estado varchar(2),
+forma_pago enum('Efectivo','Transferencia'),
+fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+estado enum('A','I'),
 PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -135,6 +137,7 @@ CREATE TABLE prc_comentarios (
     comentario TEXT,
     puntuacion INT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado enum('A','I'),
     PRIMARY KEY (id_comentario),
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );

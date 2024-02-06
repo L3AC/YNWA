@@ -9,6 +9,7 @@ use dbYNWA;
 CREATE TABLE sec_opciones(
 id_opc int,
 descripcion varchar(255),
+url varchar(255),
 estado enum('A','I'),
 PRIMARY KEY (id_opc)
 );

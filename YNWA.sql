@@ -17,7 +17,8 @@ tipo_noticia enum('A','I'),
 noticias enum('A','I'),
 comentarios enum('A','I'),
 clientes enum('A','I'),
-usuarios enum('A','I')
+usuarios enum('A','I'),
+PRIMARY KEY(id_rol)
 );
 CREATE TABLE sec_usuarios(
 id_usuario INT,

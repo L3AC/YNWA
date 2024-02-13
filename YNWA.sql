@@ -1,33 +1,22 @@
 DROP DATABASE dbYNWA;
 CREATE DATABASE dbYNWA;
 use dbYNWA;
-
 /*PRC = TABLAS DINAMICAS */
 /*CTG = CATALOGOS */
 /*SEC = TABLAS DE SEGURIDAD*/
 
-CREATE TABLE sec_opciones(
-id_opc int,
-descripcion varchar(255),
-url varchar(255),
-estado enum('A','I'),
-PRIMARY KEY (id_opc)
-);
+
 CREATE TABLE sec_roles(
 id_rol int,
-descripcion varchar(255),
-estado enum('A','I'),
-PRIMARY KEY (id_rol)
-);
-CREATE TABLE sec_opc_rol(
-id_opc_rol int,
-id_opc int,
-id_rol int,
-PRIMARY KEY (id_opc_rol),
-FOREIGN KEY(id_opc) REFERENCES sec_opciones(id_opc)
-ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
-ON DELETE CASCADE ON UPDATE CASCADE
+marcas enum('A','I'),
+modelos enum('A','I'),
+tallas enum('A','I'),
+pedidos enum('A','I'),
+tipo_noticia enum('A','I'),
+noticias enum('A','I'),
+comentarios enum('A','I'),
+clientes enum('A','I'),
+usuarios enum('A','I')
 );
 CREATE TABLE sec_usuarios(
 id_usuario INT,

@@ -33,7 +33,6 @@ CREATE TABLE sec_usuarios(
 id_usuario INT,
 id_rol int,
 usuario varchar(30) UNIQUE,
-dui varchar(10)UNIQUE,
 clave varchar(30),
 nombres varchar(255),
 apellidos varchar(255),

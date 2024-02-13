@@ -8,6 +8,7 @@ use dbYNWA;
 
 CREATE TABLE sec_roles(
 id_rol int,
+descripcion varchar(40),
 marcas enum('A','I'),
 modelos enum('A','I'),
 tallas enum('A','I'),

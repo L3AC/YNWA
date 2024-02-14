@@ -31,7 +31,7 @@
 			</div>-->
 
 			<div class="wrapper">
-				<form id="login" tabindex="500">
+				<form id="loginForm" tabindex="500">
 					<h3>Inicio de Sesion</h3>
 					<div class="mail">
 						<input type="mail" name="">
@@ -45,25 +45,29 @@
 						<button class="dark">Confirmar</button>
 					</div>
 				</form>
-				<form id="register" tabindex="502">
+				<form id="signupForm" tabindex="502">
 					<h3>Registrarse</h3>
 					<div class="name">
-						<input type="text" name="">
+						<input type="text" id="nombre" name="">
 						<label>Nombres</label>
 					</div>
                     <div class="Apellidos">
-						<input type="text" name="">
+						<input type="text" id="apellido" name="">
 						<label>Apellidos</label>
 					</div>
 					<div class="mail">
-						<input type="mail" name="">
+						<input type="mail" id="correo" name="">
 						<label>Correo</label>
 					</div>
 					<div class="uid">
-						<input type="text" name="">
+						<input type="text" id="usuario" name="">
 						<label>Usuario</label>
 					</div>
-					<div class="passwd">
+					<div class="passwd" id="clave">
+						<input type="password" name="">
+						<label>Contraseña</label>
+					</div>
+					<div class="passwd" id="confirmarClave">
 						<input type="password" name="">
 						<label>Contraseña</label>
 					</div>

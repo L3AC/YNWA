@@ -89,7 +89,6 @@ class AdministradorHandler
         $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idAdministrador']);
         return Database::executeRow($sql, $params);
     }
-
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
@@ -106,12 +105,11 @@ class AdministradorHandler
 
     public function createRow()
     {
-
         $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
                 VALUES(?, ?, ?, ?, ?,?,?,?)';
         /*$sql = 'INSERT INTO administrador(nombre_administrador, apellido_administrador, correo_administrador, alias_administrador, clave_administrador)
                 VALUES(?, ?, ?, ?, ?)';*/
-        $params = array($this>1,$this->usuario, $this->clave, $this->nombre, $this->apellido, $this->mail, $this->);
+        $params = array($this>1,$this->usuario, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin(),$this->estado);
         return Database::executeRow($sql, $params);
     }
 

@@ -1,27 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>YNWA Administracion</title>
-    <link href="../../resources/css/login.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  </head>
-  <body>
 
-    <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<div class="body">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>YNWA Administracion</title>
+	<link href="../../resources/css/login.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<div class="body" id="main">
 		<div class="veen">
-	    	<div class="login-btn splits">
-                <img src="../../resources/img/logo.png" class="imglogo" alt="">
+			<div class="login-btn splits">
+				<img src="../../resources/img/logo.png" class="imglogo" alt="">
 			</div>
 			<div class="rgstr-btn splits">
-                <img src="../../resources/img/logo.png" class="imglogo" alt="">
+				<img src="../../resources/img/logo.png" class="imglogo" alt="">
 			</div>
 
-            <!--<div class="login-btn splits">
+			<!--<div class="login-btn splits">
 				<p></p>
 				<button class="active">Iniciar Sesion</button>
 			</div>
@@ -32,7 +38,7 @@
 
 			<div class="wrapper">
 				<form id="loginForm" tabindex="500">
-					<h3>Inicio de Sesion</h3>
+					<h3 id="mainTitle">Inicio de Sesion</h3>
 					<div class="mail">
 						<input type="mail" name="">
 						<label>Usuario</label>
@@ -51,7 +57,7 @@
 						<input type="text" id="nombre" name="">
 						<label>Nombres</label>
 					</div>
-                    <div class="Apellidos">
+					<div class="Apellidos">
 						<input type="text" id="apellido" name="">
 						<label>Apellidos</label>
 					</div>
@@ -76,30 +82,36 @@
 					</div>
 				</form>
 			</div>
-		</div>	
+		</div>
 	</div>
-	
 
-    <script>$(document).ready(function(){
-        $(".veen .rgstr-btn button").click(function(){
-            $('.veen .wrapper').addClass('move');
-            $('.body').css('background','#CCC8AA');
-            $(".veen .login-btn button").removeClass('active');
-            $(this).addClass('active');
+	<script>$(document).ready(function () {
+			$(".veen .rgstr-btn button").click(function () {
+				$('.veen .wrapper').addClass('move');
+				$('.body').css('background', '#CCC8AA');
+				$(".veen .login-btn button").removeClass('active');
+				$(this).addClass('active');
 
-        });
-        $(".veen .login-btn button").click(function(){
-            $('.veen .wrapper').removeClass('move');
-            $('.body').css('background','#CCC8AA');
-            $(".veen .rgstr-btn button").removeClass('active');
-            $(this).addClass('active');
-        });
-    });</script>
+			});
+			$(".veen .login-btn button").click(function () {
+				$('.veen .wrapper').removeClass('move');
+				$('.body').css('background', '#CCC8AA');
+				$(".veen .rgstr-btn button").removeClass('active');
+				$(this).addClass('active');
+			});
+		});</script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../../controllers/utils/plantillas.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+		<script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+
+	<!-- Llamada al controlador de la página web -->
+	<script type="text/javascript" src="../../controllers/utils/components.js"></script>
+	<script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+	<script type="text/javascript" src="../../controllers/admin/index.js"></script>
+
 </body>
+
 </html>
-
-
-      

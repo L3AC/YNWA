@@ -1,10 +1,7 @@
 DROP DATABASE dbYNWA;
 CREATE DATABASE dbYNWA;
 use dbYNWA;
-/*Hola*/
-/*PRC = TABLAS DINAMICAS */
-/*CTG = CATALOGOS */
-/*SEC = TABLAS DE SEGURIDAD*/
+/*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
@@ -21,9 +18,11 @@ clientes enum('A','I'),
 usuarios enum('A','I'),
 PRIMARY KEY(id_rol)
 );
+insert into sec_roles (id_rol, descripcion, estado,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios) 
+values(1,'Admin','A','A','A','A','A','A','A','A','A','A');
 
 CREATE TABLE sec_usuarios(
-id_usuario INT,
+id_usuario INT auto_increment,
 id_rol int,
 usuario varchar(30) UNIQUE,
 clave varchar(30),
@@ -36,10 +35,15 @@ PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393','A');
+/*SELECT id_usuario, nombres, apellidos, email, usuario
+                FROM sec_usuarios
+                ORDER BY apellidos
+
 select u.id_usuario,u.usuario,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios FROM sec_usuarios u
         INNER JOIN sec_roles r ON u.id_rol = r.id_rol
-        WHERE  u.usuario like  '%%';
-
+        WHERE  u.usuario like  '%%';*/
+#select * from sec_usuarios
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
 usuario varchar(30) UNIQUE,

@@ -90,9 +90,9 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'getUser':
-                if (isset($_SESSION['aliasAdministrador'])) {
+                if (isset($_SESSION['usuario'])) {
                     $result['status'] = 1;
-                    $result['username'] = $_SESSION['aliasAdministrador'];
+                    $result['username'] = $_SESSION['usuario'];
                 } else {
                     $result['error'] = 'Alias de administrador indefinido';
                 }

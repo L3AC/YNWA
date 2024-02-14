@@ -21,7 +21,7 @@ class AdministradorHandler
      */
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_administrador, alias_administrador, clave_administrador
+        $sql = 'SELECT id_administrador , alias_administrador, clave_administrador
                 FROM administrador
                 WHERE  alias_administrador = ?';
         $params = array($username);

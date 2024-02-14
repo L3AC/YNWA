@@ -89,6 +89,7 @@ class AdministradorHandler
         $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idAdministrador']);
         return Database::executeRow($sql, $params);
     }
+
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
@@ -115,9 +116,9 @@ class AdministradorHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_administrador, nombre_administrador, apellido_administrador, correo_administrador, alias_administrador
-                FROM administrador
-                ORDER BY apellido_administrador';
+        $sql = 'SELECT id_usuario, nombres, apellidos, email, usuario
+                FROM sec_usuarios
+                ORDER BY apellidos';
         return Database::getRows($sql);
     }
 

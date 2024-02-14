@@ -15,17 +15,16 @@ HEADER.innerHTML = `
             <div class="offcanvas-body">
                 <ul class="list-group list-group-flush" >
                 <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
-                <li class="list-group-item" id="po"><a href="marcas.html">Marcas</a></li>
-                <li class="list-group-item" id="po"><a href="modelos.html">Modelos</a></li>
-                <li class="list-group-item" id="po">Tallas</li>
-                <li class="list-group-item" id="po">Pedidos</li>
-                <li class="list-group-item" id="po">Tipo Noticia</li>
-                <li class="list-group-item" id="po">Noticias</li>
-                <li class="list-group-item" id="po">Comentarios</li>
-                <li class="list-group-item" id="po">Clientas</li>
-                <li class="list-group-item" id="po">Usuarios</li>
-                <li class="list-group-item" id="po">Opciones</li>
-                <li class="list-group-item" id="po">Roles</li>
+                <li class="list-group-item" id="po"><a href="1marcas.html">Marcas</a></li>
+                <li class="list-group-item" id="po"><a href="2modelos.html">Modelos</a></li>
+                <li class="list-group-item" id="po"><a href="3tallas.html">Tallas</a></li>
+                <li class="list-group-item" id="po"><a href="4pedidos.html">Pedidos</a></li>
+                <li class="list-group-item" id="po"><a href="5tiponoticia.html">Tipo Noticias</a></li>
+                <li class="list-group-item" id="po"><a href="6noticias.html">Noticias</a></li>
+                <li class="list-group-item" id="po"><a href="7comentarios.html">Comentarios</a></li>
+                <li class="list-group-item" id="po"><a href="8clientes.html">Clientas</a></li>
+                <li class="list-group-item" id="po"><a href="9usuarios.html">Usuarios</a></li>
+                <li class="list-group-item" id="po"><a href="10roles.html">Roles</a></li>
                   </ul>
             </div>
         </div>

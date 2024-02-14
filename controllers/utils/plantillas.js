@@ -1,6 +1,7 @@
 const HEADER = document.querySelector('header');
 const FOOTER = document.querySelector('footer');
 
+
 HEADER.innerHTML = `
 <nav class="navbar">
 <div class="container-fluid position-absolute top-0 start-0">

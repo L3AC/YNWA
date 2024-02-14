@@ -35,8 +35,12 @@ PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393','A');
-/*SELECT id_usuario, nombres, apellidos, email, usuario
+
+/*
+insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) 
+values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393','A');
+
+SELECT id_usuario, nombres, apellidos, email, usuario
                 FROM sec_usuarios
                 ORDER BY apellidos
 
@@ -141,6 +145,7 @@ CREATE TABLE prc_comentarios (
     PRIMARY KEY (id_comentario),
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );
+
 
 
 

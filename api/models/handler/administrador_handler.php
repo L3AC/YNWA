@@ -13,8 +13,10 @@ class AdministradorHandler
     protected $nombre = null;
     protected $apellido = null;
     protected $correo = null;
+    protected $usuario = null;
     protected $alias = null;
     protected $clave = null;
+    protected $estado = null;
 
     /*
      *  Métodos para gestionar la cuenta del administrador.
@@ -109,7 +111,7 @@ class AdministradorHandler
                 VALUES(?, ?, ?, ?, ?,?,?,?)';
         /*$sql = 'INSERT INTO administrador(nombre_administrador, apellido_administrador, correo_administrador, alias_administrador, clave_administrador)
                 VALUES(?, ?, ?, ?, ?)';*/
-        $params = array($this>1,$this->nombre, $this->apellido, $this->correo, $this->alias, $this->clave);
+        $params = array($this>1,$this->usuario, $this->clave, $this->nombre, $this->apellido, $this->mail, $this->);
         return Database::executeRow($sql, $params);
     }
 

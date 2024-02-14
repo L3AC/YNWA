@@ -19,6 +19,17 @@ class AdministradorHandler
     /*
      *  Métodos para gestionar la cuenta del administrador.
      */
+    /*GENERAR PIN*/
+    public function generarPin() {
+        $pinLength = 6;
+        $pin = '';
+      
+        for ($i = 0; $i < $pinLength; $i++) {
+          $pin .= mt_rand(0, 9);
+        }
+      
+        return $pin;
+      }
     public function checkUser($username, $password)
     {
         $sql = 'SELECT id_administrador , alias_administrador, clave_administrador
@@ -93,11 +104,12 @@ class AdministradorHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO sec_usuarios(id_rol, nombres, apellidos, alias_administrador, clave_administrador)
-                VALUES(?, ?, ?, ?, ?)';
+
+        $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
+                VALUES(?, ?, ?, ?, ?,?,?,?)';
         /*$sql = 'INSERT INTO administrador(nombre_administrador, apellido_administrador, correo_administrador, alias_administrador, clave_administrador)
                 VALUES(?, ?, ?, ?, ?)';*/
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $this->clave);
+        $params = array($this>1,$this->nombre, $this->apellido, $this->correo, $this->alias, $this->clave);
         return Database::executeRow($sql, $params);
     }
 

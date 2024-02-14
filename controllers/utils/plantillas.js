@@ -5,8 +5,8 @@ HEADER.innerHTML = `
 <nav class="navbar">
 <div class="container-fluid position-absolute top-0 start-0">
   <a class="navbar-brand" href="#">
-    <img class="btn" src="/resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-    <img src="/resources//img/Perfilito.png" id="io" class="position-absolute top-0 end-0" width="40" height="40">
+    <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+    <img src="../../resources/img/Perfilito.png" id="io" class="position-absolute top-0 end-0" width="40" height="40">
     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
           <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>

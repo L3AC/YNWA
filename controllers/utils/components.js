@@ -218,8 +218,11 @@ const fetchData = async (filename, action, form = null) => {
         // Se agrega un parámetro a la ruta con el valor de la acción solicitada.
         PATH.searchParams.append('action', action);
         // Se define una constante tipo objeto con la respuesta de la petición.
-        const RESPONSE = await fetch(PATH.href, OPTIONS);
+        /*const RESPONSE = await fetch(PATH.href, OPTIONS);
         // Se retorna el resultado en formato JSON.
+        return await RESPONSE.json();*/
+        const RESPONSE = await fetch(PATH.href, OPTIONS);
+        console.log(RESPONSE); // Muestra la respuesta en la consola para verificar su contenido
         return await RESPONSE.json();
     } catch (error) {
         // Se muestra un mensaje en la consola del navegador web cuando ocurre un problema.

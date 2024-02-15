@@ -164,7 +164,7 @@ if (isset($_GET['action'])) {
                     !$administrador->setNombre($_POST['nombre']) or
                     !$administrador->setApellido($_POST['apellido']) or
                     !$administrador->setCorreo($_POST['correo']) or
-                    !$administrador->setAlias($_POST['usuario']) or
+                    !$administrador->setUsuario($_POST['usuario']) or
                     !$administrador->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $administrador->getDataError();
@@ -179,7 +179,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
-                if ($administrador->checkUser($_POST['usuario'], $_POST['clave'])) {
+                if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {

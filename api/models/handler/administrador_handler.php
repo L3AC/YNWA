@@ -37,14 +37,19 @@ class AdministradorHandler
         $sql = 'SELECT id_usuario , usuario, clave
                 FROM sec_usuarios
                 WHERE  usuario = ?';
-        echo($username);
+        //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
+
+        $hash = password_hash('juancho', PASSWORD_DEFAULT);
+        echo "Hash: " . $hash;
+
         if (password_verify($password, $data['clave'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuario'] = $data['usuario'];
             return true;
         } else {
+            echo ( $password.$data['clave']);
             return false;
         }
     }

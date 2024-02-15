@@ -21,10 +21,12 @@ MAIN_TITLE.classList.add('text-center', 'py-3');
 const loadTemplate = async () => {
     // Petición para obtener en nombre del usuario que ha iniciado sesión.
     const DATA = await fetchData(USER_API, 'getUser');
+    console.log('EJEMPLOS');
     // Se verifica si el usuario está autenticado, de lo contrario se envía a iniciar sesión.
     if (DATA.session) {
         // Se comprueba si existe un alias definido para el usuario, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
+            
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
                 <header>
@@ -35,12 +37,13 @@ const loadTemplate = async () => {
                     <img src="../../resources/img/Perfilito.png" id="io" class="position-absolute top-0 end-0" width="40" height="40">
                     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                         <div class="offcanvas-header">
-                          <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>
+                          <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias </h3>
                           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                             <div class="offcanvas-body">
                                 <ul class="list-group list-group-flush" >
-                                <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
+                                
+                                <li class="list-group-item" id="po"><a href="">${DATA.username}</a></li>
                                 <li class="list-group-item" id="po"><a href="1marcas.html">Marcas</a></li>
                                 <li class="list-group-item" id="po"><a href="2modelos.html">Modelos</a></li>
                                 <li class="list-group-item" id="po"><a href="3tallas.html">Tallas</a></li>

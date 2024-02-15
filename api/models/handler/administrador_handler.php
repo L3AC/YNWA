@@ -43,6 +43,7 @@ class AdministradorHandler
         if (password_verify($password, $data['clave'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuario'] = $data['usuario'];
+            //echo ($_SESSION['usuario']).' 1';
             return true;
         } else {
             return false;

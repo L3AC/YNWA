@@ -6,7 +6,7 @@ const LOGIN_FORM = document.getElementById('loginForm');
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
-    //loadTemplate();
+    loadTemplate();
     // Petición para consultar los usuarios registrados.
     const DATA = await fetchData(USER_API, 'readUsers');
     // Se comprueba si existe una sesión, de lo contrario se sigue con el flujo normal.
@@ -54,7 +54,7 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     const DATA = await fetchData(USER_API, 'logIn', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        sweetAlert(1, DATA.message, true, 'dashboard.html');
+        sweetAlert(1, DATA.message, true, 'prueba.html');
     } else {
         sweetAlert(2, DATA.error, false);
     }

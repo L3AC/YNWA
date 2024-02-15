@@ -34,14 +34,15 @@ class AdministradorHandler
       }
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_administrador , alias_administrador, clave_administrador
-                FROM administrador
-                WHERE  alias_administrador = ?';
+        $sql = 'SELECT id_usuario , usuario, clave
+                FROM sec_usuarios
+                WHERE  usuario = ?';
+        echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
-        if (password_verify($password, $data['clave_administrador'])) {
-            $_SESSION['idAdministrador'] = $data['id_administrador'];
-            $_SESSION['aliasAdministrador'] = $data['alias_administrador'];
+        if (password_verify($password, $data['clave'])) {
+            $_SESSION['idUsuario'] = $data['id_usuario'];
+            $_SESSION['usuario'] = $data['usuario'];
             return true;
         } else {
             return false;

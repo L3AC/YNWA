@@ -20,17 +20,18 @@ PRIMARY KEY(id_rol)
 );
 insert into sec_roles (id_rol, descripcion, estado,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios) 
 values(1,'Admin','A','A','A','A','A','A','A','A','A','A');
-select * from sec_usuarios
+/*
+select * from sec_usuarios;
 
 SELECT id_usuario , usuario, clave
                 FROM sec_usuarios
-                WHERE  usuario ='juancho'
+                WHERE  usuario ='juancho';*/
 
 CREATE TABLE sec_usuarios(
 id_usuario INT auto_increment,
 id_rol int,
 usuario varchar(30) UNIQUE,
-clave varchar(30),
+clave varchar(255),
 nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),

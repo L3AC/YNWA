@@ -97,7 +97,9 @@ class AdministradorData extends AdministradorHandler
     public function setClave($value)
     {
         if (Validator::validatePassword($value)) {
+            //echo $value;
             $this->clave = password_hash($value, PASSWORD_DEFAULT);
+            //echo $this->clave.' ';
             return true;
         } else {
             $this->data_error = Validator::getPasswordError();

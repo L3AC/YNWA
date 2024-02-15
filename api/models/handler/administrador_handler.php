@@ -40,16 +40,11 @@ class AdministradorHandler
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
-
-        $hash = password_hash('juancho', PASSWORD_DEFAULT);
-        echo "Hash: " . $hash;
-
         if (password_verify($password, $data['clave'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuario'] = $data['usuario'];
             return true;
         } else {
-            echo ( $password.$data['clave']);
             return false;
         }
     }
@@ -112,11 +107,9 @@ class AdministradorHandler
 
     public function createRow()
     {
-
+        //echo $this->clave.' ';
         $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
                 VALUES(1, ?, ?, ?, ?,?,?,"A")';
-        /*$sql = 'INSERT INTO administrador(nombre_administrador, apellido_administrador, correo_administrador, alias_administrador, clave_administrador)
-                VALUES(?, ?, ?, ?, ?)';*/
         $params = array($this->usuario, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }

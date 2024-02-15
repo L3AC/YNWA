@@ -106,9 +106,9 @@ class AdministradorHandler
 
     public function createRow()
     {
-        
+
         $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
-                VALUES(1, ?, ?, ?, ?,?,?,A)';
+                VALUES(1, ?, ?, ?, ?,?,?,"A")';
         /*$sql = 'INSERT INTO administrador(nombre_administrador, apellido_administrador, correo_administrador, alias_administrador, clave_administrador)
                 VALUES(?, ?, ?, ?, ?)';*/
         $params = array($this->usuario, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());

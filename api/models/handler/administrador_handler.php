@@ -55,7 +55,7 @@ class AdministradorHandler
         $sql = 'SELECT clave_administrador
                 FROM administrador
                 WHERE id_administrador = ?';
-        $params = array($_SESSION['idAdministrador']);
+        $params = array($_SESSION['idUsuario']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
         if (password_verify($password, $data['clave_administrador'])) {

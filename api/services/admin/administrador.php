@@ -365,14 +365,14 @@ if (isset($_GET['action'])) {
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setNombre($_POST['nombreAdministrador']) or
-                    !$administrador->setApellido($_POST['apellidoAdministrador']) or
-                    !$administrador->setCorreo($_POST['correoAdministrador']) or
-                    !$administrador->setAlias($_POST['aliasAdministrador']) or
-                    !$administrador->setClave($_POST['claveAdministrador'])
+                    !$administrador->setNombre($_POST['nombre']) or
+                    !$administrador->setApellido($_POST['apellido']) or
+                    !$administrador->setCorreo($_POST['correo']) or
+                    !$administrador->setAlias($_POST['usuario']) or
+                    !$administrador->setClave($_POST['clave'])
                 ) {
                     $result['error'] = $administrador->getDataError();
-                } elseif ($_POST['claveAdministrador'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($administrador->createRow()) {
                     $result['status'] = 1;
@@ -382,13 +382,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
+                
                 $_POST = Validator::validateForm($_POST);
+                //log($_POST['clavel']);
                 if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {
                     $result['error'] = 'Credenciales incorrectas';
                 }
+                
                 break;
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';

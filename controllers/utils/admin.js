@@ -7,8 +7,7 @@
 const USER_API = 'services/admin/administrador.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
-MAIN.style.paddingTop = '75px';
-MAIN.style.paddingBottom = '100px';
+
 MAIN.classList.add('container');
 // Se establece el título de la página web.
 document.querySelector('title').textContent = 'CoffeeShop - Dashboard';
@@ -36,6 +35,7 @@ const loadTemplate = async () => {
                   <a class="navbar-brand" href="#">
                     <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                     <img src="../../resources/img/Perfilito.png" id="io" class="position-absolute top-0 end-0" width="40" height="40">
+                    
                     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                         <div class="offcanvas-header">
                           <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>
@@ -88,28 +88,7 @@ const loadTemplate = async () => {
         // Se comprueba si la página web es la principal, de lo contrario se direcciona a iniciar sesión.
         if (location.pathname.endsWith('index.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.
-            MAIN.insertAdjacentHTML('beforebegin', `
-                <header>
-                    <nav class="navbar fixed-top bg-body-tertiary">
-                        <div class="container">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="../../resources/img/logo.png" alt="inventory" width="50">
-                            </a>
-                        </div>
-                    </nav>
-                </header>
-            `);
-            // Se agrega el pie de la página web después del contenido principal.
-            MAIN.insertAdjacentHTML('afterend', `
-                <footer>
-                    <nav class="navbar fixed-bottom bg-body-tertiary">
-                        <div class="container">
-                            <p><a class="nav-link" href="https://github.com/dacasoft/coffeeshop" target="_blank"><i class="bi bi-github"></i> CoffeeShop</a></p>
-                            <p><i class="bi bi-envelope-fill"></i> dacasoft@outlook.com</p>
-                        </div>
-                    </nav>
-                </footer>
-            `);
+            
         } else {
             location.href = 'index.html';
         }

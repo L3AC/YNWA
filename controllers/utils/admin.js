@@ -58,6 +58,7 @@ const loadTemplate = async () => {
                             </div>
                         </div>
                       </div>
+                      
                   </a>
                 </div>
                 </nav>
@@ -66,18 +67,18 @@ const loadTemplate = async () => {
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
                 <footer>
-                    <nav class="navbar fixed-bottom bg-body-tertiary">
-                        <div class="container">
-                            <div>
-                                <p><a class="nav-link" href="https://github.com/dacasoft/coffeeshop" target="_blank"><i class="bi bi-github"></i> CoffeeShop</a></p>
-                                <p><i class="bi bi-c-square-fill"></i> 2018-2024 Todos los derechos reservados</p>
-                            </div>
-                            <div>
-                                <p><a class="nav-link" href="../public/" target="_blank"><i class="bi bi-cart-fill"></i> Sitio público</a></p>
-                                <p><i class="bi bi-envelope-fill"></i> dacasoft@outlook.com</p>
-                            </div>
-                        </div>
-                    </nav>
+                <nav class="navbar fixed-bottom" id="foot">
+                <div class="container-fluid">
+                    <div>
+                        <h6>YNWA</h6>
+                        <p><i class="bi bi-c-square"></i>2024 Todos los derechos reservados</p>
+                    </div>
+                    <div>
+                        <h6>Contáctanos</h6>
+                        <p><i class="bi bi-envelope"></i> YNWA@gmail.com</p>
+                    </div>
+                </div>
+            </nav>
                 </footer>
             `);
         } else {

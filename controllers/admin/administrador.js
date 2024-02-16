@@ -81,15 +81,15 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.apellido_administrador}</td>
-                    <td>${row.nombre_administrador}</td>
-                    <td>${row.correo_administrador}</td>
-                    <td>${row.alias_administrador}</td>
+                    <td>${row.apellidos}</td>
+                    <td>${row.nombres}</td>
+                    <td>${row.email}</td>
+                    <td>${row.usuario}</td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_administrador})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_administrador})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_usuario})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -142,11 +142,11 @@ const openUpdate = async (id) => {
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_ADMINISTRADOR.value = ROW.id_administrador;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombre_administrador;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellido_administrador;
-        CORREO_ADMINISTRADOR.value = ROW.correo_administrador;
-        ALIAS_ADMINISTRADOR.value = ROW.alias_administrador;
+        ID_ADMINISTRADOR.value = ROW.id_usuario;
+        NOMBRE_ADMINISTRADOR.value = ROW.nombres;
+        APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
+        CORREO_ADMINISTRADOR.value = ROW.email;
+        ALIAS_ADMINISTRADOR.value = ROW.usuario;
     } else {
         sweetAlert(2, DATA.error, false);
     }

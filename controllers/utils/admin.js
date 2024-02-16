@@ -51,7 +51,7 @@ const loadTemplate = async () => {
                                 <li class="list-group-item" id="po"><a href="5tiponoticia.html">Tipo Noticias</a></li>
                                 <li class="list-group-item" id="po"><a href="6noticias.html">Noticias</a></li>
                                 <li class="list-group-item" id="po"><a href="7comentarios.html">Comentarios</a></li>
-                                <li class="list-group-item" id="po"><a href="8clientes.html">Clientas</a></li>
+                                <li class="list-group-item" id="po"><a href="8clientes.html">Clientes</a></li>
                                 <li class="list-group-item" id="po"><a href="9usuarios.html">Usuarios</a></li>
                                 <li class="list-group-item" id="po"><a href="10roles.html">Roles</a></li>
                                   </ul>

@@ -94,6 +94,7 @@ if (isset($_GET['action'])) {
                 if (isset($_SESSION['usuario'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuario'];
+                    error_log("$_SESSION");
                     
                 } else {
                     $result['error'] = 'Alias de administrador indefinido';

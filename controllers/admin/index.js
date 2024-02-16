@@ -63,7 +63,7 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
 // Constante para establecer el formulario de registro del primer usuario.
 const SIGNUP_FORM = document.getElementById('signupForm');
 // Constante para establecer el formulario de inicio de sesión.
-const LOGIN_FORM = document.getElementById('loginForm');
+const LOGIN_FORM = document.getElementById('loginForm'); 
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {

@@ -43,7 +43,7 @@ const loadTemplate = async () => {
                         </div>
                             <div class="offcanvas-body">
                                 <ul class="list-group list-group-flush" >
-                                <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
+                                <li class="list-group-item" id="po"><a href="index.html">Inicio ${DATA.username}</a></li>
                                 <li class="list-group-item" id="po"><a href="1marcas.html">Marcas</a></li>
                                 <li class="list-group-item" id="po"><a href="2modelos.html">Modelos</a></li>
                                 <li class="list-group-item" id="po"><a href="3tallas.html">Tallas</a></li>
@@ -84,6 +84,7 @@ const loadTemplate = async () => {
             sweetAlert(3, DATA.error, false, 'index.html');
         }
     } else {
+        console.log('de vuelta');
         // Se comprueba si la página web es la principal, de lo contrario se direcciona a iniciar sesión.
         if (location.pathname.endsWith('index.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.

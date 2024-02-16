@@ -31,7 +31,7 @@ class AdministradorHandler
         }
       
         return $pin;
-      }
+      } 
     public function checkUser($username, $password)
     {
         $sql = 'SELECT id_usuario , usuario, clave

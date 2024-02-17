@@ -131,6 +131,19 @@ class Validator
             return false;
         }
     }
+    /*
+    *   Método para validar un dato char de un digito.
+    *   Parámetros: $value (dato a validar).
+    *   Retorno: Char (A si el valor es activo o I en caso que este inactivo).
+    */
+    public static function validateChar($value)
+    {
+        if ($value == "A" || $value == "I") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /*
     *   Método para validar una cadena de texto (letras, digitos, espacios en blanco y signos de puntuación).

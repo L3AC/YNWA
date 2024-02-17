@@ -1,14 +1,18 @@
 // Constantes para completar las rutas de la API.
-const PRODUCTO_API = 'services/admin/producto.php';
+const PRODUCTO_API = 'services/admin/2modelos.php';
 const CATEGORIA_API = 'services/admin/categoria.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
-const TABLE_BODY = document.getElementById('tableBody'),
-    ROWS_FOUND = document.getElementById('rowsFound');
+const SUBTABLE_HEAD = document.getElementById('subheaderT'),
+    SUBTABLE_BODY = document.getElementById('subtableBody'),
+    TABLE_BODY = document.getElementById('tableBody'),
+    ROWS_FOUND = document.getElementById('rowsFound'),
+    SUBROWS_FOUND = document.getElementById('subrowsFound');
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
-    MODAL_TITLE = document.getElementById('modalTitle');
+    MODAL_TITLE = document.getElementById('modalTitle'),
+    SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idProducto'),
@@ -79,20 +83,19 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del producto.
-            (row.estado_producto) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td><img src="${SERVER_URL}images/productos/${row.imagen_producto}" height="50"></td>
-                    <td>${row.nombre_producto}</td>
-                    <td>${row.precio_producto}</td>
-                    <td>${row.nombre_categoria}</td>
+                    <td><img src="${SERVER_URL}images/modelos/${row.foto}" height="50"></td>
+                    <td>${row.descripcion}</td>
+                    <td>${row.marca}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_producto})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_modelo})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_producto})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelo})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -102,7 +105,7 @@ const fillTable = async (form = null) => {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-        sweetAlert(4, DATA.error, true);
+        //sweetAlert(4, DATA.error, true);
     }
 }
 
@@ -115,6 +118,10 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear producto';
+    SUBMODAL_TITLE.innerHTML='';
+    SUBTABLE_HEAD.innerHTML = '';
+    SUBTABLE_BODY.innerHTML = '';
+
     // Se prepara el formulario.
     SAVE_FORM.reset();
     EXISTENCIAS_PRODUCTO.disabled = false;
@@ -137,6 +144,20 @@ const openUpdate = async (id) => {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
         MODAL_TITLE.textContent = 'Actualizar producto';
+        SUBMODAL_TITLE.textContent = 'Tallas del modelo';
+        SUBTABLE_HEAD.innerHTML = `<thead>
+        <tr>
+            <td colspan="6" id="subrowsFound"></td>
+        </tr>
+        <tr>
+            <th>TALLA</th>
+            <th>STOCK</th>
+            <th>PRECIO $</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+    <tbody id="subtableBody"></tbody>`;
         // Se prepara el formulario.
         SAVE_FORM.reset();
         EXISTENCIAS_PRODUCTO.disabled = true;

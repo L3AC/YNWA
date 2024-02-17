@@ -72,6 +72,7 @@ descripcion varchar(255),
 estado enum('A','I'),
 PRIMARY KEY (id_marca)
 );
+insert into ctg_marcas(descripcion,estado) values('NIKE','A'),('NEW BALANCE','A'),('ADIDAS','A'),('NAUTICA','A');
 
 CREATE TABLE prc_modelos(
 id_modelo int AUTO_INCREMENT,
@@ -83,6 +84,34 @@ PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
+                FROM prc_modelos mo
+                INNER JOIN ctg_marcas ma USING(id_marca)
+                WHERE mo.descripcion LIKE '%%' OR ma.descripcion LIKE '%%'
+                ORDER BY mo.descripcion
+insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png','A');
+
+create table ctg_tallas(
+id_talla int AUTO_INCREMENT,
+descripcion varchar(255),
+estado enum('A','I'),
+PRIMARY KEY (id_talla)
+);
+insert into ctg_tallas(descripcion,estado) values('5','A'),('6','A'),('7','A'),('8','A'),('9','A'),('10','A');
+
+CREATE TABLE prc_modelo_tallas(
+id_modelotalla int AUTO_INCREMENT,
+id_talla int,
+id_modelo int,
+stock int,
+precio float,
+primary key (id_modelotalla),
+FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
+ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
 CREATE TABLE ctg_tiponoticias(
     id_tiponoticia INT AUTO_INCREMENT,
@@ -101,12 +130,7 @@ CREATE TABLE prc_noticias (
     PRIMARY KEY (id_noticia),
     FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
 );
-create table ctg_tallas(
-id_talla int AUTO_INCREMENT,
-descripcion varchar(255),
-estado enum('A','I'),
-PRIMARY KEY (id_talla)
-);
+
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,
@@ -117,18 +141,7 @@ PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE prc_modelo_tallas(
-id_modelotalla int AUTO_INCREMENT,
-id_talla int,
-id_modelo int,
-stock int,
-precio float,
-primary key (id_modelotalla),
-FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
-ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
-ON DELETE CASCADE ON UPDATE CASCADE
-);
+
 
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,

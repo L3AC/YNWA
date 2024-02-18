@@ -5,9 +5,10 @@ const PRODUCTO_API = 'services/admin/2modelos.php',
     MODELOTALLAS_API = 'services/admin/11modelotallas.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm'),
-     SEARCHSUB_FORM = document.getElementById('searchsubForm');
+    SEARCHSUB_FORM = document.getElementById('searchsubForm');
 // Constantes para establecer el contenido de la tabla.
 const SUBTABLE_HEAD = document.getElementById('subheaderT'),
+    SUBTABLE = document.getElementById('subtable'),
     SUBTABLE_BODY = document.getElementById('subtableBody'),
     TABLE_BODY = document.getElementById('tableBody'),
     ROWS_FOUND = document.getElementById('rowsFound'),
@@ -24,6 +25,14 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
+
+// Constantes para establecer los elementos del formulario de modelo tallas de guardar.
+const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
+    TREMODAL_TITLE = document.getElementById('tremodalTitle');
+const SAVE_TREFORM = document.getElementById('savetreForm'),
+    ID_MODELOTALLA = document.getElementById('idModeloTalla'),
+    PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
+    STOCK_MODELOTALLA = document.getElementById('stockModelotalla');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -122,9 +131,10 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear producto';
-    SUBMODAL_TITLE.innerHTML = '';
+    SUBTABLE.hidden = true;
+    /*SUBMODAL_TITLE.innerHTML = '';
     SUBTABLE_HEAD.innerHTML = '';
-    SUBTABLE_BODY.innerHTML = '';
+    SUBTABLE_BODY.innerHTML = '';*/
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
@@ -147,33 +157,14 @@ const openUpdate = async (id) => {
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        SUBMODAL_TITLE.textContent = 'Actualizar producto';
+        SUBTABLE.hidden = false;
         SUBMODAL_TITLE.textContent = 'Tallas del modelo';
-        /*SUBTABLE_HEAD.innerHTML = `<thead>
-            <tr>
-                <td colspan="6" id="subrowsFound"></td>
-            </tr>
-            <tr>
-                <th>TALLA</th>
-                <th>STOCK</th>
-                <th>PRECIO $</th>
-                <th>ACCIONES</th>
-            </tr>
-        </thead>
-        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-        <tbody id="subtableBody"></tbody>`;*/
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        //EXISTENCIAS_PRODUCTO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_modelo;
-        /*$_SESSION['idmod'] =  ROW.id_modelo;
-        console.log($_SESSION);*/
         NOMBRE_PRODUCTO.value = ROW.descripcion;
-        //DESCRIPCION_PRODUCTO.value = ROW.descripcion_producto;
-        //PRECIO_PRODUCTO.value = ROW.precio_producto;
-        //EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
         ESTADO_PRODUCTO.checked = ROW.estado;
         fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
@@ -181,7 +172,32 @@ const openUpdate = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
-
+/*
+*   Función asíncrona para eliminar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openDelete = async (id) => {
+    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
+    const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
+    // Se verifica la respuesta del mensaje.
+    if (RESPONSE) {
+        // Se define una constante tipo objeto con los datos del registro seleccionado.
+        const FORM = new FormData();
+        FORM.append('idModelo', id);
+        // Petición para eliminar el registro seleccionado.
+        const DATA = await fetchData(PRODUCTO_API, 'deleteRow', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            // Se muestra un mensaje de éxito.
+            await sweetAlert(1, DATA.message, true);
+            // Se carga nuevamente la tabla para visualizar los cambios.
+            fillTable();
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
+    }
+}
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -222,13 +238,58 @@ const fillsubTable = async (form = null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
+const subclose = () => {
+    console.log('hola');
+    SAVE_MODAL.show();
+}
 
+const opensubCreate = () => {
+    SAVE_MODAL.hide();
+    SAVE_TREMODAL.show();
+    //SAVE_MODAL.hidden = false;
+    TREMODAL_TITLE.textContent = 'Agregar talla';
+    // Se prepara el formulario.
+    SAVE_TREFORM.reset();
+    //EXISTENCIAS_PRODUCTO.disabled = false;
+    fillSelect(TALLA_API, 'readAll', 'tallaModeloTalla');
+}
+
+/*
+*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const opensubUpdate = async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
+    const FORM = new FormData();
+    FORM.append('idModeloTalla', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL.show();
+        SUBTABLE.hidden = false;
+        SUBMODAL_TITLE.textContent = 'Tallas del modelo';
+        // Se prepara el formulario.
+        SAVE_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_PRODUCTO.value = ROW.id_modelo;
+        NOMBRE_PRODUCTO.value = ROW.descripcion;
+        ESTADO_PRODUCTO.checked = ROW.estado;
+        fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
+        fillsubTable(SEARCHSUB_FORM);
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+}
 /*
 *   Función asíncrona para eliminar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
 *   Retorno: ninguno.
 */
-const openDelete = async (id) => {
+const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
     // Se verifica la respuesta del mensaje.
@@ -249,6 +310,7 @@ const openDelete = async (id) => {
         }
     }
 }
+
 
 /*
 *   Función para abrir un reporte automático de productos por categoría.

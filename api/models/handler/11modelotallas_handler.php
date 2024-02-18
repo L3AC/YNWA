@@ -58,7 +58,7 @@ class ModeloTallasHandler
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion';
         $params = array($this->idModelo);
-        return Database::getRow($sql, $params);
+        return Database::getRows($sql, $params);
     }
 
     public function readOne()

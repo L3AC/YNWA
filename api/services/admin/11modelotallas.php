@@ -44,9 +44,9 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if (!$producto->setId($_POST['idModeloTalla'])) {
+                if (!$producto->setIdModelo(1)) {
                     $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                } elseif ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } 

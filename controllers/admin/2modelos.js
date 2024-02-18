@@ -145,7 +145,7 @@ const openUpdate = async (id) => {
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar producto';
+        SUBMODAL_TITLE.textContent = 'Actualizar producto';
         SUBMODAL_TITLE.textContent = 'Tallas del modelo';
         SUBTABLE_HEAD.innerHTML = `<thead>
             <tr>
@@ -162,7 +162,6 @@ const openUpdate = async (id) => {
         <tbody id="subtableBody"></tbody>`;
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        fillsubTable(SEARCHSUB_FORM);
         //EXISTENCIAS_PRODUCTO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
@@ -173,6 +172,7 @@ const openUpdate = async (id) => {
         //EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
         ESTADO_PRODUCTO.checked = ROW.estado;
         fillSelect(TALLA_API, 'readAll', 'marcaModelo', ROW.id_modelo);
+        fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -196,7 +196,7 @@ const fillsubTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
+            SUBTABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.talla}</td>
                     <td>${row.stock}</td>
@@ -213,7 +213,7 @@ const fillsubTable = async (form = null) => {
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
-        ROWS_FOUND.textContent = DATA.message;
+        SUBROWS_FOUND.textContent = DATA.message;
     } else {
         //sweetAlert(4, DATA.error, true);
     }

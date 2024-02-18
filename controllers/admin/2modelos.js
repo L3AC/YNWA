@@ -1,6 +1,7 @@
 // Constantes para completar las rutas de la API.
-const PRODUCTO_API = 'services/admin/2modelos.php';
-const CATEGORIA_API = 'services/admin/categoria.php';
+const PRODUCTO_API = 'services/admin/2modelos.php',
+    TALLA_API = 'services/admin/3tallas.php',
+    MODELOTALLAS_API = 'services/admin/11modelotallas.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -16,11 +17,11 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idProducto'),
-    NOMBRE_PRODUCTO = document.getElementById('nombreProducto'),
+    NOMBRE_PRODUCTO = document.getElementById('nombreModelo'),
     DESCRIPCION_PRODUCTO = document.getElementById('descripcionProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
-    ESTADO_PRODUCTO = document.getElementById('estadoProducto');
+    ESTADO_PRODUCTO = document.getElementById('estadoModelo');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -105,7 +106,7 @@ const fillTable = async (form = null) => {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-        //sweetAlert(4, DATA.error, true);
+        sweetAlert(4, DATA.error, true);
     }
 }
 
@@ -118,14 +119,14 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear producto';
-    SUBMODAL_TITLE.innerHTML='';
+    SUBMODAL_TITLE.innerHTML = '';
     SUBTABLE_HEAD.innerHTML = '';
     SUBTABLE_BODY.innerHTML = '';
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
     EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(CATEGORIA_API, 'readAll', 'categoriaProducto');
+    fillSelect(TALLA_API, 'readAll', 'categoriaProducto');
 }
 
 /*
@@ -136,7 +137,7 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idProducto', id);
+    FORM.append('idModelo', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -146,32 +147,73 @@ const openUpdate = async (id) => {
         MODAL_TITLE.textContent = 'Actualizar producto';
         SUBMODAL_TITLE.textContent = 'Tallas del modelo';
         SUBTABLE_HEAD.innerHTML = `<thead>
-        <tr>
-            <td colspan="6" id="subrowsFound"></td>
-        </tr>
-        <tr>
-            <th>TALLA</th>
-            <th>STOCK</th>
-            <th>PRECIO $</th>
-            <th>ACCIONES</th>
-        </tr>
-    </thead>
-    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-    <tbody id="subtableBody"></tbody>`;
+            <tr>
+                <td colspan="6" id="subrowsFound"></td>
+            </tr>
+            <tr>
+                <th>TALLA</th>
+                <th>STOCK</th>
+                <th>PRECIO $</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+        <tbody id="subtableBody"></tbody>`;
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        EXISTENCIAS_PRODUCTO.disabled = true;
+        //EXISTENCIAS_PRODUCTO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_PRODUCTO.value = ROW.id_producto;
-        NOMBRE_PRODUCTO.value = ROW.nombre_producto;
-        DESCRIPCION_PRODUCTO.value = ROW.descripcion_producto;
-        PRECIO_PRODUCTO.value = ROW.precio_producto;
-        EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
-        ESTADO_PRODUCTO.checked = ROW.estado_producto;
-        fillSelect(CATEGORIA_API, 'readAll', 'categoriaProducto', ROW.id_categoria);
+        ID_PRODUCTO.value = ROW.id_modelo;
+        NOMBRE_PRODUCTO.value = ROW.descripcion;
+        //DESCRIPCION_PRODUCTO.value = ROW.descripcion_producto;
+        //PRECIO_PRODUCTO.value = ROW.precio_producto;
+        //EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
+        ESTADO_PRODUCTO.checked = ROW.estado;
+        fillSelect(TALLA_API, 'readAll', 'marcaModelo', ROW.id_modelo);
     } else {
         sweetAlert(2, DATA.error, false);
+    }
+}
+
+/*
+*   Función asíncrona para llenar la tabla con los registros disponibles.
+*   Parámetros: form (objeto opcional con los datos de búsqueda).
+*   Retorno: ninguno.
+*/
+const fillsubTable = async (form = null) => {
+    // Se inicializa el contenido de la tabla.
+    SUBROWS_FOUND.textContent = '';
+    SUBTABLE_BODY.innerHTML = '';
+    // Se verifica la acción a realizar.
+    (form) ? action = 'searchRows' : action = 'readAll';
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(MODELOTALLAS_API, action, form);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.talla}</td>
+                    <td>${row.stock}</td>
+                    <td>${row.precio}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_modelotalla})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelotalla})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+        //sweetAlert(4, DATA.error, true);
     }
 }
 

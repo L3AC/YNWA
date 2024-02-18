@@ -84,11 +84,7 @@ PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-                FROM prc_modelos mo
-                INNER JOIN ctg_marcas ma USING(id_marca)
-                WHERE mo.descripcion LIKE '%%' OR ma.descripcion LIKE '%%'
-                ORDER BY mo.descripcion
+select * from prc_modelos;
 insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png','A');
 
 create table ctg_tallas(
@@ -112,6 +108,21 @@ FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
+
+select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion
+from prc_modelo_tallas mt
+INNER JOIN ctg_tallas t USING(id_talla)
+INNER JOIN prc_modelos m USING(id_modelo)
+WHERE mt.id_modelo = 1
+ORDER BY t.descripcion ;
+
+select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE t.descripcion LIKE '%7%' AND mt.id_modelo=1
+        ORDER BY t.descripcion
+
 
 CREATE TABLE ctg_tiponoticias(
     id_tiponoticia INT AUTO_INCREMENT,

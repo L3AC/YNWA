@@ -149,7 +149,7 @@ const openUpdate = async (id) => {
         SAVE_MODAL.show();
         SUBMODAL_TITLE.textContent = 'Actualizar producto';
         SUBMODAL_TITLE.textContent = 'Tallas del modelo';
-        SUBTABLE_HEAD.innerHTML = `<thead>
+        /*SUBTABLE_HEAD.innerHTML = `<thead>
             <tr>
                 <td colspan="6" id="subrowsFound"></td>
             </tr>
@@ -161,13 +161,15 @@ const openUpdate = async (id) => {
             </tr>
         </thead>
         <!-- Cuerpo de la tabla para mostrar un registro por fila -->
-        <tbody id="subtableBody"></tbody>`;
+        <tbody id="subtableBody"></tbody>`;*/
         // Se prepara el formulario.
         SAVE_FORM.reset();
         //EXISTENCIAS_PRODUCTO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_modelo;
+        /*$_SESSION['idmod'] =  ROW.id_modelo;
+        console.log($_SESSION);*/
         NOMBRE_PRODUCTO.value = ROW.descripcion;
         //DESCRIPCION_PRODUCTO.value = ROW.descripcion_producto;
         //PRECIO_PRODUCTO.value = ROW.precio_producto;
@@ -190,9 +192,9 @@ const fillsubTable = async (form = null) => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    (form) ? action = 'searchRows' : action = 'readsubAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(MODELOTALLAS_API, action, form);
+    const DATA = await fetchData(PRODUCTO_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

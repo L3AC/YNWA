@@ -57,7 +57,7 @@ class ModeloTallasHandler
         INNER JOIN prc_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion';
-        
+        //echo $this->idModelo. ' que';
         $params = array($this->idModelo);
         
         return Database::getRows($sql, $params);

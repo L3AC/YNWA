@@ -54,6 +54,19 @@ class ModeloHandler
         ORDER BY mo.descripcion';
         return Database::getRows($sql);
     }
+    public function readsubAll()
+    {
+        $sql = 'select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE mt.id_modelo = ?
+        ORDER BY t.descripcion';
+        //echo $this->idModelo. ' que';
+        $params = array($this->id);
+        
+        return Database::getRows($sql, $params);
+    }
 
     public function readOne()
     {
@@ -62,7 +75,10 @@ class ModeloHandler
         INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_modelo=? ';
         $params = array($this->id);
-        return Database::getRow($sql, $params);
+        $data = Database::getRow($sql, $params);
+        $_SESSION['idmod'] = $data['id_modelo'];
+        
+        return $data;
     }
 
     public function readFilename()

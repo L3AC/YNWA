@@ -51,6 +51,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen productos registrados';
                 }
                 break;
+            case 'readsubAll':
+                    if (!$producto->setId($_SESSION['idmod'])) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($result['dataset'] = $producto->readsubAll()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                    } else {
+                        $result['error'] = 'Tallas no registradas';
+                    }
+                    break;
             case 'readOne':
                 if (!$producto->setId($_POST['idModelo'])) {
                     $result['error'] = $producto->getDataError();

@@ -33,7 +33,7 @@ class ModeloTallasData extends ModeloTallasHandler
             $this->idModelo = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador del modelo es incorrecto';
             return false;
         }
     }

@@ -44,7 +44,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if (!$producto->setIdModelo(1)) {
+                if (!$producto->setIdModelo($_POST['idModelo'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;

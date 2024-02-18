@@ -16,7 +16,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_PRODUCTO = document.getElementById('idProducto'),
+    ID_PRODUCTO = document.getElementById('idModelo'),
     NOMBRE_PRODUCTO = document.getElementById('nombreModelo'),
     DESCRIPCION_PRODUCTO = document.getElementById('descripcionProducto'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
@@ -126,7 +126,7 @@ const openCreate = () => {
     // Se prepara el formulario.
     SAVE_FORM.reset();
     EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAll', 'categoriaProducto');
+    fillSelect(TALLA_API, 'readAll', 'marcaModelo');
 }
 
 /*

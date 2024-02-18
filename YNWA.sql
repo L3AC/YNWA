@@ -109,19 +109,9 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
-select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion
-from prc_modelo_tallas mt
-INNER JOIN ctg_tallas t USING(id_talla)
-INNER JOIN prc_modelos m USING(id_modelo)
-WHERE mt.id_modelo = 1
-ORDER BY t.descripcion ;
-
-select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE t.descripcion LIKE '%7%' AND mt.id_modelo=1
-        ORDER BY t.descripcion
+SELECT id_talla, descripcion,estado
+        FROM ctg_tallas 
+        ORDER BY descripcion;
 
 
 CREATE TABLE ctg_tiponoticias(

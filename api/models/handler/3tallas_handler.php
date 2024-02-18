@@ -48,10 +48,9 @@ class TallaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        ORDER BY mo.descripcion';
+        $sql = 'SELECT id_talla, descripcion, estado
+        FROM ctg_tallas
+        ORDER BY CAST(descripcion AS UNSIGNED)';
         return Database::getRows($sql);
     }
 

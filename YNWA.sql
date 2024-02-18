@@ -108,10 +108,10 @@ FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
-
-SELECT id_talla, descripcion,estado
-        FROM ctg_tallas 
-        ORDER BY descripcion;
+SELECT mo.id_modelo,mo.id_marca, mo.descripcion,mo.foto,mo. estado, ma.descripcion marca
+        FROM prc_modelos mo
+        INNER JOIN ctg_marcas ma USING(id_marca)
+        WHERE mo.id_modelo=?
 
 
 CREATE TABLE ctg_tiponoticias(

@@ -57,9 +57,10 @@ class ModeloHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_modelo,id_marca, descripcion,foto, estado
-        FROM prc_modelos 
-        WHERE id_modelo=? ';
+        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion,mo.foto,mo.estado, ma.descripcion marca
+        FROM prc_modelos mo
+        INNER JOIN ctg_marcas ma USING(id_marca)
+        WHERE mo.id_modelo=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

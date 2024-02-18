@@ -1,5 +1,6 @@
 // Constantes para completar las rutas de la API.
 const PRODUCTO_API = 'services/admin/2modelos.php',
+    MARCA_API = 'services/admin/1marcas.php',
     TALLA_API = 'services/admin/3tallas.php',
     MODELOTALLAS_API = 'services/admin/11modelotallas.php';
 // Constante para establecer el formulario de buscar.
@@ -127,7 +128,7 @@ const openCreate = () => {
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAll', 'marcaModelo');
+    fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
 
 /*
@@ -171,7 +172,7 @@ const openUpdate = async (id) => {
         //PRECIO_PRODUCTO.value = ROW.precio_producto;
         //EXISTENCIAS_PRODUCTO.value = ROW.existencias_producto;
         ESTADO_PRODUCTO.checked = ROW.estado;
-        fillSelect(TALLA_API, 'readAll', 'marcaModelo', ROW.id_modelo);
+        fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);

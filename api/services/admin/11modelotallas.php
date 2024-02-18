@@ -44,16 +44,12 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if (!$producto->setIdModelo($_POST['idModelo'])) {
+                if (!$producto->setIdModelo($_SESSION['idmod'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                } 
-                /*if ($result['dataset'] = $producto->readAll()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                }*/ else {
+                } else {
                     $result['error'] = 'No existen productos registrados';
                 }
                 break;

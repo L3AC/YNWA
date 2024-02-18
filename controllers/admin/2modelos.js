@@ -192,9 +192,9 @@ const fillsubTable = async (form = null) => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readsubAll';
+    (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, action, form);
+    const DATA = await fetchData(MODELOTALLAS_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

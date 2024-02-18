@@ -73,7 +73,7 @@ estado enum('A','I'),
 PRIMARY KEY (id_marca)
 );
 insert into ctg_marcas(descripcion,estado) values('NIKE','A'),('NEW BALANCE','A'),('ADIDAS','A'),('NAUTICA','A');
-
+select * from ctg_marcas
 CREATE TABLE prc_modelos(
 id_modelo int AUTO_INCREMENT,
 id_marca int,

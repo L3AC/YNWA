@@ -47,15 +47,21 @@ class MarcaHandler
     public function readAll()
     {
         $sql = 'SELECT id_marca, descripcion,estado
-                FROM ctg_marcas where estado = "A"' ;
+                FROM ctg_marcas' ;
+        return Database::getRows($sql);
+    }
+    public function readAllActive()
+    {
+        $sql = 'SELECT id_marca, descripcion,estado
+                FROM ctg_marcas where estado="A"' ;
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql = 'SELECT id_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, id_categoria, estado_producto
-                FROM producto
-                WHERE id_producto = ?';
+        $sql = 'SELECT id_marca, descripcion,estado
+                FROM ctg_marcas
+                WHERE id_marca = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

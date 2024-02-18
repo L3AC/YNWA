@@ -106,9 +106,35 @@
                                 <label class="form-check-label" for="estadoModelo">Estado</label>
                             </div>
                             
-                            
+                            <!-- TABLA DE MODELO TALLAS-->
                             <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                             
+                            <form class="col-sm-12 col-md-6" id="searchsubForm">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary" onclick="fillsubTable()">
+                                            <i class="bi bi-x-square-fill"></i>
+                                        </button>
+                                        <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                                        <button type="button" class="btn btn-primary" onclick="openCreateTalla()">
+                                            <i class="bi bi-plus-square-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--<div class="col-sm-12 col-md-6 text-end">
+                                
+                                <button type="button" class="btn btn-primary" onclick="openCreateTalla()">
+                                    <i class="bi bi-plus-square-fill"></i>
+                                </button>
+                            </div> -->
+
                             <table id="subheaderT" class="table table-hover">
                                 <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                 <thead>

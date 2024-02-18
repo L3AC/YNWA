@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/11modelostallas_data.php');
+require_once('../../models/data/11modelotallas_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -44,10 +44,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if (!$producto->setId($_POST['idModeloTalla'])) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($result['dataset'] = $producto->readOne()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                } else {
+                } 
+                /*if ($result['dataset'] = $producto->readAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                }*/ else {
                     $result['error'] = 'No existen productos registrados';
                 }
                 break;

@@ -3,7 +3,8 @@ const PRODUCTO_API = 'services/admin/2modelos.php',
     TALLA_API = 'services/admin/3tallas.php',
     MODELOTALLAS_API = 'services/admin/11modelotallas.php';
 // Constante para establecer el formulario de buscar.
-const SEARCH_FORM = document.getElementById('searchForm');
+const SEARCH_FORM = document.getElementById('searchForm'),
+     SEARCHSUB_FORM = document.getElementById('searchsubForm');
 // Constantes para establecer el contenido de la tabla.
 const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     SUBTABLE_BODY = document.getElementById('subtableBody'),
@@ -125,7 +126,7 @@ const openCreate = () => {
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    EXISTENCIAS_PRODUCTO.disabled = false;
+    //EXISTENCIAS_PRODUCTO.disabled = false;
     fillSelect(TALLA_API, 'readAll', 'marcaModelo');
 }
 
@@ -161,6 +162,7 @@ const openUpdate = async (id) => {
         <tbody id="subtableBody"></tbody>`;
         // Se prepara el formulario.
         SAVE_FORM.reset();
+        fillsubTable(SEARCHSUB_FORM);
         //EXISTENCIAS_PRODUCTO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;

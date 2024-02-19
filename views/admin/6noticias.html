@@ -64,8 +64,8 @@
                     </tr>
                     <tr>
                         <th>IMAGEN</th>
-                        <th>NOMBRE</th>
-                        <th>MARCA</th>
+                        <th>TITULO</th>
+                        <th>FECHA</th>
                         <th>ESTADO</th>
                         <th>ACCIONES</th>
                     </tr>
@@ -88,16 +88,19 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idModelo" name="idModelo">
+                            <input type="hidden" id="idNoticia" name="idNoticia">
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreModelo" class="form-label">Nombre</label>
-                                <textarea id="comentario" name="comentario" class="form-control" rows="6" required></textarea>
+                              <label for="tituloNoticia" class="form-label">Título</label>
+                              <input id="tituloNoticia"  type="text" name="tituloNoticia" class="form-control" required>
+                          </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="contenidoNoticia" class="form-label">Contenido</label>
+                                <textarea id="contenidoNoticia" name="contenidoNoticia" class="form-control" rows="6" required></textarea>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="marcaModelo" class="form-label">Marca</label>
+                                <label for="marcaModelo" class="form-label">Tipo noticia</label>
                                 <select id="marcaModelo" name="marcaModelo" class="form-select" required>
                                 </select>
-
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="imagenModelo" class="form-label">Imagen</label>

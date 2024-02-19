@@ -40,6 +40,7 @@ class AdministradorHandler
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
+        //echo $data['clave'];
         if (password_verify($password, $data['clave'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuarion'] = $data['usuario'];
@@ -111,7 +112,7 @@ class AdministradorHandler
         //echo $this->clave.' ';
         $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
                 VALUES(1, ?, ?, ?, ?,?,?,"A")';
-        $params = array($this->usuario, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+        $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 

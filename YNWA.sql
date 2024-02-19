@@ -41,7 +41,7 @@ PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+select * from sec_usuarios;
 /*
 insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) 
 values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393','A');
@@ -116,6 +116,8 @@ CREATE TABLE ctg_tiponoticias(
     PRIMARY KEY (id_tiponoticia)
 );
 insert into ctg_tiponoticias(descripcion,estado) values('Ofertas','A'),('Productos Nuevos','A'),('Productos por venir','A'),('Tendencia','A');
+
+
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
     id_tiponoticia int,

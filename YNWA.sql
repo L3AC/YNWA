@@ -94,7 +94,7 @@ estado enum('A','I'),
 PRIMARY KEY (id_talla)
 );
 insert into ctg_tallas(descripcion,estado) values('5','A'),('6','A'),('7','A'),('8','A'),('9','A'),('10','A');
-
+insert into ctg_tallas(descripcion,estado) values('11','I');
 CREATE TABLE prc_modelo_tallas(
 id_modelotalla int AUTO_INCREMENT,
 id_talla int,

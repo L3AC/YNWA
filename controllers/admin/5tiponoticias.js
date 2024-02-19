@@ -86,10 +86,10 @@ const fillTable = async (form = null) => {
                     <td>${row.descripcion}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_talla})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_tiponoticia})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_talla})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_tiponoticia})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -112,7 +112,6 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear registro';
-
     // Se prepara el formulario.
     SAVE_FORM.reset();
 }

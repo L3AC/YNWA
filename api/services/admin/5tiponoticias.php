@@ -52,13 +52,13 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                //echo $_POST['idTalla'];
+                
                 if (!$producto->setId($_POST['idTipoNoticia'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Registro inexistente';
                 }
                 break;
             case 'updateRow':

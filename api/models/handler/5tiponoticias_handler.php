@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class TallaHandler
+class TipoNoticiaHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -48,17 +48,17 @@ class TallaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_talla, descripcion, estado
-        FROM ctg_tallas
+        $sql = 'SELECT id_tiponoticia, descripcion, estado
+        FROM ctg_tiponoticias
         ORDER BY CAST(descripcion AS UNSIGNED)';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='SELECT id_talla, descripcion, estado
-        FROM ctg_tallas
-        WHERE id_talla=? ';
+        $sql ='SELECT id_tiponoticia, descripcion, estado
+        FROM ctg_tiponoticias
+        WHERE id_tiponoticia=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

@@ -46,10 +46,10 @@
               <button type="button" class="btn btn-primary" onclick="openCreate()">
                   <i class="bi bi-plus-square-fill"></i>
               </button>
-              <!-- Botón para abrir un reporte en formato PDF -->
+              <!-- Botón para abrir un reporte en formato PDF 
               <button type="button" class="btn btn-warning" onclick="openReport()">
                   <i class="bi bi-filetype-pdf"></i>
-              </button>
+              </button>-->
           </div>
       </div>
 
@@ -62,7 +62,7 @@
                     <td colspan="6" id="rowsFound"></td>
                 </tr>
                 <tr>
-                    <th>TALLA</th>
+                    <th>NOMBRE</th>
                     <th>ESTADO</th>
                     <th>ACCIONES</th>
                 </tr>
@@ -85,16 +85,16 @@
                   <form id="saveForm">
                       <div class="modal-body row g-3">
                           <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                          <input type="hidden" id="idTalla" name="idTalla">
+                          <input type="hidden" id="idTalla" name="idTipoNoticia">
                           <div class="col-sm-12 col-md-6">
-                              <label for="nombreTalla" class="form-label">Nombre</label>
-                              <input id="nombreTalla" type="text" name="nombreTalla" class="form-control"
+                              <label for="nombreTipoNoticia" class="form-label">Nombre</label>
+                              <input id="nombreTipoNoticia" type="text" name="nombreTipoNoticia" class="form-control"
                                   required>
                           </div>
                           <div class="form-check form-switch form-check-reverse">
-                              <input class="form-check-input" type="checkbox" id="estadoTalla"
-                                  name="estadoTalla" checked>
-                              <label class="form-check-label" for="estadoTalla">Estado</label>
+                              <input class="form-check-input" type="checkbox" id="estadoTipoNoticia"
+                                  name="estadoTipoNoticia" checked>
+                              <label class="form-check-label" for="estadoTipoNoticia">Estado</label>
                           </div>
                           
                       </div>

@@ -115,6 +115,7 @@ CREATE TABLE ctg_tiponoticias(
     estado enum('A','I'),
     PRIMARY KEY (id_tiponoticia)
 );
+insert into ctg_tiponoticias(descripcion,estado) values('Ofertas','A'),('Productos Nuevos','A'),('Productos por venir','A'),('Tendencia','A');
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
     id_tiponoticia int,

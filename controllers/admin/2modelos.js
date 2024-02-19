@@ -30,9 +30,10 @@ const SAVE_FORM = document.getElementById('saveForm'),
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
     TREMODAL_TITLE = document.getElementById('tremodalTitle');
 const SAVE_TREFORM = document.getElementById('savetreForm'),
+    SELECTALLA = document.getElementById('selectTalla'),
     ID_MODELOTALLA = document.getElementById('idModeloTalla'),
     PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
-    STOCK_MODELOTALLA = document.getElementById('stockModelotalla');
+    STOCK_MODELOTALLA = document.getElementById('stockModeloTalla');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -222,10 +223,10 @@ const fillsubTable = async (form = null) => {
                     <td>${row.stock}</td>
                     <td>${row.precio}</td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_modelotalla})">
+                        <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelotalla})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelotalla})">
+                        <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelotalla})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -245,6 +246,7 @@ const subclose = () => {
 const opensubCreate = () => {
     SAVE_MODAL.hide();
     SAVE_TREMODAL.show();
+    SELECTALLA.hidden=false;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
@@ -261,6 +263,7 @@ const opensubCreate = () => {
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODAL.hide();
+    SELECTALLA.hidden=true;
     const FORM = new FormData();
     FORM.append('idModeloTalla', id);
     // Petición para obtener los datos del registro solicitado.
@@ -275,10 +278,10 @@ const opensubUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_MODELOTALLA.value = ROW.id_modelotalla;
-        NOMBRE_PRODUCTO.value = ROW.descripcion;
-        ESTADO_PRODUCTO.checked = ROW.estado;
-        fillSelect(MARCA_API, 'readAll', 'tallaModeloTalla', ROW.id_modelotalla, ROW.estado, ROW.estado);
-        fillsubTable(SEARCHSUB_FORM);
+        console.log(ROW.stock+' ' +ROW.precio);
+        STOCK_MODELOTALLA.value = ROW.stock;
+        PRECIO_MODELOTALLA.value = ROW.precio;
+
     } else {
         sweetAlert(2, DATA.error, false);
     }

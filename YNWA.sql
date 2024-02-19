@@ -129,6 +129,8 @@ CREATE TABLE prc_noticias (
     PRIMARY KEY (id_noticia),
     FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
 );
+insert into prc_noticias(id_tiponoticia,titulo,foto,contenido,estado,fecha) 
+values(1,'New Balance 550 - 50 off','234342asd12.jpg','Oferta disponible desde el 19 hasta el 28 de febrero','A',now());
 
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,

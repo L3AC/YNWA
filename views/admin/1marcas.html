@@ -13,6 +13,7 @@
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -78,25 +79,30 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <p class="modal-title fs-5" id="T1" style=" text-align: center;">Agregar Registro</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
-                        <div class="modal-body row g-3">
+                        <div class="modal-body row gx-5">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idMarca" name="idMarca">
-                            <div class="col-sm-12 col-md-6">
-                                <label for="nombreMarca" class="form-label">Nombre</label>
-                                <input id="nombreMarca" type="text" name="nombreMarca" class="form-control" required>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <label for="nombreMarca" id="T1" class="form-label">Nombre</label>
+                                    <input id="nombreMarca" type="text" name="nombreMarca" class="form-control" required>
+                                </div>
                             </div>
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" type="checkbox" id="estadoMarca" name="estadoMarca"
-                                    checked>
-                                <label class="form-check-label" for="estadoMarca">Estado</label>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="T1">Estado</p>
+                                        <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
+                                        <label for="switch-label" id="swa"  class="switch-button__label"></label>
+                                    </div>
+                                </div>  
+                             </div> 
                             </div>
-
-                        </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>

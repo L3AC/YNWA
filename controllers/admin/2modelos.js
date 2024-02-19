@@ -245,7 +245,7 @@ const subclose = () => {
 
 const opensubCreate = () => {
     SAVE_MODAL.hide();
-    SAVE_TREMODAL.show();
+    SAVE_TREMODAL.show(); 
     SELECTALLA.hidden=false;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';

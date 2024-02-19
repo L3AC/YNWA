@@ -33,8 +33,12 @@ const loadTemplate = async () => {
                 <nav class="navbar">
                 <div class="container-fluid position-absolute top-0 start-0">
                   <a class="navbar-brand" href="#">
-                    <a href="perfil.html"><img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"></a>
-                    <img src="../../resources/img/Perfilito.png" id="io" class="position-absolute top-0 end-0" width="40" height="40">
+                    <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" 
+                    width="90" height="80" type="button" data-bs-toggle="offcanvas" 
+                    data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+
+                    <a href="perfil.html"><img src="../../resources/img/Perfilito.png" id="io" 
+                        class="position-absolute top-0 end-0" width="40" height="40"></a>
                     
                     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                         <div class="offcanvas-header">

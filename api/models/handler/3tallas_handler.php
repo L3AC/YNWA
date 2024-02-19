@@ -56,9 +56,9 @@ class TallaHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_modelo,id_marca, descripcion,foto, estado
-        FROM prc_modelos 
-        WHERE id_modelo=? ';
+        $sql ='SELECT id_talla, descripcion, estado
+        FROM ctg_tallas
+        WHERE id_talla=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

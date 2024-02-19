@@ -96,7 +96,7 @@ const fillTable = async (form = null) => {
         DATA.dataset.forEach(row => {
             console.log(DATA.dataset);
             // Se establece un icono para el estado del producto.
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            let icon = (row.estado === 'A') ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
@@ -239,7 +239,6 @@ const fillsubTable = async (form = null) => {
     }
 }
 const subclose = () => {
-    console.log('hola');
     SAVE_MODAL.show();
 }
 
@@ -261,6 +260,7 @@ const opensubCreate = () => {
 */
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
+    SAVE_MODAL.hide();
     const FORM = new FormData();
     FORM.append('idModeloTalla', id);
     // Petición para obtener los datos del registro solicitado.
@@ -268,17 +268,16 @@ const opensubUpdate = async (id) => {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
-        SAVE_MODAL.show();
-        SUBTABLE.hidden = false;
-        SUBMODAL_TITLE.textContent = 'Tallas del modelo';
+        SAVE_TREMODAL.show();
+        TREMODAL_TITLE.textContent = 'Tallas del modelo';
         // Se prepara el formulario.
-        SAVE_FORM.reset();
+        SAVE_TREFORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_PRODUCTO.value = ROW.id_modelo;
+        ID_MODELOTALLA.value = ROW.id_modelotalla;
         NOMBRE_PRODUCTO.value = ROW.descripcion;
         ESTADO_PRODUCTO.checked = ROW.estado;
-        fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
+        fillSelect(MARCA_API, 'readAll', 'tallaModeloTalla', ROW.id_modelotalla, ROW.estado, ROW.estado);
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);

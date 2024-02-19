@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ModeloHandler
+class NoticiaHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -48,36 +48,22 @@ class ModeloHandler
 
     public function readAll()
     {
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        ORDER BY mo.descripcion';
+        $sql = 'select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
+        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
+        ORDER BY n.titulo';
         return Database::getRows($sql);
-    }
-    public function readsubAll()
-    {
-        $sql = 'select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE mt.id_modelo = ?
-        ORDER BY t.descripcion';
-        //echo $this->idModelo. ' que';
-        $params = array($this->id);
-        
-        return Database::getRows($sql, $params);
     }
 
     public function readOne()
     {
-        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion,mo.foto,mo.estado, ma.descripcion marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.id_modelo=? ';
+        $sql ='select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
+        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
+        WHERE n.id_noticia=?
+        ORDER BY n.titulo';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
-        $_SESSION['idmod'] = $data['id_modelo'];
-        
         return $data;
     }
 

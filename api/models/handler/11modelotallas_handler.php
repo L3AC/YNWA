@@ -65,9 +65,12 @@ class ModeloTallasHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_modelo,id_marca, descripcion,foto, estado
-        FROM prc_modelos 
-        WHERE id_modelo=? ';
+        $sql ='select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE mt.id_modelotalla =?
+        ORDER BY t.descripcion ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }

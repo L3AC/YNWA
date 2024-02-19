@@ -132,6 +132,11 @@ CREATE TABLE prc_noticias (
 insert into prc_noticias(id_tiponoticia,titulo,foto,contenido,estado,fecha) 
 values(1,'New Balance 550 - 50 off','234342asd12.jpg','Oferta disponible desde el 19 hasta el 28 de febrero','A',now());
 
+select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
+DATE_FORMAT(n.fecha, '%d-%m-%Y') AS fecha from prc_noticias n
+INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
+ORDER BY n.titulo;
+
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,

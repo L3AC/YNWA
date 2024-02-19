@@ -70,6 +70,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
+                
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

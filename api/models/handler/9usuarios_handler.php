@@ -68,10 +68,10 @@ class AdministradorHandler
 
     public function changePassword()
     {
-        $sql = 'UPDATE administrador
-                SET clave_administrador = ?
-                WHERE id_administrador = ?';
-        $params = array($this->clave, $_SESSION['idadministrador']);
+        $sql = 'UPDATE sec_usuarios
+                SET clave = ?
+                WHERE id_usuario = ?';
+        $params = array($this->clave, $_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
     }
 
@@ -86,10 +86,10 @@ class AdministradorHandler
 
     public function editProfile()
     {
-        $sql = 'UPDATE administrador
-                SET nombre_administrador = ?, apellido_administrador = ?, correo_administrador = ?, alias_administrador = ?
-                WHERE id_administrador = ?';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idAdministrador']);
+        $sql = 'UPDATE sec_usuarios
+                SET nombres = ?, apellidos = ?, email = ?, usuario = ?
+                WHERE id_usuario = ?';
+        $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
     }
 

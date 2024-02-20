@@ -65,10 +65,10 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setId($_POST['idAdministrador']) or
-                    !$administrador->setNombre($_POST['nombreAdministrador']) or
-                    !$administrador->setApellido($_POST['apellidoAdministrador']) or
-                    !$administrador->setCorreo($_POST['correoAdministrador'])
+                    !$administrador->setId($_POST['id_usuario']) or
+                    !$administrador->setNombre($_POST['nombres']) or
+                    !$administrador->setApellido($_POST['apellidos']) or
+                    !$administrador->setCorreo($_POST['email'])
                 ) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($administrador->updateRow()) {
@@ -115,6 +115,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
+                
                 if (
                     !$administrador->setNombre($_POST['nombreAdministrador']) or
                     !$administrador->setApellido($_POST['apellidoAdministrador']) or
@@ -125,7 +126,7 @@ if (isset($_GET['action'])) {
                 } elseif ($administrador->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['aliasAdministrador'] = $_POST['aliasAdministrador'];
+                    $_SESSION['usuarion'] = $_POST['aliasAdministrador'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }

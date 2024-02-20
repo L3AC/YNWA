@@ -63,14 +63,12 @@ if (isset($_GET['action'])) {
                 if (
                     !$categoria->setId($_POST['idMarca']) or
                     !$categoria->setNombre($_POST['nombreMarca']) or
-                    !$categoria->setDescripcion($_POST['estadoMarca']) 
+                    !$categoria->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)  
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Categoría modificada correctamente';
-                    // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenCategoria'], $categoria::RUTA_IMAGEN, $categoria->getFilename());
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar la categoría';
                 }

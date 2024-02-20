@@ -53,13 +53,13 @@ class AdministradorHandler
 
     public function checkPassword($password)
     {
-        $sql = 'SELECT clave_administrador
-                FROM administrador
-                WHERE id_administrador = ?';
+        $sql = 'SELECT clave
+                FROM sec_usuarios
+                WHERE id_usuario = ?';
         $params = array($_SESSION['idUsuario']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
-        if (password_verify($password, $data['clave_administrador'])) {
+        if (password_verify($password, $data['clave'])) {
             return true;
         } else {
             return false;

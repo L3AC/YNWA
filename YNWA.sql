@@ -54,10 +54,11 @@ select u.id_usuario,u.usuario,marcas,modelos,tallas,pedidos,tipo_noticias,notici
         INNER JOIN sec_roles r ON u.id_rol = r.id_rol
         WHERE  u.usuario like  '%%';*/
 #select * from sec_usuarios
+
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
 usuario varchar(30) UNIQUE,
-clave varchar(30),
+clave varchar(255),
 nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),
@@ -65,7 +66,8 @@ pin varchar(6),
 estado enum('A','I'),
 PRIMARY KEY(id_cliente)
 );
-insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) values();
+
+#insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) values(?,?,?,?,?,?,?);
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,

@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/administrador.php';
+const ADMINISTRADOR_API = 'services/admin/8clientes.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -10,12 +10,12 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_ADMINISTRADOR = document.getElementById('idAdministrador'),
-    NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
-    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoAdministrador'),
-    CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
-    ALIAS_ADMINISTRADOR = document.getElementById('aliasAdministrador'),
-    CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
+    ID_ADMINISTRADOR = document.getElementById('idCliente'),
+    NOMBRE_ADMINISTRADOR = document.getElementById('nombreCliente'),
+    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoCliente'),
+    CORREO_ADMINISTRADOR = document.getElementById('correoCliente'),
+    ALIAS_ADMINISTRADOR = document.getElementById('aliasCliente'),
+    CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
 
 // Método del evento para cuando el documento ha cargado.
@@ -78,6 +78,7 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
+            let icon = (row.estado === 'A') ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
@@ -85,11 +86,12 @@ const fillTable = async (form = null) => {
                     <td>${row.nombres}</td>
                     <td>${row.email}</td>
                     <td>${row.usuario}</td>
+                    <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_cliente})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_usuario})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_cliente})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -118,7 +120,6 @@ const openCreate = () => {
     CLAVE_ADMINISTRADOR.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
 }
-
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).

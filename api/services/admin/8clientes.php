@@ -54,7 +54,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readExist':
-                $this->id = $_POST['aliasCliente'];
+                $this->usuario = $_POST['usuario'];
                 if ($result['dataset'] = $administrador->readOne()) {
                     $result['status'] = 1;
                 } else {

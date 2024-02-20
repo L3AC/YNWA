@@ -136,7 +136,7 @@ class ClienteHandler
         $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
                 from prc_clientes
                 WHERE usuario like ';
-        $params = array($this->id);
+        $params = array($this->usuario);
         return Database::getRow($sql, $params);
     }
 

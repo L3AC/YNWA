@@ -65,6 +65,7 @@ pin varchar(6),
 estado enum('A','I'),
 PRIMARY KEY(id_cliente)
 );
+insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) values();
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,
@@ -131,12 +132,6 @@ CREATE TABLE prc_noticias (
 );
 insert into prc_noticias(id_tiponoticia,titulo,foto,contenido,estado,fecha) 
 values(1,'New Balance 550 - 50 off','234342asd12.jpg','Oferta disponible desde el 19 hasta el 28 de febrero','A',now());
-
-select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
-DATE_FORMAT(n.fecha, '%d-%m-%Y') AS fecha from prc_noticias n
-INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
-ORDER BY n.titulo;
-
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,
@@ -147,6 +142,8 @@ PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+insert into prc_pedidos(id_cliente,forma_pago,fecha,estado) values('','','','Efectivo',now(),'A');
+select id_pedido,id_cliente from prc_pedidos;
 
 
 create table prc_detalle_pedidos(

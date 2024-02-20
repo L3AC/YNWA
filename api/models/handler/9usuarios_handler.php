@@ -77,10 +77,10 @@ class AdministradorHandler
 
     public function readProfile()
     {
-        $sql = 'SELECT id_administrador, nombre_administrador, apellido_administrador, correo_administrador, alias_administrador
-                FROM administrador
-                WHERE id_administrador = ?';
-        $params = array($_SESSION['idAdministrador']);
+        $sql = 'SELECT id_usuario, nombres, apellidos, email, usuario
+                FROM sec_usuarios
+                WHERE id_usuario = ?';
+        $params = array($_SESSION['idUsuario']);
         return Database::getRow($sql, $params);
     }
 

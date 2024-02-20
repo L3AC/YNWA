@@ -27,11 +27,8 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setDescripcion($_POST['descripcionModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
-                    !$producto->setImagen($_FILES['imagenModelo'])
+                    !$producto->setTalla($_POST['nombreModelo']) or
+                    !$producto->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {

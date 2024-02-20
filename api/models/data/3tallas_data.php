@@ -67,7 +67,7 @@ class TallaData extends TallaHandler
         }
     }
 
-    public function setExistencias($value)
+    public function setTalla($value)
     {
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;

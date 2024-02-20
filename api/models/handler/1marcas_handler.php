@@ -86,8 +86,8 @@ class MarcaHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM producto
-                WHERE id_producto = ?';
+        $sql = 'DELETE FROM ctg_marcas 
+                WHERE id_marca = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

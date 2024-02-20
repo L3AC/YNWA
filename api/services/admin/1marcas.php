@@ -75,8 +75,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$categoria->setId($_POST['idCategoria']) or
-                    !$categoria->setFilename()
+                    !$categoria->setId($_POST['idMarca']) 
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->deleteRow()) {

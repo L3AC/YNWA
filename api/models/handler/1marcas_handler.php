@@ -27,12 +27,11 @@ class MarcaHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                WHERE nombre_producto LIKE ? OR descripcion_producto LIKE ?
-                ORDER BY nombre_producto';
-        $params = array($value, $value);
+        $sql = 'SELECT id_marca, descripcion, estado
+                FROM ctg_marcas
+                WHERE descripcion LIKE ? 
+                ORDER BY descripcion';
+        $params = array($value);
         return Database::getRows($sql, $params);
     }
 

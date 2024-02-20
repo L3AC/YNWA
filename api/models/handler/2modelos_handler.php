@@ -40,9 +40,9 @@ class ModeloHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO prc_modelos(descripcion, id_marca, imagen_producto, estado_producto)
+                VALUES(?, ?, ?, ?)';
+        $params = array($this->descripcion, $this->id; $this->imagen, $this->estado);
         return Database::executeRow($sql, $params);
     }
 

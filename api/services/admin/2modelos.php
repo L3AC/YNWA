@@ -28,9 +28,8 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setDescripcion($_POST['descripcionModelo']) or
                     !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
+                    !$producto->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
                     !$producto->setImagen($_FILES['imagenModelo'])
                 ) {
                     $result['error'] = $producto->getDataError();

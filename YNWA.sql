@@ -96,8 +96,7 @@ descripcion varchar(255),
 estado enum('A','I'),
 PRIMARY KEY (id_talla)
 );
-insert into ctg_tallas(descripcion,estado) values('5','A'),('6','A'),('7','A'),('8','A'),('9','A'),('10','A');
-insert into ctg_tallas(descripcion,estado) values('11','I');
+insert into ctg_tallas(descripcion,estado) values('5','A'),('6','A'),('7','A'),('8','A'),('9','A'),('10','A'),('11','I');
 CREATE TABLE prc_modelo_tallas(
 id_modelotalla int AUTO_INCREMENT,
 id_talla int,
@@ -144,8 +143,8 @@ PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_pedidos(id_cliente,forma_pago,fecha,estado) values('','','','Efectivo',now(),'A');
-select id_pedido,id_cliente from prc_pedidos;
+/*nsert into prc_pedidos(id_cliente,forma_pago,fecha,estado) values('','','','Efectivo',now(),'A');
+select id_pedido,id_cliente from prc_pedidos;*/
 
 
 create table prc_detalle_pedidos(

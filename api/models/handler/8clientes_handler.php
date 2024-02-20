@@ -131,6 +131,15 @@ class ClienteHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
+    public function readExist()
+    {
+        $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
+                from prc_clientes
+                WHERE usuario like ';
+        $params = array($this->id);
+        return Database::getRow($sql, $params);
+    }
+
 
     public function updateRow()
     {

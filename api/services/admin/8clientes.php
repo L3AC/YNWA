@@ -55,9 +55,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'readExist':
                 $this->id = $_POST['aliasCliente'];
-                if (!$administrador->$_POST['aliasCliente']) {
-                    $result['error'] = 'Nombre incorrecto';
-                } elseif ($result['dataset'] = $administrador->readOne()) {
+                if ($result['dataset'] = $administrador->readOne()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Administrador inexistente';

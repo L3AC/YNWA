@@ -61,6 +61,32 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
+ALIAS_ADMINISTRADOR.addEventListener('input', function() {
+    const FORM = new FormData();
+    FORM.append('usuario', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = fetchData(ADMINISTRADOR_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL.show();
+        MODAL_TITLE.textContent = 'Actualizar administrador';
+        // Se prepara el formulario.
+        SAVE_FORM.reset();
+        ALIAS_ADMINISTRADOR.disabled = true;
+        CLAVE_ADMINISTRADOR.disabled = true;
+        CONFIRMAR_CLAVE.disabled = true;
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_ADMINISTRADOR.value = ROW.id_usuario;
+        NOMBRE_ADMINISTRADOR.value = ROW.nombres;
+        APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
+        CORREO_ADMINISTRADOR.value = ROW.email;
+        ALIAS_ADMINISTRADOR.value = ROW.usuario;
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+ });
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).

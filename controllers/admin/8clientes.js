@@ -18,6 +18,9 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
 
+const mensajeDiv = document.getElementById('mensajeDiv'),
+    IDGUARDAR=document.getElementById('idGuardar');
+
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -62,30 +65,14 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 });
 
 ALIAS_ADMINISTRADOR.addEventListener('input', function() {
-    const FORM = new FormData();
-    FORM.append('usuario', id);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = fetchData(ADMINISTRADOR_API, 'readOne', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se muestra la caja de diálogo con su título.
-        SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar administrador';
-        // Se prepara el formulario.
-        SAVE_FORM.reset();
-        ALIAS_ADMINISTRADOR.disabled = true;
-        CLAVE_ADMINISTRADOR.disabled = true;
-        CONFIRMAR_CLAVE.disabled = true;
-        // Se inicializan los campos con los datos.
-        const ROW = DATA.dataset;
-        ID_ADMINISTRADOR.value = ROW.id_usuario;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombres;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
-        CORREO_ADMINISTRADOR.value = ROW.email;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario;
-    } else {
-        sweetAlert(2, DATA.error, false);
-    }
+    const mensaje = 'Se escribió en el input'; // Mensaje de ejemplo
+ 
+    mensajeDiv.textContent = mensaje;
+    mensajeDiv.style.display = 'block';
+ 
+    /*setTimeout(function() {
+       mensajeDiv.style.display = 'none';
+    }, 3000);*/ // Ocultar el mensaje después de 3 segundos (3000 ms)
  });
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.

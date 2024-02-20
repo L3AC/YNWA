@@ -77,9 +77,9 @@ class MarcaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE producto
-                SET imagen_producto = ?, nombre_producto = ?, descripcion_producto = ?, precio_producto = ?, estado_producto = ?, id_categoria = ?
-                WHERE id_producto = ?';
+        $sql = 'UPDATE ctg_marcas
+                SET  descripcion = ?, estado = ?
+                WHERE id_marcas = ?';
         $params = array($this->imagen, $this->nombre, $this->descripcion, $this->precio, $this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);
     }

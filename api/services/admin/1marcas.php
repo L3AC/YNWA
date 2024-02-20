@@ -27,16 +27,15 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setNombre($_POST['nombreCategoria']) or
-                    !$categoria->setDescripcion($_POST['descripcionCategoria']) or
-                    !$categoria->setImagen($_FILES['imagenCategoria'])
+                    !$categoria->setDescripcion($_POST['nombreMarca'])or
+                    !$categoria->setEstado($_POST['estadoMarca']) 
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Categoría creada correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenCategoria'], $categoria::RUTA_IMAGEN);
+                    
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear la categoría';
                 }
@@ -61,11 +60,9 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setId($_POST['idCategoria']) or
-                    !$categoria->setFilename() or
-                    !$categoria->setNombre($_POST['nombreCategoria']) or
-                    !$categoria->setDescripcion($_POST['descripcionCategoria']) or
-                    !$categoria->setImagen($_FILES['imagenCategoria'], $categoria->getFilename())
+                    !$categoria->setId($_POST['idMarca']) or
+                    !$categoria->setNombre($_POST['nombreMarca']) or
+                    !$categoria->setDescripcion($_POST['estadoMarca']) 
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->updateRow()) {

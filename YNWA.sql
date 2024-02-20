@@ -1,4 +1,4 @@
-DROP DATABASE if exists dbYNWA;
+/*DROP DATABASE dbYNWA;*/
 CREATE DATABASE dbYNWA;
 use dbYNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
@@ -6,20 +6,20 @@ use dbYNWA;
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
 descripcion varchar(40),
-estado enum('A','I'),
-marcas enum('A','I'),
-modelos enum('A','I'),
-tallas enum('A','I'),
-pedidos enum('A','I'),
-tipo_noticias enum('A','I'),
-noticias enum('A','I'),
-comentarios enum('A','I'),
-clientes enum('A','I'),
-usuarios enum('A','I'),
+estado boolean,
+marcas boolean,
+modelos boolean,
+tallas boolean,
+pedidos boolean,
+tipo_noticias boolean,
+noticias boolean,
+comentarios boolean,
+clientes boolean,
+usuarios boolean,
 PRIMARY KEY(id_rol)
 );
 insert into sec_roles (id_rol, descripcion, estado,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios) 
-values(1,'Admin','A','A','A','A','A','A','A','A','A','A');
+values(1,'Admin',true,true,true,true,true,true,true,true,true,true);
 /*
 select * from sec_usuarios;
 
@@ -36,15 +36,15 @@ nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),
 pin varchar(6),
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-select * from sec_usuarios;
+
 /*
 insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) 
-values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393','A');
+values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393',true);
 
 SELECT id_usuario, nombres, apellidos, email, usuario
                 FROM sec_usuarios
@@ -54,49 +54,47 @@ select u.id_usuario,u.usuario,marcas,modelos,tallas,pedidos,tipo_noticias,notici
         INNER JOIN sec_roles r ON u.id_rol = r.id_rol
         WHERE  u.usuario like  '%%';*/
 #select * from sec_usuarios
-
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
 usuario varchar(30) UNIQUE,
-clave varchar(255),
+clave varchar(30),
 nombres varchar(255),
 apellidos varchar(255),
 email varchar(100),
 pin varchar(6),
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY(id_cliente)
 );
-
-#insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) values(?,?,?,?,?,?,?);
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,
 descripcion varchar(255),
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY (id_marca)
 );
-insert into ctg_marcas(descripcion,estado) values('NIKE','A'),('NEW BALANCE','A'),('ADIDAS','A'),('NAUTICA','A');
+insert into ctg_marcas(descripcion,estado) values('NIKE',true),('NEW BALANCE',true),('ADIDAS',true),('NAUTICA',true);
 
 CREATE TABLE prc_modelos(
 id_modelo int AUTO_INCREMENT,
 id_marca int,
 descripcion varchar(255),
 foto LONGTEXT,
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 select * from prc_modelos;
-insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png','A');
+insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png',true);
 
 create table ctg_tallas(
 id_talla int AUTO_INCREMENT,
 descripcion varchar(255),
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY (id_talla)
 );
-insert into ctg_tallas(descripcion,estado) values('5','A'),('6','A'),('7','A'),('8','A'),('9','A'),('10','A'),('11','I');
+insert into ctg_tallas(descripcion,estado) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
+
 CREATE TABLE prc_modelo_tallas(
 id_modelotalla int AUTO_INCREMENT,
 id_talla int,
@@ -111,40 +109,36 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
+
+
 CREATE TABLE ctg_tiponoticias(
     id_tiponoticia INT AUTO_INCREMENT,
     descripcion varchar(255),
-    estado enum('A','I'),
+    estado boolean,
     PRIMARY KEY (id_tiponoticia)
 );
-insert into ctg_tiponoticias(descripcion,estado) values('Ofertas','A'),('Productos Nuevos','A'),('Productos por venir','A'),('Tendencia','A');
-
-
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
     id_tiponoticia int,
     titulo VARCHAR(255),
     foto LONGTEXT,
     contenido TEXT,
-    estado enum('A','I'),
+    estado boolean,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
     FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
 );
-insert into prc_noticias(id_tiponoticia,titulo,foto,contenido,estado,fecha) 
-values(1,'New Balance 550 - 50 off','234342asd12.jpg','Oferta disponible desde el 19 hasta el 28 de febrero','A',now());
+
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,
 forma_pago enum('Efectivo','Transferencia'),
 fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-estado enum('A','I'),
+estado boolean,
 PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-/*nsert into prc_pedidos(id_cliente,forma_pago,fecha,estado) values('','','','Efectivo',now(),'A');
-select id_pedido,id_cliente from prc_pedidos;*/
 
 
 create table prc_detalle_pedidos(
@@ -164,11 +158,7 @@ CREATE TABLE prc_comentarios (
     comentario TEXT,
     puntuacion INT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado enum('A','I'),
+    estado boolean,
     PRIMARY KEY (id_comentario),
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );
-
-
-
-

@@ -53,6 +53,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen administradores registrados';
                 }
                 break;
+            case 'readExist':
+                $this->id = $_POST['aliasCliente'];
+                if (!$administrador->$_POST['aliasCliente']) {
+                    $result['error'] = 'Nombre incorrecto';
+                } elseif ($result['dataset'] = $administrador->readOne()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Administrador inexistente';
+                }
+                break;
             case 'readOne':
                 if (!$administrador->setId($_POST['idCliente'])) {
                     $result['error'] = 'Administrador incorrecto';
@@ -179,16 +189,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                
+
                 $_POST = Validator::validateForm($_POST);
-                
+
                 if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {
                     $result['error'] = 'Credenciales incorrectas';
                 }
-                
+
                 break;
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
@@ -203,4 +213,3 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
-

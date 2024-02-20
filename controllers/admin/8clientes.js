@@ -71,11 +71,13 @@ ALIAS_ADMINISTRADOR.addEventListener('input', function () {
     const DATA = fetchData(ADMINISTRADOR_API, 'readExist', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        const mensaje = 'Usuario'; // Mensaje de ejemplo
+        const mensaje = 'Ya existe el usuario'; // Mensaje de ejemplo
         mensajeDiv.textContent = mensaje;
         mensajeDiv.style.display = 'block'; 
+        IDGUARDAR.disabled=true;
     } else {
         mensajeDiv.textContent = "";
+        IDGUARDAR.disabled=false;
     }
 
 

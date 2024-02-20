@@ -74,6 +74,7 @@ const fillTable = async (form = null) => {
     (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(ADMINISTRADOR_API, action, form);
+    MAIN_TITLE.textContent = `Gestionar administradores ${DATA.username}`;
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.

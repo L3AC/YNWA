@@ -97,7 +97,7 @@ const fillTable = async (form = null) => {
         DATA.dataset.forEach(row => {
             console.log(DATA.dataset);
             // Se establece un icono para el estado del producto.
-            let icon = (row.estado === 'A') ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill';
+            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>

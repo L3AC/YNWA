@@ -25,10 +25,11 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'createRow':
+                
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setDescripcion($_POST['nombreMarca'])or
-                    !$categoria->setEstado($_POST['estadoMarca']) 
+                    !$categoria->setNombre($_POST['nombreMarca'])or
+                    !$categoria->setEstado(isset($_POST['estadoMarca']) ? 1 : 0) 
                 ) {
                     $result['error'] = $categoria->getDataError();
                 } elseif ($categoria->createRow()) {

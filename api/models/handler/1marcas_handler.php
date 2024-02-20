@@ -38,9 +38,9 @@ class MarcaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO ctg_marcas(descripcion, estado)
+                VALUES(?, ?)';
+        $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
     }
 

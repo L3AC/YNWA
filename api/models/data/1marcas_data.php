@@ -107,6 +107,7 @@ class MarcaData extends MarcaHandler
 
     public function setEstado($value)
     {
+        
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;

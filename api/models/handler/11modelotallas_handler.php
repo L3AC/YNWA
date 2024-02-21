@@ -43,9 +43,9 @@ class ModeloTallasHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
+                VALUES(?, ?, ?, ?)';
+        $params = array($this->idTalla, $this->idModelo, $this->existencias, $this->precio);
         return Database::executeRow($sql, $params);
     }
 
@@ -66,7 +66,7 @@ class ModeloTallasHandler
 
     public function readOne()
     {
-        $sql ='select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
+        $sql ='select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,mt.stock_modelo_talla,
         mt.precio_modelo_talla,t.descripcion_talla as talla
         from prc_modelo_tallas mt 
         INNER JOIN ctg_tallas t USING(id_talla)

@@ -195,15 +195,15 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_modelo;
-        NOMBRE_PRODUCTO.value = ROW.descripcion;
-        ESTADO_PRODUCTO.checked = ROW.estado;
+        NOMBRE_PRODUCTO.value = ROW.descripcion_modelo;
+        ESTADO_PRODUCTO.checked = ROW.estado_modelo;
         IMAGEN_PRE.style.maxWidth = '300px';
         IMAGEN_PRE.style.maxHeight = 'auto';
         IMAGEN_PRE.style.margin = '20px auto';
         IMAGEN_PRE.innerHTML = '';
         IMAGEN_PRE.insertAdjacentHTML(
             "beforeend",
-            `<img src="${SERVER_URL}images/modelos/${ROW.foto}">` // Backticks para img variable
+            `<img src="${SERVER_URL}images/modelos/${ROW.foto_modelo}">` // Backticks para img variable
         );
 
         fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
@@ -259,13 +259,13 @@ const fillsubTable = async (form = null) => {
             SUBTABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.talla}</td>
-                    <td>${row.stock}</td>
-                    <td>${row.precio}</td>
+                    <td>${row.stock_modelo_talla}</td>
+                    <td>${row.precio_modelo_talla}</td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelotalla})">
+                        <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelo_talla})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelotalla})">
+                        <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelo_talla})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -316,10 +316,10 @@ const opensubUpdate = async (id) => {
         SAVE_TREFORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_MODELOTALLA.value = ROW.id_modelotalla;
-        console.log(ROW.stock + ' ' + ROW.precio);
-        STOCK_MODELOTALLA.value = ROW.stock;
-        PRECIO_MODELOTALLA.value = ROW.precio;
+        ID_MODELOTALLA.value = ROW.id_modelo_talla;
+        console.log(ROW.stock + ' ' + ROW.precio_modelo_talla);
+        STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
+        PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
     } else {
         sweetAlert(2, DATA.error, false);

@@ -62,7 +62,6 @@ const sweetAlert = async (type, text, timer, url = null) => {
         icon: icon,
         closeOnClickOutside: false,
         closeOnEsc: false,
-        onclick: location.reload(),
         button: { // Aquí envolvemos la función reload () en una función anónima
             text: 'Aceptar'
         }

@@ -118,7 +118,7 @@ class ClienteHandler
     {
         $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
                 from prc_clientes
-                WHERE estado="A" 
+                WHERE estado=true 
                 ORDER BY apellidos';
         return Database::getRows($sql);
     }

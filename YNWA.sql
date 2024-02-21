@@ -1,25 +1,26 @@
 /*DROP DATABASE dbYNWA;*/
-DROP DATABASE dbynwa;
-CREATE DATABASE dbYNWA;
-use dbYNWA;
+DROP DATABASE db_ynwa;
+CREATE DATABASE db_YNWA;
+use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
-descripcion varchar(40),
-estado boolean,
-marcas boolean,
-modelos boolean,
-tallas boolean,
-pedidos boolean,
-tipo_noticias boolean,
-noticias boolean,
-comentarios boolean,
-clientes boolean,
-usuarios boolean,
+descripcion_opc varchar(40),
+estado_opc boolean,
+marcas_opc boolean,
+modelos_opc boolean,
+tallas_opc boolean,
+pedidos_opc boolean,
+tipo_noticias_opc boolean,
+noticias_opc boolean,
+comentarios_opc boolean,
+clientes_opc boolean,
+usuarios_opc boolean,
 PRIMARY KEY(id_rol)
 );
-insert into sec_roles (id_rol, descripcion, estado,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios) 
+insert into sec_roles (id_rol, descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
+pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc) 
 values(1,'Admin',true,true,true,true,true,true,true,true,true,true);
 /*
 select * from sec_usuarios;
@@ -31,13 +32,13 @@ SELECT id_usuario , usuario, clave
 CREATE TABLE sec_usuarios(
 id_usuario INT auto_increment,
 id_rol int,
-usuario varchar(30) UNIQUE,
-clave varchar(255),
-nombres varchar(255),
-apellidos varchar(255),
-email varchar(100),
-pin varchar(6),
-estado boolean,
+usuario_usuario varchar(30) UNIQUE,
+clave_usuario varchar(255),
+nombre_usuario varchar(255),
+apellido_usuario varchar(255),
+email_usuario varchar(100),
+pin_usuario varchar(6),
+estado_usuario boolean,
 PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -54,47 +55,47 @@ SELECT id_usuario, nombres, apellidos, email, usuario
 select u.id_usuario,u.usuario,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios FROM sec_usuarios u
         INNER JOIN sec_roles r ON u.id_rol = r.id_rol
         WHERE  u.usuario like  '%%';*/
-#select * from sec_usuarios
+#select * from prc_clientes where estado=1
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
-usuario varchar(30) UNIQUE,
-clave varchar(30),
-nombres varchar(255),
-apellidos varchar(255),
-email varchar(100),
-pin varchar(6),
-estado boolean,
+usuario_cliente varchar(30) UNIQUE,
+clave_cliente varchar(30),
+nombre_cliente varchar(255),
+apellido_cliente varchar(255),
+email_cliente varchar(100),
+pin_cliente varchar(6),
+estado_cliente boolean,
 PRIMARY KEY(id_cliente)
 );
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,
-descripcion varchar(255),
-estado boolean,
+descripcion_marca varchar(255),
+estado_marca boolean,
 PRIMARY KEY (id_marca)
 );
-insert into ctg_marcas(descripcion,estado) values('NIKE',true),('NEW BALANCE',true),('ADIDAS',true),('NAUTICA',true);
+insert into ctg_marcas(descripcion_marca,estado_marca) values('NIKE',true),('NEW BALANCE',true),('ADIDAS',true),('NAUTICA',true);
 
 CREATE TABLE prc_modelos(
 id_modelo int AUTO_INCREMENT,
 id_marca int,
-descripcion varchar(255),
-foto LONGTEXT,
-estado boolean,
+descripcion_modelo varchar(255),
+foto_modelo LONGTEXT,
+estado_modelo boolean,
 PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png',true);
+insert into prc_modelos(id_marca,descripcion_modelo,foto_modelo,estado_modelo) values(1,'JORDAN','3728asb23423.png',true);
 
 create table ctg_tallas(
 id_talla int AUTO_INCREMENT,
-descripcion varchar(255),
-estado boolean,
+descripcion_talla varchar(255),
+estado_talla boolean,
 PRIMARY KEY (id_talla)
 );
-insert into ctg_tallas(descripcion,estado) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
+insert into ctg_tallas(descripcion_talla,estado_talla) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
 
 CREATE TABLE prc_modelo_tallas(
 id_modelotalla int AUTO_INCREMENT,

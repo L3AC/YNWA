@@ -63,7 +63,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-
+/*
 ALIAS_ADMINISTRADOR.addEventListener('input', function () {
     const FORM = new FormData();
     FORM.append(ALIAS_ADMINISTRADOR.value, usuario);
@@ -84,8 +84,8 @@ ALIAS_ADMINISTRADOR.addEventListener('input', function () {
 
     /*setTimeout(function() {
        mensajeDiv.style.display = 'none';
-    }, 3000);*/ // Ocultar el mensaje después de 3 segundos (3000 ms)
-});
+    }, 3000); // Ocultar el mensaje después de 3 segundos (3000 ms)
+});*/
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).

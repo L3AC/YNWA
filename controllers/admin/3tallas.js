@@ -54,6 +54,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
+        ID_PRODUCTO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
@@ -124,6 +125,7 @@ const openCreate = () => {
 *   Retorno: ninguno.
 */
 const openUpdate = async (id) => {
+    
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idTalla', id);
@@ -142,6 +144,7 @@ const openUpdate = async (id) => {
         ID_PRODUCTO.value = ROW.id_talla;
         NOMBRE_PRODUCTO.value = ROW.descripcion;
         ESTADO_PRODUCTO.checked = ROW.estado;
+        
     } else {
         sweetAlert(2, DATA.error, false);
     }

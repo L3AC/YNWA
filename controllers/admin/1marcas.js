@@ -76,11 +76,11 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del producto.
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_marca) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion}</td>
+                    <td>${row.descripcion_marca}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_marca})">
@@ -136,8 +136,8 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_marca;
-        NOMBRE_PRODUCTO.value = ROW.descripcion;
-        ESTADO_PRODUCTO.checked = ROW.estado;
+        NOMBRE_PRODUCTO.value = ROW.descripcion_marca;
+        ESTADO_PRODUCTO.checked = ROW.estado_marca;
     } else {
         sweetAlert(2, DATA.error, false);
     }

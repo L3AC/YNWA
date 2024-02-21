@@ -27,17 +27,17 @@ class MarcaHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_marca, descripcion, estado
+        $sql = 'SELECT id_marca, descripcion_marca, estado_marca
                 FROM ctg_marcas
-                WHERE descripcion LIKE ? 
-                ORDER BY descripcion';
+                WHERE descripcion_marca LIKE ? 
+                ORDER BY descripcion_marca';
         $params = array($value);
         return Database::getRows($sql, $params);
     }
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_marcas(descripcion, estado)
+        $sql = 'INSERT INTO ctg_marcas(descripcion_marca, estado_marca)
                 VALUES(?, ?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
@@ -45,20 +45,20 @@ class MarcaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_marca, descripcion,estado
+        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
                 FROM ctg_marcas' ;
         return Database::getRows($sql);
     }
     public function readAllActive()
     {
-        $sql = 'SELECT id_marca, descripcion,estado
-                FROM ctg_marcas where estado="A"' ;
+        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
+                FROM ctg_marcas where estado_marca=true' ;
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql = 'SELECT id_marca, descripcion,estado
+        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
                 FROM ctg_marcas
                 WHERE id_marca = ?';
         $params = array($this->id);
@@ -77,7 +77,7 @@ class MarcaHandler
     public function updateRow()
     {
         $sql = 'UPDATE ctg_marcas
-                SET descripcion = ?, estado = ?
+                SET descripcion_marca = ?, estado_marca = ?
                 WHERE id_marca = ?';
         $params = array( $this->nombre, $this->estado, $this->id);
         return Database::executeRow($sql, $params);

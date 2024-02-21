@@ -28,11 +28,11 @@ class ModeloHandler
     {
         $value = '%' . Validator::getSearchValue() . '%';
 
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.descripcion LIKE ? OR ma.descripcion LIKE ?
-        ORDER BY mo.descripcion';
+        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM prc_modelos 
+        INNER JOIN ctg_marcas USING(id_marca)
+        WHERE descripcion_modelo LIKE ? OR descripcion_marca LIKE ?
+        ORDER BY descripcion_modelo';
 
         $params = array($value, $value);
         return Database::getRows($sql, $params);
@@ -40,7 +40,7 @@ class ModeloHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelos(descripcion, id_marca, imagen_producto, estado_producto)
+        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
                 VALUES(?, ?, ?, ?)';
         $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
         return Database::executeRow($sql, $params);
@@ -48,20 +48,21 @@ class ModeloHandler
 
     public function readAll()
     {
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        ORDER BY mo.descripcion';
+        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM prc_modelos
+        INNER JOIN ctg_marcas  USING(id_marca)
+        ORDER BY descripcion_modelo';
         return Database::getRows($sql);
     }
     public function readsubAll()
     {
-        $sql = 'select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
+        $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,
+        mt.stock_modelo_talla,mt.precio_modelo_talla,t.descripcion_talla as talla
         from prc_modelo_tallas mt 
         INNER JOIN ctg_tallas t USING(id_talla)
         INNER JOIN prc_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
-        ORDER BY t.descripcion';
+        ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
         $params = array($this->id);
         
@@ -70,7 +71,8 @@ class ModeloHandler
 
     public function readOne()
     {
-        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion,mo.foto,mo.estado, ma.descripcion marca
+        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion_modelo,
+        mo.foto_modelo,mo.estado_modelo, ma.descripcion_marca marca
         FROM prc_modelos mo
         INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_modelo=? ';
@@ -92,8 +94,8 @@ class ModeloHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
+        $sql = 'UPDATE prc_modelos 
+                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
                 WHERE id_modelo = ?';
         $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);

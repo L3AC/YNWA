@@ -82,10 +82,10 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.apellidos}</td>
-                    <td>${row.nombres}</td>
-                    <td>${row.email}</td>
-                    <td>${row.usuario}</td>
+                    <td>${row.apellido_usuario}</td>
+                    <td>${row.nombre_usuario}</td>
+                    <td>${row.email_usuario}</td>
+                    <td>${row.usuario_usuario}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -144,10 +144,10 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_ADMINISTRADOR.value = ROW.id_usuario;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombres;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
-        CORREO_ADMINISTRADOR.value = ROW.email;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario;
+        NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
+        APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
+        CORREO_ADMINISTRADOR.value = ROW.email_usuario;
+        ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
     } else {
         sweetAlert(2, DATA.error, false);
     }

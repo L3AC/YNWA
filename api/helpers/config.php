@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 date_default_timezone_set('America/El_Salvador');
 // Constantes para establecer las credenciales de conexión con el servidor de bases de datos.
 define('SERVER', 'localhost');
-define('DATABASE', 'dbynwa');
+define('DATABASE', 'db_ynwa');
 define('USERNAME', 'root');
 define('PASSWORD', '');
 ?>

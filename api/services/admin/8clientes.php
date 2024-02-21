@@ -54,8 +54,8 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readExist':
-                $this->usuario = $_POST['usuario'];
-                if ($result['dataset'] = $administrador->readOne()) {
+                //echo $_POST['usuario'];
+                if ($result['dataset'] = $administrador->readExist()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Administrador inexistente';

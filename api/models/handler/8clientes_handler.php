@@ -34,9 +34,9 @@ class ClienteHandler
       } 
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_cliente , usuario, clave
+        $sql = 'SELECT id_cliente , usuario_cliente, clave_cliente
                 FROM prc_clientes
-                WHERE  usuario = ?';
+                WHERE  usuario_cliente = ?';
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
@@ -51,9 +51,9 @@ class ClienteHandler
 
     public function checkPassword($password)
     {
-        $sql = 'SELECT clave
-                FROM administrador
-                WHERE id_administrador = ?';
+        $sql = 'SELECT clave_cliente
+                FROM prc_clientes
+                WHERE id_cliente = ?';
         $params = array($_SESSION['idUsuario']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
@@ -109,17 +109,25 @@ class ClienteHandler
     {
         //echo $this->clave.' ';
         $sql = 'insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) 
-        values(?,?,?,?,?,?,1)';
+        values(?,?,?,?,?,?,true)';
         $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
-        $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
-                from prc_clientes
-                WHERE estado=true 
-                ORDER BY apellidos';
+        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
+         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente
+                from prc_clientes 
+                ORDER BY apellido_cliente';
+        return Database::getRows($sql);
+    }
+    public function readAllActive()
+    {
+        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
+         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente
+                from prc_clientes where estado_cliente=true
+                ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }
 
@@ -133,9 +141,10 @@ class ClienteHandler
     }
     public function readExist()
     {
-        $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
+        $sql = 'SELECT usuario_cliente,clave_cliente,nombre_cliente,
+        apellido_cliente,email_cliente,estado_cliente
                 from prc_clientes
-                WHERE usuario like ';
+                WHERE usuario_cliente like ';
         $params = array($this->usuario);
         return Database::getRow($sql, $params);
     }

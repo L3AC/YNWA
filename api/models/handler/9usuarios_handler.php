@@ -120,6 +120,13 @@ class AdministradorHandler
     public function readAll()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+                FROM sec_usuarios
+                ORDER BY apellido_usuario';
+        return Database::getRows($sql);
+    }
+    public function readAllA()
+    {
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
                 FROM sec_usuarios WHERE estado_usuario=true
                 ORDER BY apellido_usuario';
         return Database::getRows($sql);

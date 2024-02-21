@@ -57,35 +57,36 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
+        ID_ADMINISTRADOR.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
         sweetAlert(2, DATA.error, false);
     }
 });
-/*
+
 ALIAS_ADMINISTRADOR.addEventListener('input', function () {
     const FORM = new FormData();
-    FORM.append(ALIAS_ADMINISTRADOR.value, usuario);
+    FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
     // Petición para obtener los datos del registro solicitado.
     const DATA = fetchData(ADMINISTRADOR_API, 'readExist', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
+        console.log(1);
         const mensaje = 'Ya existe el usuario'; // Mensaje de ejemplo
         mensajeDiv.textContent = mensaje;
         mensajeDiv.style.display = 'block'; 
         IDGUARDAR.disabled=true;
     } else {
+        console.log(2);
         mensajeDiv.textContent = "";
         IDGUARDAR.disabled=false;
     }
 
-
-
+});
     /*setTimeout(function() {
        mensajeDiv.style.display = 'none';
-    }, 3000); // Ocultar el mensaje después de 3 segundos (3000 ms)
-});*/
+    }, 3000); // Ocultar el mensaje después de 3 segundos (3000 ms)*/
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -104,14 +105,14 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
              // Se establece un icono para el estado 
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_cliente) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.apellidos}</td>
-                    <td>${row.nombres}</td>
-                    <td>${row.email}</td>
-                    <td>${row.usuario}</td>
+                    <td>${row.apellido_cliente}</td>
+                    <td>${row.nombre_cliente}</td>
+                    <td>${row.email_cliente}</td>
+                    <td>${row.usuario_cliente}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_cliente})">
@@ -169,11 +170,11 @@ const openUpdate = async (id) => {
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_ADMINISTRADOR.value = ROW.id_usuario;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombres;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
-        CORREO_ADMINISTRADOR.value = ROW.email;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario;
+        ID_ADMINISTRADOR.value = ROW.id_cliente;
+        NOMBRE_ADMINISTRADOR.value = ROW.nombre_cliente;
+        APELLIDO_ADMINISTRADOR.value = ROW.apellido_cliente;
+        CORREO_ADMINISTRADOR.value = ROW.email_cliente;
+        ALIAS_ADMINISTRADOR.value = ROW.usuario_cliente;
     } else {
         sweetAlert(2, DATA.error, false);
     }

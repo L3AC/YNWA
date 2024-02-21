@@ -25,7 +25,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
@@ -162,6 +162,16 @@ IMAGEN_PRODUCTO.addEventListener('change', function (event) {
     reader.readAsDataURL(file);
 });
 
+// Agregar un evento click a la imagen para aplicar un zoom
+IMAGEN_PRE.addEventListener('click', function () {
+    IMAGEN_PRE.style.transform = 'scale(3)'; /* Escala de 1.5 (ampliar al 150% del tamaño original) al hacer clic en la imagen */
+    event.stopPropagation(); 
+});
+
+document.addEventListener('click', function() {
+    IMAGEN_PRE.style.transform = 'scale(1)'; /* Restablecer el tamaño original de la imagen */
+});
+
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -273,8 +283,8 @@ const subclose = () => {
 
 const opensubCreate = () => {
     SAVE_MODAL.hide();
-    SAVE_TREMODAL.show(); 
-    SELECTALLA.hidden=false;
+    SAVE_TREMODAL.show();
+    SELECTALLA.hidden = false;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
@@ -291,7 +301,7 @@ const opensubCreate = () => {
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODAL.hide();
-    SELECTALLA.hidden=true;
+    SELECTALLA.hidden = true;
     const FORM = new FormData();
     FORM.append('idModeloTalla', id);
     // Petición para obtener los datos del registro solicitado.
@@ -306,7 +316,7 @@ const opensubUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_MODELOTALLA.value = ROW.id_modelotalla;
-        console.log(ROW.stock+' ' +ROW.precio);
+        console.log(ROW.stock + ' ' + ROW.precio);
         STOCK_MODELOTALLA.value = ROW.stock;
         PRECIO_MODELOTALLA.value = ROW.precio;
 

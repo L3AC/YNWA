@@ -62,10 +62,14 @@ const sweetAlert = async (type, text, timer, url = null) => {
         icon: icon,
         closeOnClickOutside: false,
         closeOnEsc: false,
-        button: {
+        onclick: location.reload(),
+        button: { // Aquí envolvemos la función reload () en una función anónima
             text: 'Aceptar'
         }
     };
+
+    
+
     // Se verifica el uso del temporizador.
     (timer) ? options.timer = 3000 : options.timer = null;
     // Se muestra el mensaje.
@@ -196,6 +200,7 @@ const logOut = async () => {
         }
     }
 }
+
 
 /*
 *   Función asíncrona para intercambiar datos con el servidor.

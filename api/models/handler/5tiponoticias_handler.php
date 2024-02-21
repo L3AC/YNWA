@@ -28,10 +28,10 @@ class TipoNoticiaHandler
     {
         $value = '%' . Validator::getSearchValue() . '%';
 
-        $sql = 'SELECT id_tiponoticia, descripcion, estado
-        FROM ctg_tiponoticias
-        WHERE descripcion LIKE ? 
-        ORDER BY descripcion';
+        $sql = 'SELECT id_tipo_noticia, descripcion_tipo_noticia, estado_tipo_noticia
+        FROM ctg_tipo_noticias
+        WHERE descripcion_tipo_noticia LIKE ? 
+        ORDER BY descripcion_tipo_noticia';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -39,7 +39,7 @@ class TipoNoticiaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_tiponoticias(descripcion, estado)
+        $sql = 'INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia, estado_tipo_noticia)
                 VALUES(?, ?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
@@ -47,17 +47,17 @@ class TipoNoticiaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_tiponoticia, descripcion, estado
-        FROM ctg_tiponoticias
-        ORDER BY CAST(descripcion AS UNSIGNED)';
+        $sql = 'SELECT id_tipo_noticia, descripcion_tipo_noticia, estado_tipo_noticia
+        FROM ctg_tipo_noticias
+        ORDER BY CAST(descripcion_tipo_noticia AS UNSIGNED)';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='SELECT id_tiponoticia, descripcion, estado
-        FROM ctg_tiponoticias
-        WHERE id_tiponoticia=? ';
+        $sql ='SELECT id_tipo_noticia, descripcion_tipo_noticia, estado_tipo_noticia
+        FROM ctg_tipo_noticias
+        WHERE id_tipo_noticia=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -73,17 +73,17 @@ class TipoNoticiaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE ctg_tiponoticias 
-                SET descripcion = ?,estado = ?
-                WHERE id_tiponoticia = ?';
+        $sql = 'UPDATE ctg_tipo_noticias 
+                SET descripcion_tipo_noticia = ?,estado_tipo_noticia = ?
+                WHERE id_tipo_noticia = ?';
         $params = array($this->nombre, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM ctg_tiponoticias
-                WHERE id_tiponoticia = ?';
+        $sql = 'DELETE FROM ctg_tipo_noticias
+                WHERE id_tipo_noticia = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

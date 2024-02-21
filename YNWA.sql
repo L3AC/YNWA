@@ -109,6 +109,7 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
 CREATE TABLE ctg_tipo_noticias(
@@ -117,6 +118,8 @@ CREATE TABLE ctg_tipo_noticias(
     estado_tipo_noticia boolean,
     PRIMARY KEY (id_tipo_noticia)
 );
+insert into ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
+values('Oferta',true),('Nuevos productos',true),('Temporada',true);
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
     id_tipo_noticia int,

@@ -25,6 +25,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
+    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+    IMAGEN_PRE = document.getElementById('imgPre');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
@@ -131,6 +133,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
+    IMAGEN_PRE.innerHTML = '';
     MODAL_TITLE.textContent = 'Crear producto';
     SUBTABLE.hidden = true;
     /*SUBMODAL_TITLE.innerHTML = '';
@@ -142,6 +145,22 @@ const openCreate = () => {
     //EXISTENCIAS_PRODUCTO.disabled = false;
     fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
+
+IMAGEN_PRODUCTO.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        imgPre.innerHTML = '';
+        imgPre.appendChild(img);
+        // Establecer los estilos CSS de la imagen
+        img.style.maxWidth = '300px';
+        img.style.maxHeight = 'auto';
+        img.style.margin = '20px auto';
+    };
+    reader.readAsDataURL(file);
+});
 
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -167,6 +186,15 @@ const openUpdate = async (id) => {
         ID_PRODUCTO.value = ROW.id_modelo;
         NOMBRE_PRODUCTO.value = ROW.descripcion;
         ESTADO_PRODUCTO.checked = ROW.estado;
+        IMAGEN_PRE.style.maxWidth = '300px';
+        IMAGEN_PRE.style.maxHeight = 'auto';
+        IMAGEN_PRE.style.margin = '20px auto';
+        IMAGEN_PRE.innerHTML = '';
+        IMAGEN_PRE.insertAdjacentHTML(
+            "beforeend",
+            `<img src="${SERVER_URL}images/modelos/${ROW.foto}">` // Backticks para img variable
+        );
+
         fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
         fillsubTable(SEARCHSUB_FORM);
     } else {

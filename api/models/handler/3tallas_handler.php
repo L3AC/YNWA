@@ -28,21 +28,20 @@ class TallaHandler
     {
         $value = '%' . Validator::getSearchValue() . '%';
 
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.descripcion LIKE ? OR ma.descripcion LIKE ?
-        ORDER BY mo.descripcion';
+        $sql = 'SELECT id_talla, descripcion, estado
+                FROM ctg_tallas
+                WHERE descripcion LIKE ? 
+                ORDER BY descripcion';
 
-        $params = array($value, $value);
+        $params = array($value);
         return Database::getRows($sql, $params);
     }
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO ctg_tallas(descripcion, estado)
+                VALUES(?, ?)';
+        $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
     }
 
@@ -74,17 +73,17 @@ class TallaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE ctg_tallas
+                SET descripcion = ?,estado = ?
+                WHERE id_talla = ?';
+        $params = array($this->nombre,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'DELETE FROM ctg_tallas
+                WHERE id_talla = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

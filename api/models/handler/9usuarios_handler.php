@@ -111,7 +111,7 @@ class AdministradorHandler
     {
         //echo $this->clave.' ';
         $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario, clave,nombres, apellidos,email,pin,estado)
-                VALUES(1, ?, ?, ?, ?,?,?,1)';
+                VALUES(1, ?, ?, ?, ?,?,?,true)';
         $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
@@ -119,7 +119,7 @@ class AdministradorHandler
     public function readAll()
     {
         $sql = 'SELECT id_usuario, nombres, apellidos, email, usuario
-                FROM sec_usuarios WHERE estado="A" 
+                FROM sec_usuarios WHERE estado=1 
                 ORDER BY apellidos';
         return Database::getRows($sql);
     }

@@ -181,3 +181,6 @@ const openReport = () => {
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }
+
+
+  

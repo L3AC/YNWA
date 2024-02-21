@@ -109,7 +109,7 @@ class ClienteHandler
     {
         //echo $this->clave.' ';
         $sql = 'insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) 
-        values(?,?,?,?,?,?,"A")';
+        values(?,?,?,?,?,?,1)';
         $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }

@@ -22,16 +22,17 @@ class ClienteHandler
      *  Métodos para gestionar la cuenta del administrador.
      */
     /*GENERAR PIN*/
-    public function generarPin() {
+    public function generarPin()
+    {
         $pinLength = 6;
         $pin = '';
-      
+
         for ($i = 0; $i < $pinLength; $i++) {
-          $pin .= mt_rand(0, 9);
+            $pin .= mt_rand(0, 9);
         }
-      
+
         return $pin;
-      } 
+    }
     public function checkUser($username, $password)
     {
         $sql = 'SELECT id_cliente , usuario_cliente, clave_cliente
@@ -139,14 +140,19 @@ class ClienteHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
-    public function readExist()
+    public function readExist($username)
     {
-        $sql = 'SELECT usuario_cliente,clave_cliente,nombre_cliente,
-        apellido_cliente,email_cliente,estado_cliente
-                from prc_clientes
-                WHERE usuario_cliente like ';
-        $params = array($this->usuario);
-        return Database::getRow($sql, $params);
+        $sql = 'SELECT usuario_cliente, clave_cliente, nombre_cliente, apellido_cliente, email_cliente, estado_cliente
+        FROM prc_clientes
+        WHERE usuario_cliente LIKE ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['usuario_cliente'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

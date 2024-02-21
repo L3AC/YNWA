@@ -54,11 +54,11 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readExist':
-                //echo $_POST['usuario'];
-                if ($result['dataset'] = $administrador->readExist()) {
+                if ($administrador->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
+                    //$result['message'] = 'Autenticación correcta';
                 } else {
-                    $result['error'] = 'Administrador inexistente';
+                    //$result['error'] = 'Credenciales incorrectas';
                 }
                 break;
             case 'readOne':

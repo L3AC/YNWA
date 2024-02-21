@@ -67,6 +67,7 @@ pin_cliente varchar(6),
 estado_cliente boolean,
 PRIMARY KEY(id_cliente)
 );
+insert into prc_clientes(usuario_cliente) values('ricardo');
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,

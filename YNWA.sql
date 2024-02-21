@@ -1,4 +1,5 @@
 /*DROP DATABASE dbYNWA;*/
+DROP DATABASE dbynwa;
 CREATE DATABASE dbYNWA;
 use dbYNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
@@ -84,7 +85,7 @@ PRIMARY KEY(id_modelo),
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-select * from prc_modelos;
+
 insert into prc_modelos(id_marca,descripcion,foto,estado) values(1,'JORDAN','3728asb23423.png',true);
 
 create table ctg_tallas(

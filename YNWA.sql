@@ -1,5 +1,5 @@
 /*DROP DATABASE dbYNWA;*/
-DROP DATABASE db_ynwa;
+DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
@@ -98,45 +98,43 @@ PRIMARY KEY (id_talla)
 insert into ctg_tallas(descripcion_talla,estado_talla) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
 
 CREATE TABLE prc_modelo_tallas(
-id_modelotalla int AUTO_INCREMENT,
+id_modelo_talla int AUTO_INCREMENT,
 id_talla int,
 id_modelo int,
-stock int,
-precio float,
-primary key (id_modelotalla),
+stock_modelo_talla int,
+precio_modelo_talla float,
+primary key (id_modelo_talla),
 FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
 ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_modelo_tallas(id_talla,id_modelo,stock,precio) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
+insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
-
-
-CREATE TABLE ctg_tiponoticias(
-    id_tiponoticia INT AUTO_INCREMENT,
-    descripcion varchar(255),
-    estado boolean,
-    PRIMARY KEY (id_tiponoticia)
+CREATE TABLE ctg_tipo_noticias(
+    id_tipo_noticia INT AUTO_INCREMENT,
+    descripcion_tipo_noticia varchar(255),
+    estado_tipo_noticia boolean,
+    PRIMARY KEY (id_tipo_noticia)
 );
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
-    id_tiponoticia int,
-    titulo VARCHAR(255),
-    foto LONGTEXT,
-    contenido TEXT,
-    estado boolean,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_tipo_noticia int,
+    titulo_noticia VARCHAR(255),
+    foto_noticia LONGTEXT,
+    contenido_noticia TEXT,
+    estado_noticia boolean,
+    fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
-    FOREIGN KEY (id_tiponoticia) REFERENCES ctg_tiponoticias(id_tiponoticia)
+    FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
 
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,
-forma_pago enum('Efectivo','Transferencia'),
-fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-estado boolean,
+forma_pago_pedido enum('Efectivo','Transferencia'),
+fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+estado_pedido boolean,
 PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -146,21 +144,21 @@ ON DELETE CASCADE ON UPDATE CASCADE
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,
 id_pedido int,
-id_modelotalla int,
-cantidad int,
+id_modelo_talla int,
+cantidad_detalle_pedido int,
 PRIMARY KEY (id_detalle),
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
 ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_modelotalla) REFERENCES prc_modelo_tallas(id_modelotalla)
+FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE prc_comentarios (
     id_comentario INT AUTO_INCREMENT,
     id_detalle INT ,
-    comentario TEXT,
-    puntuacion INT,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado boolean,
+    contenido_comentario TEXT,
+    puntuacion_comentario INT,
+    fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado_comentario boolean,
     PRIMARY KEY (id_comentario),
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );

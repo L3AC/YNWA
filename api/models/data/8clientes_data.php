@@ -20,7 +20,7 @@ class ClienteData extends ClienteHandler
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del administrador es incorrecto';
+            $this->data_error = 'El identificador es incorrecto';
             return false;
         }
     }

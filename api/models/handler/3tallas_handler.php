@@ -43,7 +43,7 @@ class TallaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_tallas(descripcion, estado)
+        $sql = 'INSERT INTO ctg_tallas(descripcion_talla, estado_talla)
                 VALUES(?, ?)';
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
@@ -78,7 +78,7 @@ class TallaHandler
     public function updateRow()
     {
         $sql = 'UPDATE ctg_tallas
-                SET descripcion = ?,estado = ?
+                SET descripcion_talla = ?,estado_talla = ?
                 WHERE id_talla = ?';
         $params = array($this->nombre,$this->estado, $this->id);
         return Database::executeRow($sql, $params);

@@ -51,6 +51,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
+        //SE VACIA LA VARIABLE ID PARA NO GENERAR ERROR CON EL FORMULARIO
         ID_PRODUCTO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();

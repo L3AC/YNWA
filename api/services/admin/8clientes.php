@@ -88,7 +88,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($administrador->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador eliminado correctamente';
+                    $result['message'] = 'Registro eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el administrador';
                 }
@@ -98,7 +98,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
                 } else {
-                    $result['error'] = 'Alias de administrador indefinido';
+                    $result['error'] = 'Alias indefinido';
                 }
                 break;
             case 'logOut':

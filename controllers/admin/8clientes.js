@@ -65,24 +65,22 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-ALIAS_ADMINISTRADOR.addEventListener('input', function () {
+ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
     const FORM = new FormData();
     FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+    const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
+    if (DATA.status === 1) {
         console.log(1);
-        const mensaje = 'Ya existe el usuario'; // Mensaje de ejemplo
-        mensajeDiv.textContent = mensaje;
+        mensajeDiv.textContent = 'Ya existe el usuario';
         mensajeDiv.style.display = 'block'; 
-        IDGUARDAR.disabled=true;
+        IDGUARDAR.disabled = true;
     } else {
         console.log(2);
         mensajeDiv.textContent = "";
-        IDGUARDAR.disabled=false;
+        IDGUARDAR.disabled = false;
     }
-
 });
     /*setTimeout(function() {
        mensajeDiv.style.display = 'none';

@@ -144,14 +144,14 @@ class ClienteHandler
     {
         $sql = 'SELECT usuario_cliente, clave_cliente, nombre_cliente, apellido_cliente, email_cliente, estado_cliente
         FROM prc_clientes
-        WHERE usuario_cliente LIKE ?';
+        WHERE usuario_cliente = ?';
         $params = array($username);
         $data = Database::getRow($sql, $params);
 
         if (empty($data['usuario_cliente'])) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 

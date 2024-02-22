@@ -56,9 +56,8 @@ if (isset($_GET['action'])) {
             case 'readExist':
                 if ($administrador->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
-                    //$result['message'] = 'Autenticación correcta';
                 } else {
-                    //$result['error'] = 'Credenciales incorrectas';
+                    $result['status'] = 2;
                 }
                 break;
             case 'readOne':

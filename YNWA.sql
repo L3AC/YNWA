@@ -98,8 +98,6 @@ PRIMARY KEY (id_talla)
 );
 insert into ctg_tallas(descripcion_talla,estado_talla) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
 
-
-
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla int AUTO_INCREMENT,
 id_talla int,

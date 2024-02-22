@@ -24,14 +24,18 @@ class TallaHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($value)
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        if ($value === '') {
+            $value = '%%';
+        } else {
+            $value = '%' . $value.'%';
+        }
 
-        $sql = 'SELECT id_talla, descripcion, estado
+        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
                 FROM ctg_tallas
-                WHERE descripcion LIKE ? 
-                ORDER BY descripcion';
+                WHERE descripcion_talla LIKE  ? 
+                ORDER BY CAST(descripcion_talla AS UNSIGNED)';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -47,15 +51,15 @@ class TallaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_talla, descripcion, estado
+        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
         FROM ctg_tallas
-        ORDER BY CAST(descripcion AS UNSIGNED)';
+        ORDER BY CAST(descripcion_talla AS UNSIGNED)';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='SELECT id_talla, descripcion, estado
+        $sql ='SELECT id_talla, descripcion_talla, estado_talla
         FROM ctg_tallas
         WHERE id_talla=? ';
         $params = array($this->id);

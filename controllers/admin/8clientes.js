@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar administradores';
+    MAIN_TITLE.textContent = 'Gestionar clientes';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -82,9 +82,6 @@ ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
         IDGUARDAR.disabled = false;
     }
 });
-    /*setTimeout(function() {
-       mensajeDiv.style.display = 'none';
-    }, 3000); // Ocultar el mensaje después de 3 segundos (3000 ms)*/
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -138,7 +135,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear administrador';
+    MODAL_TITLE.textContent = 'Crear registro';
     // Se prepara el formulario.
     SAVE_FORM.reset();
     ALIAS_ADMINISTRADOR.disabled = false;
@@ -160,7 +157,7 @@ const openUpdate = async (id) => {
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar administrador';
+        MODAL_TITLE.textContent = 'Actualizar registro';
         // Se prepara el formulario.
         SAVE_FORM.reset();
         ALIAS_ADMINISTRADOR.disabled = true;

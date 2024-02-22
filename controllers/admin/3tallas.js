@@ -14,6 +14,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_PRODUCTO = document.getElementById('idTalla'),
     NOMBRE_PRODUCTO = document.getElementById('nombreTalla'),
     ESTADO_PRODUCTO = document.getElementById('estadoTalla');
@@ -61,6 +62,42 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
+//METODO PARA BUSCAR 
+INPUTSEARCH.addEventListener('input', async function ()  {
+    ROWS_FOUND.textContent = '';
+    TABLE_BODY.innerHTML = '';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(TALLA_API, 'searchRows', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se establece un icono para el estado del producto.
+            (row.estado_talla) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.descripcion_talla}</td>
+                    <td><i class="${icon}"></i></td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_talla})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_talla})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+       // sweetAlert(4, DATA.error, true);
+    }
+});
 
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
@@ -79,13 +116,12 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(row.estado);
             // Se establece un icono para el estado del producto.
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_talla) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion}</td>
+                    <td>${row.descripcion_talla}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_talla})">
@@ -142,8 +178,8 @@ const openUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_talla;
-        NOMBRE_PRODUCTO.value = ROW.descripcion;
-        ESTADO_PRODUCTO.checked = ROW.estado;
+        NOMBRE_PRODUCTO.value = ROW.descripcion_talla;
+        ESTADO_PRODUCTO.checked = ROW.estado_talla;
         
     } else {
         sweetAlert(2, DATA.error, false);

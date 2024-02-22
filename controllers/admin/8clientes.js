@@ -150,7 +150,7 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define una constante tipo objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idAdministrador', id);
+    FORM.append('idCliente', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(ADMINISTRADOR_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -187,7 +187,7 @@ const openDelete = async (id) => {
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idAdministrador', id);
+        FORM.append('idCliente', id);
         // Petición para eliminar el registro seleccionado.
         const DATA = await fetchData(ADMINISTRADOR_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.

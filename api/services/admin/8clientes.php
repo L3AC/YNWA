@@ -17,13 +17,11 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if (!Validator::validateSearch($_POST['search'])) {
-                    $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $administrador->searchRows()) {
+                if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error'] = 'No hay coincidencias';
+                    
                 }
                 break;
             case 'createRow':
@@ -62,11 +60,11 @@ if (isset($_GET['action'])) {
                 break;
             case 'readOne':
                 if (!$administrador->setId($_POST['idCliente'])) {
-                    $result['error'] = 'Administrador incorrecto';
+                    $result['error'] = 'Registro incorrecto';
                 } elseif ($result['dataset'] = $administrador->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Administrador inexistente';
+                    $result['error'] = 'Registro inexistente';
                 }
                 break;
             case 'updateRow':
@@ -86,9 +84,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if ($_POST['idAdministrador'] == $_SESSION['idAdministrador']) {
-                    $result['error'] = 'No se puede eliminar a sí mismo';
-                } elseif (!$administrador->setId($_POST['idAdministrador'])) {
+                if (!$administrador->setId($_POST['idCliente'])) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($administrador->deleteRow()) {
                     $result['status'] = 1;

@@ -109,7 +109,8 @@ class ClienteHandler
     public function createRow()
     {
         //echo $this->clave.' ';
-        $sql = 'insert into prc_clientes(usuario,clave,nombres,apellidos,email,pin,estado) 
+        $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
+        apellido_cliente,email_cliente,pin_cliente,estado_cliente) 
         values(?,?,?,?,?,?,true)';
         $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
@@ -134,7 +135,8 @@ class ClienteHandler
 
     public function readOne()
     {
-        $sql = 'SELECT usuario,clave,nombres,apellidos,email,estado 
+        $sql = 'SELECT usuario_cliente,clave_cliente,nombre_cliente,
+                apellido_cliente,email_cliente,estado_cliente
                 from prc_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);
@@ -167,10 +169,8 @@ class ClienteHandler
 
     public function deleteRow()
     {
-        $sql = 'UPDATE sec_usuarios SET estado="I" 
-                WHERE id_usuario = ?';
-        /*$sql = 'DELETE FROM sec_usuarios
-                WHERE id_usuario = ?';*/
+        $sql = 'DELETE FROM prc_clientes
+                WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

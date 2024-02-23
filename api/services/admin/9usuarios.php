@@ -50,6 +50,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     $result['username'] = $_SESSION['usuarion'];
+
                 } else {
                     $result['error'] = 'No existen administradores registrados';
                 }
@@ -95,7 +96,22 @@ if (isset($_GET['action'])) {
                 if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
-                    
+                    /*$result['marcaopc'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];
+                    $result['username'] = $_SESSION['usuarion'];*/
+
                 } else {
                     $result['error'] = 'Alias de administrador indefinido';
                 }

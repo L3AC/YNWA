@@ -68,6 +68,7 @@ const loadTemplate = async () => {
                 </nav>
                 </header>
             `);
+            
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
                 <footer>

@@ -37,10 +37,10 @@ class RolHandler
             $value = '%' . $value.'%';
         }
 
-        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
-                FROM ctg_tallas
-                WHERE descripcion_talla LIKE  ? 
-                ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc
+                FROM sec_roles
+                WHERE descripcion_opc LIKE  ? 
+                ORDER BY CAST(descripcion_opc AS UNSIGNED)';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -49,10 +49,10 @@ class RolHandler
     public function createRow()
     {
         $sql = 'insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
-        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc) 
-        values(?,?,?,?,?,?,?,?,?,?,?);';
+        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,rol_opc) 
+        values(?,?,?,?,?,?,?,?,?,?,?,?);';
         $params = array($this->descripcion,$this->estado,$this->marcas,$this->modelos,$this->tallas,
-        $this->pedidos,$this->tiponoticias,$this->noticias,$this->comentarios,
+        $this->pedidos,$this->tiponoticias,$this->noticias,$this->comentarios,$this->roles,
         $this->clientes,$this->usuarios);
         return Database::executeRow($sql, $params);
     }
@@ -61,7 +61,7 @@ class RolHandler
     {
         $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc
+        comentarios_opc,clientes_opc,usuarios_opc,rol_opc
         FROM sec_roles
         ORDER BY CAST(descripcion_opc AS UNSIGNED)';
         return Database::getRows($sql);
@@ -71,7 +71,7 @@ class RolHandler
     {
         $sql ='SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc
+        comentarios_opc,clientes_opc,usuarios_opc,rol_opc
         FROM sec_roles
         WHERE id_rol=? ';
         $params = array($this->id);

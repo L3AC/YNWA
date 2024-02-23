@@ -32,11 +32,11 @@ if (isset($_GET['action'])) {
                     !$producto->setTalla(isset($_POST['estadoTalla']) ? 1 : 0)  or
                     !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
                     !$producto->setTipoNoticia(isset($_POST['estadoTipoNoticia']) ? 1 : 0)  or
-                    !$producto->setNoticia(isset($_POST['estadNoticia']) ? 1 : 0)  or
+                    !$producto->setNoticia(isset($_POST['estadoNoticia']) ? 1 : 0)  or
                     !$producto->setComentario(isset($_POST['estadoComentario']) ? 1 : 0)  or
                     !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
                     !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)  or
-                    !$producto->setRol(isset($_POST['estadoRol']) ? 1 : 0)  
+                    !$producto->setRol(isset($_POST['estadopRol']) ? 1 : 0)  
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {

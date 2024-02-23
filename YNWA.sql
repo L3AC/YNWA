@@ -146,14 +146,6 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) values(2,'Efectivo',now(),true);
 
-select p.id_pedido,CONCAT(c.nombre_cliente,c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-from prc_pedidos p
-inner join prc_clientes c USING(id_cliente)
-where CONCAT(c.nombre_cliente,c.apellido_cliente) like '%%'
-ORDER BY CONCAT(c.nombre_cliente,c.apellido_cliente);
-
-
-
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,
 id_pedido int,
@@ -165,6 +157,9 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
+
+select * from prc_modelo_tallas;
 
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla int AUTO_INCREMENT,

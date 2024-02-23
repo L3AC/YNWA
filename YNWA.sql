@@ -17,11 +17,11 @@ noticias_opc boolean,
 comentarios_opc boolean,
 clientes_opc boolean,
 usuarios_opc boolean,
-rol_opc boolean,
+roles_opc boolean,
 PRIMARY KEY(id_rol)
 );
 insert into sec_roles (id_rol, descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
-pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,rol_opc) 
+pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
 values(1,'Admin',true,true,true,true,true,true,true,true,true,true,true);
 /*
 select * from sec_usuarios;

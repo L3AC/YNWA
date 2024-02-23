@@ -49,7 +49,7 @@ class RolHandler
     public function createRow()
     {
         $sql = 'insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
-        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,rol_opc) 
+        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
         values(?,?,?,?,?,?,?,?,?,?,?,?);';
         $params = array($this->descripcion,$this->estado,$this->marcas,$this->modelos,$this->tallas,
         $this->pedidos,$this->tiponoticias,$this->noticias,$this->comentarios,$this->roles,
@@ -61,7 +61,7 @@ class RolHandler
     {
         $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc,rol_opc
+        comentarios_opc,clientes_opc,usuarios_opc,roles_opc
         FROM sec_roles
         ORDER BY CAST(descripcion_opc AS UNSIGNED)';
         return Database::getRows($sql);
@@ -71,7 +71,7 @@ class RolHandler
     {
         $sql ='SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc,rol_opc
+        comentarios_opc,clientes_opc,usuarios_opc,roles_opc
         FROM sec_roles
         WHERE id_rol=? ';
         $params = array($this->id);

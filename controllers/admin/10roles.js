@@ -16,9 +16,18 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ID_ROL = document.getElementById('idRol'),
-    NOMBRE_ROL = document.getElementById('nombreRol'),
-
-    ESTADO_ROL = document.getElementById('estadoRol');
+    NOMBRE_OPC = document.getElementById('nombreRol'),
+    ESTADO_ROL = document.getElementById('estadoRol'),
+    MARCA_OPC = document.getElementById('estadoMarca'),
+    MODELO_OPC = document.getElementById('estadoModelo'),
+    TALLA_OPC = document.getElementById('estadoTalla'),
+    PEDIDO_OPC = document.getElementById('estadoPedido'),
+    TIPONOTICIA_OPC = document.getElementById('estadoTipoNoticia'),
+    NOTICIA_OPC = document.getElementById('estadoNoticia'),
+    COMENTARIO_OPC = document.getElementById('estadoComentario'),
+    CLIENTE_OPC = document.getElementById('estadoCliente'),
+    USUARIO_OPC = document.getElementById('estadoUsuario'),
+    ROL_OPC = document.getElementById('estadopRol');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -165,7 +174,7 @@ const openUpdate = async (id) => {
     
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idROL', id);
+    FORM.append('idRol', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(ROL_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -178,9 +187,20 @@ const openUpdate = async (id) => {
         //EXISTENCIAS_ROL.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_ROL.value = ROW.id_ROL;
-        NOMBRE_ROL.value = ROW.descripcion_ROL;
-        ESTADO_ROL.checked = ROW.estado_ROL;
+        ID_ROL.value = ROW.id_rol;
+        NOMBRE_ROL.value = ROW.descripcion_opc;
+        ESTADO_ROL.checked = ROW.estado_rol;
+        MARCA_OPC.checked        = ROW.marcas_opc;
+        MODELO_OPC.checked       = ROW.modelos_opc;
+        TALLA_OPC.checked        = ROW.tallas_opc;
+        PEDIDO_OPC.checked       = ROW.pedidos_opc;
+        TIPONOTICIA_OPC.checked  = ROW.tiponoticias_opc;
+        NOTICIA_OPC.checked      = ROW.noticias_opc;
+        COMENTARIO_OPC.checked   = ROW.comentarios_opc;
+        CLIENTE_OPC.checked      = ROW.clientes_opc;
+        USUARIO_OPC.checked      = ROW.usuarios_opc;
+        ROL_OPC.checked          = ROW.roles_opc;
+ 
         
     } else {
         sweetAlert(2, DATA.error, false);

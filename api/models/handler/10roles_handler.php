@@ -40,7 +40,8 @@ class RolHandler
         $sql = 'SELECT id_rol, descripcion_opc, estado_opc
                 FROM sec_roles
                 WHERE descripcion_opc LIKE  ? 
-                ORDER BY CAST(descripcion_opc AS UNSIGNED)';
+                ORDER BY CAST(descripcion_opc AS UNSIGNED)
+                OFFSET 1';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -63,7 +64,8 @@ class RolHandler
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
         comentarios_opc,clientes_opc,usuarios_opc,roles_opc
         FROM sec_roles
-        ORDER BY CAST(descripcion_opc AS UNSIGNED)';
+        ORDER BY CAST(descripcion_opc AS UNSIGNED)
+        OFFSET 1';
         return Database::getRows($sql);
     }
 

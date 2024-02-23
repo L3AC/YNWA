@@ -145,7 +145,6 @@ FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,
 id_pedido int,
@@ -157,6 +156,37 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE prc_modelo_tallas(
+id_modelo_talla int AUTO_INCREMENT,
+id_talla int,
+id_modelo int,
+stock_modelo_talla int,
+precio_modelo_talla float,
+primary key (id_modelo_talla),
+FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
+ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*TRIGGER*/
+DELIMITER //
+CREATE TRIGGER actualizar_stock AFTER INSERT ON prc_detalle_pedidos
+FOR EACH ROW
+BEGIN
+    DECLARE stock_actual INT;
+    DECLARE cantidad_pedido INT;
+
+    SELECT stock_modelo_talla INTO stock_actual FROM prc_modelo_tallas WHERE id_modelo_talla = NEW.id_modelo_talla;
+    SELECT cantidad_detalle_pedido INTO cantidad_pedido FROM prc_detalle_pedidos WHERE id_detalle = NEW.id_detalle;
+
+    UPDATE prc_modelo_tallas SET stock_modelo_talla = stock_actual - cantidad_pedido WHERE id_modelo_talla = NEW.id_modelo_talla;
+END;
+//DELIMITER ;
+
+
+
 CREATE TABLE prc_comentarios (
     id_comentario INT AUTO_INCREMENT,
     id_detalle INT ,
@@ -167,3 +197,4 @@ CREATE TABLE prc_comentarios (
     PRIMARY KEY (id_comentario),
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );
+

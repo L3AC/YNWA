@@ -17,6 +17,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     SUBMODAL_TITLE = document.getElementById('submodalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar modelos';
+    MAIN_TITLE.textContent = 'Gestionar pedidos';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -64,6 +65,44 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
+INPUTSEARCH.addEventListener('input', async function ()  {
+    ROWS_FOUND.textContent = '';
+    TABLE_BODY.innerHTML = '';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            console.log(DATA.dataset);
+            // Se establece un icono para el estado del PEDIDO.
+            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.cliente}</td>
+                    <td>${row.forma_pago_pedido}</td>
+                    <td>${row.fecha}</td>
+                    <td><i class="${icon}"></i></td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+       // sweetAlert(4, DATA.error, true);
+    }
+});
 
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
@@ -84,18 +123,19 @@ const fillTable = async (form = null) => {
         DATA.dataset.forEach(row => {
             console.log(DATA.dataset);
             // Se establece un icono para el estado del PEDIDO.
-            (row.estado_modelo) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.marca}</td>
+                    <td>${row.cliente}</td>
+                    <td>${row.forma_pago_pedido}</td>
+                    <td>${row.fecha}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_modelo})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelo})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -130,31 +170,6 @@ const openCreate = () => {
     fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
 
-IMAGEN_PEDIDO.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        imgPre.innerHTML = '';
-        imgPre.appendChild(img);
-        // Establecer los estilos CSS de la imagen
-        img.style.maxWidth = '300px';
-        img.style.maxHeight = 'auto';
-        img.style.margin = '20px auto';
-    };
-    reader.readAsDataURL(file);
-});
-
-// Agregar un evento click a la imagen para aplicar un zoom
-IMAGEN_PRE.addEventListener('click', function () {
-    IMAGEN_PRE.style.transform = 'scale(3)'; /* Escala de 1.5 (ampliar al 150% del tamaño original) al hacer clic en la imagen */
-    event.stopPropagation(); 
-});
-
-document.addEventListener('click', function() {
-    IMAGEN_PRE.style.transform = 'scale(1)'; /* Restablecer el tamaño original de la imagen */
-});
 
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -164,7 +179,7 @@ document.addEventListener('click', function() {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idModelo', id);
+    FORM.append('idPedido', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(PEDIDO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.

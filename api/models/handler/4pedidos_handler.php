@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ModeloHandler
+class PedidoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -32,7 +32,7 @@ class ModeloHandler
             $value = '%' . $value.'%';
         }
 
-        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente,c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
         from prc_pedidos p
         inner join prc_clientes c USING(id_cliente)
         where CONCAT(c.nombre_cliente,c.apellido_cliente) like ?
@@ -52,10 +52,10 @@ class ModeloHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos
-        INNER JOIN ctg_marcas  USING(id_marca)
-        ORDER BY descripcion_modelo';
+        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        from prc_pedidos p
+        inner join prc_clientes c USING(id_cliente)
+        ORDER BY CONCAT(c.nombre_cliente,c.apellido_cliente)';
         return Database::getRows($sql);
     }
     public function readsubAll()

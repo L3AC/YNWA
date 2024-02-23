@@ -25,16 +25,26 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombretalla($_POST['nombreTalla']) or
-                    !$producto->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$producto->setDescripcion($_POST['descripcionRol']) or
+                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
+                    !$producto->setMarca(isset($_POST['estadoMarca']) ? 1 : 0)  or
+                    !$producto->setModelo(isset($_POST['estadoModelo']) ? 1 : 0)  or
+                    !$producto->setTalla(isset($_POST['estadoTalla']) ? 1 : 0)  or
+                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
+                    !$producto->setTipoNoticia(isset($_POST['estadoTipoNoticia']) ? 1 : 0)  or
+                    !$producto->setNoticia(isset($_POST['estadNoticia']) ? 1 : 0)  or
+                    !$producto->setComentario(isset($_POST['estadoComentario']) ? 1 : 0)  or
+                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)  or
+                    !$producto->setRol(isset($_POST['estadoRol']) ? 1 : 0)  
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
+                    $result['message'] = 'Registro creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
                 break;
             case 'readAll':
@@ -42,30 +52,40 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = 'No existen productos registrados';
+                    $result['error'] = 'No existen registros';
                 }
                 break;
             case 'readOne':
                 //echo $_POST['idTalla'];
-                if (!$producto->setId($_POST['idTalla'])) {
+                if (!$producto->setId($_POST['idRol'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Registro inexistente';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idTalla']) or
-                    !$producto->setNombretalla($_POST['nombreTalla']) or
-                    !$producto->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$producto->setId($_POST['idRol']) or
+                    !$producto->setDescripcion($_POST['descripcionRol']) or
+                    !$producto->setEstado(isset($_POST['estadoRol']) ? 1 : 0)  or
+                    !$producto->setMarca(isset($_POST['estadoMarca']) ? 1 : 0)  or
+                    !$producto->setModelo(isset($_POST['estadoModelo']) ? 1 : 0)  or
+                    !$producto->setTalla(isset($_POST['estadoTalla']) ? 1 : 0)  or
+                    !$producto->setPedido(isset($_POST['estadoPedido']) ? 1 : 0)  or
+                    !$producto->setTipoNoticia(isset($_POST['estadoTipoNoticia']) ? 1 : 0)  or
+                    !$producto->setNoticia(isset($_POST['estadNoticia']) ? 1 : 0)  or
+                    !$producto->setComentario(isset($_POST['estadoComentario']) ? 1 : 0)  or
+                    !$producto->setCliente(isset($_POST['estadoCliente']) ? 1 : 0)  or
+                    !$producto->setUsuario(isset($_POST['estadoUsuario']) ? 1 : 0)  or
+                    !$producto->setRol(isset($_POST['estadoRol']) ? 1 : 0)  
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
+                    $result['message'] = 'Registro modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';

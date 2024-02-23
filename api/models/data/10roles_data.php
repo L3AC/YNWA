@@ -28,34 +28,6 @@ class RolData extends RolHandler
         }
     }
 
-    public function setNombre($value, $min = 2, $max = 50)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
-    public function setNombretalla($value, $min = 1, $max = 2)
-    {
-        if (!Validator::validateAlphanumeric($value)) {
-            $this->data_error = 'El nombre debe ser un valor alfanumérico';
-            return false;
-        } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->nombre = $value;
-            return true;
-        } else {
-            $this->data_error = 'El nombre debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
@@ -70,54 +42,6 @@ class RolData extends RolHandler
         }
     }
 
-    public function setPrecio($value)
-    {
-        if (Validator::validateMoney($value)) {
-            $this->precio = $value;
-            return true;
-        } else {
-            $this->data_error = 'El precio debe ser un valor numérico';
-            return false;
-        }
-    }
-
-    public function setTalla($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->existencias = $value;
-            return true;
-        } else {
-            $this->data_error = 'El valor de las existencias debe ser numérico entero';
-            return false;
-        }
-    }
-
-    public function setImagen($file, $filename = null)
-    {
-        if (Validator::validateImageFile($file, 500, 500)) {
-            $this->imagen = Validator::getFileName();
-            return true;
-        } elseif (Validator::getFileError()) {
-            return false;
-        } elseif ($filename) {
-            $this->imagen = $filename;
-            return true;
-        } else {
-            $this->imagen = 'default.png';
-            return true;
-        }
-    }
-
-    public function setCategoria($value)
-    {
-        if (Validator::validateNaturalNumber($value)) {
-            $this->categoria = $value;
-            return true;
-        } else {
-            $this->data_error = 'El identificador es incorrecto';
-            return false;
-        }
-    }
 
     public function setEstado($value)
     {
@@ -129,6 +53,107 @@ class RolData extends RolHandler
             return false;
         }
     }
+    public function setMarca($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->marcas = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setModelo($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->modelos = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setTalla($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->tallas = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setPedido($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->pedidos = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setTipoNoticia($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->tiponoticias = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setNoticia($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->noticias = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setComentario($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->comentarios = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setCliente($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->clientes = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setUsuario($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->usuarios = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+    public function setRol($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->roles = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
+
 
     public function setFilename()
     {

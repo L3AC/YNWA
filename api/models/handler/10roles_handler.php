@@ -10,13 +10,18 @@ class RolHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $nombre = null;
-    protected $descripcion = null;
-    protected $precio = null;
-    protected $existencias = null;
-    protected $imagen = null;
-    protected $categoria = null;
     protected $estado = null;
+    protected $descripcion = null;
+    protected $marcas = null;
+    protected $modelos = null;
+    protected $tallas = null;
+    protected $pedidos = null;
+    protected $tiponoticias = null;
+    protected $noticias = null;
+    protected $comentarios = null;
+    protected $clientes = null;
+    protected $usuarios = null;
+    protected $roles = null;
 
     // Constante para establecer la ruta de las imágenes.
     const RUTA_IMAGEN = '../../images/modelos/';
@@ -43,25 +48,32 @@ class RolHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO ctg_tallas(descripcion_talla, estado_talla)
-                VALUES(?, ?)';
-        $params = array($this->nombre, $this->estado);
+        $sql = 'insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
+        pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc) 
+        values(?,?,?,?,?,?,?,?,?,?,?);';
+        $params = array($this->descripcion,$this->estado,$this->marcas,$this->modelos,$this->tallas,
+        $this->pedidos,$this->tiponoticias,$this->noticias,$this->comentarios,
+        $this->clientes,$this->usuarios);
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
-        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
-        FROM ctg_tallas
-        ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
+        tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
+        comentarios_opc,clientes_opc,usuarios_opc
+        FROM sec_roles
+        ORDER BY CAST(descripcion_opc AS UNSIGNED)';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='SELECT id_talla, descripcion_talla, estado_talla
-        FROM ctg_tallas
-        WHERE id_talla=? ';
+        $sql ='SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
+        tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
+        comentarios_opc,clientes_opc,usuarios_opc
+        FROM sec_roles
+        WHERE id_rol=? ';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
@@ -80,7 +92,7 @@ class RolHandler
         $sql = 'UPDATE ctg_tallas
                 SET descripcion_talla = ?,estado_talla = ?
                 WHERE id_talla = ?';
-        $params = array($this->nombre,$this->estado, $this->id);
+        $params = array($this->descripcion,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -104,7 +116,7 @@ class RolHandler
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true
                 ORDER BY nombre_producto'*/;
-        $params = array($this->categoria);
+        $params = array($this->id);
         return Database::getRows($sql, $params);
     }
 
@@ -139,7 +151,7 @@ class RolHandler
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ?
                 ORDER BY nombre_producto';
-        $params = array($this->categoria);
+        $params = array($this->id);
         return Database::getRows($sql, $params);
     }
 }

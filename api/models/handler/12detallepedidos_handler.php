@@ -34,12 +34,15 @@ class DetallePedidoHandler
             $value = '%' . $value.'%';
         }
 
-        $sql = 'SELECT pe.id_pedido,mo.descripcion_modelo,dp.cantidad_detalle_pedido
+        $sql = 'SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
+        t.descripcion_talla,dp.cantidad_detalle_pedido
         FROM prc_pedidos pe
         INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
         INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN prc_clientes cl USING (id_cliente)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        INNER JOIN ctg_tallas t USING (id_talla)
         WHERE pe.id_pedido =? AND mo.descripcion_modelo like ?
         ORDER BY mo.descripcion_modelo';
 

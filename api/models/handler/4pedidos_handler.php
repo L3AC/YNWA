@@ -32,7 +32,8 @@ class PedidoHandler
             $value = '%' . $value.'%';
         }
 
-        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
         from prc_pedidos p
         inner join prc_clientes c USING(id_cliente)
         where CONCAT(c.nombre_cliente,c.apellido_cliente) like ?
@@ -52,7 +53,8 @@ class PedidoHandler
 
     public function readAll()
     {
-        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
         from prc_pedidos p
         inner join prc_clientes c USING(id_cliente)
         ORDER BY CONCAT(c.nombre_cliente,c.apellido_cliente)';
@@ -75,9 +77,11 @@ class PedidoHandler
 
     public function readOne()
     {
-        $sql ='SELECT id_pedido,forma_pago_pedido,estado_pedido
-        FROM prc_pedidos
-        WHERE id_pedido =?;';
+        $sql ='SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        from prc_pedidos p
+        inner join prc_clientes c USING(id_cliente)
+        WHERE p.id_pedido =?';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         //$_SESSION['idmod'] = $data['id_modelo'];

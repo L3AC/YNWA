@@ -2,6 +2,16 @@
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
+
+SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
+        t.descripcion_talla,dp.cantidad_detalle_pedido
+        FROM prc_pedidos pe
+        INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN prc_clientes cl USING (id_cliente)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        INNER JOIN ctg_tallas t USING (id_talla);
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 CREATE TABLE sec_roles(
@@ -161,9 +171,6 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
 
-SELECT id_pedido,forma_pago_pedido,estado_pedido
-FROM prc_pedidos
-WHERE id_pedido =3;
 
 
 CREATE TABLE prc_modelo_tallas(

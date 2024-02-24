@@ -36,10 +36,10 @@
                 </div>
             </form>
             <div class="col-sm-12 col-md-6 text-end">
-                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro 
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
-                </button>
+                </button>-->
                 <!-- Botón para abrir un reporte en formato PDF 
                 <button type="button" class="btn btn-warning" onclick="openReport()">
                     <i class="bi bi-filetype-pdf"></i>
@@ -79,14 +79,20 @@
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
-                        <div class="modal-body row gx-5">
+                        <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idPedido" name="idPedido">
-                            <div class="col-6">
-                                <div class="p-3">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="clientePedido" class="form-label">Cliente</label>
+                                <input id="clientePedido" type="text" name="clientePedido" class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="fechaPedido" class="form-label">Fecha</label>
+                                <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
                                     <label for="formaPago" class="form-label">Forma de pago</label>
                                     <input id="formaPago" type="text" name="formaPago" class="form-control" required>
-                                </div>
                             </div>
                             <div class="col-6">
                                 <div class="p-3">
@@ -120,7 +126,9 @@
                                             <td colspan="6" id="subrowsFound"></td>
                                         </tr>
                                         <tr>
-                                            <th>PRODUCTO</th>
+                                            <th>MODELO</th>
+                                            <th>MARCA</th>
+                                            <th>PRECIO $</th>
                                             <th>CANTIDAD</th>
                                         </tr>
                                     </thead>

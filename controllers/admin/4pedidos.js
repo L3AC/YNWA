@@ -20,6 +20,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
+    CLIENTE_PEDIDO = document.getElementById('clientePedido'),
+    FECHA_PEDIDO = document.getElementById('fechaPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
 
@@ -185,14 +187,19 @@ const openUpdate = async (id) => {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
         SUBTABLE.hidden = false;
+        MODAL_TITLE.textContent = 'Información del pedido';
         SUBMODAL_TITLE.textContent = 'Detalle del pedido';
         // Se prepara el formulario.
         SAVE_FORM.reset();
+        CLIENTE_PEDIDO.disabled = true;
+        FECHA_PEDIDO.disabled = true;
         FORMA_PAGO.disabled = true;
         ESTADO_PEDIDO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PEDIDO.value = ROW.id_pedido;
+        CLIENTE_PEDIDO.value = ROW.cliente;
+        FECHA_PEDIDO.value = ROW.fecha;
         FORMA_PAGO.value = ROW.forma_pago_pedido;
         ESTADO_PEDIDO.checked = ROW.estado_pedido;
         
@@ -217,6 +224,8 @@ SUBINPUTSEARCH.addEventListener('input', async function ()  {
             SUBTABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.descripcion_modelo}</td>
+                    <td>${row.descripcion_marca}</td>
+                    <td>${row.descripcion_talla}</td>
                     <td>${row.cantidad_detalle_pedido}</td>
                 </tr>
             `;

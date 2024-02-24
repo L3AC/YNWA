@@ -2,16 +2,6 @@
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
-
-SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
-        t.descripcion_talla,dp.cantidad_detalle_pedido
-        FROM prc_pedidos pe
-        INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
-        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
-        INNER JOIN prc_modelos mo USING (id_modelo)
-        INNER JOIN prc_clientes cl USING (id_cliente)
-        INNER JOIN ctg_marcas ma USING (id_marca)
-        INNER JOIN ctg_tallas t USING (id_talla);
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 CREATE TABLE sec_roles(
@@ -54,16 +44,6 @@ PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
-        t.descripcion_talla,dp.cantidad_detalle_pedido
-        FROM prc_pedidos pe
-        INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
-        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
-        INNER JOIN prc_modelos mo USING (id_modelo)
-        INNER JOIN prc_clientes cl USING (id_cliente)
-        INNER JOIN ctg_marcas ma USING (id_marca)
-        INNER JOIN ctg_tallas t USING (id_talla)
-        
         
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
@@ -76,7 +56,6 @@ pin_cliente varchar(6),
 estado_cliente boolean,
 PRIMARY KEY(id_cliente)
 );
-insert into prc_clientes(usuario_cliente) values('ricardo');
 
 create table ctg_marcas(
 id_marca int AUTO_INCREMENT,
@@ -120,8 +99,6 @@ FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
-
 insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
 CREATE TABLE ctg_tipo_noticias(
@@ -132,6 +109,7 @@ CREATE TABLE ctg_tipo_noticias(
 );
 insert into ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
 values('Oferta',true),('Nuevos productos',true),('Temporada',true);
+
 CREATE TABLE prc_noticias (
     id_noticia INT AUTO_INCREMENT,
     id_tipo_noticia int,
@@ -154,7 +132,7 @@ PRIMARY KEY (id_pedido),
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) values(2,'Efectivo',now(),true);
+insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) values(1,'Efectivo',now(),true);
 
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,
@@ -167,22 +145,35 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
+insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(1,1,1);
 
-
-
-CREATE TABLE prc_modelo_tallas(
-id_modelo_talla int AUTO_INCREMENT,
-id_talla int,
-id_modelo int,
-stock_modelo_talla int,
-precio_modelo_talla float,
-primary key (id_modelo_talla),
-FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
-ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
-ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE prc_comentarios (
+    id_comentario INT AUTO_INCREMENT,
+    id_detalle INT ,
+    contenido_comentario TEXT,
+    puntuacion_comentario INT,
+    fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado_comentario boolean,
+    PRIMARY KEY (id_comentario),
+    FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
 );
+
+insert into prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
+values(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
+
+select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+CONCAT(descripcion_marca,' ',descripcion_modelo) as modelo,contenido_comentario,
+puntuacion_comentario,fecha_comentario,estado_comentario
+from prc_comentarios cm
+INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+INNER JOIN prc_pedidos p USING(id_pedido)
+INNER JOIN prc_clientes c USING(id_cliente)
+INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+INNER JOIN prc_modelos mo USING (id_modelo)
+INNER JOIN ctg_marcas ma USING (id_marca)
+WHERE descripcion_modelo like '%%'
+ORDER BY fecha_comentario DESC, estado_comentario DESC
+
 
 
 /*TRIGGER*/
@@ -202,14 +193,4 @@ END;
 
 
 
-CREATE TABLE prc_comentarios (
-    id_comentario INT AUTO_INCREMENT,
-    id_detalle INT ,
-    contenido_comentario TEXT,
-    puntuacion_comentario INT,
-    fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado_comentario boolean,
-    PRIMARY KEY (id_comentario),
-    FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
-);
 

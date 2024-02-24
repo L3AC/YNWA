@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar pedidos';
+    MAIN_TITLE.textContent = 'Pedidos';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -68,6 +68,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
+/*BUSQUEDA EN TIEMPO REAL*/
 INPUTSEARCH.addEventListener('input', async function ()  {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';

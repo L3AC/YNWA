@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class NoticiaHandler
+class ComentarioHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -24,46 +24,81 @@ class NoticiaHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($value)
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        if ($value === '') {
+            $value = '%%';
+        } else {
+            $value = '%' . $value . '%';
+        }
 
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.descripcion LIKE ? OR ma.descripcion LIKE ?
-        ORDER BY mo.descripcion';
+        $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,fecha_comentario,estado_comentario
+        from prc_comentarios cm
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        WHERE descripcion_modelo like ?
+        ORDER BY fecha_comentario DESC, estado_comentario DESC';
 
-        $params = array($value, $value);
+        $params = array($value);
         return Database::getRows($sql, $params);
     }
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
+                VALUES(?, ?, ?, ?)';
+        $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
-        $sql = 'select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
-        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
-        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
-        ORDER BY n.titulo';
+        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
+        FROM prc_pedidos p
+        INNER JOIN prc_clientes c USING(id_cliente)
+        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
         return Database::getRows($sql);
+    }
+    public function readsubAll()
+    {
+        $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,
+        mt.stock_modelo_talla,mt.precio_modelo_talla,t.descripcion_talla as talla
+        from prc_modelo_tallas mt 
+        INNER JOIN ctg_tallas t USING(id_talla)
+        INNER JOIN prc_modelos m USING(id_modelo)
+        WHERE mt.id_modelo = ?
+        ORDER BY t.descripcion_talla';
+        //echo $this->idModelo. ' que';
+        $params = array($this->id);
+
+        return Database::getRows($sql, $params);
     }
 
     public function readOne()
     {
-        $sql ='select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
-        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
-        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
-        WHERE n.id_noticia=?
-        ORDER BY n.titulo';
+        $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,fecha_comentario,estado_comentario
+        from prc_comentarios cm
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        WHERE id_comentario = ?
+        ORDER BY fecha_comentario DESC, estado_comentario DESC';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
+        //$_SESSION['idmod'] = $data['id_modelo'];
+
         return $data;
     }
 
@@ -78,10 +113,10 @@ class NoticiaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
+        $sql = 'UPDATE prc_modelos 
+                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
                 WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);
     }
 

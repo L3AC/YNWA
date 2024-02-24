@@ -1,5 +1,5 @@
 // Constantes para completar las rutas de la API.
-const PRODUCTO_API = 'services/admin/7comentarios.php';
+const COMENTARIO_API = 'services/admin/7comentarios.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -10,6 +10,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_PRODUCTO = document.getElementById('idNoticia'),
     NOMBRE_PRODUCTO = document.getElementById('tituloNoticia'),
     CONTENIDO_NOTICIA = document.getElementById('contenidoNoticia'),
@@ -22,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar modelos';
+    MAIN_TITLE.textContent = 'Comentarios';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -59,6 +60,45 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
+/*BUSQUEDA EN TIEMPO REAL*/
+INPUTSEARCH.addEventListener('input', async function ()  {
+    ROWS_FOUND.textContent = '';
+    TABLE_BODY.innerHTML = '';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(COMENTARIO_API, 'searchRows', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            console.log(DATA.dataset);
+            // Se establece un icono para el estado del comentario.
+            (row.estado_comentario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.cliente}</td>
+                    <td>${row.forma_pago_comentario}</td>
+                    <td>${row.fecha}</td>
+                    <td><i class="${icon}"></i></td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_comentario})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_comentario})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+       // sweetAlert(4, DATA.error, true);
+    }
+});
 
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
@@ -72,26 +112,24 @@ const fillTable = async (form = null) => {
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, action, form);
+    const DATA = await fetchData(COMENTARIO_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            // Se establece un icono para el estado 
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            console.log(DATA.dataset);
+            // Se establece un icono para el estado del comentario.
+            (row.estado_comentario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td><img src="${SERVER_URL}images/noticias/${row.foto}" height="50"></td>
-                    <td>${row.titulo}</td>
+                    <td>${row.cliente}</td>
+                    <td>${row.forma_pago_comentario}</td>
                     <td>${row.fecha}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_noticia})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_noticia})">
-                            <i class="bi bi-trash-fill"></i>
+                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_comentario})">
+                        <i class="bi bi-info-circle"></i>
                         </button>
                     </td>
                 </tr>

@@ -29,15 +29,15 @@ class PedidoHandler
         if ($value === '') {
             $value = '%%';
         } else {
-            $value = '%' . $value.'%';
+            $value = '%' . $value . '%';
         }
 
-        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
         p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        from prc_pedidos p
-        inner join prc_clientes c USING(id_cliente)
-        where CONCAT(c.nombre_cliente,c.apellido_cliente) like ?
-        ORDER BY CONCAT(c.nombre_cliente,c.apellido_cliente)';
+        FROM prc_pedidos p
+        INNER JOIN prc_clientes c USING(id_cliente)
+        WHERE CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ?
+        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -53,11 +53,11 @@ class PedidoHandler
 
     public function readAll()
     {
-        $sql = 'select p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
         p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        from prc_pedidos p
-        inner join prc_clientes c USING(id_cliente)
-        ORDER BY CONCAT(c.nombre_cliente,c.apellido_cliente)';
+        FROM prc_pedidos p
+        INNER JOIN prc_clientes c USING(id_cliente)
+        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
         return Database::getRows($sql);
     }
     public function readsubAll()
@@ -71,13 +71,13 @@ class PedidoHandler
         ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
         $params = array($this->id);
-        
+
         return Database::getRows($sql, $params);
     }
 
     public function readOne()
     {
-        $sql ='SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
+        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
         p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
         from prc_pedidos p
         inner join prc_clientes c USING(id_cliente)
@@ -85,7 +85,7 @@ class PedidoHandler
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         //$_SESSION['idmod'] = $data['id_modelo'];
-        
+
         return $data;
     }
 
@@ -103,7 +103,7 @@ class PedidoHandler
         $sql = 'UPDATE prc_modelos 
                 SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
                 WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -122,7 +122,7 @@ class PedidoHandler
         INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_marca LIKE ? OR estado="A"
         ORDER BY mo.descripcion';
-        /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+            /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
                 FROM producto
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true

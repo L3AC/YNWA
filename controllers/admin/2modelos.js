@@ -260,7 +260,7 @@ const fillsubTable = async (form = null) => {
                 <tr>
                     <td>${row.talla}</td>
                     <td>${row.stock_modelo_talla}</td>
-                    <td>${row.precio_modelo_talla}</td>
+                    <td>$ ${row.precio_modelo_talla}</td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelo_talla})">
                             <i class="bi bi-pencil-fill"></i>

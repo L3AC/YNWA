@@ -54,19 +54,17 @@ PRIMARY KEY (id_usuario),
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-/*
-insert into sec_usuarios(id_rol,usuario,clave,nombres,apellidos,email,pin,estado) 
-values(1,'juancho','juancho','juan','pedri','juancho@gmail.com','904393',true);
-
-SELECT id_usuario, nombres, apellidos, email, usuario
-                FROM sec_usuarios
-                ORDER BY apellidos
-
-select u.id_usuario,u.usuario,marcas,modelos,tallas,pedidos,tipo_noticias,noticias,comentarios,clientes,usuarios FROM sec_usuarios u
-        INNER JOIN sec_roles r ON u.id_rol = r.id_rol
-        WHERE  u.usuario like  '%%';*/
-#select * from prc_clientes where estado=1
+SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
+        t.descripcion_talla,dp.cantidad_detalle_pedido
+        FROM prc_pedidos pe
+        INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN prc_clientes cl USING (id_cliente)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        INNER JOIN ctg_tallas t USING (id_talla)
+        
+        
 create table prc_clientes(
 id_cliente INT AUTO_INCREMENT,
 usuario_cliente varchar(30) UNIQUE,

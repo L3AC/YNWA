@@ -79,7 +79,7 @@
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
-                        <div class="modal-body row g-3">
+                        <div class="modal-body row g-4">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idPedido" name="idPedido">
                             <div class="col-sm-12 col-md-6">
@@ -123,12 +123,13 @@
                                     <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
                                     <thead>
                                         <tr>
-                                            <td colspan="6" id="subrowsFound"></td>
+                                            <td colspan="4" id="subrowsFound"></td>
                                         </tr>
                                         <tr>
                                             <th>MODELO</th>
                                             <th>MARCA</th>
-                                            <th>PRECIO $</th>
+                                            <th>TALLA</th>
+                                            <th>PRECIO</th>
                                             <th>CANTIDAD</th>
                                         </tr>
                                     </thead>
@@ -139,8 +140,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                                style="background-color: #CCC8AA; font-family: 'Times New Roman', Times, serif;">Salir</button>
+                            
                         </div>
                     </form>
                 </div>

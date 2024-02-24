@@ -35,7 +35,7 @@ class DetallePedidoHandler
         }
 
         $sql = 'SELECT pe.id_pedido,mo.descripcion_modelo,ma.descripcion_marca,
-        t.descripcion_talla,dp.cantidad_detalle_pedido
+        mt.precio_modelo_talla,t.descripcion_talla,dp.cantidad_detalle_pedido
         FROM prc_pedidos pe
         INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
         INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)

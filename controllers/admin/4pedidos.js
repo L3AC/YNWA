@@ -226,6 +226,7 @@ SUBINPUTSEARCH.addEventListener('input', async function ()  {
                     <td>${row.descripcion_modelo}</td>
                     <td>${row.descripcion_marca}</td>
                     <td>${row.descripcion_talla}</td>
+                    <td>$ ${row.precio_modelo_talla}</td>
                     <td>${row.cantidad_detalle_pedido}</td>
                 </tr>
             `;
@@ -282,8 +283,11 @@ const fillsubTable = async () => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.cantidad_detalle_pedido}</td>
+                <td>${row.descripcion_modelo}</td>
+                <td>${row.descripcion_marca}</td>
+                <td>${row.descripcion_talla}</td>
+                <td>$ ${row.precio_modelo_talla}</td>
+                <td>${row.cantidad_detalle_pedido}</td>
                 </tr>
             `;
         });

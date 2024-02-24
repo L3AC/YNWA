@@ -133,11 +133,8 @@ const fillTable = async (form = null) => {
                     <td>${row.fecha}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
-                            <i class="bi bi-trash-fill"></i>
+                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
+                        <i class="bi bi-info-circle"></i>
                         </button>
                     </td>
                 </tr>
@@ -191,11 +188,13 @@ const openUpdate = async (id) => {
         SUBMODAL_TITLE.textContent = 'Detalle del pedido';
         // Se prepara el formulario.
         SAVE_FORM.reset();
+        FORMA_PAGO.disabled = true;
+        ESTADO_PEDIDO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_PEDIDO.value = ROW.id_modelo;
-        NOMBRE_PEDIDO.value = ROW.descripcion_modelo;
-        ESTADO_PEDIDO.checked = ROW.estado_modelo;
+        ID_PEDIDO.value = ROW.id_pedido;
+        FORMA_PAGO.value = ROW.forma_pago_pedido;
+        ESTADO_PEDIDO.checked = ROW.estado_pedido;
         
         fillsubTable(SEARCHSUB_FORM);
     } else {
@@ -207,30 +206,18 @@ SUBINPUTSEARCH.addEventListener('input', async function ()  {
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
     FORM.append('valor', SUBINPUTSEARCH.value);
+    FORM.append('idPedido', ID_PEDIDO.value);
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
-            // Se establece un icono para el estado del PEDIDO.
-            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
+            SUBTABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.cliente}</td>
-                    <td>${row.forma_pago_pedido}</td>
-                    <td>${row.fecha}</td>
-                    <td><i class="${icon}"></i></td>
-                    <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
+                    <td>${row.descripcion_modelo}</td>
+                    <td>${row.cantidad_detalle_pedido}</td>
                 </tr>
             `;
         });
@@ -271,14 +258,14 @@ const openDelete = async (id) => {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillsubTable = async (form = null) => {
-    // Se inicializa el contenido de la tabla.
+const fillsubTable = async () => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
-    // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', SUBINPUTSEARCH.value?? null);
+    FORM.append('idPedido', ID_PEDIDO.value?? null);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(DETALLEPEDIDO_API, action, form);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -286,24 +273,15 @@ const fillsubTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.talla}</td>
-                    <td>${row.stock_modelo_talla}</td>
-                    <td>${row.precio_modelo_talla}</td>
-                    <td>
-                        <button type="button" class="btn btn-info" onclick="opensubUpdate(${row.id_modelo_talla})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelo_talla})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
+                    <td>${row.descripcion_modelo}</td>
+                    <td>${row.cantidad_detalle_pedido}</td>
                 </tr>
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
-        //sweetAlert(4, DATA.error, true);
+       // sweetAlert(4, DATA.error, true);
     }
 }
 const subclose = () => {

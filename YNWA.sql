@@ -161,14 +161,9 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
 
-SELECT pe.id_pedido,mo.descripcion_modelo,dp.cantidad_detalle_pedido
-FROM prc_pedidos pe
-INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
-INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
-INNER JOIN prc_modelos mo USING (id_modelo)
-INNER JOIN prc_clientes cl USING (id_cliente)
-WHERE pe.id_pedido =3 AND mo.descripcion_modelo like '%%'
-ORDER BY mo.descripcion_modelo;
+SELECT id_pedido,forma_pago_pedido,estado_pedido
+FROM prc_pedidos
+WHERE id_pedido =3;
 
 
 CREATE TABLE prc_modelo_tallas(

@@ -75,14 +75,12 @@ class PedidoHandler
 
     public function readOne()
     {
-        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion_modelo,
-        mo.foto_modelo,mo.estado_modelo, ma.descripcion_marca marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.id_modelo=? ';
+        $sql ='SELECT id_pedido,forma_pago_pedido,estado_pedido
+        FROM prc_pedidos
+        WHERE id_pedido =?;';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
-        $_SESSION['idmod'] = $data['id_modelo'];
+        //$_SESSION['idmod'] = $data['id_modelo'];
         
         return $data;
     }

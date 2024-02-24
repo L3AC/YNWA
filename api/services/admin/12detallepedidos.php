@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if (!$producto->setId($_POST['idModeloTalla'])) {
+                if (!$producto->setId($_POST['idPedido'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
                     $result['status'] = 1;
@@ -44,7 +44,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if (!$producto->setIdModelo($_SESSION['idmod'])) {
+                if (!$producto->setIdModelo($_POST['idPedido'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;

@@ -2,11 +2,11 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/12detallepedidos_handler.php');
+require_once('../../models/handler/11modelotallas_handler.php');
 /*
  *	Clase para manejar el encapsulamiento de los datos de la tabla PRODUCTO.
  */
-class DetallePedidoData extends DetallePedidoHandler
+class ModeloTallaData extends ModeloTallaHandler
 {
     /*
      *  Atributos adicionales.

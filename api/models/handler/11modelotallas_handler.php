@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class DetallePedidoHandler
+class ModeloTallaHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -26,8 +26,9 @@ class DetallePedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($valor)
     {
+        $valor='';
         $value = '%' . Validator::getSearchValue() . '%';
 
         $sql='select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla

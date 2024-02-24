@@ -4,7 +4,7 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ModeloTallasHandler
+class DetallePedidoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
@@ -26,7 +26,7 @@ class ModeloTallasHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($id,$value)
+    public function searchRows($value)
     {
         if ($value === '') {
             $value = '%%';
@@ -43,7 +43,7 @@ class ModeloTallasHandler
         WHERE pe.id_pedido =? AND mo.descripcion_modelo like ?
         ORDER BY mo.descripcion_modelo';
 
-        $params = array($id,$value);
+        $params = array($this->id,$value);
         return Database::getRows($sql, $params);
     }
 

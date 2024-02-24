@@ -26,18 +26,24 @@ class ModeloTallasHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($id,$value)
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        if ($value === '') {
+            $value = '%%';
+        } else {
+            $value = '%' . $value.'%';
+        }
 
-        $sql='select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE t.descripcion LIKE ? AND mt.id_modelo=?
-        ORDER BY t.descripcion';
+        $sql = 'SELECT pe.id_pedido,mo.descripcion_modelo,dp.cantidad_detalle_pedido
+        FROM prc_pedidos pe
+        INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN prc_clientes cl USING (id_cliente)
+        WHERE pe.id_pedido =? AND mo.descripcion_modelo like ?
+        ORDER BY mo.descripcion_modelo';
 
-        $params = array($value,$this->idModelo);
+        $params = array($id,$value);
         return Database::getRows($sql, $params);
     }
 

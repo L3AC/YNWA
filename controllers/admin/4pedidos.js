@@ -18,6 +18,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
+    SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
@@ -187,7 +188,7 @@ const openUpdate = async (id) => {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
         SUBTABLE.hidden = false;
-        SUBMODAL_TITLE.textContent = 'Tallas del modelo';
+        SUBMODAL_TITLE.textContent = 'Detalle del pedido';
         // Se prepara el formulario.
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
@@ -195,21 +196,50 @@ const openUpdate = async (id) => {
         ID_PEDIDO.value = ROW.id_modelo;
         NOMBRE_PEDIDO.value = ROW.descripcion_modelo;
         ESTADO_PEDIDO.checked = ROW.estado_modelo;
-        IMAGEN_PRE.style.maxWidth = '300px';
-        IMAGEN_PRE.style.maxHeight = 'auto';
-        IMAGEN_PRE.style.margin = '20px auto';
-        IMAGEN_PRE.innerHTML = '';
-        IMAGEN_PRE.insertAdjacentHTML(
-            "beforeend",
-            `<img src="${SERVER_URL}images/modelos/${ROW.foto_modelo}">` // Backticks para img variable
-        );
-
-        fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
+        
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
+SUBINPUTSEARCH.addEventListener('input', async function ()  {
+    SUBROWS_FOUND.textContent = '';
+    SUBTABLE_BODY.innerHTML = '';
+    const FORM = new FormData();
+    FORM.append('valor', SUBINPUTSEARCH.value);
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            console.log(DATA.dataset);
+            // Se establece un icono para el estado del PEDIDO.
+            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.cliente}</td>
+                    <td>${row.forma_pago_pedido}</td>
+                    <td>${row.fecha}</td>
+                    <td><i class="${icon}"></i></td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_pedido})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        SUBROWS_FOUND.textContent = DATA.message;
+    } else {
+       // sweetAlert(4, DATA.error, true);
+    }
+});
 /*
 *   Función asíncrona para eliminar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -248,7 +278,7 @@ const fillsubTable = async (form = null) => {
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(MODELOTALLAS_API, action, form);
+    const DATA = await fetchData(DETALLEPEDIDO_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

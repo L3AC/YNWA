@@ -112,6 +112,8 @@ FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+
 insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
 
 CREATE TABLE ctg_tipo_noticias(
@@ -159,7 +161,15 @@ ON DELETE CASCADE ON UPDATE CASCADE
 );
 insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
 
-select * from prc_modelo_tallas;
+SELECT pe.id_pedido,mo.descripcion_modelo,dp.cantidad_detalle_pedido
+FROM prc_pedidos pe
+INNER JOIN prc_detalle_pedidos dp USING (id_pedido)
+INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+INNER JOIN prc_modelos mo USING (id_modelo)
+INNER JOIN prc_clientes cl USING (id_cliente)
+WHERE pe.id_pedido =3 AND mo.descripcion_modelo like '%%'
+ORDER BY mo.descripcion_modelo;
+
 
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla int AUTO_INCREMENT,
@@ -173,7 +183,7 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_modelo_tallas 
+
 
 /*TRIGGER*/
 DELIMITER //

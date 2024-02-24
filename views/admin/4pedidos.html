@@ -98,9 +98,42 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="subtable">
+                            <!-- TABLA DE MODELO TALLAS-->
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="submodalTitle"></h1>
+                            </div>
+
+                            <form class="col-sm-12 col-md-6" id="searchsubForm">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input id="subinputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                <table id="subheaderT" class="table table-hover">
+                                    <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                    <thead>
+                                        <tr>
+                                            <td colspan="6" id="subrowsFound"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>TALLA</th>
+                                            <th>STOCK</th>
+                                            <th>PRECIO $</th>
+                                            <th>ACCIONES</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                    <tbody id="subtableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div class="modal-footer">
-                            <button type="submit" class="btn"
-                                style="background-color: #CCC8AA; font-family: 'Times New Roman', Times, serif;">Guardar</button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                style="background-color: #CCC8AA; font-family: 'Times New Roman', Times, serif;">Salir</button>
                         </div>
                     </form>
                 </div>

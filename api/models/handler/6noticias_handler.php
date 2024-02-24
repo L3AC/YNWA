@@ -13,6 +13,7 @@ class NoticiaHandler
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
+    protected $idtiponoticia = null;
     protected $existencias = null;
     protected $imagen = null;
     protected $categoria = null;
@@ -40,9 +41,9 @@ class NoticiaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO producto(nombre_producto, descripcion_producto, precio_producto, existencias_producto, imagen_producto, estado_producto, id_categoria, id_administrador)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->descripcion, $this->precio, $this->existencias, $this->imagen, $this->estado, $this->categoria, $_SESSION['idAdministrador']);
+        $sql = 'INSERT INTO prc_noticias(id_tipo_noticia, titulo_noticia, foto_noticia, contenido_noticia, estado_noticia, fecha_noticia)
+                VALUES(?, ?, ?, ?, ?, now())';
+        $params = array($this->idtiponoticia, $this->nombre, $this->imagen, $this->descripcion, $this->estado);
         return Database::executeRow($sql, $params);
     }
 

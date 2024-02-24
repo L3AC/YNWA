@@ -119,7 +119,7 @@ const openCreate = () => {
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(MARCA_API, 'readAll', 'idNoticia');
+    fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia');
 }
 
 /*
@@ -145,7 +145,7 @@ const openUpdate = async (id) => {
         NOMBRE_PRODUCTO.value = ROW.titulo;
         CONTENIDO_NOTICIA.value = ROW.contenido;
         ESTADO_PRODUCTO.checked = ROW.estado;
-        fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia', ROW.id_tiponoticia);
+        fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia', ROW.id_tipo_noticia);
     } else {
         sweetAlert(2, DATA.error, false);
     }

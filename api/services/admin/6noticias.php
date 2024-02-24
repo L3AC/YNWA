@@ -27,11 +27,12 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setDescripcion($_POST['descripcionModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
-                    !$producto->setImagen($_FILES['imagenModelo'])
+                    !$producto->setNombre($_POST['tituloNoticia']) or
+                    !$producto->setDescripcion($_POST['contenidoNoticia']) or
+                    !$producto->setCategoria($_POST['tipoNoticia']) or
+                    !$producto->setImagen($_FILES['imagenModelo']) or
+                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? "A" : "I") 
+                    
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {

@@ -97,7 +97,7 @@ class NoticiaData extends NoticiaHandler
     public function setCategoria($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->categoria = $value;
+            $this->idtiponoticia = $value;
             return true;
         } else {
             $this->data_error = 'El identificador es incorrecto';

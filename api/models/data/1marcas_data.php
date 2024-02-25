@@ -28,6 +28,10 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+     *   Establece el nombre de la marca
+     */
+
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphanumeric($value)) {
@@ -42,8 +46,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece la descripción de la marca.
+    */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
+        // Validación de la descripción.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
@@ -56,8 +64,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece el precio del producto.
+    */
     public function setPrecio($value)
     {
+        // Validación del precio.
         if (Validator::validateMoney($value)) {
             $this->precio = $value;
             return true;
@@ -67,8 +79,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece las existencias del producto.
+    */
     public function setExistencias($value)
     {
+        // Validación de las existencias.
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;
             return true;
@@ -78,8 +94,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece la imagen del producto.
+    */
     public function setImagen($file, $filename = null)
     {
+        // Validación de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
             $this->imagen = Validator::getFileName();
             return true;
@@ -94,8 +114,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece la categoría del producto.
+    */
     public function setCategoria($value)
     {
+        // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
@@ -105,9 +129,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+     * Establece el estado del producto.
+     */
     public function setEstado($value)
     {
-        
+        // Validación del estado.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -117,8 +144,12 @@ class MarcaData extends MarcaHandler
         }
     }
 
+    /*
+    * Establece el nombre de archivo.
+    */
     public function setFilename()
     {
+        // Obtiene el nombre de archivo desde la lectura.
         if ($data = $this->readFilename()) {
             $this->filename = $data['imagen_producto'];
             return true;
@@ -127,6 +158,7 @@ class MarcaData extends MarcaHandler
             return false;
         }
     }
+
 
     /*
      *  Métodos para obtener los atributos adicionales.

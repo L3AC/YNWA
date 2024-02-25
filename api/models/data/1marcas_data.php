@@ -47,8 +47,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece la descripción de la marca.
-    */
+ * Establece la descripción de la marca.
+ */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         // Validación de la descripción.
@@ -65,8 +65,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece el precio del producto.
-    */
+ * Establece el precio de la marca.
+ */
     public function setPrecio($value)
     {
         // Validación del precio.
@@ -80,8 +80,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece las existencias del producto.
-    */
+ * Establece las existencias de la marca.
+ */
     public function setExistencias($value)
     {
         // Validación de las existencias.
@@ -95,8 +95,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece la imagen del producto.
-    */
+ * Establece la imagen de la marca.
+ */
     public function setImagen($file, $filename = null)
     {
         // Validación de la imagen.
@@ -115,8 +115,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece la categoría del producto.
-    */
+ * Establece la categoría de la marca.
+ */
     public function setCategoria($value)
     {
         // Validación del identificador de la categoría.
@@ -130,8 +130,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-     * Establece el estado del producto.
-     */
+ * Establece el estado de la marca.
+ */
     public function setEstado($value)
     {
         // Validación del estado.
@@ -145,8 +145,8 @@ class MarcaData extends MarcaHandler
     }
 
     /*
-    * Establece el nombre de archivo.
-    */
+ * Establece el nombre de archivo.
+ */
     public function setFilename()
     {
         // Obtiene el nombre de archivo desde la lectura.

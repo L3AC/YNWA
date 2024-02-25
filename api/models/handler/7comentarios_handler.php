@@ -42,7 +42,7 @@ class ComentarioHandler
         INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN ctg_marcas ma USING (id_marca)
-        WHERE descripcion_modelo like ?
+        WHERE CONCAT(descripcion_marca," ",descripcion_modelo) like ?
         ORDER BY fecha_comentario DESC, estado_comentario DESC';
 
         $params = array($value);
@@ -59,11 +59,17 @@ class ComentarioHandler
 
     public function readAll()
     {
-        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
-        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        FROM prc_pedidos p
+        $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,fecha_comentario,estado_comentario
+        from prc_comentarios cm
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
         INNER JOIN prc_clientes c USING(id_cliente)
-        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        ORDER BY fecha_comentario DESC, estado_comentario DESC';
         return Database::getRows($sql);
     }
     public function readsubAll()

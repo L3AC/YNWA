@@ -13,6 +13,7 @@
   <!-- Llamada al icono de la página web -->
   <link type="image/png" rel="icon" href="../../resources/img/icon.png">
   <link href="../../resources/css/nav.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../resources/css/estado.css">
   <!-- Llamada a las hojas de estilos del framework e iconos -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -77,31 +78,40 @@
           </div>
           <!-- Formulario para crear o actualizar un registro -->
           <form id="saveForm">
-            <div class="modal-body row g-3">
+            <div class="modal-body row g-4">
               <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-              <input type="hidden" id="idNoticia" name="idNoticia">
-              <div class="col-sm-12 col-md-6">
-                <label for="tituloNoticia" class="form-label">Título</label>
-                <input id="tituloNoticia" type="text" name="tituloNoticia" class="form-control" required>
+              <input type="hidden" id="idComentario" name="idComentario">
+              <div class="col-sm-12 col-md-12">
+                <label for="clienteComentario" class="form-label">Cliente</label>
+                <input id="clienteComentario" type="text" name="clienteComentario" class="form-control" required>
               </div>
-              <div class="col-sm-12 col-md-6">
-                <label for="contenidoNoticia" class="form-label">Contenido</label>
-                <textarea id="contenidoNoticia" name="contenidoNoticia" class="form-control" rows="6"
+              <div class="col-sm-12 col-md-12">
+                <label for="contenidoComentario" class="form-label">Contenido</label>
+                <textarea id="contenidoComentario" name="contenidoComentario" class="form-control" rows="6"
                   required></textarea>
               </div>
               <div class="col-sm-12 col-md-6">
-                <label for="tipoNoticia" class="form-label">Tipo noticia</label>
-                <select id="tipoNoticia" name="tipoNoticia" class="form-select" required>
-                </select>
+                <label for="puntuacionComentario" class="form-label">Puntuacion</label>
+                <input id="puntuacionComentario" type="text" name="puntuacionComentario" class="form-control" required>
               </div>
               <div class="col-sm-12 col-md-6">
-                <label for="imagenModelo" class="form-label">Imagen</label>
-                <input id="imagenModelo" type="file" name="imagenModelo" class="form-control" accept=".png, .jpg">
+                <label for="fechaComentario" class="form-label">Fecha</label>
+                <input id="fechaComentario" type="text" name="fechaComentario" class="form-control" required>
               </div>
-              <div class=" col-sm-12 col-md-6 form-check form-switch form-check-reverse">
-                <input class="form-check-input" type="checkbox" id="estadoNoticia" name="estadoNoticia" checked>
-                <label class="form-check-label" for="estadoNoticia">Estado</label>
+              <div class="col-sm-12 col-md-6">
+                <label for="modeloComentario" class="form-label">Modelo</label>
+                <input id="modeloComentario" type="text" name="modeloComentario" class="form-control" required>
               </div>
+              <div class="col-6">
+                <div class="p-3">
+                    <div class="switch-button">
+                        <p id="T1">Estado</p>
+                        <input type="checkbox" name="estadoComentario" id="estadoComentario"
+                            class="switch-button__checkbox form-control">
+                        <label for="estadoComentario" id="swa" class="switch-button__label"></label>
+                    </div>
+                </div>
+            </div>
 
             </div>
             <div class="modal-footer">

@@ -34,7 +34,8 @@ class ComentarioHandler
 
         $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
-        puntuacion_comentario,fecha_comentario,estado_comentario
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
         from prc_comentarios cm
         INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
         INNER JOIN prc_pedidos p USING(id_pedido)
@@ -61,7 +62,8 @@ class ComentarioHandler
     {
         $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
-        puntuacion_comentario,fecha_comentario,estado_comentario
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
         from prc_comentarios cm
         INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
         INNER JOIN prc_pedidos p USING(id_pedido)
@@ -91,7 +93,8 @@ class ComentarioHandler
     {
         $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
-        puntuacion_comentario,fecha_comentario,estado_comentario
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
         from prc_comentarios cm
         INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
         INNER JOIN prc_pedidos p USING(id_pedido)
@@ -119,10 +122,10 @@ class ComentarioHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelos 
-                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE prc_comentarios
+                SET estado_comentario = ?
+                WHERE id_comentario = ?';
+        $params = array($this->estado,  $this->id);
         return Database::executeRow($sql, $params);
     }
 

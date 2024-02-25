@@ -60,22 +60,15 @@ if (isset($_GET['action'])) {
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
+                echo $_POST['idComentario'];
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename())
+                    !$producto->setId($_POST['idComentario']) or
+                    !$producto->setEstado(isset($_POST['estadoComentario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
-                    // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['message'] = 'Registro modificado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }

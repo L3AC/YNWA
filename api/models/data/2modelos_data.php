@@ -28,8 +28,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece el nombre del modelo.
+ */
     public function setNombre($value, $min = 2, $max = 50)
     {
+        // Validación del nombre.
         if (!Validator::validateAlphanumeric($value)) {
             $this->data_error = 'El nombre debe ser un valor alfanumérico';
             return false;
@@ -42,8 +46,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece la descripción del modelo.
+ */
     public function setDescripcion($value, $min = 2, $max = 250)
     {
+        // Validación de la descripción.
         if (!Validator::validateString($value)) {
             $this->data_error = 'La descripción contiene caracteres prohibidos';
             return false;
@@ -56,8 +64,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece el precio del modelo.
+ */
     public function setPrecio($value)
     {
+        // Validación del precio.
         if (Validator::validateMoney($value)) {
             $this->precio = $value;
             return true;
@@ -67,8 +79,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece las existencias del modelo.
+ */
     public function setExistencias($value)
     {
+        // Validación de las existencias.
         if (Validator::validateNaturalNumber($value)) {
             $this->existencias = $value;
             return true;
@@ -78,8 +94,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece la imagen del modelo.
+ */
     public function setImagen($file, $filename = null)
     {
+        // Validación de la imagen.
         if (Validator::validateImageFile($file, 500, 500)) {
             $this->imagen = Validator::getFileName();
             return true;
@@ -94,8 +114,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece la categoría del modelo.
+ */
     public function setCategoria($value)
     {
+        // Validación del identificador de la categoría.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
@@ -105,8 +129,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece el estado del modelo.
+ */
     public function setEstado($value)
     {
+        // Validación del estado.
         if (Validator::validateBoolean($value)) {
             $this->estado = $value;
             return true;
@@ -116,8 +144,12 @@ class ModeloData extends ModeloHandler
         }
     }
 
+    /*
+ * Establece el nombre de archivo.
+ */
     public function setFilename()
     {
+        // Obtiene el nombre de archivo desde la lectura.
         if ($data = $this->readFilename()) {
             $this->filename = $data['imagen_producto'];
             return true;

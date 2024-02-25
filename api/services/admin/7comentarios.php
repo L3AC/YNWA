@@ -60,7 +60,6 @@ if (isset($_GET['action'])) {
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
-                echo $_POST['idComentario'];
                 if (
                     !$producto->setId($_POST['idComentario']) or
                     !$producto->setEstado(isset($_POST['estadoComentario']) ? 1 : 0) 

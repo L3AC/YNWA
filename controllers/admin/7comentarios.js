@@ -175,7 +175,6 @@ const openUpdate = async (id) => {
         // Se prepara el formulario.
         SAVE_FORM.reset();
         //INABILITARLOS
-        ID_COMENTARIO.disabled = true;
         CLIENTE_COMENTARIO.disabled = true;
         CONTENIDO_COMENTARIO.disabled = true;
         PUNTUACION_COMENTARIO.disabled = true;

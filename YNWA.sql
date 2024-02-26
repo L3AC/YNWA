@@ -30,7 +30,8 @@ insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas
 pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
 values('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Empleado',true,false,true,false,true,false,true,true,false,false,false),
-('Vendedor',true,false,true,false,true,false,false,true,false,false,false);
+('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
+('Asistente',true,true,true,true,false,false,false,true,true,false,false);
 
 SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
         tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
@@ -71,7 +72,7 @@ ORDER BY descripcion_opc;
 SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
                 FROM sec_usuarios
                 WHERE id_usuario != idmin('sec_usuarios') AND nombre_usuario like '%%' AND id_rol!=1
-                ORDER BY apellido_usuario
+                ORDER BY apellido_usuario;
                 
                 
 update sec_usuarios set id_rol=2 where id_usuario = 2 

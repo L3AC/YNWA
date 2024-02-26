@@ -24,6 +24,8 @@ insert into sec_roles (id_rol, descripcion_opc, estado_opc,marcas_opc,modelos_op
 pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
 values(1,'Admin',true,true,true,true,true,true,true,true,true,true,true),
 (2,'Empleado',true,false,true,false,true,false,true,true,false,false,false);
+
+
 /*SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
 CREATE FUNCTION minrol()
@@ -39,7 +41,7 @@ SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
 FROM sec_roles
-WHERE id_rol != minrol()
+WHERE id_rol != minrol() AND descripcion_opc like ?
 ORDER BY descripcion_opc;
 
 

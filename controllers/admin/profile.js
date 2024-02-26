@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (DATA.status) {
         // Se inicializan los campos del formulario con los datos del usuario que ha iniciado sesión.
         const ROW = DATA.dataset;
+        console.log (ROW.nombres);
         NOMBRE_ADMINISTRADOR.value = ROW.nombres;
         APELLIDO_ADMINISTRADOR.value = ROW.apellidos;
         CORREO_ADMINISTRADOR.value = ROW.email;

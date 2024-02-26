@@ -31,7 +31,7 @@ if (isset($_GET['action'])) {
                     !$producto->setDescripcion($_POST['contenidoNoticia']) or
                     !$producto->setCategoria($_POST['tipoNoticia']) or
                     !$producto->setImagen($_FILES['imagenModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? "A" : "I") 
+                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) 
                     
                 ) {
                     $result['error'] = $producto->getDataError();
@@ -39,7 +39,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
+                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenModelo'], $producto::RUTA_IMAGEN);
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }

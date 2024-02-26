@@ -20,7 +20,7 @@ class NoticiaHandler
     protected $estado = null;
 
     // Constante para establecer la ruta de las imágenes.
-    const RUTA_IMAGEN = '../../images/modelos/';
+    const RUTA_IMAGEN = '../../images/noticias/';
 
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
@@ -41,9 +41,9 @@ class NoticiaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_noticias(id_tipo_noticia, titulo_noticia, foto_noticia, contenido_noticia, estado_noticia, fecha_noticia)
+        $sql = 'INSERT INTO prc_noticias( titulo_noticia, foto_noticia, contenido_noticia, estado_noticia, fecha_noticia)
                 VALUES(?, ?, ?, ?, ?, now())';
-        $params = array($this->idtiponoticia, $this->nombre, $this->imagen, $this->descripcion, $this->estado);
+        $params = array($this->nombre, $this->imagen, $this->descripcion, $this->estado);
         return Database::executeRow($sql, $params);
     }
 

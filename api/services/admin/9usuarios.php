@@ -180,7 +180,7 @@ if (isset($_GET['action'])) {
             case 'readUsers':
                 if ($administrador->readAll()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Debe autenticarse para ingresar';
+                    //$result['message'] = 'Debe autenticarse para ingresar';
                 } else {
                     $result['error'] = 'Debe crear un administrador para comenzar';
                 }

@@ -199,7 +199,7 @@ const openUpdate = async (id) => {
         COMENTARIO_OPC.checked   = ROW.comentarios_opc;
         CLIENTE_OPC.checked      = ROW.clientes_opc;
         USUARIO_OPC.checked      = ROW.usuarios_opc;
-        ROL_OPC.checked          = ROW.roles_opc;
+        //ROL_OPC.checked          = ROW.roles_opc;
  
         
     } else {

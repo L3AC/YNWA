@@ -48,16 +48,16 @@ const loadTemplate = async () => {
                             <div class="offcanvas-body">
                                 <ul class="list-group list-group-flush" >
                                 <li class="list-group-item" id="po"><a href="index.html">Inicio ${DATA.username} ${DATA.idrol}</a></li>
-                                <li class="list-group-item" id="po"><a href="1marcas.html">Marcas</a></li>
-                                <li class="list-group-item" id="po"><a href="2modelos.html">Modelos</a></li>
-                                <li class="list-group-item" id="po"><a href="3tallas.html">Tallas</a></li>
-                                <li class="list-group-item" id="po"><a href="4pedidos.html">Pedidos</a></li>
-                                <li class="list-group-item" id="po"><a href="5tiponoticia.html">Tipo Noticias</a></li>
-                                <li class="list-group-item" id="po"><a href="6noticias.html">Noticias</a></li>
-                                <li class="list-group-item" id="po"><a href="7comentarios.html">Comentarios</a></li>
-                                <li class="list-group-item" id="po"><a href="8clientes.html">Clientes</a></li>
-                                <li class="list-group-item" id="po"><a href="9usuarios.html">Usuarios</a></li>
-                                <li class="list-group-item" id="po"><a href="10roles.html">Roles</a></li>
+                                <li class="list-group-item" id="marca"><a href="1marcas.html">Marcas</a></li>
+                                <li class="list-group-item" id="modelo"><a href="2modelos.html">Modelos</a></li>
+                                <li class="list-group-item" id="talla"><a href="3tallas.html">Tallas</a></li>
+                                <li class="list-group-item" id="pedido"><a href="4pedidos.html">Pedidos</a></li>
+                                <li class="list-group-item" id="tipon"><a href="5tiponoticia.html">Tipo Noticias</a></li>
+                                <li class="list-group-item" id="noticia"><a href="6noticias.html">Noticias</a></li>
+                                <li class="list-group-item" id="comentario"><a href="7comentarios.html">Comentarios</a></li>
+                                <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
+                                <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
+                                <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
                                   </ul>
                             </div>
                         </div>
@@ -68,6 +68,7 @@ const loadTemplate = async () => {
                 </nav>
                 </header>
             `);
+            
             
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
@@ -87,7 +88,7 @@ const loadTemplate = async () => {
                 </footer>
             `);
         } else {
-            sweetAlert(3, DATA.error, false, 'index.html');
+            //sweetAlert(3, DATA.error, false, 'index.html');
         }
     } else {
         console.log('de vuelta');

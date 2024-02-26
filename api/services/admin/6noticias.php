@@ -30,8 +30,8 @@ if (isset($_GET['action'])) {
                     !$producto->setNombre($_POST['tituloNoticia']) or
                     !$producto->setDescripcion($_POST['contenidoNoticia']) or
                     !$producto->setCategoria($_POST['tipoNoticia']) or
-                    !$producto->setImagen($_FILES['imagenModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) 
+                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
+                    !$producto->setImagen($_FILES['imagenModelo'])
                     
                 ) {
                     $result['error'] = $producto->getDataError();

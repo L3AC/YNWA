@@ -13,6 +13,7 @@
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -86,10 +87,15 @@
                                 <label for="nombreTalla" class="form-label">Talla</label>
                                 <input id="nombreTalla" type="number" name="nombreTalla" class="form-control" required>
                             </div>
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" type="checkbox" id="estadoTalla" name="estadoTalla"
-                                    checked>
-                                <label class="form-check-label" for="estadoTalla">Estado</label>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="switch-button">
+                                        <p id="" style="margin-bottom: 1px;">Estado</p>
+                                        <input type="checkbox" name="estadoMarca" id="estadoMarca"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoMarca" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

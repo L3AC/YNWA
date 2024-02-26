@@ -34,14 +34,15 @@ class RolHandler
         if ($value === '') {
             $value = '%%';
         } else {
-            $value = '%' . $value.'%';
+            $value = '%' . $value . '%';
         }
 
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc
-                FROM sec_roles
-                WHERE descripcion_opc LIKE  ? 
-                ORDER BY CAST(descripcion_opc AS UNSIGNED)
-                OFFSET 1';
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
+        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
+        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
+        FROM sec_roles
+        WHERE id_rol != minrol() AND descripcion_opc like ?
+        ORDER BY descripcion_opc';
 
         $params = array($value);
         return Database::getRows($sql, $params);
@@ -52,26 +53,28 @@ class RolHandler
         $sql = 'insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
         pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
         values(?,?,?,?,?,?,?,?,?,?,?,?);';
-        $params = array($this->descripcion,$this->estado,$this->marcas,$this->modelos,$this->tallas,
-        $this->pedidos,$this->tiponoticias,$this->noticias,$this->comentarios,$this->roles,
-        $this->clientes,$this->usuarios);
+        $params = array(
+            $this->descripcion, $this->estado, $this->marcas, $this->modelos, $this->tallas,
+            $this->pedidos, $this->tiponoticias, $this->noticias, $this->comentarios, $this->roles,
+            $this->clientes, $this->usuarios
+        );
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
-        $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
-        tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
-        comentarios_opc,clientes_opc,usuarios_opc,roles_opc
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
+        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
+        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
         FROM sec_roles
-        ORDER BY CAST(descripcion_opc AS UNSIGNED)
-        OFFSET 1';
+        WHERE id_rol != minrol() 
+        ORDER BY descripcion_opc';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
+        $sql = 'SELECT id_rol, descripcion_opc, estado_opc,marcas_opc,marcas_opc,modelos_opc,
         tallas_opc,pedidos_opc,tipo_noticias_opc,noticias_opc,
         comentarios_opc,clientes_opc,usuarios_opc,roles_opc
         FROM sec_roles
@@ -94,7 +97,7 @@ class RolHandler
         $sql = 'UPDATE ctg_tallas
                 SET descripcion_talla = ?,estado_talla = ?
                 WHERE id_talla = ?';
-        $params = array($this->descripcion,$this->estado, $this->id);
+        $params = array($this->descripcion, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -113,7 +116,7 @@ class RolHandler
         INNER JOIN ctg_marcas ma USING(id_marca)
         WHERE mo.id_marca LIKE ? OR estado="A"
         ORDER BY mo.descripcion';
-        /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
+            /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
                 FROM producto
                 INNER JOIN categoria USING(id_categoria)
                 WHERE id_categoria = ? AND estado_producto = true

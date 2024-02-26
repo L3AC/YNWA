@@ -22,7 +22,29 @@ PRIMARY KEY(id_rol)
 );
 insert into sec_roles (id_rol, descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
 pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
-values(1,'Admin',true,true,true,true,true,true,true,true,true,true,true);
+values(1,'Admin',true,true,true,true,true,true,true,true,true,true,true),
+(2,'Empleado',true,false,true,false,true,false,true,true,false,false,false);
+/*SELECCIONAR EL PRIMER REGISTRO*/
+DELIMITER //
+CREATE FUNCTION minrol()
+RETURNS INT
+BEGIN
+    DECLARE min_id INT;
+    SELECT MIN(id_rol) INTO min_id FROM sec_roles;
+    RETURN min_id;
+END//
+DELIMITER ;
+
+SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
+       tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
+       comentarios_opc, clientes_opc, usuarios_opc, roles_opc
+FROM sec_roles
+WHERE id_rol != minrol()
+ORDER BY descripcion_opc;
+
+
+
+
 /*
 select * from sec_usuarios;
 
@@ -161,7 +183,18 @@ CREATE TABLE prc_comentarios (
 insert into prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
 values(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
 
-
+select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
+        from prc_comentarios cm
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        ORDER BY fecha_comentario DESC, estado_comentario DESC
 
 /*TRIGGER*/
 DELIMITER //

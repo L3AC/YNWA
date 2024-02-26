@@ -31,47 +31,6 @@ const confirmAction = (message) => {
     });
 }
 
-const alerta = async (type, text, timer, url = null,imagen) => {
-    // Se compara el tipo de mensaje a mostrar.
-    switch (type) {
-        case 1:
-            title = 'Éxito';
-            icon = 'success';
-            break;
-        case 2:
-            title = 'Error';
-            icon = 'error';
-            break;
-        case 3:
-            title = 'Advertencia';
-            icon = 'warning';
-            break;
-        case 4:
-            title = 'Aviso';
-            icon = 'info';
-    }
-    // Se define un objeto con las opciones principales para el mensaje.
-    let options = {
-        imageUrl: imagen,
-        imageWidth: 400,
-        imageHeight: 200,
-        imageAlt: "Custom image",
-        title: title,
-        text: text,
-        icon: icon,
-        closeOnClickOutside: false,
-        closeOnEsc: false,
-        button: { // Aquí envolvemos la función reload () en una función anónima
-            text: 'Aceptar'
-        }
-    };
-    // Se verifica el uso del temporizador.
-    (timer) ? options.timer = 3000 : options.timer = null;
-    // Se muestra el mensaje.
-    await swal(options);
-    // Se direcciona a una página web si se indica.
-    (url) ? location.href = url : undefined;
-}
 
 /*
 *   Función asíncrona para manejar los mensajes de notificación al usuario. Requiere la librería sweetalert para funcionar.

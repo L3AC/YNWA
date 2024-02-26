@@ -47,7 +47,7 @@ const loadTemplate = async () => {
                         </div>
                             <div class="offcanvas-body">
                                 <ul class="list-group list-group-flush" >
-                                <li class="list-group-item" id="po"><a href="index.html">Inicio ${DATA.username}</a></li>
+                                <li class="list-group-item" id="po"><a href="index.html">Inicio ${DATA.username} ${DATA.idrol}</a></li>
                                 <li class="list-group-item" id="po"><a href="1marcas.html">Marcas</a></li>
                                 <li class="list-group-item" id="po"><a href="2modelos.html">Modelos</a></li>
                                 <li class="list-group-item" id="po"><a href="3tallas.html">Tallas</a></li>

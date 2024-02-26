@@ -41,7 +41,7 @@ class RolHandler
         tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
         comentarios_opc, clientes_opc, usuarios_opc, roles_opc
         FROM sec_roles
-        WHERE id_rol != minrol() AND descripcion_opc like ?
+        WHERE id_rol != idmin(sec_roles)  AND descripcion_opc like ?
         ORDER BY descripcion_opc';
 
         $params = array($value);
@@ -67,7 +67,7 @@ class RolHandler
         tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
         comentarios_opc, clientes_opc, usuarios_opc, roles_opc
         FROM sec_roles
-        WHERE id_rol != minrol() 
+        WHERE id_rol != idmin(sec_roles) 
         ORDER BY descripcion_opc';
         return Database::getRows($sql);
     }

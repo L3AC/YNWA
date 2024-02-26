@@ -25,26 +25,34 @@ pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios
 values(1,'Admin',true,true,true,true,true,true,true,true,true,true,true),
 (2,'Empleado',true,false,true,false,true,false,true,true,false,false,false);
 
-
 /*SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
-CREATE FUNCTION minrol()
+CREATE FUNCTION idmin(tabla VARCHAR(255))
 RETURNS INT
 BEGIN
     DECLARE min_id INT;
-    SELECT MIN(id_rol) INTO min_id FROM sec_roles;
+
+    CASE tabla
+        WHEN 'sec_usuarios' THEN
+            SELECT MIN(id_usuario) INTO min_id FROM sec_usuarios;
+        WHEN 'sec_roles' THEN
+            SELECT MIN(id_rol) INTO min_id FROM sec_roles;
+        -- Agrega más casos según sea necesario para cada tabla
+        ELSE
+            SET min_id = NULL;
+    END CASE;
+
     RETURN min_id;
 END//
 DELIMITER ;
+
 
 SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
 FROM sec_roles
-WHERE id_rol != minrol() AND descripcion_opc like ?
+WHERE id_rol != idmin('sec_roles') AND descripcion_opc like '%%'
 ORDER BY descripcion_opc;
-
-
 
 
 /*
@@ -53,6 +61,7 @@ select * from sec_usuarios;
 SELECT id_usuario , usuario, clave
                 FROM sec_usuarios
                 WHERE  usuario ='juancho';*/
+
 
 CREATE TABLE sec_usuarios(
 id_usuario INT auto_increment,

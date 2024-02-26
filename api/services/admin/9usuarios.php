@@ -17,13 +17,20 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if (!Validator::validateSearch($_POST['search'])) {
-                    $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $administrador->searchRows()) {
+                if ($result['dataset'] = $administrador->searchRows($_SESSION['idRol'], $_POST['valor']/*,$_POST['valor2'],$_POST['valor3'],*/)
+                ) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error'] = 'No hay coincidencias';
+                }
+                break;
+            case 'fillTab':
+                if ($result['dataset'] = $administrador->fillTab($_SESSION['idRol'])
+                ) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                } else {
+                    $result['error'] = 'No existen administradores registrados';
                 }
                 break;
             case 'createRow':
@@ -50,7 +57,6 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     $result['username'] = $_SESSION['usuarion'];
-
                 } else {
                     $result['error'] = 'No existen administradores registrados';
                 }
@@ -96,6 +102,7 @@ if (isset($_GET['action'])) {
                 if (isset($_SESSION['usuarion'])) {
                     $result['status'] = 1;
                     $result['username'] = $_SESSION['usuarion'];
+                    $result['idrol'] = $_SESSION['idRol'];
                     /*$result['marcaopc'] = $_SESSION['usuarion'];
                     $result['username'] = $_SESSION['usuarion'];
                     $result['username'] = $_SESSION['usuarion'];
@@ -111,7 +118,6 @@ if (isset($_GET['action'])) {
                     $result['username'] = $_SESSION['usuarion'];
                     $result['username'] = $_SESSION['usuarion'];
                     $result['username'] = $_SESSION['usuarion'];*/
-
                 } else {
                     $result['error'] = 'Alias de administrador indefinido';
                 }
@@ -133,7 +139,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
-                
+
                 if (
                     !$administrador->setNombre($_POST['nombreAdministrador']) or
                     !$administrador->setApellido($_POST['apellidoAdministrador']) or
@@ -198,16 +204,16 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                
+
                 $_POST = Validator::validateForm($_POST);
-                
+
                 if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {
                     $result['error'] = 'Credenciales incorrectas';
                 }
-                
+
                 break;
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
@@ -222,4 +228,3 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
-

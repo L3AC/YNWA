@@ -34,7 +34,7 @@ class AdministradorHandler
       } 
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_usuario , usuario_usuario, clave_usuario
+        $sql = 'SELECT id_usuario ,id_rol, usuario_usuario, clave_usuario
                 FROM sec_usuarios
                 WHERE  usuario_usuario = ?';
         //echo($username);
@@ -44,6 +44,7 @@ class AdministradorHandler
         if (password_verify($password, $data['clave_usuario'])) {
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuarion'] = $data['usuario_usuario'];
+            $_SESSION['idRol'] = $data['id_rol'];
             //echo ($_SESSION['usuario']).' 1';
             return true;
         } else {
@@ -92,18 +93,33 @@ class AdministradorHandler
         $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $_SESSION['idUsuario']);
         return Database::executeRow($sql, $params);
     }
-
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
-    public function searchRows()
+    public function searchRows($idrol,$value/*,$value2,$value3*/)
     {
-        $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_administrador,id_rol, nombre_administrador, apellido_administrador, correo_administrador, alias_administrador
-                FROM administrador
-                WHERE apellido_administrador LIKE ? OR nombre_administrador LIKE ?
-                ORDER BY apellido_administrador';
-        $params = array($value, $value);
+        $value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
+        /*$value2 = ($value2 === '') ? '%%' : '%' . $value2 . '%';
+        $value3 = ($value3 === '') ? '%%' : '%' . $value3 . '%';*/
+
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+        FROM sec_usuarios
+        WHERE id_usuario != idmin("sec_usuarios") 
+        AND id_rol!=?
+        ORDER BY apellido_usuario';
+
+        $params = array($idrol);
+        return Database::getRows($sql, $params);
+    }
+    public function fillTab($idrol)
+    {
+        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+        FROM sec_usuarios
+        WHERE id_usuario != idmin("sec_usuarios") 
+        AND id_rol!=?
+        ORDER BY apellido_usuario';
+
+        $params = array($idrol);
         return Database::getRows($sql, $params);
     }
 
@@ -120,8 +136,7 @@ class AdministradorHandler
     public function readAll()
     {
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-                FROM sec_usuarios
-                ORDER BY apellido_usuario';
+        FROM sec_usuarios';
         return Database::getRows($sql);
     }
     public function readAllA()

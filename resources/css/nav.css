@@ -19,8 +19,11 @@
     margin-left: 10px;
   }
 
-  #po{
+/*.li{
     background-color: #F1EFEF;
+  }*/
+  .list-group.list-group-flush li {
+    background-color: #F1EFEF; /* Cambia el color de fondo según tus necesidades */
   }
 
   #io{

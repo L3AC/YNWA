@@ -66,7 +66,7 @@ class RolHandler
         tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
         comentarios_opc, clientes_opc, usuarios_opc, roles_opc
         FROM sec_roles
-        WHERE id_rol != idmin("sec_roles") and id_rol!=?
+        WHERE id_rol != idmin("sec_roles") and id_rol!=? AND estado_opc=true
         ORDER BY descripcion_opc';
         $params = array($this->id);
         return Database::getRows($sql, $params);

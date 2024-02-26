@@ -23,21 +23,25 @@ class AdministradorHandler
      *  Métodos para gestionar la cuenta del administrador.
      */
     /*GENERAR PIN*/
-    public function generarPin() {
+    public function generarPin()
+    {
         $pinLength = 6;
         $pin = '';
-      
+
         for ($i = 0; $i < $pinLength; $i++) {
-          $pin .= mt_rand(0, 9);
+            $pin .= mt_rand(0, 9);
         }
-      
+
         return $pin;
-      } 
+    }
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_usuario ,id_rol, usuario_usuario, clave_usuario
-                FROM sec_usuarios
-                WHERE  usuario_usuario = ?';
+        $sql = 'SELECT id_usuario ,id_rol, usuario_usuario, clave_usuario,descripcion_opc, 
+        estado_opc, marcas_opc, modelos_opc,tallas_opc, pedidos_opc, 
+        tipo_noticias_opc, noticias_opc,comentarios_opc, clientes_opc, usuarios_opc, roles_opc
+        FROM sec_usuarios
+        INNER JOIN sec_roles using(id_rol)
+        WHERE  usuario_usuario = ?';
         //echo($username);
         $params = array($username);
         $data = Database::getRow($sql, $params);
@@ -46,6 +50,17 @@ class AdministradorHandler
             $_SESSION['idUsuario'] = $data['id_usuario'];
             $_SESSION['usuarion'] = $data['usuario_usuario'];
             $_SESSION['idRol'] = $data['id_rol'];
+            $_SESSION['marcas_opc'] = $data['marcas_opc'];
+            $_SESSION['modelos_opc'] = $data['modelos_opc'];
+            $_SESSION['tallas_opc']         =$data['tallas_opc'];
+            $_SESSION['pedidos_opc']       = $data['pedidos_opc'];
+            $_SESSION['tipo_noticias_opc'] = $data['tipo_noticias_opc'];
+            $_SESSION['noticias_opc']      = $data['noticias_opc'];
+            $_SESSION['comentarios_opc']   = $data['comentarios_opc'];
+            $_SESSION['clientes_opc']      = $data['clientes_opc'];
+            $_SESSION['usuarios_opc']     =  $data['usuarios_opc'];
+            $_SESSION['roles_opc']          =$data['roles_opc'];
+
             //echo ($_SESSION['usuario']).' 1';
             return true;
         } else {
@@ -97,7 +112,7 @@ class AdministradorHandler
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
-    public function searchRows($idrol,$value/*,$value2,$value3*/)
+    public function searchRows($idrol, $value/*,$value2,$value3*/)
     {
         $value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
         /*$value2 = ($value2 === '') ? '%%' : '%' . $value2 . '%';
@@ -130,7 +145,7 @@ class AdministradorHandler
         $sql = 'INSERT INTO sec_usuarios(id_rol,usuario_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
                 VALUES(?, ?, ?, ?, ?,?,?,true)';
-        $params = array($this->idRol,$this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+        $params = array($this->idRol, $this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 

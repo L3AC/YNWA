@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         MAIN_TITLE.textContent = 'Registrar primer usuario';
         // Se muestra el formulario para registrar el primer usuario.
         SIGNUP_FORM.classList.remove('d-none');
-        //sweetAlert(4, DATA.error, true);
+        alerta(4, DATA.error, true,"https://unsplash.it/400/200");
     }
 });
 
@@ -57,6 +57,6 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
     } else {
-        //sweetAlert(2, DATA.error, false);
+        alerta(4, DATA.error, true,"https://unsplash.it/400/200");
     }
 });

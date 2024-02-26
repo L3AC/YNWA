@@ -24,6 +24,16 @@ class AdministradorData extends AdministradorHandler
             return false;
         }
     }
+    public function setIdRol($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idRol = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
 
     public function setNombre($value, $min = 2, $max = 50)
     {

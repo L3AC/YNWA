@@ -10,6 +10,7 @@ class AdministradorHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $idRol = null;
     protected $nombre = null;
     protected $apellido = null;
     protected $correo = null;
@@ -126,10 +127,10 @@ class AdministradorHandler
     public function createRow()
     {
         //echo $this->clave.' ';
-        $sql = 'INSERT INTO sec_usuarios(id_rol,  usuario_usuario, clave_usuario,nombre_usuario, 
+        $sql = 'INSERT INTO sec_usuarios(id_rol,usuario_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
-                VALUES(1, ?, ?, ?, ?,?,?,true)';
-        $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+                VALUES(?, ?, ?, ?, ?,?,?,true)';
+        $params = array($this->idRol,$this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
         return Database::executeRow($sql, $params);
     }
 

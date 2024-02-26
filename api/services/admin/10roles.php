@@ -65,6 +65,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Registro inexistente';
                 }
                 break;
+                case 'fillSelect':
+                    //echo $_POST['idTalla'];
+                    if (!$producto->setId($_SESSION['idRol'])) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($result['dataset'] = $producto->fillSelect()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Registro inexistente';
+                    }
+                    break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

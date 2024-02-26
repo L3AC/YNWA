@@ -1,5 +1,6 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/9usuarios.php';
+const ADMINISTRADOR_API = 'services/admin/9usuarios.php',
+       ROL_API = 'services/admin/10roles.php'; 
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -12,6 +13,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 const SAVE_FORM = document.getElementById('saveForm'),
 INPUTSEARCH = document.getElementById('inputsearch'),   
     ID_ADMINISTRADOR = document.getElementById('idAdministrador'),
+    ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
     NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
     APELLIDO_ADMINISTRADOR = document.getElementById('apellidoAdministrador'),
     CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
@@ -55,6 +57,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
+        ID_ADMINISTRADOR.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
@@ -154,6 +157,8 @@ const openCreate = () => {
     ALIAS_ADMINISTRADOR.disabled = false;
     CLAVE_ADMINISTRADOR.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
+
+    fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
 }
 
 /*

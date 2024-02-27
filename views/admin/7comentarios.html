@@ -27,25 +27,30 @@
     <main>
         <!-- Título del contenido principal -->
         <h3 id="mainTitle"></h3>
+
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-6" id="searchForm">
                 <div class="row">
                     <div class="col-6">
+                        <!-- Campo de búsqueda -->
                         <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar"
                             required>
                     </div>
-
                 </div>
             </form>
-            <div class="col-sm-12 col-md-6 text-end">
 
-                <!-- Botón para abrir un reporte en formato PDF 
-                <button type="button" class="btn btn-warning" onclick="openReport()">
-                    <i class="bi bi-filetype-pdf"></i>
-                </button>-->
+            <!-- Botones de la parte derecha -->
+            <div class="col-sm-12 col-md-6 text-end">
+                <!-- Botón para abrir un reporte en formato PDF -->
+                <!--<button type="button" class="btn btn-warning" onclick="openReport()">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>-->
             </div>
         </div>
+
+        <!-- Tabla con registros -->
         <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
             <!-- Tabla para mostrar los registros existentes -->
             <table class="table table-hover">
@@ -73,7 +78,9 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <!-- Título del modal -->
                         <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
@@ -82,30 +89,28 @@
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idComentario" name="idComentario">
 
+                            <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-12">
                                 <label for="clienteComentario" class="form-label">Cliente</label>
-                                <input id="clienteComentario" type="text" name="clienteComentario" class="form-control"
-                                    >
+                                <input id="clienteComentario" type="text" name="clienteComentario" class="form-control">
                             </div>
                             <div class="col-sm-12 col-md-12">
                                 <label for="contenidoComentario" class="form-label">Contenido</label>
                                 <textarea id="contenidoComentario" name="contenidoComentario" class="form-control"
-                                    rows="6" ></textarea>
+                                    rows="6"></textarea>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="puntuacionComentario" class="form-label">Puntuacion</label>
                                 <input id="puntuacionComentario" type="text" name="puntuacionComentario"
-                                    class="form-control" >
+                                    class="form-control">
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="fechaComentario" class="form-label">Fecha</label>
-                                <input id="fechaComentario" type="text" name="fechaComentario" class="form-control"
-                                    >
+                                <input id="fechaComentario" type="text" name="fechaComentario" class="form-control">
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="modeloComentario" class="form-label">Modelo</label>
-                                <input id="modeloComentario" type="text" name="modeloComentario" class="form-control"
-                                    >
+                                <input id="modeloComentario" type="text" name="modeloComentario" class="form-control">
                             </div>
                             <div class="col-6">
                                 <div class="p-3">
@@ -117,32 +122,37 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="modal-footer">
+                            <!-- Botón para guardar el formulario -->
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Modal secundario para otro formulario -->
         <div class="modal fade" id="savetreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <!-- Título del modal secundario -->
                         <h1 class="modal-title fs-5" id="tremodalTitle"></h1>
+                        <!-- Botón de cierre del modal secundario -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             onclick="subclose()"></button>
                     </div>
-                    <!-- Formulario para crear o actualizar un registro -->
+                    <!-- Formulario para crear o actualizar un registro en el modal secundario -->
                     <form id="savetreForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+
+                            <!-- Campos del formulario en el modal secundario -->
                             <div class="col-sm-12 col-md-6">
-                                <label for="precioModeloTalla" class="form-label">Precio
-                                    (US$)</label>
+                                <label for="precioModeloTalla" class="form-label">Precio (US$)</label>
                                 <input id="precioModeloTalla" type="number" name="precioModeloTalla" min="0.01"
                                     step="0.01" class="form-control" required>
                             </div>
@@ -153,11 +163,12 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="tallaModeloTalla" class="form-label">Talla</label>
-                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select" required>
-                                </select>
+                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select"
+                                    required></select>
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <!-- Botón para guardar el formulario en el modal secundario -->
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
@@ -165,6 +176,7 @@
             </div>
         </div>
     </main>
+
 
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

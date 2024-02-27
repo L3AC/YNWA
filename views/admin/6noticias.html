@@ -26,35 +26,43 @@
     <main>
         <!-- Título del contenido principal -->
         <h3 id="mainTitle"></h3>
+
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-6" id="searchForm">
                 <div class="row">
                     <div class="col-6">
+                        <!-- Campo de búsqueda -->
                         <input type="search" class="form-control" name="search" placeholder="Buscar" required>
                     </div>
                     <div class="col-6">
+                        <!-- Botón de búsqueda -->
                         <button type="submit" class="btn btn-success">
                             <i class="bi bi-search"></i>
                         </button>
+                        <!-- Botón para limpiar y llenar la tabla -->
                         <button type="reset" class="btn btn-secondary" onclick="fillTable()">
                             <i class="bi bi-x-square-fill"></i>
                         </button>
                     </div>
                 </div>
             </form>
+
+            <!-- Botones de la parte derecha (comentados) -->
             <div class="col-sm-12 col-md-6 text-end">
                 <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
-                <!-- Botón para abrir un reporte en formato PDF 
-                <button type="button" class="btn btn-warning" onclick="openReport()">
-                    <i class="bi bi-filetype-pdf"></i>
-                </button>-->
+                <!-- Botón para abrir un reporte en formato PDF -->
+                <!--<button type="button" class="btn btn-warning" onclick="openReport()">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>-->
             </div>
         </div>
-        <!-- HACE QUE LA TABLA SEA SCROLEABLE -->
+
+        <!-- Tabla con registros -->
         <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
             <!-- Tabla para mostrar los registros existentes -->
             <table class="table table-hover">
@@ -76,14 +84,15 @@
             </table>
         </div>
 
-
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <!-- Título del modal -->
                         <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
@@ -91,6 +100,7 @@
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idNoticia" name="idNoticia">
+                            <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="tituloNoticia" class="form-label">Título</label>
                                 <input id="tituloNoticia" type="text" name="tituloNoticia" class="form-control"
@@ -103,8 +113,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="tipoNoticia" class="form-label">Tipo noticia</label>
-                                <select id="tipoNoticia" name="tipoNoticia" class="form-select" required>
-                                </select>
+                                <select id="tipoNoticia" name="tipoNoticia" class="form-select" required></select>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="imagenNoticia" class="form-label">Imagen</label>
@@ -116,8 +125,9 @@
                                     checked>
                                 <label class="form-check-label" for="estadoNoticia">Estado</label>
                             </div>
-
                         </div>
+
+                        <!-- Pie del modal con botón de guardar -->
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
@@ -125,12 +135,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal adicional para guardar un modelo y talla -->
         <div class="modal fade" id="savetreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="tremodalTitle"></h1>
+                        <!-- Botón de cierre del modal con llamada a función "subclose()" -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             onclick="subclose()"></button>
                     </div>
@@ -140,20 +153,19 @@
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idModeloTalla" name="idModeloTalla">
                             <div class="col-sm-12 col-md-6">
-                                <label for="precioModeloTalla" class="form-label">Precio
-                                    (US$)</label>
+                                <label for="precioModeloTalla" class="form-label">Precio (US$)</label>
                                 <input id="precioModeloTalla" type="number" name="precioModeloTalla" min="0.01"
                                     step="0.01" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="existenciasProducto" class="form-label">Stock</label>
+                                <label for="stockModeloTalla" class="form-label">Stock</label>
                                 <input id="stockModeloTalla" type="number" name="stockModeloTalla" min="1" step="1"
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="tallaModeloTalla" class="form-label">Talla</label>
-                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select" required>
-                                </select>
+                                <select id="tallaModeloTalla" name="tallaModeloTalla" class="form-select"
+                                    required></select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -164,6 +176,7 @@
             </div>
         </div>
     </main>
+
 
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

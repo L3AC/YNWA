@@ -17,16 +17,17 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-		<main></main>
-	
-		<div class="body" >
-			<div class="veen">
-				<div class="login-btn splits">
-					<img src="../../resources/img/logo.png" class="imglogo" alt="">
-				</div>
-				<div class="rgstr-btn splits">
-					<img src="../../resources/img/logo.png" class="imglogo" alt="">
-				</div>
+	<main></main>
+
+	<div class="body">
+		<div class="veen">
+			<!-- Botones para iniciar sesión y registrarse -->
+			<div class="login-btn splits">
+				<img src="../../resources/img/logo.png" class="imglogo" alt="">
+			</div>
+			<div class="rgstr-btn splits">
+				<img src="../../resources/img/logo.png" class="imglogo" alt="">
+			</div>
 
 				<!--<div class="login-btn splits">
 				<p></p>
@@ -37,77 +38,89 @@
 				<button>Registro</button>
 			</div>-->
 
-				<div class="wrapper">
-					<form id="loginForm" tabindex="500" class="d-none">
-						<h3 id="mainTitle">Inicio de Sesion</h3>
-						<div class="usuariol">
-							<input id="usuariol" type="text" name="usuariol" class="form-control" required>
-							<label>Usuario</label>
-						</div>
-						<div class="clavel">
-							<input id="clavel" type="password" name="clavel" class="form-control" required>
-							<label>Contraseña</label>
-						</div>
-						<div class="submit">
-							<button class="dark">Confirmar</button>
-						</div>
-					</form>
-					<form id="signupForm" tabindex="502" class="d-none">
-						<h3>Registrarse</h3>
-						<div class="name">
-							<input id="nombre" type="text" name="nombre" class="form-control"
-                        required>
-							<label>Nombres</label>
-						</div>
-						<div class="Apellidos">
-							<input type="text" id="apellido" name="apellido" class="form-control" required>
-							<label>Apellidos</label>
-						</div>
-						<div class="mail">
-							<input type="mail" id="correo" name="correo" class="form-control" required>
-							<label>Correo</label>
-						</div>
-						<div class="uid">
-							<input type="text" id="usuario" name="usuario" class="form-control" required>
-							<label>Usuario</label>
-						</div>
-						<div class="passwd" id="">
-							<input type="password" name="clave" id="clave" class="form-control" required>
-							<label>Contraseña</label>
-						</div>
-						<div class="passwd" id="">
-							<input id="confirmarClave" type="password" name="confirmarClave" class="form-control" required>
-							<label>Contraseña</label>
-						</div>
-						<div class="submit">
-							<button class="dark">Register</button>
-						</div>
-					</form>
-				</div>
+			<!-- Formularios de inicio de sesión y registro -->
+			<div class="wrapper">
+				<!-- Formulario de inicio de sesión -->
+				<form id="loginForm" tabindex="500" class="d-none">
+					<h3 id="mainTitle">Inicio de Sesion</h3>
+					<!-- Campos para el usuario y contraseña -->
+					<div class="usuariol">
+						<input id="usuariol" type="text" name="usuariol" class="form-control" required>
+						<label>Usuario</label>
+					</div>
+					<div class="clavel">
+						<input id="clavel" type="password" name="clavel" class="form-control" required>
+						<label>Contraseña</label>
+					</div>
+					<!-- Botón de confirmación -->
+					<div class="submit">
+						<button class="dark">Confirmar</button>
+					</div>
+				</form>
+
+				<!-- Formulario de registro -->
+				<form id="signupForm" tabindex="502" class="d-none">
+					<h3>Registrarse</h3>
+					<!-- Campos para nombres, apellidos, correo, usuario y contraseña -->
+					<div class="name">
+						<input id="nombre" type="text" name="nombre" class="form-control" required>
+						<label>Nombres</label>
+					</div>
+					<div class="Apellidos">
+						<input type="text" id="apellido" name="apellido" class="form-control" required>
+						<label>Apellidos</label>
+					</div>
+					<div class="mail">
+						<input type="mail" id="correo" name="correo" class="form-control" required>
+						<label>Correo</label>
+					</div>
+					<div class="uid">
+						<input type="text" id="usuario" name="usuario" class="form-control" required>
+						<label>Usuario</label>
+					</div>
+					<div class="passwd" id="">
+						<input type="password" name="clave" id="clave" class="form-control" required>
+						<label>Contraseña</label>
+					</div>
+					<div class="passwd" id="">
+						<input id="confirmarClave" type="password" name="confirmarClave" class="form-control" required>
+						<label>Confirmar Contraseña</label>
+					</div>
+					<!-- Botón de registro -->
+					<div class="submit">
+						<button class="dark">Registrarse</button>
+					</div>
+				</form>
 			</div>
 		</div>
-	
-	<script>$(document).ready(function () {
+	</div>
+
+	<!-- Script para cambiar entre los formularios de inicio de sesión y registro -->
+	<script>
+		$(document).ready(function () {
 			$(".veen .rgstr-btn button").click(function () {
 				$('.veen .wrapper').addClass('move');
 				$('.body').css('background', '#CCC8AA');
 				$(".veen .login-btn button").removeClass('active');
 				$(this).addClass('active');
-
 			});
+
 			$(".veen .login-btn button").click(function () {
 				$('.veen .wrapper').removeClass('move');
 				$('.body').css('background', '#CCC8AA');
 				$(".veen .rgstr-btn button").removeClass('active');
 				$(this).addClass('active');
 			});
-		});</script>
+		});
+	</script>
 
+	<!-- Enlaces a scripts externos -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
-		<script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+	<script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+
 
 	<!-- Llamada al controlador de la página web -->
 	<script type="text/javascript" src="../../controllers/utils/components.js"></script>

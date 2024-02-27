@@ -26,27 +26,34 @@
     <main>
         <!-- Título del contenido principal -->
         <h3 id="mainTitle"></h3>
+
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-6" id="searchForm">
                 <div class="row">
                     <div class="col-6">
-                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                        <!-- Campo de búsqueda -->
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar"
+                            required>
                     </div>
                 </div>
             </form>
+
+            <!-- Botones de la parte derecha -->
             <div class="col-sm-12 col-md-6 text-end">
-                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro 
-                <button type="button" class="btn btn-primary" onclick="openCreate()">
-                    <i class="bi bi-plus-square-fill"></i>
-                </button>-->
-                <!-- Botón para abrir un reporte en formato PDF 
-                <button type="button" class="btn btn-warning" onclick="openReport()">
-                    <i class="bi bi-filetype-pdf"></i>
-                </button>-->
+                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro (comentado) -->
+                <!--<button type="button" class="btn btn-primary" onclick="openCreate()">
+                <i class="bi bi-plus-square-fill"></i>
+            </button>-->
+                <!-- Botón para abrir un reporte en formato PDF -->
+                <!--<button type="button" class="btn btn-warning" onclick="openReport()">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>-->
             </div>
         </div>
-        <!-- HACE QUE LA TABLA SEA SCROLEABLE -->
+
+        <!-- Tabla con registros -->
         <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
             <!-- Tabla para mostrar los registros existentes -->
             <table class="table table-hover">
@@ -74,25 +81,30 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <!-- Título del modal -->
                         <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
-                        <div class="modal-body row g-4 ">
+                        <div class="modal-body row g-4">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idPedido" name="idPedido">
+
+                            <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="clientePedido" class="form-label">Cliente</label>
-                                <input id="clientePedido" type="text" name="clientePedido" class="form-control" required>
+                                <input id="clientePedido" type="text" name="clientePedido" class="form-control"
+                                    required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="fechaPedido" class="form-label">Fecha</label>
                                 <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                    <label for="formaPago" class="form-label">Forma de pago</label>
-                                    <input id="formaPago" type="text" name="formaPago" class="form-control" required>
+                                <label for="formaPago" class="form-label">Forma de pago</label>
+                                <input id="formaPago" type="text" name="formaPago" class="form-control" required>
                             </div>
                             <div class="col-6">
                                 <div class="p-3">
@@ -105,19 +117,25 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Subtabla para mostrar los detalles del pedido -->
                         <div id="subtable">
-                            <!-- TABLA DE MODELO TALLAS-->
+                            <!-- TABLA DE MODELO TALLAS -->
                             <div class="modal-header border-0">
                                 <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                             </div>
 
+                            <!-- Formulario de búsqueda para la subtabla -->
                             <form class="col-sm-12 col-md-6" id="searchsubForm">
                                 <div class="row">
                                     <div class="col-6">
-                                        <input id="subinputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                                        <input id="subinputsearch" type="search" class="form-control" name="search"
+                                            placeholder="Buscar" required>
                                     </div>
                                 </div>
                             </form>
+
+                            <!-- Subtabla para mostrar los detalles del pedido -->
                             <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                                 <table id="subheaderT" class="table table-hover ">
                                     <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
@@ -139,16 +157,15 @@
                             </div>
                         </div>
 
+                        <!-- Pie del modal sin botones de acción -->
                         <div class="modal-footer">
-                            
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        
     </main>
+
 
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

@@ -25,15 +25,21 @@
     <main>
         <!-- Título del contenido principal -->
         <h3 id="mainTitle"></h3>
+
+        <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
             <form class="col-sm-12 col-md-6" id="searchForm">
                 <div class="row">
                     <div class="col-6">
-                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
+                        <!-- Campo de búsqueda -->
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar"
+                            required>
                     </div>
                 </div>
             </form>
+
+            <!-- Botones de la parte derecha -->
             <div class="col-sm-12 col-md-6 text-end">
                 <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
@@ -41,7 +47,8 @@
                 </button>
             </div>
         </div>
-        <!-- HACE QUE LA TABLA SEA SCROLEABLE -->
+
+        <!-- Hace que la tabla sea scrollable -->
         <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
             <!-- Tabla para mostrar los registros existentes -->
             <table class="table table-hover">
@@ -69,7 +76,9 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <!-- Título del modal -->
                         <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Formulario para guardar un registro -->
@@ -77,11 +86,16 @@
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idAdministrador" name="idAdministrador">
+
+                            <!-- Select para elegir el rol del usuario -->
                             <div class="col-sm-12 col-md-6" id="selectRol">
                                 <label for="rolUsuario" class="form-label">Rol</label>
                                 <select id="rolUsuario" name="rolUsuario" class="form-select" required>
+                                    <!-- Opciones del select se pueden cargar dinámicamente -->
                                 </select>
                             </div>
+
+                            <!-- Campos del formulario -->
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreAdministrador" class="form-label">Nombre</label>
                                 <input id="nombreAdministrador" type="text" name="nombreAdministrador"
@@ -114,6 +128,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <!-- Botón para guardar el formulario -->
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
@@ -121,6 +136,8 @@
             </div>
         </div>
     </main>
+
+
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>

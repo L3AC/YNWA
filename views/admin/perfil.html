@@ -2,78 +2,98 @@
 <html lang="pt-BR" dir="ltr">
 
 <head>
-  <meta charset="utf-8">
-  <title>Editar </title>
-  <link rel="stylesheet" href="../../resources/css/perfil.css">
-  <link rel="stylesheet" href="../../resources/css/nav.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <meta charset="utf-8">
+    <title>Editar </title>
+    <link rel="stylesheet" href="../../resources/css/perfil.css">
+    <link rel="stylesheet" href="../../resources/css/nav.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
 <body>
 
-<header></header>
+    <header></header>
 
-     <form class="box" action="{{url_for('membros.atualizar_page')}}" method="post">
-       <section class="user-profile">
-         <div class="header">
-           <div class="cover">
-             <div class="perfil-usuario-avatar">
-               <img src="http://www.coopernortetelecom.com.br/assets/images/author-1.png" alt="img-avatar">
-               <button type="button" class="boton-avatar">
-                 <i class="far fa-image"></i>
-               </button>
-             </div>
-           </div>
-         </div>
-         </div>
-         <div class="user-profile-body">
-           <div class="user-profile-bio">
-             <ul style="text-align: left;" class="data-list">
-               <br>
-               <div class="mb-3">
-                 <input type="text" class="form-control" name="nv_nome" placeholder="Nombre" value="">
-               </div>
-               <div class="mb-3">
-                   <input type="text" class="form-control" name="nv_nome" placeholder="Apellido" value="">
-                 </div>
-             </ul>
-           </div>
-           <div class="user-profile-footer">
-             <ul class="data-list">
-              <form id="register" tabindex="502">
-                <div class="name">
-                  <input type="text" name="">
-                  <label>Usuario</label>
+    <form class="box" action="{{url_for('membros.atualizar_page')}}" method="post">
+        <!-- Sección de perfil de usuario -->
+        <section class="user-profile">
+            <div class="header">
+                <!-- Portada del perfil -->
+                <div class="cover">
+                    <!-- Avatar del usuario -->
+                    <div class="perfil-usuario-avatar">
+                        <img src="http://www.coopernortetelecom.com.br/assets/images/author-1.png" alt="img-avatar">
+                        <!-- Botón para cambiar la imagen del avatar -->
+                        <button type="button" class="boton-avatar">
+                            <i class="far fa-image"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="contra">
-                  <input type="password" name="">
-                  <label>Contraseña</label>
+            </div>
+            </div>
+            <div class="user-profile-body">
+                <div class="user-profile-bio">
+                    <ul style="text-align: left;" class="data-list">
+                        <br>
+                        <!-- Campo para el nombre del usuario -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="nv_nome" placeholder="Nombre" value="">
+                        </div>
+                        <!-- Campo para el apellido del usuario -->
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="nv_nome" placeholder="Apellido" value="">
+                        </div>
+                    </ul>
                 </div>
-                <div class="mail">
-                  <input type="mail" name="">
-                  <label>Correo</label>
+                <div class="user-profile-footer">
+                    <ul class="data-list">
+                        <!-- Formulario para actualizar información adicional del usuario -->
+                        <form id="register" tabindex="502">
+                            <!-- Campo para el nombre de usuario -->
+                            <div class="name">
+                                <input type="text" name="">
+                                <label>Usuario</label>
+                            </div>
+                            <!-- Campo para la contraseña -->
+                            <div class="contra">
+                                <input type="password" name="">
+                                <label>Contraseña</label>
+                            </div>
+                            <!-- Campo para el correo electrónico -->
+                            <div class="mail">
+                                <input type="mail" name="">
+                                <label>Correo</label>
+                            </div>
+                            <!-- Campo para el número de teléfono -->
+                            <div class="uid">
+                                <input type="text" name="">
+                                <label>Número de teléfono</label>
+                            </div>
+                            <!-- Campo para la dirección -->
+                            <div class="direccion">
+                                <input type="text" name="">
+                                <label>Dirección</label>
+                            </div>
+                            <!-- Botón de envío -->
+                            <!--<div class="submit">
+                          <button class="dark"></button>
+                      </div>-->
+                        </form>
+                    </ul>
                 </div>
-                <div class="uid">
-                  <input type="text" name="">
-                  <label>Numero de telefono</label>
-                </div>
-                <div class="direccion">
-                  <input type="text" name="">
-                  <label>Direccion</label>
-                </div>
-                <!--<div class="submit">
-                  <button class="dark"></button>
-                </div>-->
-              </form>
-             </ul>
-           </div><br><br><br>
-       </section>
-     </form>
+                <br><br><br>
+        </section>
+    </form>
 
-      
+
+    <!-- Enlaces a scripts externos -->
     <script type="text/javascript" src="../../controllers/utils/plantillas.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="../../controllers/utils/plantillas.js"></script>
 </body>
+
 </html>

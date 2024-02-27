@@ -4,11 +4,6 @@ CREATE DATABASE db_YNWA;
 use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
-SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-        FROM sec_roles
-        WHERE id_rol != idmin("sec_roles")
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
@@ -26,19 +21,13 @@ usuarios_opc boolean,
 roles_opc boolean,
 PRIMARY KEY(id_rol)
 );
+
 insert into sec_roles (descripcion_opc, estado_opc,marcas_opc,modelos_opc,tallas_opc,
 pedidos_opc,tipo_noticias_opc,noticias_opc,comentarios_opc,clientes_opc,usuarios_opc,roles_opc) 
 values('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Empleado',true,false,true,false,true,false,true,true,false,false,false),
 ('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
 ('Asistente',true,true,true,true,false,false,false,true,true,false,false);
-
-SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-        tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-        comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-        FROM sec_roles
-        WHERE id_rol != idmin("sec_roles") and id_rol>1
-        ORDER BY descripcion_opc
 
 /*SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
@@ -61,21 +50,6 @@ BEGIN
 END//
 DELIMITER ;
 
-
-SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
-       tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
-       comentarios_opc, clientes_opc, usuarios_opc, roles_opc
-FROM sec_roles
-WHERE id_rol != idmin('sec_roles') AND descripcion_opc like '%%'
-ORDER BY descripcion_opc;
-
-SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-                FROM sec_usuarios
-                WHERE id_usuario != idmin('sec_usuarios') AND nombre_usuario like '%%' AND id_rol!=1
-                ORDER BY apellido_usuario;
-                
-                
-update sec_usuarios set id_rol=2 where id_usuario = 2 
 /*
 select * from sec_usuarios;
 

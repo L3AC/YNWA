@@ -17,16 +17,14 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if ($result['dataset'] = $administrador->searchRows($_SESSION['idRol'], $_POST['valor']/*,$_POST['valor2'],$_POST['valor3'],*/)
-                ) {
+                if ($result['dataset'] = $administrador->searchRows($_SESSION['idRol'], $_POST['valor']/*,$_POST['valor2'],$_POST['valor3'],*/)) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
                 }
                 break;
             case 'fillTab':
-                if ($result['dataset'] = $administrador->fillTab($_SESSION['idRol'])
-                ) {
+                if ($result['dataset'] = $administrador->fillTab($_SESSION['idRol'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -106,10 +104,10 @@ if (isset($_GET['action'])) {
                     $result['idrol'] = $_SESSION['idRol'];
                     $result['marcas_opc'] = $_SESSION['marcas_opc'];
                     $result['modelos_opc'] = $_SESSION['modelos_opc'];
-                    $result['tallas_opc']        = $_SESSION['tallas_opc'];
-                    $result['pedidos_opc']       = $_SESSION['pedidos_opc'];
+                    $result['tallas_opc'] = $_SESSION['tallas_opc'];
+                    $result['pedidos_opc'] = $_SESSION['pedidos_opc'];
                     $result['tipo_noticias_opc'] = $_SESSION['tipo_noticias_opc'];
-                    $result['noticias_opc']      = $_SESSION['noticias_opc'];
+                    $result['noticias_opc'] = $_SESSION['noticias_opc'];
                     $result['comentarios_opc']   = $_SESSION['comentarios_opc'];
                     $result['clientes_opc']      = $_SESSION['clientes_opc'];
                     $result['usuarios_opc']      = $_SESSION['usuarios_opc'];

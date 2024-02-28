@@ -4,6 +4,14 @@ CREATE DATABASE db_YNWA;
 use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
+/*
+CREATE TABLE ejemplo_uuid (
+    id CHAR(36) PRIMARY KEY,
+    nombre VARCHAR(255)
+);
+INSERT INTO ejemplo_uuid (id, nombre) VALUES (UUID(), 'Ejemplo');
+INSERT INTO ejemplo_uuid (id, nombre) VALUES ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'Otro Ejemplo');
+SELECT * FROM ejemplo_uuid;*/
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
@@ -28,6 +36,10 @@ values('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Empleado',true,false,true,false,true,false,true,true,false,false,false),
 ('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
 ('Asistente',true,true,true,true,false,false,false,true,true,false,false);
+
+select * from sec_usuarios
+select * from sec_roles
+# update sec_roles set marcas_opc=true where id_rol=2
 
 /*SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
@@ -69,6 +81,7 @@ email_usuario varchar(100),
 pin_usuario varchar(6),
 estado_usuario boolean,
 PRIMARY KEY (id_usuario),
+CONSTRAINT fk_usuario_rol
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -100,6 +113,7 @@ descripcion_modelo varchar(255),
 foto_modelo LONGTEXT,
 estado_modelo boolean,
 PRIMARY KEY(id_modelo),
+CONSTRAINT fk_modelo_marca
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -121,8 +135,10 @@ id_modelo int,
 stock_modelo_talla int,
 precio_modelo_talla float,
 primary key (id_modelo_talla),
+CONSTRAINT fk_mt_modelo
 FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
 ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_mt_talla
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -147,6 +163,7 @@ CREATE TABLE prc_noticias (
     estado_noticia boolean,
     fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
+    CONSTRAINT fk_noticia_tipo_noticia
     FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
 
@@ -157,6 +174,7 @@ forma_pago_pedido enum('Efectivo','Transferencia'),
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 estado_pedido boolean,
 PRIMARY KEY (id_pedido),
+CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -168,6 +186,7 @@ id_pedido int,
 id_modelo_talla int,
 cantidad_detalle_pedido int,
 PRIMARY KEY (id_detalle),
+CONSTRAINT fk_rol_usuario
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
 ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)

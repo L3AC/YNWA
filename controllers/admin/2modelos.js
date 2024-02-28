@@ -135,11 +135,8 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     IMAGEN_PRE.innerHTML = '';
-    MODAL_TITLE.textContent = 'Crear producto';
+    MODAL_TITLE.textContent = 'Crear registro';
     SUBTABLE.hidden = true;
-    /*SUBMODAL_TITLE.innerHTML = '';
-    SUBTABLE_HEAD.innerHTML = '';
-    SUBTABLE_BODY.innerHTML = '';*/
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
@@ -182,6 +179,7 @@ const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idModelo', id);
+    
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(PRODUCTO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -189,6 +187,7 @@ const openUpdate = async (id) => {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
         SUBTABLE.hidden = false;
+        MODAL_TITLE.textContent = 'Actualizar registro';
         SUBMODAL_TITLE.textContent = 'Tallas del modelo';
         // Se prepara el formulario.
         SAVE_FORM.reset();

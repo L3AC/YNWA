@@ -11,7 +11,27 @@ CREATE TABLE ejemplo_uuid (
 );
 INSERT INTO ejemplo_uuid (id, nombre) VALUES (UUID(), 'Ejemplo');
 INSERT INTO ejemplo_uuid (id, nombre) VALUES ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'Otro Ejemplo');
-SELECT * FROM ejemplo_uuid;*/
+SELECT * FROM ejemplo_uuid;
+
+DELIMITER //
+CREATE TRIGGER actualizar_fecha_modificacion
+BEFORE UPDATE ON ejemplo
+FOR EACH ROW
+BEGIN
+    SET NEW.fecha_modificacion = NOW();
+END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE contar_registros()
+BEGIN
+    DECLARE total INT;
+    SELECT COUNT(*) INTO total FROM ejemplo;
+    SELECT total;
+END//
+DELIMITER ;
+
+*/
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
@@ -186,9 +206,10 @@ id_pedido int,
 id_modelo_talla int,
 cantidad_detalle_pedido int,
 PRIMARY KEY (id_detalle),
-CONSTRAINT fk_rol_usuario
+CONSTRAINT fk_detalle_pedido
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
 ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_detalle_modelo
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -202,7 +223,9 @@ CREATE TABLE prc_comentarios (
     fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     estado_comentario boolean,
     PRIMARY KEY (id_comentario),
+    CONSTRAINT fk_comentario_detalle
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 insert into prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 

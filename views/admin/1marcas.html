@@ -25,7 +25,7 @@
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
-        <h3 id="mainTitle" ></h3>
+        <h3 id="mainTitle"></h3>
 
         <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
@@ -36,7 +36,7 @@
                         <!-- Campo de búsqueda -->
                         <input type="search" class="form-control" name="search" placeholder="Buscar" required>
                     </div>
-                    
+
                 </div>
             </form>
 
@@ -47,10 +47,6 @@
             <button type="button" class="btn btn-primary" onclick="openCreate()">
                 <i class="bi bi-plus-square-fill"></i>
             </button>
-            <!-- Botón para abrir un reporte en formato PDF -->
-            <!--<button type="button" class="btn btn-warning" onclick="openReport()">
-            <i class="bi bi-filetype-pdf"></i>
-            </button>-->
         </div>
 
         <!-- Tabla con registros -->
@@ -77,11 +73,10 @@
         <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content ">
                     <div class="modal-header">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" 
-                            id="modalTitle"></h1>
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
                         <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -112,7 +107,7 @@
                             </div>
                         </div>
                         <!-- Pie del modal con el botón de guardar -->
-                        <div class="modal-footer">
+                        <div class="modal-footer border-0">
                             <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                         </div>
                     </form>

@@ -29,22 +29,23 @@
         <!-- Fila que contiene el formulario de búsqueda y botones -->
         <div class="row">
             <!-- Formulario de búsqueda -->
-            <form class="col-sm-12 col-md-6" id="searchForm">
+            <form class="col-sm-12 col-md-12" id="searchForm">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
                         <!-- Campo de búsqueda -->
-                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                        <input id="inputsearch" type="search" class="form-control" name="search" placeholder="Buscar" required>
                     </div>
+
                 </div>
             </form>
 
-            <!-- Botones de la parte derecha -->
-            <div class="col-sm-12 col-md-6 text-end">
-                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
-                <button type="button" class="btn btn-primary" onclick="openCreate()">
-                    <i class="bi bi-plus-square-fill"></i>
-                </button>
-            </div>
+        </div>
+        <!-- Botones de la parte derecha -->
+        <div class="col-sm-12 col-md-12 d-flex justify-content-end pb-3 pt-3">
+            <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+            <button type="button" class="btn btn-primary" onclick="openCreate()">
+                <i class="bi bi-plus-square-fill"></i>
+            </button>
         </div>
 
         <!-- Hace que la tabla sea scrollable -->

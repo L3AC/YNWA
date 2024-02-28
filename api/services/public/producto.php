@@ -16,7 +16,7 @@ if (isset($_GET['action'])) {
             } elseif ($result['dataset'] = $producto->readProductosCategoria()) {
                 $result['status'] = 1;
             } else {
-                $result['error'] = 'No existen productos para mostrar';
+                $result['error'] = ' no existen registrospara mostrar';
             }
             break;
         case 'readOne':

@@ -186,6 +186,9 @@ CREATE TABLE prc_noticias (
     CONSTRAINT fk_noticia_tipo_noticia
     FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
+insert into prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )
+values(1,'Nuevas ofertas por el dia de san valentin','234342asd12.jpg','Este 14 de febrero, 
+tendremos en oferta todos los productos mayores a 200$', true,now());
 
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,

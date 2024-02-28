@@ -39,7 +39,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $pedido->readDetail()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'No existen productos en el carrito';
+                    $result['error'] = ' no existen registrosen el carrito';
                 }
                 break;
             // Acción para actualizar la cantidad de un producto en el carrito de compras.

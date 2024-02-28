@@ -94,16 +94,22 @@
                                 <input id="nombreTipoNoticia" type="text" name="nombreTipoNoticia" class="form-control"
                                     required>
                             </div>
-                            <div class="form-check form-switch form-check-reverse">
-                                <input class="form-check-input" type="checkbox" id="estadoTipoNoticia"
-                                    name="estadoTipoNoticia" checked>
-                                <label class="form-check-label" for="estadoTipoNoticia">Estado</label>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <!-- Interruptor para el estado del registro -->
+                                    <div class="switch-button">
+                                        <p id="">Estado</p>
+                                        <input type="checkbox" name="estadoTipoNoticia" id="estadoTipoNoticia"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoTipoNoticia" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Pie del modal con botón de guardar -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        <div class="modal-footer border-0">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                         </div>
                     </form>
                 </div>

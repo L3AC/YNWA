@@ -149,7 +149,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear producto';
+    MODAL_TITLE.textContent = 'Crear registro';
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
@@ -175,6 +175,7 @@ const openUpdate = async (id) => {
         // Se prepara el formulario.
         SAVE_FORM.reset();
         //INABILITARLOS
+        MODAL_TITLE.textContent = 'Información';
         CLIENTE_COMENTARIO.disabled = true;
         CONTENIDO_COMENTARIO.disabled = true;
         PUNTUACION_COMENTARIO.disabled = true;

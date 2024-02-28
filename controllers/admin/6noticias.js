@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar modelos';
+    MAIN_TITLE.textContent = 'Gestionar noticias';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -80,12 +80,12 @@ const fillTable = async (form = null) => {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se establece un icono para el estado del producto.
-            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
+            (row.estado_noticia) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td><img src="${SERVER_URL}images/noticias/${row.foto}" height="50"></td>
-                    <td>${row.titulo}</td>
+                    <td><img src="${SERVER_URL}images/noticias/${row.foto_noticia}" height="50"></td>
+                    <td>${row.titulo_noticia}</td>
                     <td>${row.fecha}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
@@ -114,7 +114,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear producto';
+    MODAL_TITLE.textContent = 'Crear registro';
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
@@ -140,11 +140,12 @@ const openUpdate = async (id) => {
         // Se prepara el formulario.
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
+        MODAL_TITLE.textContent = 'Actualizar registro';
         const ROW = DATA.dataset;
         ID_PRODUCTO.value = ROW.id_noticia;
-        NOMBRE_PRODUCTO.value = ROW.titulo;
-        CONTENIDO_NOTICIA.value = ROW.contenido;
-        ESTADO_PRODUCTO.checked = ROW.estado;
+        NOMBRE_PRODUCTO.value = ROW.titulo_noticia;
+        CONTENIDO_NOTICIA.value = ROW.contenido_noticia;
+        ESTADO_PRODUCTO.checked = ROW.estado_noticia;
         fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia', ROW.id_tipo_noticia);
     } else {
         sweetAlert(2, DATA.error, false);

@@ -49,20 +49,22 @@ class NoticiaHandler
 
     public function readAll()
     {
-        $sql = 'select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
-        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
-        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
-        ORDER BY n.titulo';
+        $sql = 'select n.id_noticia,n.id_tipo_noticia,n.titulo_noticia,
+        n.foto_noticia,n.contenido_noticia,n.estado_noticia,
+        DATE_FORMAT(n.fecha_noticia, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tipo_noticias tn USING(id_tipo_noticia)
+        ORDER BY n.titulo_noticia';
         return Database::getRows($sql);
     }
 
     public function readOne()
     {
-        $sql ='select n.id_noticia,n.id_tiponoticia,n.titulo,n.foto,n.contenido,n.estado,
-        DATE_FORMAT(n.fecha, "%d-%m-%Y") AS fecha from prc_noticias n
-        INNER JOIN ctg_tiponoticias tn USING(id_tiponoticia)
+        $sql ='select n.id_noticia,n.id_tipo_noticia,n.titulo_noticia,
+        n.foto_noticia,n.contenido_noticia,n.estado_noticia,
+        DATE_FORMAT(n.fecha_noticia, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tipo_noticias tn USING(id_tipo_noticia)
         WHERE n.id_noticia=?
-        ORDER BY n.titulo';
+        ORDER BY n.titulo_noticia';
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         return $data;

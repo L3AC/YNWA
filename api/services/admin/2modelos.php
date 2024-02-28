@@ -47,7 +47,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = ' no existen registrosregistrados';
+                    $result['error'] = ' No se encontraron registros';
                 }
                 break;
             case 'readsubAll':

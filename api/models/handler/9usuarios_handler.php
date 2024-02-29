@@ -142,6 +142,7 @@ class AdministradorHandler
     public function createRow()
     {
         //echo $this->clave.' ';
+        $this->idRol = ($this->idRol === null) ? 1 : $this->idRol;
         $sql = 'INSERT INTO sec_usuarios(id_rol,usuario_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
                 VALUES(?, ?, ?, ?, ?,?,?,true)';

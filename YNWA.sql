@@ -4,34 +4,8 @@ CREATE DATABASE db_YNWA;
 use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
-/*
-CREATE TABLE ejemplo_uuid (
-    id CHAR(36) PRIMARY KEY,
-    nombre VARCHAR(255)
-);
-INSERT INTO ejemplo_uuid (id, nombre) VALUES (UUID(), 'Ejemplo');
-INSERT INTO ejemplo_uuid (id, nombre) VALUES ('f47ac10b-58cc-4372-a567-0e02b2c3d479', 'Otro Ejemplo');
-SELECT * FROM ejemplo_uuid;
+#select * from sec_usuarios
 
-DELIMITER //
-CREATE TRIGGER actualizar_fecha_modificacion
-BEFORE UPDATE ON ejemplo
-FOR EACH ROW
-BEGIN
-    SET NEW.fecha_modificacion = NOW();
-END//
-DELIMITER ;
-
-DELIMITER //
-CREATE PROCEDURE contar_registros()
-BEGIN
-    DECLARE total INT;
-    SELECT COUNT(*) INTO total FROM ejemplo;
-    SELECT total;
-END//
-DELIMITER ;
-
-*/
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,
@@ -57,10 +31,6 @@ values('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
 ('Asistente',true,true,true,true,false,false,false,true,true,false,false);
 
-select * from sec_usuarios
-select * from sec_roles
-# update sec_roles set marcas_opc=true where id_rol=2
-
 /*SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
 CREATE FUNCTION idmin(tabla VARCHAR(255))
@@ -81,14 +51,6 @@ BEGIN
     RETURN min_id;
 END//
 DELIMITER ;
-
-/*
-select * from sec_usuarios;
-
-SELECT id_usuario , usuario, clave
-                FROM sec_usuarios
-                WHERE  usuario ='juancho';*/
-
 
 CREATE TABLE sec_usuarios(
 id_usuario INT auto_increment,
@@ -190,6 +152,7 @@ insert into prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_n
 values(1,'Nuevas ofertas por el dia de san valentin','234342asd12.jpg','Este 14 de febrero, 
 tendremos en oferta todos los productos mayores a 200$', true,now());
 
+
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
 id_cliente int,
@@ -201,7 +164,6 @@ CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) values(1,'Efectivo',now(),true);
 
 create table prc_detalle_pedidos(
 id_detalle int AUTO_INCREMENT,
@@ -216,7 +178,6 @@ CONSTRAINT fk_detalle_modelo
 FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(1,1,1);
 
 CREATE TABLE prc_comentarios (
     id_comentario INT AUTO_INCREMENT,
@@ -231,22 +192,14 @@ CREATE TABLE prc_comentarios (
     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/*
+insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 
+values(1,'Efectivo',now(),true);
+select * from prc_detalle_pedidos
+insert into prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) values(3,1,1);
 insert into prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
-values(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
-
-select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
-        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
-        puntuacion_comentario,estado_comentario,
-        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
-        from prc_comentarios cm
-        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
-        INNER JOIN prc_pedidos p USING(id_pedido)
-        INNER JOIN prc_clientes c USING(id_cliente)
-        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
-        INNER JOIN prc_modelos mo USING (id_modelo)
-        INNER JOIN ctg_marcas ma USING (id_marca)
-        ORDER BY fecha_comentario DESC, estado_comentario DESC
-
+values(2,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
+*/
 /*TRIGGER*/
 DELIMITER //
 CREATE TRIGGER actualizar_stock AFTER INSERT ON prc_detalle_pedidos

@@ -37,16 +37,8 @@ const loadTemplate = async () => {
                     width="90" height="80" type="button" data-bs-toggle="offcanvas" 
                     data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
 
-                    <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                    <a  href="#" onclick="logOut()" class="" ><img src="../../resources/img/logout.png"  
-                    class="" width="40" height="40"></a>
-                    </li>
-                    <li class="nav-item">
                     <a  href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png"  
                     class="" width="40" height="40"></a>
-                    </li>
-                    </ul>
 
                     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                         <div class="offcanvas-header">
@@ -66,6 +58,8 @@ const loadTemplate = async () => {
                                 <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
                                 <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
                                 <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
+                                <li class="list-group-item" id=""><a  href="#" onclick="logOut()" class="" ><img src="../../resources/img/logout.png"  
+                                class="" width="40" height="40"></a></li>
                                   </ul>
                             </div>
                         </div>

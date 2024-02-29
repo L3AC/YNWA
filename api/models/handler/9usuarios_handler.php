@@ -172,6 +172,20 @@ class AdministradorHandler
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
+    public function readExist($username)
+    {
+        $sql = 'SELECT usuario_usuario
+        FROM sec_usuarios
+        WHERE usuario_usuario= ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['usuario_usuario'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function updateRow()
     {

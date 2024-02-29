@@ -60,6 +60,13 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen administradores registrados';
                 }
                 break;
+            case 'readExist':
+                if ($administrador->readExist($_POST['usuario'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
             case 'readOne':
                 if (!$administrador->setId($_POST['idAdministrador'])) {
                     $result['error'] = 'Administrador incorrecto';

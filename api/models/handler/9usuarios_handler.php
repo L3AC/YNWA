@@ -166,7 +166,7 @@ class AdministradorHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+        $sql = 'SELECT id_rol,id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
                 FROM sec_usuarios
                 WHERE id_usuario = ?';
         $params = array($this->id);

@@ -37,9 +37,17 @@ const loadTemplate = async () => {
                     width="90" height="80" type="button" data-bs-toggle="offcanvas" 
                     data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
 
-                    <a  href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png" id="io" 
-                        class="position-absolute top-0 end-0" width="40" height="40"></a>
-                    
+                    <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                    <a  href="#" onclick="logOut()" class="" ><img src="../../resources/img/logout.png"  
+                    class="" width="40" height="40"></a>
+                    </li>
+                    <li class="nav-item">
+                    <a  href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png"  
+                    class="" width="40" height="40"></a>
+                    </li>
+                    </ul>
+
                     <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                         <div class="offcanvas-header">
                           <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>

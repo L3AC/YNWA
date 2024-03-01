@@ -38,7 +38,23 @@ const loadTemplate = async () => {
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div class="navbar-nav ms-auto">
-                                    <a class="nav-link" href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
+                                
+                                <div class="col-3 nav-link">
+                                    <div class="">
+                                        <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
+                                        placeholder="Busqueda" >
+                                    </div>
+                                </div>
+
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+                                         href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
+                                        <ul class="dropdown-menu" id="marcalist">
+                                            <li><a class="dropdown-item" href="profile.html">Editar perfil</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#" onclick="logOut()">Cerrar sesión</a></li>
+                                        </ul>
+                                    </li>
                                     <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
                                     <a class="nav-link" href="cart.html"><i class="bi bi-clock-history"></i> Historial</a>
                                     <a class="nav-link" href="cart.html"><i class="bi bi-person-fill"></i>Cuenta</a>
@@ -52,6 +68,7 @@ const loadTemplate = async () => {
 
                 </header>
             `);
+            
         } else {
             location.href = 'index.html';
         }

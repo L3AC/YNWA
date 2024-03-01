@@ -30,21 +30,26 @@ const loadTemplate = async () => {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
                 <header>
-                    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color: #CCC8AA" >
                         <div class="container">
-                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="50" alt="YNWA"></a>
+                            <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60" alt="YNWA" ></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div class="navbar-nav ms-auto">
-                                    <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
+                                    <a class="nav-link" href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
                                     <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
+                                    <a class="nav-link" href="cart.html"><i class="bi bi-clock-history"></i> Historial</a>
+                                    <a class="nav-link" href="cart.html"><i class="bi bi-person-fill"></i>Cuenta</a>
                                     <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a>
                                 </div>
                             </div>
                         </div>
                     </nav>
+
+
+
                 </header>
             `);
         } else {
@@ -62,7 +67,7 @@ const loadTemplate = async () => {
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ms-auto">
-                                <a class="nav-link" href="index.html"><i class="bi bi-shop"></i> Catálogo</a>
+                                <a class="nav-link" href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
                                 <a class="nav-link" href="signup.html"><i class="bi bi-person"></i> Crear cuenta</a>
                                 <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
                             </div>

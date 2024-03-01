@@ -1,6 +1,6 @@
 /*
-*   Controlador de uso general en las páginas web del sitio privado.
-*   Sirve para manejar la plantilla del encabezado y pie del documento.
+* Controlador de uso general en las páginas web del sitio privado.
+* Sirve para manejar la plantilla del encabezado y pie del documento.
 */
 
 // Constante para completar la ruta de la API.
@@ -15,9 +15,9 @@ document.querySelector('title').textContent = 'YNWA';
 const MAIN_TITLE = document.getElementById('mainTitle');
 MAIN_TITLE.classList.add('text-center', 'py-3');
 
-/*  Función asíncrona para cargar el encabezado y pie del documento.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
+/* Función asíncrona para cargar el encabezado y pie del documento.
+* Parámetros: ninguno.
+* Retorno: ninguno.
 */
 
 const loadTemplate = async () => {
@@ -29,46 +29,47 @@ const loadTemplate = async () => {
         if (DATA.status) {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-                <header>
+            <header>
                 <nav class="navbar">
-                <div class="container-fluid position-absolute top-0 start-0">
-                  <a class="navbar-brand" href="#">
-                    <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" 
-                    width="90" height="80" type="button" data-bs-toggle="offcanvas" 
-                    data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+                    <div class="container-fluid position-absolute top-0 start-0">
+                        <a class="navbar-brand" href="#">
+                            <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
 
-                    <a  href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png"  
-                    class="" width="40" height="40"></a>
+                            <a href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png" class=""
+                                    width="40" height="40"></a>
 
-                    <div class="offcanvas offcanvas-start" style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-                        <div class="offcanvas-header">
-                          <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>
-                          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                            <div class="offcanvas-body">
-                                <ul class="list-group list-group-flush" >
-                                <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
-                                <li class="list-group-item" id="marca"><a href="1marcas.html">Marcas</a></li>
-                                <li class="list-group-item" id="modelo"><a href="2modelos.html">Modelos</a></li>
-                                <li class="list-group-item" id="talla"><a href="3tallas.html">Tallas</a></li>
-                                <li class="list-group-item" id="pedido"><a href="4pedidos.html">Pedidos</a></li>
-                                <li class="list-group-item" id="tipon"><a href="5tiponoticia.html">Tipo Noticias</a></li>
-                                <li class="list-group-item" id="noticia"><a href="6noticias.html">Noticias</a></li>
-                                <li class="list-group-item" id="comentario"><a href="7comentarios.html">Comentarios</a></li>
-                                <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
-                                <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
-                                <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
-                                <li class="list-group-item" id=""><a  href="#" onclick="logOut()" class="" ><img src="../../resources/img/logout.png"  
-                                class="" width="40" height="40"></a></li>
-                                  </ul>
+                            <div class="offcanvas offcanvas-start"
+                                style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;"
+                                data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                                <div class="offcanvas-header">
+                                    <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
+                                        <li class="list-group-item" id="marca"><a href="1marcas.html">Marcas</a></li>
+                                        <li class="list-group-item" id="modelo"><a href="2modelos.html">Modelos</a></li>
+                                        <li class="list-group-item" id="talla"><a href="3tallas.html">Tallas</a></li>
+                                        <li class="list-group-item" id="pedido"><a href="4pedidos.html">Pedidos</a></li>
+                                        <li class="list-group-item" id="tipon"><a href="5tiponoticia.html">Tipo Noticias</a></li>
+                                        <li class="list-group-item" id="noticia"><a href="6noticias.html">Noticias</a></li>
+                                        <li class="list-group-item" id="comentario"><a href="7comentarios.html">Comentarios</a></li>
+                                        <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
+                                        <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
+                                        <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
+                                        <li class="list-group-item" id=""><a href="#" onclick="logOut()" class=""><img
+                                                    src="../../resources/img/logout.png" class="" width="40" height="40"></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                      </div>
-                      
-                  </a>
-                </div>
+                    </div>
+
+                    </a>
+                    </div>
                 </nav>
-                </header>
+            </header>
             `);
             const opc1 = document.getElementById('marca');
             const opc2 = document.getElementById('modelo');
@@ -81,55 +82,55 @@ const loadTemplate = async () => {
             const opc9 = document.getElementById('usuario');
             const opc10 = document.getElementById('rol');
 
-            if(DATA.marcas_opc!=1){
-                opc1.style.display="none";
+            if (DATA.marcas_opc != 1) {
+                opc1.style.display = "none";
             }
-            if(DATA.modelos_opc!=1){
-                opc2.style.display="none";
+            if (DATA.modelos_opc != 1) {
+                opc2.style.display = "none";
             }
-            if(DATA.tallas_opc!=1){
-                opc3.style.display="none";
+            if (DATA.tallas_opc != 1) {
+                opc3.style.display = "none";
             }
-            if(DATA.pedidos_opc!=1){
-                opc4.style.display="none";
+            if (DATA.pedidos_opc != 1) {
+                opc4.style.display = "none";
             }
-            if(DATA.tipo_noticias_opc!=1){
-                opc5.style.display="none";
+            if (DATA.tipo_noticias_opc != 1) {
+                opc5.style.display = "none";
             }
-            if(DATA.noticias_opc!=1){
-                opc6.style.display="none";
+            if (DATA.noticias_opc != 1) {
+                opc6.style.display = "none";
             }
-            if(DATA.comentarios_opc!=1){
-                opc7.style.display="none";
+            if (DATA.comentarios_opc != 1) {
+                opc7.style.display = "none";
             }
-            if(DATA.clientes_opc!=1){
-                opc8.style.display="none";
+            if (DATA.clientes_opc != 1) {
+                opc8.style.display = "none";
             }
-            if(DATA.usuarios_opc!=1){
-                opc9.style.display="none";
+            if (DATA.usuarios_opc != 1) {
+                opc9.style.display = "none";
             }
-            if(DATA.roles_opc!=1){
-                opc10.style.display="none";
+            if (DATA.roles_opc != 1) {
+                opc10.style.display = "none";
             }
-            
-            
+
+
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
-                <footer>
-                <nav class="navbar fixed-bottom" id="foot">
-                <div class="container-fluid">
-                    <div>
-                        <h6>YNWA</h6>
-                        <p><i class="bi bi-c-square"></i>2024 Todos los derechos reservados</p>
-                    </div>
-                    <div>
-                        <h6>Contáctanos</h6>
-                        <p><i class="bi bi-envelope"></i> YNWA@gmail.com</p>
-                    </div>
-                </div>
-            </nav>
-                </footer>
-            `);
+<footer>
+    <nav class="navbar fixed-bottom" id="foot">
+        <div class="container-fluid">
+            <div>
+                <h6>YNWA</h6>
+                <p><i class="bi bi-c-square"></i>2024 Todos los derechos reservados</p>
+            </div>
+            <div>
+                <h6>Contáctanos</h6>
+                <p><i class="bi bi-envelope"></i> YNWA@gmail.com</p>
+            </div>
+        </div>
+    </nav>
+</footer>
+`);
         } else {
             //sweetAlert(3, DATA.error, false, 'index.html');
         }
@@ -138,7 +139,7 @@ const loadTemplate = async () => {
         // Se comprueba si la página web es la principal, de lo contrario se direcciona a iniciar sesión.
         if (location.pathname.endsWith('index.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.
-            
+
         } else {
             location.href = 'index.html';
         }

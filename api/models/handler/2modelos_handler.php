@@ -65,13 +65,13 @@ class ModeloHandler
         ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
         $params = array($this->id);
-        
+
         return Database::getRows($sql, $params);
     }
 
     public function readOne()
     {
-        $sql ='SELECT mo.id_modelo,mo.id_marca, mo.descripcion_modelo,
+        $sql = 'SELECT mo.id_modelo,mo.id_marca, mo.descripcion_modelo,
         mo.foto_modelo,mo.estado_modelo, ma.descripcion_marca marca
         FROM prc_modelos mo
         INNER JOIN ctg_marcas ma USING(id_marca)
@@ -79,7 +79,7 @@ class ModeloHandler
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         $_SESSION['idmod'] = $data['id_modelo'];
-        
+
         return $data;
     }
 
@@ -97,7 +97,7 @@ class ModeloHandler
         $sql = 'UPDATE prc_modelos 
                 SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
                 WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -111,16 +111,11 @@ class ModeloHandler
 
     public function readProductosCategoria()
     {
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
+        $sql = 'SELECT mo.id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
         FROM prc_modelos mo
         INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.id_marca LIKE ? OR estado="A"
-        ORDER BY mo.descripcion';
-        /*'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                WHERE id_categoria = ? AND estado_producto = true
-                ORDER BY nombre_producto'*/;
+        WHERE mo.id_marca LIKE ? OR estado_modelo="A"
+        ORDER BY mo.descripcion_modelo';
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
@@ -130,19 +125,20 @@ class ModeloHandler
     */
     public function cantidadProductosCategoria()
     {
-        $sql = 'SELECT nombre_categoria, COUNT(id_producto) cantidad
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY cantidad DESC LIMIT 5';
+        $sql = 'SELECT descripcion_marca, COUNT(id_marca) cantidad
+        FROM prc_modelos
+        INNER JOIN ctg_marcas USING(id_marca)
+        GROUP BY descripcion_marca ORDER BY cantidad DESC LIMIT 5';
         return Database::getRows($sql);
     }
 
     public function porcentajeProductosCategoria()
     {
-        $sql = 'SELECT nombre_categoria, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM producto)), 2) porcentaje
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY porcentaje DESC';
+        $sql = 'SELECT descripcion_marca, ROUND((COUNT(id_modelo) * 100.0 / (SELECT COUNT(id_modelo) FROM prc_modelos)), 2)
+        porcentaje
+        FROM prc_modelos mo
+        INNER JOIN ctg_marcas ma USING(id_marca)
+        GROUP BY descripcion_marca ORDER BY porcentaje DESC';
         return Database::getRows($sql);
     }
 

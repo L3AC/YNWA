@@ -2,6 +2,13 @@
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
+select * from prc_modelos;
+
+SELECT descripcion_marca, COUNT(id_marca) cantidad
+                FROM prc_modelos
+                INNER JOIN ctg_marcas USING(id_marca)
+                GROUP BY descripcion_marca ORDER BY cantidad DESC LIMIT 5
+
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 #select * from sec_usuarios

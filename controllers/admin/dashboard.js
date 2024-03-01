@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/admin/producto.php';
+const PRODUCTO_API = 'services/admin/2modelos.php';
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,11 +40,11 @@ const graficoBarrasCategorias = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            categorias.push(row.nombre_categoria);
+            categorias.push(row.descripcion_marca);
             cantidades.push(row.cantidad);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart1', categorias, cantidades, 'Cantidad de productos', 'Cantidad de productos por categoría');
+        barGraph('chart1', categorias, cantidades, 'Cantidad de modelos', 'Cantidad de modelos por marca');
     } else {
         document.getElementById('chart1').remove();
         console.log(DATA.error);
@@ -67,11 +67,11 @@ const graficoPastelCategorias = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            categorias.push(row.nombre_categoria);
+            categorias.push(row.descripcion_marca);
             porcentajes.push(row.porcentaje);
         });
         // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
-        pieGraph('chart2', categorias, porcentajes, 'Porcentaje de productos por categoría');
+        pieGraph('chart2', categorias, porcentajes, 'Porcentaje de modelos por marca');
     } else {
         document.getElementById('chart2').remove();
         console.log(DATA.error);

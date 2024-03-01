@@ -5,7 +5,8 @@ use db_YNWA;
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 #select * from sec_usuarios
-delete from sec_usuarios where id_usuario=3
+#select * from prc_clientes
+#delete from sec_usuarios where id_usuario=3
 
 CREATE TABLE sec_roles(
 id_rol int AUTO_INCREMENT,

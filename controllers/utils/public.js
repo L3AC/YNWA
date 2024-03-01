@@ -74,19 +74,19 @@ const loadTemplate = async () => {
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
-        <footer>
-            <nav class="navbar fixed-bottom bg-body-tertiary">
-                <div class="container">
+                <footer>
+                <nav class="navbar fixed-bottom" id="foot">
+                <div class="container-fluid">
                     <div>
                         <h6>YNWA</h6>
-                        <p><i class="bi bi-c-square"></i> 2018-2024 Todos los derechos reservados</p>
+                        <p><i class="bi bi-c-square"></i>2024 Todos los derechos reservados</p>
                     </div>
                     <div>
                         <h6>Contáctanos</h6>
-                        <p><i class="bi bi-envelope"></i> dacasoft@outlook.com</p>
+                        <p><i class="bi bi-envelope"></i> YNWA@gmail.com</p>
                     </div>
                 </div>
             </nav>
-        </footer>
-    `);
+                </footer>
+            `);
 }

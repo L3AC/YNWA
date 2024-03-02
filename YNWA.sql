@@ -116,6 +116,7 @@ PRIMARY KEY (id_talla)
 );
 insert into ctg_tallas(descripcion_talla,estado_talla) values('5',true),('6',true),('7',true),('8',true),('9',true),('10',true);
 
+
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla int AUTO_INCREMENT,
 id_talla int,
@@ -130,8 +131,12 @@ CONSTRAINT fk_mt_talla
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values(1,1,3,75),(2,1,3,80),(3,1,3,85);
+select * from prc_modelos;
+insert into prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_modelo_talla) values
+/*NIKE JORDAN*/(1,1,3,75),(2,1,3,80),(3,1,3,85),
+/*NEWBALANCE*/(1,2,30,85),(2,2,30,90),(3,2,30,95),
+/*ADIDAS PREDATOR*/(1,3,30,65),(2,3,30,70),(3,3,30,75),
+/*NAUTICA BLUE*/(1,4,30,55),(2,4,30,60),(3,4,30,65);
 
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT AUTO_INCREMENT,

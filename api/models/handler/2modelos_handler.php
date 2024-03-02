@@ -111,11 +111,11 @@ class ModeloHandler
 
     public function readProductosCategoria()
     {
-        $sql = 'SELECT mo.id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.id_marca LIKE ? OR estado_modelo="A"
-        ORDER BY mo.descripcion_modelo';
+        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM prc_modelos 
+        INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_modelo=true and id_marca=?
+        ORDER BY descripcion_modelo';
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }

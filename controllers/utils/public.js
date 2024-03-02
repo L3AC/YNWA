@@ -46,12 +46,10 @@ const loadTemplate = async () => {
                                         placeholder="Busqueda" >
                                     </div>
                                 </div>
-
                                     <li class="nav-item dropdown ">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                                          href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
                                         <ul class="dropdown-menu" id="listmarca">
-                                            
                                         </ul>
                                     </li>
                                     <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
@@ -62,13 +60,10 @@ const loadTemplate = async () => {
                             </div>
                         </div>
                     </nav>
-
-
-
                 </header>
             `);
 
-            const LISTA_MARCA= document.getElementById('listmarca');
+            const LISTA_MARCA = document.getElementById('listmarca');
             const DATA = await fetchData(MARCA_API, 'readAllAcitve');
             if (DATA.status) {
                 // Se inicializa el contenedor de productos.
@@ -77,25 +72,27 @@ const loadTemplate = async () => {
                 DATA.dataset.forEach(row => {
                     // Se crean y concatenan las tarjetas con los datos de cada producto.
                     LISTA_MARCA.innerHTML += `
-                        <li><a class="dropdown-item" href="profile.html">${row.descripcion_marca}</a></li>
+                        <li><a class="dropdown-item" 
+                        href="products.html?id=${row.id_marca}&marca=${row.descripcion_marca}">
+                        ${row.descripcion_marca}</a></li>
                     `;
                 });
             } else {
                 // Se presenta un mensaje de error cuando no existen datos para mostrar.
-                MAIN_TITLE.textContent = DATA.error;
+                LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
 
 
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se asigna como título principal la categoría de los productos.
-        MAIN_TITLE.textContent = `Categoría: ${PARAMS.get('nombre')}`;
-        // Se inicializa el contenedor de productos.
-        PRODUCTOS.innerHTML = '';
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se crean y concatenan las tarjetas con los datos de cada producto.
-            PRODUCTOS.innerHTML += `
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status) {
+                // Se asigna como título principal la categoría de los productos.
+                MAIN_TITLE.textContent = `Categoría: ${PARAMS.get('nombre')}`;
+                // Se inicializa el contenedor de productos.
+                PRODUCTOS.innerHTML = '';
+                // Se recorre el conjunto de registros fila por fila a través del objeto row.
+                DATA.dataset.forEach(row => {
+                    // Se crean y concatenan las tarjetas con los datos de cada producto.
+                    PRODUCTOS.innerHTML += `
                 <div class="col-sm-12 col-md-6 col-lg-3">
                     <div class="card mb-3">
                         <img src="${SERVER_URL}images/productos/${row.imagen_producto}" class="card-img-top" alt="${row.nombre_producto}">
@@ -112,37 +109,71 @@ const loadTemplate = async () => {
                     </div>
                 </div>
             `;
-        });
-    } else {
-        // Se presenta un mensaje de error cuando no existen datos para mostrar.
-        MAIN_TITLE.textContent = DATA.error;
-    }
+                });
+            } else {
+                // Se presenta un mensaje de error cuando no existen datos para mostrar.
+                MAIN_TITLE.textContent = DATA.error;
+            }
 
-            
+
         } else {
             location.href = 'index.html';
         }
     } else {
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
-            <header>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+                <header>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color: #CCC8AA" >
                     <div class="container">
-                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="50" alt="YNWA"></a>
+                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60" alt="YNWA" ></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ms-auto">
-                                <a class="nav-link" href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
-                                <a class="nav-link" href="signup.html"><i class="bi bi-person"></i> Crear cuenta</a>
-                                <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
+                            
+                            <div class="col-3 nav-link">
+                                <div class="">
+                                    <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
+                                    placeholder="Busqueda" >
+                                </div>
+                            </div>
+
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+                                    href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
+                                    <ul class="dropdown-menu" id="listmarca">
+                                        
+                                    </ul>
+                                </li>
+                                <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
+                                <a class="nav-link" href="cart.html"><i class="bi bi-clock-history"></i> Historial</a>
+                                <a class="nav-link" href="cart.html"><i class="bi bi-person-fill"></i>Cuenta</a>
+                                <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a>
                             </div>
                         </div>
                     </div>
                 </nav>
             </header>
         `);
+        const LISTA_MARCA = document.getElementById('listmarca');
+        const DATA = await fetchData(MARCA_API, 'readAllAcitve');
+        if (DATA.status) {
+            // Se inicializa el contenedor de productos.
+            LISTA_MARCA.innerHTML = '';
+            // Se recorre el conjunto de registros fila por fila a través del objeto row.
+            DATA.dataset.forEach(row => {
+                // Se crean y concatenan las tarjetas con los datos de cada producto.
+                LISTA_MARCA.innerHTML += `
+                    <li><a class="dropdown-item" 
+                    href="products.html?id=${row.id_marca}&nombre=${row.marca}">
+                    ${row.descripcion_marca}</a></li>
+                `;
+            });
+        } else {
+            // Se presenta un mensaje de error cuando no existen datos para mostrar.
+            LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
+        }
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `

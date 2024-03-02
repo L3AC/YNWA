@@ -5,6 +5,7 @@
 
 // Constante para completar la ruta de la API.
 const USER_API = 'services/public/cliente.php';
+const MARCA_API = 'services/public/marca.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
 MAIN.style.paddingTop = '75px';
@@ -46,10 +47,10 @@ const loadTemplate = async () => {
                                     </div>
                                 </div>
 
-                                    <li class="nav-item dropdown">
+                                    <li class="nav-item dropdown ">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                                          href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
-                                        <ul class="dropdown-menu" id="marcalist">
+                                        <ul class="dropdown-menu" id="listmarca">
                                             <li><a class="dropdown-item" href="profile.html">Editar perfil</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="#" onclick="logOut()">Cerrar sesión</a></li>
@@ -68,6 +69,9 @@ const loadTemplate = async () => {
 
                 </header>
             `);
+
+            const LISTA_MARCA= document.getElementById('listmarca');
+
             
         } else {
             location.href = 'index.html';

@@ -163,6 +163,10 @@ insert into prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_n
 values(1,'Nuevas ofertas por el dia de san valentin','234342asd12.jpg','Este 14 de febrero, 
 tendremos en oferta todos los productos mayores a 200$', true,now());
 
+insert into prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )
+values(2,'Nuevas productos','pr3241jsksd.jpg','Este 8 de marzo vendran nuevos productos de la marca Nike edición 2024', true,now());
+
+
 
 create table prc_pedidos(
 id_pedido int AUTO_INCREMENT,
@@ -202,6 +206,11 @@ CREATE TABLE prc_comentarios (
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
+SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM prc_modelos 
+        INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_modelo=true 
+        ORDER BY descripcion_modelo
 
 /*
 insert into prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 

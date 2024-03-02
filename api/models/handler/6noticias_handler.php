@@ -56,6 +56,16 @@ class NoticiaHandler
         ORDER BY n.titulo_noticia';
         return Database::getRows($sql);
     }
+    public function readAllActive()
+    {
+        $sql = 'select id_noticia,id_tipo_noticia,titulo_noticia,
+        foto_noticia,contenido_noticia,estado_noticia,
+        DATE_FORMAT(n.fecha_noticia, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tipo_noticias tn USING(id_tipo_noticia)
+        WHERE estado_noticia=true
+        ORDER BY n.titulo_noticia';
+        return Database::getRows($sql);
+    }
 
     public function readOne()
     {

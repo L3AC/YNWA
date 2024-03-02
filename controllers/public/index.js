@@ -1,7 +1,9 @@
 // Constante para completar la ruta de la API.
-const CATEGORIA_API = 'services/public/categoria.php';
-// Constante para establecer el contenedor de categorías.
-const CATEGORIAS = document.getElementById('categorias');
+const CATEGORIA_API = 'services/public/categoria.php',
+    NOTICIA_API = 'services/public/noticia.php';
+CATEGORIAS = document.getElementById('categorias'),
+    BTNSLIDE = document.getElementById('btnSlide'),
+    CARDSLIDE = document.getElementById('cardSlide');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -9,6 +11,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadTemplate();
     // Se establece el título del contenido principal.
     MAIN_TITLE.textContent = 'Productos por categoría';
+
+
+    // Petición para obtener las categorías disponibles.
+    const DATA2 = await fetchData(NOTICIA_API, 'readAllActive');
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA2.status) {
+        // Se inicializa el contenedor de categorías.
+        CARDSLIDE.innerHTML = '';
+        BTNSLIDE.innerHTML = '';
+        let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
+        let cElemento=1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA2.dataset.forEach(row => {
+            // Se crean y concatenan las tarjetas con los datos de cada categoría.
+            BTNSLIDE.innerHTML += `
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}" class="active"
+                aria-current="true" aria-label="Slide ${cElemento}"></button>
+            `;
+            CARDSLIDE.innerHTML += `
+                <div class="carousel-item active">
+                    <img src="../../api/images/noticias/${row.foto_noticia}" 
+                    class="d-block w-100 " style="height: 500px; object-fit: cover;" alt="Slide ${cElemento}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>${row.titulo_noticia}?</h5>
+                        <p>${row.contenido_noticia}</p>
+                    </div>
+                </div>
+            `;
+            cBtn ++;
+            cElemento++;
+        });
+    } else {
+        // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
+        document.getElementById('mainTitle').textContent = DATA.error;
+    }
+
+
     // Petición para obtener las categorías disponibles.
     const DATA = await fetchData(CATEGORIA_API, 'readAll');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -37,4 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
         document.getElementById('mainTitle').textContent = DATA.error;
     }
+
+
+
 });

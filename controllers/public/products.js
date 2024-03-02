@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se asigna como título principal la categoría de los productos.
-        MAIN_TITLE.textContent = `Marca: ${PARAMS.get('marca')}`;
+        MAIN_TITLE.textContent = `Marca: ${PARAMS.get('nombre')}`;
         // Se inicializa el contenedor de productos.
         PRODUCTOS.innerHTML = '';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.

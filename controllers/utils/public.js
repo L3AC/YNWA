@@ -64,7 +64,7 @@ const loadTemplate = async () => {
             `);
 
             const LISTA_MARCA = document.getElementById('listmarca');
-            const DATA = await fetchData(MARCA_API, 'readAllAcitve');
+            const DATA = await fetchData(MARCA_API, 'readAllActive');
             if (DATA.status) {
                 // Se inicializa el contenedor de productos.
                 LISTA_MARCA.innerHTML = '';
@@ -73,7 +73,7 @@ const loadTemplate = async () => {
                     // Se crean y concatenan las tarjetas con los datos de cada producto.
                     LISTA_MARCA.innerHTML += `
                         <li><a class="dropdown-item" 
-                        href="products.html?id=${row.id_marca}&marca=${row.descripcion_marca}">
+                        href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
                         ${row.descripcion_marca}</a></li>
                     `;
                 });
@@ -157,7 +157,7 @@ const loadTemplate = async () => {
             </header>
         `);
         const LISTA_MARCA = document.getElementById('listmarca');
-        const DATA = await fetchData(MARCA_API, 'readAllAcitve');
+        const DATA = await fetchData(MARCA_API, 'readAllActive');
         if (DATA.status) {
             // Se inicializa el contenedor de productos.
             LISTA_MARCA.innerHTML = '';
@@ -166,7 +166,7 @@ const loadTemplate = async () => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 LISTA_MARCA.innerHTML += `
                     <li><a class="dropdown-item" 
-                    href="products.html?id=${row.id_marca}&nombre=${row.marca}">
+                    href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
                     ${row.descripcion_marca}</a></li>
                 `;
             });

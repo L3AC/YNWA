@@ -10,7 +10,7 @@ if (isset($_GET['action'])) {
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null);
     // Se compara la acción a realizar según la petición del controlador.
     switch ($_GET['action']) {
-        case 'readAll':
+        case 'readAllAcitve':
             if ($result['dataset'] = $categoria->readAllActive()) {
                 $result['status'] = 1;
             } else {

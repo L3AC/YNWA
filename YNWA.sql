@@ -2,10 +2,6 @@
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_YNWA;
 use db_YNWA;
-select * from prc_modelos;
-
-
-
 /*PRC = TABLAS DINAMICAS *//*CTG = CATALOGOS *//*SEC = TABLAS DE SEGURIDAD*/
 
 #select * from sec_usuarios
@@ -104,8 +100,13 @@ CONSTRAINT fk_modelo_marca
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+select * from ctg_marcas;
+insert into prc_modelos(id_marca,descripcion_modelo,foto_modelo,estado_modelo) 
+values(1,'JORDAN','3728asb23423.png',true),
+(2,'Unisex','43jnd344ksnw.jpg',true),
+(3,'Samba Predator','23dfb234nsd.jpg',true),
+(4,'Blue Black','738sd23nkssd2.jpg',true);
 
-insert into prc_modelos(id_marca,descripcion_modelo,foto_modelo,estado_modelo) values(1,'JORDAN','3728asb23423.png',true);
 
 create table ctg_tallas(
 id_talla int AUTO_INCREMENT,

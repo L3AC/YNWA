@@ -19,29 +19,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (DATA2.status) {
         // Se inicializa el contenedor de categorías.
         CARDSLIDE.innerHTML = '';
-        BTNSLIDE.innerHTML = '';
-        let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
-        let cElemento=1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA2.dataset.forEach(row => {
-            // Se crean y concatenan las tarjetas con los datos de cada categoría.
-            BTNSLIDE.innerHTML += `
-                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}" class="active"
-                aria-current="true" aria-label="Slide ${cElemento}"></button>
-            `;
-            CARDSLIDE.innerHTML += `
-                <div class="carousel-item active">
-                    <img src="../../api/images/noticias/${row.foto_noticia}" 
-                    class="d-block w-100 " style="height: 500px; object-fit: cover;" alt="Slide ${cElemento}">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>${row.titulo_noticia}?</h5>
-                        <p>${row.contenido_noticia}</p>
-                    </div>
+BTNSLIDE.innerHTML = '';
+let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
+let cElemento=1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
+// Se recorre el conjunto de registros fila por fila a través del objeto row.
+DATA2.dataset.forEach(row => {
+    // Se crean y concatenan las tarjetas con los datos de cada categoría.
+    BTNSLIDE.innerHTML += `
+        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}" class="${cBtn === 0 ? 'active' : ''}"
+        aria-current="${cBtn === 0 ? 'true' : 'false'}" aria-label="Slide ${cElemento}"></button>
+        
+    `;
+    CARDSLIDE.innerHTML += `
+        <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
+            <div class="d-flex justify-content-center align-items-center" style="height: 600px;">
+                <img src="../../api/images/noticias/${row.foto_noticia}" 
+                class="d-block w-100 mx-auto" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
+            </div>
+            <div class="carousel-caption d-none d-md-block text-center">
+                <div style="background-color: rgba(0, 0, 0, 0.5); display: inline-block; padding: 5px;">
+                    <h5>${row.titulo_noticia}</h5>
+                    <p>${row.contenido_noticia}</p>
                 </div>
-            `;
-            cBtn ++;
-            cElemento++;
-        });
+            </div>
+        </div>
+    `;
+    cBtn ++;
+    cElemento++;
+});
+
+        
+
+
+
+
     } else {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
         document.getElementById('mainTitle').textContent = DATA.error;

@@ -39,12 +39,12 @@ tendremos en oferta todos los productos mayores a 200$', true,now()),
  true,now());
  SELECT * FROM prc_noticias;
 
+
 INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 
 VALUES(1,'Efectivo',now(),true);
 SELECT * FROM prc_pedidos;
 
-
-INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(3,1,1);
+INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(1,1,1);
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
-VALUES(2,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
+VALUES(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
 SELECT * FROM prc_detalle_pedidos

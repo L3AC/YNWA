@@ -24,17 +24,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Se crean y concatenan las tarjetas con los datos de cada producto.
             PRODUCTOS.innerHTML += `
                 <div class="col-sm-12 col-md-6 col-lg-3">
-                <div class="card mb-3">
-                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" 
-                    class="card-img-top" alt="${row.descripcion_modelo}">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">${row.descripcion_modelo}</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <a href="detail.html?id=${row.id_modelo}" class="btn btn-primary">Ver detalle</a>
+                    <div class="card mb-3">
+                        <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" 
+                        class="card-img-top" alt="${row.descripcion_modelo}">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">${row.descripcion_modelo}</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <a href="detail.html?id=${row.id_modelo}" class="btn btn-primary">Ver detalle</a>
+                        </div>
                     </div>
                 </div>
-            </div>
             `;
         });
     } else {

@@ -54,6 +54,17 @@ class ModeloHandler
         ORDER BY descripcion_modelo';
         return Database::getRows($sql);
     }
+    public function readDesc()
+    {
+        $sql = 'SELECT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca AS marca
+        FROM prc_modelos
+        INNER JOIN ctg_marcas USING(id_marca)
+        ORDER BY id_modelo DESC
+        LIMIT 8';
+        return Database::getRows($sql);
+    }
+
+
     public function readsubAll()
     {
         $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,

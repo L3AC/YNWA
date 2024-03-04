@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const CATEGORIA_API = 'services/public/categoria.php',
+const CATEGORIA_API = 'services/public/producto.php',
     NOTICIA_API = 'services/public/noticia.php';
 CATEGORIAS = document.getElementById('categorias'),
     BTNSLIDE = document.getElementById('btnSlide'),
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Productos por categoría';
+    MAIN_TITLE.textContent = 'Modelos Recientes';
 
 
     // Petición para obtener las categorías disponibles.
@@ -19,68 +19,76 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (DATA2.status) {
         // Se inicializa el contenedor de categorías.
         CARDSLIDE.innerHTML = '';
-BTNSLIDE.innerHTML = '';
-let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
-let cElemento=1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
-// Se recorre el conjunto de registros fila por fila a través del objeto row.
-DATA2.dataset.forEach(row => {
-    // Se crean y concatenan las tarjetas con los datos de cada categoría.
-    BTNSLIDE.innerHTML += `
-        <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}" class="${cBtn === 0 ? 'active' : ''}"
-        aria-current="${cBtn === 0 ? 'true' : 'false'}" aria-label="Slide ${cElemento}"></button>
-        
-    `;
-    CARDSLIDE.innerHTML += `
-        <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-            <div class="d-flex justify-content-center align-items-center" style="height: 600px;">
-                <img src="../../api/images/noticias/${row.foto_noticia}" 
-                class="d-block w-100 mx-auto" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
-            </div>
-            <div class="carousel-caption d-none d-md-block text-center">
-                <div style="background-color: rgba(0, 0, 0, 0.5); display: inline-block; padding: 5px;">
-                    <h5>${row.titulo_noticia}</h5>
-                    <p>${row.contenido_noticia}</p>
+        BTNSLIDE.innerHTML = '';
+        let cBtn = 0;/*CONTADOR DE BOTONES DEL SLIDE*/
+        let cElemento = 1;/*CONTADOR DE LOS CARROUSEL DEL SLIDE*/
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA2.dataset.forEach(row => {
+            // Se crean y concatenan las tarjetas con los datos de cada categoría.
+            BTNSLIDE.innerHTML += `
+                <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}" class="${cBtn === 0 ? 'active' : ''}"
+                aria-current="${cBtn === 0 ? 'true' : 'false'}" aria-label="Slide ${cElemento}"></button>
+                
+            `;
+            CARDSLIDE.innerHTML += `
+            <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
+                <div class="d-flex justify-content-center align-items-center" style="height: 600px;">
+                    <img src="../../api/images/noticias/${row.foto_noticia}" 
+                    class="d-block w-100 mx-auto" style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
+                </div>
+                <div class="carousel-caption d-none d-md-block text-center">
+                    <div style="background-color: rgba(0, 0, 0, 0.5); display: inline-block; padding: 5px;">
+                        <h5>${row.titulo_noticia}</h5>
+                        <p>${row.contenido_noticia}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
-    cBtn ++;
-    cElemento++;
-});
-
-        
-
-
-
+            `;
+            cBtn++;
+            cElemento++;
+        });
 
     } else {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
-        document.getElementById('mainTitle').textContent = DATA.error;
+            // Se crean y concatenan las tarjetas con los datos de cada categoría.
+            BTNSLIDE.innerHTML += `
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>`;
+
+            CARDSLIDE.innerHTML += `
+            <div class="carousel-item active">
+                    <img src="../../resources/img/carousel/img1.jpg" class="d-block w-100" alt="Slide 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>¿Sabías que...?</h5>
+                        <p>El café reduce el riesgo de padecer Alzheimer.</p>
+                    </div>
+                </div>`;
     }
 
 
     // Petición para obtener las categorías disponibles.
-    const DATA = await fetchData(CATEGORIA_API, 'readAll');
+    const DATA = await fetchData(CATEGORIA_API, 'readDesc');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el contenedor de categorías.
         CATEGORIAS.innerHTML = '';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            // Se establece la página web de destino con los parámetros.
-            let url = `products.html?id=${row.id_categoria}&nombre=${row.nombre_categoria}`;
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             CATEGORIAS.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="${SERVER_URL}images/categorias/${row.imagen_categoria}" class="card-img-top" alt="${row.nombre_categoria}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">${row.nombre_categoria}</h5>
-                            <p class="card-text">${row.descripcion_categoria}</p>
-                            <a href="${url}" class="btn btn-primary">Ver productos</a>
-                        </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="card mb-3">
+                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" 
+                    class="card-img-top" alt="${row.descripcion_modelo}" width="250" height="400">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">${row.descripcion_modelo}</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <a href="detail.html?id=${row.id_modelo}" class="btn btn-primary">Ver detalle</a>
                     </div>
                 </div>
+            </div>
+
             `;
         });
     } else {

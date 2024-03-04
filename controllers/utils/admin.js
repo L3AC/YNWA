@@ -38,6 +38,7 @@ const loadTemplate = async () => {
 
                             <a href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png" class=""
                                     width="40" height="40"></a>
+                            
 
                             <div class="offcanvas offcanvas-start"
                                 style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;"
@@ -59,7 +60,7 @@ const loadTemplate = async () => {
                                         <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
                                         <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
                                         <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
-                                        <a href="#" style="margin-top: 100px;" onclick="logOut()" class=""><img
+                                        <a href="#" style="margin-top: 20px;" onclick="logOut()" class=""><img
                                                     src="../../resources/img/logout.png" class="" width="40" height="40"></a>
                                     </ul>
                                 </div>

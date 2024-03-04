@@ -29,19 +29,23 @@
         <!-- Formulario para cambiar datos personales -->
         <form class="row g-3 pt-3" id="profileForm">
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                <!--Se muestra su nombre-->
                 <label for="nombreAdministrador" class="form-label">Nombre</label>
                 <input id="nombreAdministrador" type="text" name="nombreAdministrador" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
+                <!--Se muestra su apellido-->
                 <label for="apellidoAdministrador" class="form-label">Apellido</label>
                 <input id="apellidoAdministrador" type="text" name="apellidoAdministrador" class="form-control"
                     required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                <!--Se muestra su correo-->
                 <label for="correoAdministrador" class="form-label">Correo</label>
                 <input id="correoAdministrador" type="email" name="correoAdministrador" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
+                <!--Se muestra su usuario-->
                 <label for="aliasAdministrador" class="form-label">Usuario</label>
                 <input id="aliasAdministrador" type="text" name="aliasAdministrador" class="form-control" required>
             </div>
@@ -69,6 +73,7 @@
                     <form id="passwordForm">
                         <div class="modal-body row g-3">
                             <div class="col-sm-12 col-md-6 offset-md-3">
+                                <!--Se pide la contraseña actual-->
                                 <label for="claveActual" class="form-label">Contraseña actual</label>
                                 <input id="claveActual" type="password" name="claveActual" class="form-control"
                                     required>
@@ -77,16 +82,19 @@
                                 <span>CONTRASEÑA NUEVA</span>
                             </div>
                             <div class="col-sm-12 col-md-6">
+                                <!--Se pide la contraseña nueva-->
                                 <label for="claveNueva" class="form-label">Contraseña</label>
                                 <input id="claveNueva" type="password" name="claveNueva" class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
+                                <!--Se pide la confirmacion contraseña nueva-->
                                 <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
                                 <input id="confirmarClave" type="password" name="confirmarClave" class="form-control"
                                     required>
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <!--Se guardan los cambios-->
                             <button type="submit" class="btn" style="background-color: #CCC8AA;">
                                 Guardar</button>
                         </div>

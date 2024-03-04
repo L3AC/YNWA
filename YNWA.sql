@@ -77,9 +77,9 @@ PRIMARY KEY (id_talla)
 
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla INT UNSIGNED AUTO_INCREMENT,
-id_talla INT UNSIGNED unsigned,
-id_modelo INT UNSIGNED unsigned,
-stock_modelo_talla INT UNSIGNED unsigned,
+id_talla INT UNSIGNED,
+id_modelo INT UNSIGNED,
+stock_modelo_talla INT UNSIGNED,
 precio_modelo_talla FLOAT UNSIGNED,
 PRIMARY KEY (id_modelo_talla),
 CONSTRAINT fk_mt_modelo
@@ -107,8 +107,7 @@ CREATE TABLE prc_noticias (
     fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
     CONSTRAINT fk_noticia_tipo_noticia
-    FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia),
-    CONSTRAINT chk_fecha_noticia CHECK (fecha_noticia >= NOW())
+    FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
 
 CREATE TABLE prc_pedidos(
@@ -147,11 +146,5 @@ CREATE TABLE prc_comentarios (
     PRIMARY KEY (id_comentario),
     CONSTRAINT fk_comentario_detalle
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
-    ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT chk_fecha_comentario CHECK (fecha_comentario >= NOW())
+    ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
-
-
-

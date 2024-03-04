@@ -1,7 +1,7 @@
 /*DROP DATABASE dbYNWA;*/
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
-USE db_YNWA;
+USE db_ynwa;
 
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
@@ -44,14 +44,14 @@ nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
 email_cliente VARCHAR(100),
 pin_cliente VARCHAR(6),
-estado_cliente BOOLEAN,
+estado_cliente BOOLEAN DEFAULT TRUE,
 PRIMARY KEY(id_cliente)
 );
 
 CREATE TABLE ctg_marcas(
 id_marca INT UNSIGNED AUTO_INCREMENT,
 descripcion_marca VARCHAR(255),
-estado_marca BOOLEAN,
+estado_marca BOOLEAN DEFAULT TRUE,
 PRIMARY KEY (id_marca)
 );
 
@@ -60,7 +60,7 @@ id_modelo INT UNSIGNED AUTO_INCREMENT,
 id_marca INT UNSIGNED,
 descripcion_modelo VARCHAR(255),
 foto_modelo LONGTEXT,
-estado_modelo BOOLEAN,
+estado_modelo BOOLEAN DEFAULT TRUE,
 PRIMARY KEY(id_modelo),
 CONSTRAINT fk_modelo_marca
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)
@@ -70,7 +70,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE ctg_tallas(
 id_talla INT UNSIGNED AUTO_INCREMENT,
 descripcion_talla VARCHAR(255),
-estado_talla BOOLEAN,
+estado_talla BOOLEAN  DEFAULT TRUE,
 PRIMARY KEY (id_talla)
 );
 
@@ -93,7 +93,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,
     descripcion_tipo_noticia VARCHAR(255),
-    estado_tipo_noticia BOOLEAN,
+    estado_tipo_noticia BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (id_tipo_noticia)
 );
 
@@ -103,7 +103,7 @@ CREATE TABLE prc_noticias (
     titulo_noticia VARCHAR(255),
     foto_noticia LONGTEXT,
     contenido_noticia TEXT,
-    estado_noticia BOOLEAN,
+    estado_noticia BOOLEAN DEFAULT TRUE,
     fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id_noticia),
     CONSTRAINT fk_noticia_tipo_noticia
@@ -116,7 +116,7 @@ id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED,
 forma_pago_pedido enum('Efectivo','Transferencia'),
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-estado_pedido BOOLEAN,
+estado_pedido BOOLEAN DEFAULT TRUE,
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
@@ -143,7 +143,7 @@ CREATE TABLE prc_comentarios (
     contenido_comentario TEXT,
     puntuacion_comentario INT UNSIGNED,
     fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado_comentario BOOLEAN,
+    estado_comentario BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (id_comentario),
     CONSTRAINT fk_comentario_detalle
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)

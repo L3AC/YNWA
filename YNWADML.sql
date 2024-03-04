@@ -30,18 +30,18 @@ SELECT * FROM prc_modelo_tallas;
 
 INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
 VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
-SELECT * FROM ctg_tipo_noticias
+SELECT * FROM ctg_tipo_noticias;
 
 INSERT INTO prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )
 VALUES(1,'Nuevas ofertas por el dia de san valentin','234342asd12.jpg','Este 14 de febrero, 
 tendremos en oferta todos los productos mayores a 200$', true,now()),
 (2,'Nuevas productos','pr3241jsksd.jpg','Este 8 de marzo vendran nuevos productos de la marca Nike edición 2024',
  true,now());
- SELECT * FROM prc_noticias
+ SELECT * FROM prc_noticias;
 
 INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 
 VALUES(1,'Efectivo',now(),true);
-SELECT * FROM prc_pedidos
+SELECT * FROM prc_pedidos;
 
 
 INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(3,1,1);

@@ -44,7 +44,7 @@ const loadTemplate = async () => {
                                 style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;"
                                 data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
                                 <div class="offcanvas-header">
-                                    <h3 class="offcanvas-title" id="staticBackdropLabel">Categorias</h3>
+                                    <h3 class="offcanvas-title" id="staticBackdropLabel">Menú</h3>
                                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                 </div>
                                 <div class="offcanvas-body">

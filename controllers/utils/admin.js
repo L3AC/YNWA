@@ -30,25 +30,29 @@ const loadTemplate = async () => {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
             <header>
-                <nav class="navbar">
-                    <div class="container-fluid position-absolute top-0 start-0">
-                        <a class="navbar-brand" href="#">
-                            <img class="btn" src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button"
-                                data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-
-                            <a href="../../views/admin/profile.html"><img src="../../resources/img/Perfilito.png" class=""
-                                    width="40" height="40"></a>
-                            
-
-                            <div class="offcanvas offcanvas-start"
-                                style=" background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;"
-                                data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-                                <div class="offcanvas-header">
-                                    <h3 class="offcanvas-title" id="staticBackdropLabel">Menú</h3>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <ul class="list-group list-group-flush">
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+            </a>
+            <div class="d-flex position-absolute top-0 end-0 me-3 mt-2" >
+                <a href="../../views/admin/profile.html" style="margin-right: 10px; margin-top: 10px;">
+                    <img src="../../resources/img/Perfilito.png" width="40" height="40">
+                </a>
+                <a href="#" onclick="logOut()" style="margin-top: 10px;">
+                    <img src="../../resources/img/logout.png" width="40" height="40">
+                </a>
+            </div>
+            <!-- Offcanvas menu -->
+            <div class="offcanvas offcanvas-start" style="background-color: #F1EFEF; border-top-right-radius: 30px; border-bottom-right-radius: 30px;"
+                data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+                <div class="offcanvas-header">
+                    <h3 class="offcanvas-title" id="staticBackdropLabel">Menú</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="list-group list-group-flush">
                                         <li class="list-group-item" id="po"><a href="index.html">Inicio</a></li>
                                         <li class="list-group-item" id="marca"><a href="1marcas.html">Marcas</a></li>
                                         <li class="list-group-item" id="modelo"><a href="2modelos.html">Modelos</a></li>
@@ -60,17 +64,12 @@ const loadTemplate = async () => {
                                         <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
                                         <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
                                         <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
-                                        <a href="#" style="margin-top: 20px;" onclick="logOut()" class=""><img
-                                                    src="../../resources/img/logout.png" class="" width="40" height="40"></a>
-                                    </ul>
-                                </div>
-                            </div>
-                    </div>
-
-                    </a>
-                    </div>
-                </nav>
-            </header>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
             `);
             const opc1 = document.getElementById('marca');
             const opc2 = document.getElementById('modelo');

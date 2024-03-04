@@ -59,8 +59,8 @@ const loadTemplate = async () => {
                                         <li class="list-group-item" id="cliente"><a href="8clientes.html">Clientes</a></li>
                                         <li class="list-group-item" id="usuario"><a href="9usuarios.html">Usuarios</a></li>
                                         <li class="list-group-item" id="rol"><a href="10roles.html">Roles</a></li>
-                                        <li class="list-group-item" id=""><a href="#" onclick="logOut()" class=""><img
-                                                    src="../../resources/img/logout.png" class="" width="40" height="40"></a></li>
+                                        <a href="#" style="margin-top: 100px;" onclick="logOut()" class=""><img
+                                                    src="../../resources/img/logout.png" class="" width="40" height="40"></a>
                                     </ul>
                                 </div>
                             </div>

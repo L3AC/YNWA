@@ -24,7 +24,7 @@ class ProductoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($idMarca,$value)
     {
         $value = '%' . Validator::getSearchValue() . '%';
         $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto
@@ -90,6 +90,7 @@ class ProductoHandler
 
     public function readProductosCategoria()
     {
+
         $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, existencias_producto
                 FROM producto
                 INNER JOIN categoria USING(id_categoria)

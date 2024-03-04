@@ -42,7 +42,7 @@ const loadTemplate = async () => {
                                 
                                 <div class="col-3 nav-link">
                                     <div class="">
-                                        <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
+                                        <input id="searchMain" type="text" name="searchMain" class="form-control"
                                         placeholder="Busqueda" >
                                     </div>
                                 </div>
@@ -63,6 +63,13 @@ const loadTemplate = async () => {
                 </header>
             `);
 
+            const SEARCH_MAIN = document.getElementById('searchMain');
+            SEARCH_MAIN.addEventListener('click', function() {
+                const searchValue = document.getElementById('searchMain').value;
+                window.location.href = 'products.html?=' + encodeURIComponent(searchValue);
+              });
+
+        
             const LISTA_MARCA = document.getElementById('listmarca');
             const DATA = await fetchData(MARCA_API, 'readAllActive');
             if (DATA.status) {
@@ -81,7 +88,7 @@ const loadTemplate = async () => {
                 // Se presenta un mensaje de error cuando no existen datos para mostrar.
                 LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
-
+            
 
             // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
             if (DATA.status) {

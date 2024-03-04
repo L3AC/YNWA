@@ -24,8 +24,9 @@ class ModeloHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows()
+    public function searchRows($idMarca,$value)
     {
+        
         $value = '%' . Validator::getSearchValue() . '%';
 
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca

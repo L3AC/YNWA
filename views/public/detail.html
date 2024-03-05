@@ -12,98 +12,105 @@
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
-    <link rel="stylesheet" href="../../resources/css/correc.css">
-
+    <link rel="stylesheet" href="../../resources/css/detcar.css">
+    <link rel="stylesheet" href="../../resources/css/btnTallas.css">
     <link href="../../resources/css/nav.css" rel="stylesheet">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body style="font-family: 'Quicksand', sans-serif;
+font-optical-sizing: auto;
+font-style: normal; ;">
     <!-- Contenido principal del documento -->
     <main>
         <div id="contenido">
-        <!-- Título del contenido principal -->
-        <h4 id="mainTitle" class="mt-4"></h4>
-        <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
-        <div class="card mb-3" id="detalle">
-            <div class="row">
-                <div class="col-md-4">
-                    <!-- Se muestra la imagen del Modelo -->
-                    <img id="imagenModelo" class="img-fluid rounded">
+            <!-- Título del contenido principal -->
+
+            <h4 id="mainTitle" class="mt-4"></h4>
+            <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
+
+            <div class="card mb-3" id="detalle">
+                <div class="row">
+                    <div class="col-md-4 cardno">
+                        <!-- Se muestra la imagen del Modelo -->
+                        <img id="imagenModelo" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mt-2 mb-5" id="nombreModelo"></h5>
+                            <h4 class="card-title text-center" id="">Tallas</h5>
+                                <div class="row" id="tallas"></div>
+
+
+                                <!-- Formulario para agregar el Modelo al carrito de compras -->
+                                <form class="row" id="shoppingForm">
+                                    <!-- Campo oculto para asignar el id del Modelo -->
+                                    <input type="hidden" id="idModelo" name="idModelo">
+                                    <div class="col-6">
+                                        <input type="number" id="cantidadModelo" name="cantidadModelo" min="1"
+                                            class="form-control" placeholder="Ingrese cantidad" required>
+                                    </div>
+                                    <div class="col-6 align-self-end">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-cart-plus-fill"></i> Comprar
+                                        </button>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title text-center mt-2 mb-5" id="nombreModelo"></h5>
-                        <h5 class="card-title text-center" id="">Tallas</h5>
-                        <div class="row" id="tallas"></div>
+            </div>
+            <!-- Modal para guardar un registro -->
+            <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="modalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <!-- Título del modal -->
+                            <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                            <!-- Botón de cierre del modal -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Formulario para crear o actualizar un registro -->
+                        <form id="saveForm">
+                            <div class="modal-body row gx-5">
+                                <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                                <input type="hidden" id="idMarca" name="idMarca">
 
-
-                        <!-- Formulario para agregar el Modelo al carrito de compras -->
-                        <form class="row" id="shoppingForm">
-                            <!-- Campo oculto para asignar el id del Modelo -->
-                            <input type="hidden" id="idModelo" name="idModelo">
-                            <div class="col-6">
-                                <input type="number" id="cantidadModelo" name="cantidadModelo" min="1" class="form-control" placeholder="Ingrese cantidad"
-                                    required>
+                                <!-- Campos del formulario -->
+                                <div class="col-6">
+                                    <div class="p-3">
+                                        <label for="nombreMarca" class="form-label">Nombre</label>
+                                        <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3">
+                                        <!-- Interruptor para el estado del registro -->
+                                        <div class="switch-button">
+                                            <p id="">Estado</p>
+                                            <input type="checkbox" name="estadoMarca" id="estadoMarca"
+                                                class="switch-button__checkbox form-control">
+                                            <label for="estadoMarca" id="swa" class="switch-button__label"></label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6 align-self-end">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-cart-plus-fill"></i> Comprar
-                                </button>
+                            <!-- Pie del modal con el botón de guardar -->
+                            <div class="modal-footer border-0">
+                                <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal para guardar un registro -->
-        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="modalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content ">
-                    <div class="modal-header">
-                        <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
-                        <!-- Botón de cierre del modal -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- Formulario para crear o actualizar un registro -->
-                    <form id="saveForm">
-                        <div class="modal-body row gx-5">
-                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idMarca" name="idMarca">
-
-                            <!-- Campos del formulario -->
-                            <div class="col-6">
-                                <div class="p-3">
-                                    <label for="nombreMarca" class="form-label">Nombre</label>
-                                    <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="p-3">
-                                    <!-- Interruptor para el estado del registro -->
-                                    <div class="switch-button">
-                                        <p id="">Estado</p>
-                                        <input type="checkbox" name="estadoMarca" id="estadoMarca"
-                                            class="switch-button__checkbox form-control">
-                                        <label for="estadoMarca" id="swa" class="switch-button__label"></label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Pie del modal con el botón de guardar -->
-                        <div class="modal-footer border-0">
-                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> 
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

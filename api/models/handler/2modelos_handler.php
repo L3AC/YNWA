@@ -39,8 +39,7 @@ class ModeloHandler
     }
     public function searchModelos($value)
     {
-        //$value!== '' ? ' AND descripcion_modelo like %' . $value . '%' : '';
-        $value='%' . $value . '%';
+        $value = !empty($value) ? '%' . $value . '%' : '%%';
         
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
         FROM prc_modelos 

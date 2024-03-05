@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             CATEGORIAS.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-3">
+                <div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
                     <div class="car hadow">
                         <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
                                 alt="${row.descripcion_modelo}"></div>
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
                                     class="text">Comprar</span><span>Thanks!</span></a></div>
                     </div>
-                </div>
+                </div> 
 
 `;
         });

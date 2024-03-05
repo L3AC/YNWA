@@ -30,8 +30,8 @@ const loadTemplate = async () => {
         if (!location.pathname.endsWith('login.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-                <header>
-                    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color: #CCC8AA" >
+                <header >
+                    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #CCC8AA; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" >
                         <div class="container">
                             <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60" alt="YNWA" ></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,7 +123,7 @@ const loadTemplate = async () => {
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
                 <header>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" style="background-color: #CCC8AA" >
+                <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: #CCC8AA; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" >
                     <div class="container">
                         <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60" alt="YNWA" ></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,7 +175,7 @@ const loadTemplate = async () => {
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
                 <footer>
-                <nav class="navbar fixed-bottom" id="foot">
+                <nav class="navbar" id="foot">
                 <div class="container-fluid">
                     <div>
                         <h6>YNWA</h6>

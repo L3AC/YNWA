@@ -1,6 +1,7 @@
 // Constantes para completar la ruta de la API.
 const PRODUCTO_API = 'services/public/producto.php';
 const PEDIDO_API = 'services/public/pedido.php';
+const MODELOTALLAS_API = 'services/public/modelotallas.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
@@ -11,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Detalles del producto';
+    MAIN_TITLE.textContent = 'Modelo';
     // Constante tipo objeto con los datos del producto seleccionado.
     const FORM = new FormData();
     FORM.append('idProducto', PARAMS.get('id'));

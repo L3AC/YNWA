@@ -24,26 +24,26 @@
     <main>
         <!-- Título del contenido principal -->
         <h4 id="mainTitle"></h4>
-        <!-- Componente Horizontal Card para mostrar el detalle de un producto -->
+        <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
         <div class="card mb-3" id="detalle">
             <div class="row">
                 <div class="col-md-4">
-                    <!-- Se muestra la imagen del producto -->
-                    <img id="imagenProducto" class="img-fluid rounded-start">
+                    <!-- Se muestra la imagen del Modelo -->
+                    <img id="imagenModelo" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title" id="nombreProducto"></h5>
-                        <p class="card-text" id="descripcionProducto"></p>
+                        <h5 class="card-title" id="nombreModelo"></h5>
+                        <h5 class="card-title text-center" id="">Tallas</h5>
                         <div class="row" id="tallas"></div>
-                        <p class="card-text">Precio unitario (US$) <b id="precioProducto"></b></p>
-                        <p class="card-text">Existencias <b id="existenciasProducto"></b></p>
-                        <!-- Formulario para agregar el producto al carrito de compras -->
+                        <p class="card-text">Precio unitario (US$) <b id="precioModelo"></b></p>
+                        <p class="card-text">Existencias <b id="existenciasModelo"></b></p>
+                        <!-- Formulario para agregar el Modelo al carrito de compras -->
                         <form class="row" id="shoppingForm">
-                            <!-- Campo oculto para asignar el id del producto -->
-                            <input type="hidden" id="idProducto" name="idProducto">
+                            <!-- Campo oculto para asignar el id del Modelo -->
+                            <input type="hidden" id="idModelo" name="idModelo">
                             <div class="col-6">
-                                <input type="number" id="cantidadProducto" name="cantidadProducto" min="1" class="form-control" placeholder="Ingrese cantidad"
+                                <input type="number" id="cantidadModelo" name="cantidadModelo" min="1" class="form-control" placeholder="Ingrese cantidad"
                                     required>
                             </div>
                             <div class="col-6 align-self-end">

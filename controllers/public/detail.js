@@ -5,9 +5,14 @@ const MODELOTALLAS_API = 'services/public/modelotallas.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
-const SHOPPING_FORM = document.getElementById('shoppingForm');
-const TALLAS = document.getElementById('tallas');
-const ID_MODELO = document.getElementById('idProducto');
+const SHOPPING_FORM = document.getElementById('shoppingForm'),
+TALLAS = document.getElementById('tallas'),
+ID_MODELO = document.getElementById('idModelo'),
+IMAGEN_MODELO=document.getElementById('imagenModelo'),
+STOCK_MODELO=document.getElementById('stockModelo'),
+NOMBRE_MODELO=document.getElementById('nombreModelo')
+;
+
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -23,15 +28,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se colocan los datos en la página web de acuerdo con el producto seleccionado previamente.
-        document.getElementById('imagenProducto').src = SERVER_URL.concat('images/productos/', DATA.dataset.imagen_producto);
-        document.getElementById('nombreProducto').textContent = DATA.dataset.nombre_producto;
-        document.getElementById('descripcionProducto').textContent = DATA.dataset.descripcion_producto;
-        document.getElementById('precioProducto').textContent = DATA.dataset.precio_producto;
-        document.getElementById('existenciasProducto').textContent = DATA.dataset.existencias_producto;
-        document.getElementById('idProducto').value = DATA.dataset.id_producto;
+        IMAGEN_MODELO.src = SERVER_URL.concat('images/modelos/', DATA.dataset.foto_modelo);
+        NOMBRE_MODELO.textContent = DATA.dataset.descripcion_modelo;
+        ID_MODELO.value = DATA.dataset.id_modelo;
 
         const FORM2 = new FormData();
-        FORM2.append('idModelo', PARAMS.get('id'));
+        FORM2.append('idModelo',ID_MODELO.value );
         const DATA2 = await fetchData(MODELOTALLAS_API, 'readAllActive', FORM2);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA2.status) {
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
                 <div class="">
-                    <div class="card mb-3">
+                    <div class="mb-3">
                         <div class="card-body text-center">
                             <a href="detail.html?id=${row.id_talla}" 
                             class="btn btn-primary">${row.talla}</a>

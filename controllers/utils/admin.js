@@ -32,8 +32,8 @@ const loadTemplate = async () => {
             <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="../../resources/img/logo.png" alt="Bootstrap" width="90" height="80" type="button"
+            <a class=" " href="#">
+                <img src="../../resources/img/logo.png" alt="Bootstrap" width="70" height="80" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
             </a>
             <div class="d-flex position-absolute top-0 end-0 me-3 mt-2" >

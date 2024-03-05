@@ -41,10 +41,11 @@ const loadTemplate = async () => {
                                 <div class="navbar-nav ms-auto">
                                 
                                 <div class="col-3 nav-link">
-                                    <div class="">
-                                        <input id="searchMain" type="text" name="searchMain" class="form-control" placeholder="Busqueda">
+                                    <div class="input-group">
+                                        <input id="searchMain" type="text" name="searchMain" class="form-control" placeholder="Búsqueda">
                                     </div>
                                 </div>
+                                
                                     <li class="nav-item dropdown ">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                                          href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
@@ -61,6 +62,17 @@ const loadTemplate = async () => {
                     </nav>
                 </header>
             `);
+
+            const SEARCH_MAIN = document.getElementById('searchMain');
+            SEARCH_MAIN.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    console.log(document.activeElement)
+                    // Obtener el valor del input
+                    const searchValue = SEARCH_MAIN.value;
+                    // Redirigir a la página de búsqueda con el valor del input como parámetro
+                    window.location.href = 'products.html?modelo=' + searchValue;
+                }
+            });
 
 
             const LISTA_MARCA = document.getElementById('listmarca');
@@ -133,10 +145,9 @@ const loadTemplate = async () => {
                             <div class="navbar-nav ms-auto">
                             
                             <div class="col-3 nav-link">
-                                <div class="">
-                                    <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
-                                    placeholder="Busqueda" >
-                                </div>
+                                    <div class="input-group">
+                                        <input id="searchMain" type="text" name="searchMain" class="form-control" placeholder="Búsqueda">
+                                    </div>
                             </div>
 
                                 <li class="nav-item dropdown ">
@@ -153,6 +164,18 @@ const loadTemplate = async () => {
                 </nav>
             </header>
         `);
+
+        const SEARCH_MAIN = document.getElementById('searchMain');
+        SEARCH_MAIN.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                console.log(document.activeElement)
+                // Obtener el valor del input
+                const searchValue = SEARCH_MAIN.value;
+                // Redirigir a la página de búsqueda con el valor del input como parámetro
+                window.location.href = 'products.html?modelo=' + searchValue;
+            }
+        });
+
         const LISTA_MARCA = document.getElementById('listmarca');
         const DATA = await fetchData(MARCA_API, 'readAllActive');
         if (DATA.status) {

@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (PARAMS.has('id')) {
         FORM.append('idCategoria', PARAMS.get('id'));
-        MAIN_TITLE.textContent = `Marca: ${PARAMS.get('nombre')}`;
+        MAIN_TITLE.textContent = ` ${PARAMS.get('nombre')}`;
         action='readProductosCategoria';
         console.log(2);
     }
@@ -33,19 +33,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada producto.
             PRODUCTOS.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" 
-                        class="card-img-top" alt="${row.descripcion_modelo}">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">${row.descripcion_modelo}</h5>
-                            <li class="list-group-item">${row.marca}</li>
-                        </div>
-                        <div class="card-body text-center">
-                            <a href="detail.html?id=${row.id_modelo}" class="btn btn-primary">Ver detalle</a>
-                        </div>
-                    </div>
-                </div>
+            <div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
+            <div class="car hadow">
+                <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
+                        alt="${row.descripcion_modelo}"></div>
+                <div class="title">${row.descripcion_modelo}</div>
+                <p class="marca">${row.marca}</p>
+                <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
+                            class="text">Comprar</span><span>Thanks!</span></a></div>
+            </div>
+        </div>
             `;
         });
     } else {

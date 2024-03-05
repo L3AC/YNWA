@@ -32,23 +32,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 `;
             CARDSLIDE.innerHTML += `
 <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-    <div class="container">
-
-        <div class="slide">
- 
-            <div class="item" style="background-image: url(../../api/images/noticias/${row.foto_noticia});">
-                <div class="content">
-                    <div class="name">${row.titulo_noticia}</div>
-                    <div class="des">${row.contenido_noticia}</div>
-                </div>
-            </div>
+    <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
+        <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
+            style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
+    </div>
+    <div class="carousel-caption d-none d-md-block text-center">
+        <div style="background-color: transparent; display: inline-block; padding: 5px;">
+            <h5>${row.titulo_noticia}</h5>
+            <p>${row.contenido_noticia}</p>
         </div>
- 
-        <div class="button">
-            <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
-            <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
-        </div>
- 
     </div>
 </div>
 `;
@@ -84,16 +76,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             CATEGORIAS.innerHTML += `
-                <div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
-                    <div class="car hadow">
-                        <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
-                                alt="${row.descripcion_modelo}"></div>
-                        <div class="title">${row.descripcion_modelo}</div>
-                        <p class="marca">${row.marca}</p>
-                        <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
-                                    class="text">Comprar</span><span>Thanks!</span></a></div>
-                    </div>
-                </div> 
+<div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
+    <div class="car hadow">
+        <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
+                alt="${row.descripcion_modelo}"></div>
+        <div class="title">${row.descripcion_modelo}</div>
+        <p class="marca">${row.marca}</p>
+        <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
+                    class="text">Comprar</span><span>Thanks!</span></a></div>
+    </div>
+</div>
 
 `;
         });

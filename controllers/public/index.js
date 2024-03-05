@@ -32,15 +32,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 `;
             CARDSLIDE.innerHTML += `
 <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-    <div class="d-flex justify-content-center align-items-center" style="height: 600px;">
-        <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
-            style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
-    </div>
-    <div class="carousel-caption d-none d-md-block text-center">
-        <div style="background-color: rgba(0, 0, 0, 0.5); display: inline-block; padding: 5px;">
-            <h5>${row.titulo_noticia}</h5>
-            <p>${row.contenido_noticia}</p>
+    <div class="container">
+
+        <div class="slide">
+ 
+            <div class="item" style="background-image: url(../../api/images/noticias/${row.foto_noticia});">
+                <div class="content">
+                    <div class="name">${row.titulo_noticia}</div>
+                    <div class="des">${row.contenido_noticia}</div>
+                </div>
+            </div>
         </div>
+ 
+        <div class="button">
+            <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+ 
     </div>
 </div>
 `;

@@ -137,6 +137,7 @@ visibility: hidden;
 .veen > .wrapper.move input:focus{
     border-color: #e0b722;
 }
+
 @media (max-width: 767px){
     .veen{
         padding: 5px;
@@ -182,6 +183,9 @@ visibility: hidden;
     .veen > .wrapper.move{
         left: 0%;
     }
+    .veen.splits.imglogo{
+        visibility: hidden;
+       }
 }
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{

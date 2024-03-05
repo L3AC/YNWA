@@ -26,7 +26,6 @@ class ModeloHandler
     */
     public function searchRows($idMarca,$value)
     {
-        
         $value = '%' . Validator::getSearchValue() . '%';
 
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
@@ -38,6 +37,20 @@ class ModeloHandler
         $params = array($value, $value);
         return Database::getRows($sql, $params);
     }
+    public function searchModelos($value)
+    {
+        $value!== '' ? ' AND descripcion_modelo like %' . $value . '%' : '';
+
+        $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
+        FROM prc_modelos 
+        INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_modelo=true ?
+        ORDER BY descripcion_modelo';
+
+        $params = array($value);
+        return Database::getRows($sql, $params);
+    }
+
 
     public function createRow()
     {

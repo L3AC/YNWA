@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se establece el título del contenido principal.
     MAIN_TITLE.textContent = 'Modelos Recientes';
 
-
     // Petición para obtener las categorías disponibles.
     const DATA2 = await fetchData(NOTICIA_API, 'readAllActive');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.

@@ -6,18 +6,25 @@ const PRODUCTOS = document.getElementById('productos');
 
 // Método manejador de eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
+    action="";
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se define un objeto con los datos de la categoría seleccionada.
     const FORM = new FormData();
-    FORM.append('idCategoria', PARAMS.get('id'));
-    FORM.append('modelo', PARAMS.get('modelo'));
+    if (PARAMS.has('id')) {
+        FORM.append('idCategoria', PARAMS.get('id'));
+        MAIN_TITLE.textContent = `Marca: ${PARAMS.get('nombre')}`;
+        action='readProductosCategoria';
+    }
+    
+    if (PARAMS.has('modelo')) {
+        FORM.append('modelo', PARAMS.get('modelo'));
+        action='searchModelos';
+    }
     // Petición para solicitar los productos de la categoría seleccionada.
-    const DATA = await fetchData(PRODUCTO_API, 'readProductosCategoria', FORM);
+    const DATA = await fetchData(PRODUCTO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        // Se asigna como título principal la categoría de los productos.
-        MAIN_TITLE.textContent = `Marca: ${PARAMS.get('nombre')}`;
         // Se inicializa el contenedor de productos.
         PRODUCTOS.innerHTML = '';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.

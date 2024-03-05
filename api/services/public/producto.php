@@ -19,6 +19,13 @@ if (isset($_GET['action'])) {
                 $result['error'] = ' no existen registrospara mostrar';
             }
             break;
+        case 'searchModelos':
+                if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = ' no existen registrospara mostrar';
+                }
+                break;
         case 'readOne':
             if (!$producto->setId($_POST['idProducto'])) {
                 $result['error'] = $producto->getDataError();

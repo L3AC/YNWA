@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         class="card-img-top" alt="${row.descripcion_modelo}">
                         <div class="card-body text-center">
                             <h5 class="card-title">${row.descripcion_modelo}</h5>
+                            <li class="list-group-item">${row.marca}</li>
                         </div>
                         <div class="card-body text-center">
                             <a href="detail.html?id=${row.id_modelo}" class="btn btn-primary">Ver detalle</a>

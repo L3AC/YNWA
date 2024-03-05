@@ -6,6 +6,8 @@ const MODELOTALLAS_API = 'services/public/modelotallas.php';
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
 const SHOPPING_FORM = document.getElementById('shoppingForm');
+const TALLAS = document.getElementById('tallas');
+const ID_MODELO = document.getElementById('idProducto');
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -27,6 +29,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('precioProducto').textContent = DATA.dataset.precio_producto;
         document.getElementById('existenciasProducto').textContent = DATA.dataset.existencias_producto;
         document.getElementById('idProducto').value = DATA.dataset.id_producto;
+
+        const FORM2 = new FormData();
+        FORM2.append('idModelo', PARAMS.get('id'));
+        const DATA2 = await fetchData(MODELOTALLAS_API, 'readAllActive', FORM2);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA2.status) {
+            // Se inicializa el contenedor de productos.
+            TALLAS.innerHTML = '';
+            // Se recorre el conjunto de registros fila por fila a través del objeto row.
+            DATA2.dataset.forEach(row => {
+                // Se crean y concatenan las tarjetas con los datos de cada producto.
+                TALLAS.innerHTML += `
+                <div class="">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <a href="detail.html?id=${row.id_talla}" 
+                            class="btn btn-primary">${row.talla}</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            });
+        } else {
+            // Se presenta un mensaje de error cuando no existen datos para mostrar.
+            MAIN_TITLE.textContent = DATA.error;
+        }
+
     } else {
         // Se presenta un mensaje de error cuando no existen datos para mostrar.
         document.getElementById('mainTitle').textContent = DATA.error;

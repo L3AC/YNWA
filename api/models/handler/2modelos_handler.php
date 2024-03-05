@@ -88,9 +88,7 @@ class ModeloHandler
         INNER JOIN prc_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion_talla';
-        //echo $this->idModelo. ' que';
         $params = array($this->id);
-
         return Database::getRows($sql, $params);
     }
 
@@ -104,7 +102,6 @@ class ModeloHandler
         $params = array($this->id);
         $data = Database::getRow($sql, $params);
         $_SESSION['idmod'] = $data['id_modelo'];
-
         return $data;
     }
 

@@ -59,9 +59,19 @@ class ModeloTallaHandler
         INNER JOIN prc_modelos m USING(id_modelo)
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion_talla';
-        //echo $this->idModelo. ' que';
-        $params = array($this->idModelo);
-        
+        $params = array($this->idModelo); 
+        return Database::getRows($sql, $params);
+    }
+    public function readAllActive()
+    {
+        $sql = 'select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
+        precio_modelo_talla,descripcion_talla as talla
+        from prc_modelo_tallas 
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        WHERE estado_talla=true AND id_modelo = ?
+        ORDER BY descripcion_talla';
+        $params = array($this->idModelo); 
         return Database::getRows($sql, $params);
     }
 

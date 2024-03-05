@@ -3,6 +3,15 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
+        precio_modelo_talla,descripcion_talla as talla
+        from prc_modelo_tallas 
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        WHERE id_modelo = 1 
+        ORDER BY descripcion_talla;
+
+
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40),

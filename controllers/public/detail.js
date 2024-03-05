@@ -6,12 +6,12 @@ const MODELOTALLAS_API = 'services/public/modelotallas.php';
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
 const SHOPPING_FORM = document.getElementById('shoppingForm'),
-TALLAS = document.getElementById('tallas'),
-ID_MODELO = document.getElementById('idModelo'),
-IMAGEN_MODELO=document.getElementById('imagenModelo'),
-STOCK_MODELO=document.getElementById('stockModelo'),
-NOMBRE_MODELO=document.getElementById('nombreModelo')
-;
+    TALLAS = document.getElementById('tallas'),
+    ID_MODELO = document.getElementById('idModelo'),
+    IMAGEN_MODELO = document.getElementById('imagenModelo'),
+    STOCK_MODELO = document.getElementById('stockModelo'),
+    NOMBRE_MODELO = document.getElementById('nombreModelo')
+    ;
 
 
 // Método del eventos para cuando el documento ha cargado.
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ID_MODELO.value = DATA.dataset.id_modelo;
 
         const FORM2 = new FormData();
-        FORM2.append('idModelo',ID_MODELO.value );
+        FORM2.append('idModelo', ID_MODELO.value);
         const DATA2 = await fetchData(MODELOTALLAS_API, 'readAllActive', FORM2);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA2.status) {
@@ -43,11 +43,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             DATA2.dataset.forEach(row => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
-                <div class="">
-                    <div class="mb-3">
-                        <div class="card-body text-center">
-                            <a href="detail.html?id=${row.id_talla}" 
-                            class="btn btn-primary">${row.talla}</a>
+
+                <div class="col-sm-3 col-md-4 col-lg-3 m-2">
+                    <div class="card-body text-center">
+                        <a value="${row.id_talla}" class="btn btn-primary">${row.talla}</a>
+                        <div class="additional-info">
+                            <p>Precio - $${row.precio_modelo_talla}</p>
+                            <p>Stock - ${row.stock_modelo_talla}</p>
                         </div>
                     </div>
                 </div>

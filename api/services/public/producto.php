@@ -16,14 +16,14 @@ if (isset($_GET['action'])) {
             } elseif ($result['dataset'] = $producto->readProductosCategoria()) {
                 $result['status'] = 1;
             } else {
-                $result['error'] = ' no existen registrospara mostrar';
+                $result['error'] = ' no existen registros para mostrar';
             }
             break;
         case 'searchModelos':
                 if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = ' no existen registrospara mostrar';
+                    $result['error'] = ' no existen registros para mostrar';
                 }
                 break;
         case 'readOne':

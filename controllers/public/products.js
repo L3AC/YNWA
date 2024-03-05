@@ -11,15 +11,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadTemplate();
     // Se define un objeto con los datos de la categoría seleccionada.
     const FORM = new FormData();
+
     if (PARAMS.has('id')) {
         FORM.append('idCategoria', PARAMS.get('id'));
         MAIN_TITLE.textContent = `Marca: ${PARAMS.get('nombre')}`;
         action='readProductosCategoria';
+        console.log(2);
     }
-    
     if (PARAMS.has('modelo')) {
         FORM.append('modelo', PARAMS.get('modelo'));
         action='searchModelos';
+        console.log(1);
     }
     // Petición para solicitar los productos de la categoría seleccionada.
     const DATA = await fetchData(PRODUCTO_API, action, FORM);

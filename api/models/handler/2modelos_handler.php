@@ -39,16 +39,17 @@ class ModeloHandler
     }
     public function searchModelos($value)
     {
-        $value!== '' ? ' AND descripcion_modelo like %' . $value . '%' : '';
-
+        //$value!== '' ? ' AND descripcion_modelo like %' . $value . '%' : '';
+        $value='%' . $value . '%';
+        
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
         FROM prc_modelos 
         INNER JOIN ctg_marcas USING(id_marca)
-        WHERE estado_modelo=true ?
+        WHERE estado_modelo=true AND descripcion_modelo like ?
         ORDER BY descripcion_modelo';
 
         $params = array($value);
-        return Database::getRows($sql, $params);
+    return Database::getRows($sql, $params);
     }
 
 

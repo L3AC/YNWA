@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="title">${row.descripcion_modelo}</div>
         <p class="marca">${row.marca}</p>
         <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
-                    class="text">Comprar</span><span>Thanks!</span></a></div>
+                    class="text">Comprar</span><span>Adquirir!</span></a></div>
     </div>
 </div>
 

@@ -8,7 +8,7 @@ select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
         from prc_modelo_tallas 
         INNER JOIN ctg_tallas USING(id_talla)
         INNER JOIN prc_modelos USING(id_modelo)
-        WHERE id_modelo = 1 
+        WHERE estado_talla=true AND id_modelo = 1
         ORDER BY descripcion_talla;
 
 
@@ -122,9 +122,9 @@ CREATE TABLE prc_noticias (
 CREATE TABLE prc_pedidos(
 id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED,
-forma_pago_pedido enum('Efectivo','Transferencia'),
+forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo',
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-estado_pedido BOOLEAN DEFAULT TRUE,
+estado_pedido enum('Inactivo','En proceso','Entregado') DEFAULT 'En proceso',
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)

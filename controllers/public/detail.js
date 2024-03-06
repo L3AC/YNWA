@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
                 
-                    <div class="col-sm-3 col-sm-3 col-sm-3 col-sm-3">
+                    <div class="col-lg-3 col-md-6 col-sm-3">
                     <div class="container">
                         <div class="contenedor-botones">
                             <button class="boton-numero">

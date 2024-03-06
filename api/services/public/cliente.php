@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/8clientes_data.php');
+require_once('../../models/data/cliente_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -83,7 +83,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
-                if (!$cliente->checkUser($_POST['correo'], $_POST['clave'])) {
+                if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
                     $result['error'] = 'Datos incorrectos';
                 } elseif ($cliente->checkStatus()) {
                     $result['status'] = 1;

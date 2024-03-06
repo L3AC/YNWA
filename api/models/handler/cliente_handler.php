@@ -10,7 +10,8 @@ class ClienteHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
-    protected $nombre = null;
+    protected $nombre = null;    
+    protected $usuario = null;
     protected $apellido = null;
     protected $correo = null;
     protected $telefono = null;
@@ -23,16 +24,16 @@ class ClienteHandler
     /*
     *   Métodos para gestionar la cuenta del cliente.
     */
-    public function checkUser($mail, $password)
+    public function checkUser($usuario, $password)
     {
-        $sql = 'SELECT id_cliente, correo_cliente, clave_cliente, estado_cliente
-                FROM cliente
-                WHERE correo_cliente = ?';
-        $params = array($mail);
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
+                FROM prc_clientes
+                WHERE usuario_cliente = ?';
+        $params = array($usuario);
         $data = Database::getRow($sql, $params);
         if (password_verify($password, $data['clave_cliente'])) {
             $this->id = $data['id_cliente'];
-            $this->correo = $data['correo_cliente'];
+            $this->usuario = $data['usuario_cliente'];
             $this->estado = $data['estado_cliente'];
             return true;
         } else {
@@ -43,8 +44,8 @@ class ClienteHandler
     public function checkStatus()
     {
         if ($this->estado) {
-            $_SESSION['idCliente'] = $this->id;
-            $_SESSION['correoCliente'] = $this->correo;
+            $_SESSION['idUsuario'] = $this->id;
+            $_SESSION['Usuarion'] = $this->usuario;
             return true;
         } else {
             return false;

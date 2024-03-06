@@ -12,15 +12,19 @@
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <!-- ESTILOS DE CSS -->
     <link rel="stylesheet" href="../../resources/css/detcar.css">
     <link rel="stylesheet" href="../../resources/css/btnTallas.css">
+    <link rel="stylesheet" href="../../resources/css/btnCom.css">
     <link href="../../resources/css/nav.css" rel="stylesheet">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    
 </head>
 
 <body style="font-family: 'Quicksand', sans-serif;
@@ -40,29 +44,39 @@ font-style: normal; ;">
                         <!-- Se muestra la imagen del Modelo -->
                         <img id="imagenModelo" class="img-fluid rounded">
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title text-center mt-2 mb-5" id="nombreModelo"></h5>
-                            <h4 class="card-title text-center" id="">Tallas</h5>
-                                <div class="row" id="tallas"></div>
+                            <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
+                                id="nombreModelo"></p>
+                            <p class="card-title text-center" style="font-size: 25px; text-align: center;" id="">Tallas
+                            </p>
+                            <div class="row" id="tallas" style=""></div>
 
 
-                                <!-- Formulario para agregar el Modelo al carrito de compras -->
-                                <form class="row" id="shoppingForm">
-                                    <!-- Campo oculto para asignar el id del Modelo -->
-                                    <input type="hidden" id="idModelo" name="idModelo">
-                                    <div class="col-6">
-                                        <input type="number" id="cantidadModelo" name="cantidadModelo" min="1"
-                                            class="form-control" placeholder="Ingrese cantidad" required>
-                                    </div>
-                                    <div class="col-6 align-self-end">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="bi bi-cart-plus-fill"></i> Comprar
-                                        </button>
-                                    </div>
-                                </form>
+                            <!-- Formulario para agregar el Modelo al carrito de compras -->
+                            <form class="row" id="shoppingForm">
+                                <!-- Campo oculto para asignar el id del Modelo -->
+                                <input type="hidden" id="idModelo" name="idModelo">
+                                <div class="col-6">
+                                    <input type="number" id="cantidadModelo" name="cantidadModelo" min="1"
+                                        class="form-control" placeholder="Ingrese cantidad" required>
+                                </div>
+                                <div class="col-6 align-self-end">
+                                    <button class="btn" type="submit">
+                                        <span class="hover-underline-animation"> Comprar </span>
+                                        <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30"
+                                            height="10" viewBox="0 0 46 16">
+                                            <path id="Path_10" data-name="Path 10"
+                                                d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+                                                transform="translate(30)"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                    <div class="col-md-1"></div>
                 </div>
             </div>
             <!-- Modal para guardar un registro -->

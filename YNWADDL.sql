@@ -14,7 +14,7 @@ BEGIN
 END;
 //DELIMITER ;
 
-/*SELECCIONAR EL PRIMER REGISTRO*/
+/*FUNCION PARA SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
 CREATE FUNCTION idmin(tabla VARCHAR(255))
 RETURNS INT
@@ -32,4 +32,25 @@ BEGIN
 
     RETURN min_id;
 END//
+DELIMITER ;
+
+/*PROCEDMIENTO PARA INSERTAR UN MODELO*/
+DELIMITER $$
+CREATE PROCEDURE insertar_modelo(
+    IN nombre_marca VARCHAR(255),
+    IN descripcion_modelo VARCHAR(255),
+    IN foto_modelo LONGTEXT
+)
+BEGIN
+    DECLARE id_marca_param INT;
+
+    SELECT id_marca INTO id_marca_param
+    FROM ctg_marcas
+    WHERE descripcion_marca = nombre_marca;
+    
+    INSERT INTO prc_modelos (id_marca, descripcion_modelo, foto_modelo)
+    VALUES (id_marca_param, descripcion_modelo, foto_modelo);
+
+    SELECT LAST_INSERT_ID() AS id_modelo;
+END$$
 DELIMITER ;

@@ -1,4 +1,3 @@
-/*DROP DATABASE dbYNWA;*/
 DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
@@ -26,7 +25,7 @@ id_rol INT UNSIGNED NOT NULL,
 usuario_usuario VARCHAR(30) UNIQUE NOT NULL,
 clave_usuario VARCHAR(255) NOT NULL,
 nombre_usuario VARCHAR(255) NOT NULL,
-apellido_usuario VARCHAR(255),
+apellido_usuario VARCHAR(255) NOT NULL,
 email_usuario VARCHAR(100) NOT NULL,
 pin_usuario VARCHAR(6) NOT NULL,
 estado_usuario BOOLEAN DEFAULT TRUE,
@@ -57,10 +56,10 @@ PRIMARY KEY (id_marca)
 
 CREATE TABLE prc_modelos(
 id_modelo INT UNSIGNED AUTO_INCREMENT,
-id_marca INT UNSIGNED,
+id_marca INT UNSIGNED NOT NULL,
 descripcion_modelo VARCHAR(255) NOT NULL,
 foto_modelo LONGTEXT NOT NULL,
-estado_modelo BOOLEAN DEFAULT TRUE,
+estado_modelo BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY(id_modelo),
 CONSTRAINT fk_modelo_marca
 FOREIGN KEY(id_marca) REFERENCES ctg_marcas(id_marca)

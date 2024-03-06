@@ -148,7 +148,7 @@ CREATE TABLE `prc_comentarios` (
 
 LOCK TABLES `prc_comentarios` WRITE;
 /*!40000 ALTER TABLE `prc_comentarios` DISABLE KEYS */;
-INSERT INTO `prc_comentarios` VALUES (1,1,'Excelente producto, muy satisfecho con mi compra.',5,'2024-03-06 04:33:19',1),(2,2,'El tamaño no era el esperado, un poco pequeño.',3,'2024-03-06 04:33:19',1),(3,3,'Buena calidad, lo recomendaría a otros compradores.',4,'2024-03-06 04:33:19',1),(4,4,'Entrega rápida y el producto en perfecto estado.',5,'2024-03-06 04:33:19',1),(5,5,'No cumple con mis expectativas, baja calidad.',2,'2024-03-06 04:33:19',1),(6,6,'El color no es exactamente como se muestra en la imagen.',3,'2024-03-06 04:33:19',1),(7,7,'Muy buena atención al cliente, resolvieron mis dudas.',4,'2024-03-06 04:33:19',1),(8,8,'El precio es un poco elevado para la calidad del producto.',3,'2024-03-06 04:33:19',1),(9,9,'Excelente servicio, volvería a comprar sin duda.',5,'2024-03-06 04:33:19',1),(10,10,'Tardó más de lo esperado en llegar, pero el producto es bueno.',4,'2024-03-06 04:33:19',1),(11,11,'El producto llegó con defectos, solicité un reemplazo.',2,'2024-03-06 04:33:19',1),(12,12,'Buena relación calidad-precio, lo recomendaría.',4,'2024-03-06 04:33:19',1),(13,13,'El envío tuvo problemas y llegó con retraso.',2,'2024-03-06 04:33:19',1),(14,14,'El producto es exactamente lo que esperaba, muy contento.',5,'2024-03-06 04:33:19',1),(15,15,'Las costuras del producto se deshicieron rápidamente.',2,'2024-03-06 04:33:19',1),(16,16,'El pedido llegó incompleto, falta un artículo.',1,'2024-03-06 04:33:19',1),(17,17,'Buena atención al cliente, resolvieron mi problema.',4,'2024-03-06 04:33:19',1),(18,18,'El producto es de buena calidad, lo recomendaría.',4,'2024-03-06 04:33:19',1),(19,19,'El envío llegó en perfectas condiciones y dentro del plazo.',5,'2024-03-06 04:33:19',1),(20,20,'No cumple con las especificaciones descritas en la página.',2,'2024-03-06 04:33:19',1),(21,21,'El producto es tal como se muestra en la imagen, muy satisfecho.',5,'2024-03-06 04:33:19',1),(22,22,'El precio es elevado, esperaba una mejor calidad.',3,'2024-03-06 04:33:19',1),(23,23,'Excelente atención al cliente, respondieron rápidamente.',5,'2024-03-06 04:33:19',1),(24,24,'El envío tuvo demoras y el producto llegó dañado.',1,'2024-03-06 04:33:19',1),(25,25,'El producto es de buena calidad, lo recomendaré a mis amigos.',4,'2024-03-06 04:33:19',1);
+INSERT INTO `prc_comentarios` VALUES (1,1,'Excelente producto, muy satisfecho con mi compra.',5,'2024-03-06 16:44:10',1),(2,2,'El tamaño no era el esperado, un poco pequeño.',3,'2024-03-06 16:44:10',1),(3,3,'Buena calidad, lo recomendaría a otros compradores.',4,'2024-03-06 16:44:10',1),(4,4,'Entrega rápida y el producto en perfecto estado.',5,'2024-03-06 16:44:10',1),(5,5,'No cumple con mis expectativas, baja calidad.',2,'2024-03-06 16:44:10',1),(6,6,'El color no es exactamente como se muestra en la imagen.',3,'2024-03-06 16:44:10',1),(7,7,'Muy buena atención al cliente, resolvieron mis dudas.',4,'2024-03-06 16:44:10',1),(8,8,'El precio es un poco elevado para la calidad del producto.',3,'2024-03-06 16:44:10',1),(9,9,'Excelente servicio, volvería a comprar sin duda.',5,'2024-03-06 16:44:10',1),(10,10,'Tardó más de lo esperado en llegar, pero el producto es bueno.',4,'2024-03-06 16:44:10',1),(11,11,'El producto llegó con defectos, solicité un reemplazo.',2,'2024-03-06 16:44:10',1),(12,12,'Buena relación calidad-precio, lo recomendaría.',4,'2024-03-06 16:44:10',1),(13,13,'El envío tuvo problemas y llegó con retraso.',2,'2024-03-06 16:44:10',1),(14,14,'El producto es exactamente lo que esperaba, muy contento.',5,'2024-03-06 16:44:10',1),(15,15,'Las costuras del producto se deshicieron rápidamente.',2,'2024-03-06 16:44:10',1),(16,16,'El pedido llegó incompleto, falta un artículo.',1,'2024-03-06 16:44:10',1),(17,17,'Buena atención al cliente, resolvieron mi problema.',4,'2024-03-06 16:44:10',1),(18,18,'El producto es de buena calidad, lo recomendaría.',4,'2024-03-06 16:44:10',1),(19,19,'El envío llegó en perfectas condiciones y dentro del plazo.',5,'2024-03-06 16:44:10',1),(20,20,'No cumple con las especificaciones descritas en la página.',2,'2024-03-06 16:44:10',1),(21,21,'El producto es tal como se muestra en la imagen, muy satisfecho.',5,'2024-03-06 16:44:10',1),(22,22,'El precio es elevado, esperaba una mejor calidad.',3,'2024-03-06 16:44:10',1),(23,23,'Excelente atención al cliente, respondieron rápidamente.',5,'2024-03-06 16:44:10',1),(24,24,'El envío tuvo demoras y el producto llegó dañado.',1,'2024-03-06 16:44:10',1),(25,25,'El producto es de buena calidad, lo recomendaré a mis amigos.',4,'2024-03-06 16:44:10',1);
 /*!40000 ALTER TABLE `prc_comentarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,14 +247,14 @@ DROP TABLE IF EXISTS `prc_modelos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prc_modelos` (
   `id_modelo` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_marca` int(10) unsigned DEFAULT NULL,
+  `id_marca` int(10) unsigned NOT NULL,
   `descripcion_modelo` varchar(255) NOT NULL,
   `foto_modelo` longtext NOT NULL,
-  `estado_modelo` tinyint(1) DEFAULT 1,
+  `estado_modelo` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_modelo`),
   KEY `fk_modelo_marca` (`id_marca`),
   CONSTRAINT `fk_modelo_marca` FOREIGN KEY (`id_marca`) REFERENCES `ctg_marcas` (`id_marca`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `prc_modelos` (
 
 LOCK TABLES `prc_modelos` WRITE;
 /*!40000 ALTER TABLE `prc_modelos` DISABLE KEYS */;
-INSERT INTO `prc_modelos` VALUES (1,1,'Nike Air Force 1','ruta/a/foto1.jpg',1),(2,1,'Nike Air Max 90','ruta/a/foto2.jpg',1),(3,1,'Nike Roshe Run','ruta/a/foto3.jpg',1),(4,2,'Adidas Stan Smith','ruta/a/foto4.jpg',1),(5,2,'Adidas Superstar','ruta/a/foto5.jpg',1),(6,2,'Adidas Gazelle','ruta/a/foto6.jpg',1),(7,3,'Puma Suede Classic','ruta/a/foto7.jpg',1),(8,3,'Puma Basket Classic','ruta/a/foto8.jpg',1),(9,3,'Puma Roma','ruta/a/foto9.jpg',1),(10,4,'Vans Old Skool','ruta/a/foto10.jpg',1),(11,4,'Vans Authentic','ruta/a/foto11.jpg',1),(12,4,'Vans Era','ruta/a/foto12.jpg',1),(13,5,'Converse Chuck Taylor All Star','ruta/a/foto13.jpg',1),(14,5,'Converse One Star','ruta/a/foto14.jpg',1),(15,5,'Converse Jack Purcell','ruta/a/foto15.jpg',1),(16,6,'New Balance 574','ruta/a/foto16.jpg',1),(17,6,'New Balance 990','ruta/a/foto17.jpg',1),(18,6,'New Balance Fresh Foam','ruta/a/foto18.jpg',1),(19,7,'Reebok Classic Leather','ruta/a/foto19.jpg',1),(20,7,'Reebok Club C','ruta/a/foto20.jpg',1),(21,7,'Reebok Workout Plus','ruta/a/foto21.jpg',1),(22,8,'Skechers Go Walk','ruta/a/foto22.jpg',1),(23,8,'Skechers D\"Lites\"','ruta/a/foto23.jpg',1),(24,8,'Skechers Energy','ruta/a/foto24.jpg',1),(25,9,'Fila Disruptor II','ruta/a/foto25.jpg',1);
+INSERT INTO `prc_modelos` VALUES (1,1,'Nike Air Force 1','ruta/a/foto1.jpg',1),(2,1,'Nike Air Max 90','ruta/a/foto2.jpg',1),(3,1,'Nike Roshe Run','ruta/a/foto3.jpg',1),(4,2,'Adidas Stan Smith','ruta/a/foto4.jpg',1),(5,2,'Adidas Superstar','ruta/a/foto5.jpg',1),(6,2,'Adidas Gazelle','ruta/a/foto6.jpg',1),(7,3,'Puma Suede Classic','ruta/a/foto7.jpg',1),(8,3,'Puma Basket Classic','ruta/a/foto8.jpg',1),(9,3,'Puma Roma','ruta/a/foto9.jpg',1),(10,4,'Vans Old Skool','ruta/a/foto10.jpg',1),(11,4,'Vans Authentic','ruta/a/foto11.jpg',1),(12,4,'Vans Era','ruta/a/foto12.jpg',1),(13,5,'Converse Chuck Taylor All Star','ruta/a/foto13.jpg',1),(14,5,'Converse One Star','ruta/a/foto14.jpg',1),(15,5,'Converse Jack Purcell','ruta/a/foto15.jpg',1),(16,6,'New Balance 574','ruta/a/foto16.jpg',1),(17,6,'New Balance 990','ruta/a/foto17.jpg',1),(18,6,'New Balance Fresh Foam','ruta/a/foto18.jpg',1),(19,7,'Reebok Classic Leather','ruta/a/foto19.jpg',1),(20,7,'Reebok Club C','ruta/a/foto20.jpg',1),(21,7,'Reebok Workout Plus','ruta/a/foto21.jpg',1),(22,8,'Skechers Go Walk','ruta/a/foto22.jpg',1),(23,8,'Skechers D\"Lites\"','ruta/a/foto23.jpg',1),(24,8,'Skechers Energy','ruta/a/foto24.jpg',1),(25,9,'Fila Disruptor II','ruta/a/foto25.jpg',1),(26,1,'Air Force','ruta/a/airforce.jpg',1);
 /*!40000 ALTER TABLE `prc_modelos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +322,7 @@ CREATE TABLE `prc_pedidos` (
 
 LOCK TABLES `prc_pedidos` WRITE;
 /*!40000 ALTER TABLE `prc_pedidos` DISABLE KEYS */;
-INSERT INTO `prc_pedidos` VALUES (1,1,'Efectivo','2024-03-06 04:33:11','Inactivo'),(2,2,'Transferencia','2024-03-06 04:33:11','Inactivo'),(3,3,'Efectivo','2024-03-06 04:33:11','Inactivo'),(4,4,'Transferencia','2024-03-06 04:33:11','Inactivo'),(5,5,'Efectivo','2024-03-06 04:33:11','Inactivo'),(6,6,'Transferencia','2024-03-06 04:33:11','Inactivo'),(7,7,'Efectivo','2024-03-06 04:33:11','Inactivo'),(8,8,'Transferencia','2024-03-06 04:33:11','Inactivo'),(9,9,'Efectivo','2024-03-06 04:33:11','Inactivo'),(10,10,'Transferencia','2024-03-06 04:33:11','Inactivo'),(11,11,'Efectivo','2024-03-06 04:33:11','Inactivo'),(12,12,'Transferencia','2024-03-06 04:33:11','Inactivo'),(13,13,'Efectivo','2024-03-06 04:33:11','Inactivo'),(14,14,'Transferencia','2024-03-06 04:33:11','Inactivo'),(15,15,'Efectivo','2024-03-06 04:33:11','Inactivo'),(16,16,'Transferencia','2024-03-06 04:33:11','Inactivo'),(17,17,'Efectivo','2024-03-06 04:33:11','Inactivo'),(18,18,'Transferencia','2024-03-06 04:33:11','Inactivo'),(19,19,'Efectivo','2024-03-06 04:33:11','Inactivo'),(20,20,'Transferencia','2024-03-06 04:33:11','Inactivo'),(21,21,'Efectivo','2024-03-06 04:33:11','Inactivo'),(22,22,'Transferencia','2024-03-06 04:33:11','Inactivo'),(23,23,'Efectivo','2024-03-06 04:33:11','Inactivo'),(24,24,'Transferencia','2024-03-06 04:33:11','Inactivo'),(25,25,'Efectivo','2024-03-06 04:33:11','Inactivo');
+INSERT INTO `prc_pedidos` VALUES (1,1,'Efectivo','2024-03-06 16:44:10','Inactivo'),(2,2,'Transferencia','2024-03-06 16:44:10','Inactivo'),(3,3,'Efectivo','2024-03-06 16:44:10','Inactivo'),(4,4,'Transferencia','2024-03-06 16:44:10','Inactivo'),(5,5,'Efectivo','2024-03-06 16:44:10','Inactivo'),(6,6,'Transferencia','2024-03-06 16:44:10','Inactivo'),(7,7,'Efectivo','2024-03-06 16:44:10','Inactivo'),(8,8,'Transferencia','2024-03-06 16:44:10','Inactivo'),(9,9,'Efectivo','2024-03-06 16:44:10','Inactivo'),(10,10,'Transferencia','2024-03-06 16:44:10','Inactivo'),(11,11,'Efectivo','2024-03-06 16:44:10','Inactivo'),(12,12,'Transferencia','2024-03-06 16:44:10','Inactivo'),(13,13,'Efectivo','2024-03-06 16:44:10','Inactivo'),(14,14,'Transferencia','2024-03-06 16:44:10','Inactivo'),(15,15,'Efectivo','2024-03-06 16:44:10','Inactivo'),(16,16,'Transferencia','2024-03-06 16:44:10','Inactivo'),(17,17,'Efectivo','2024-03-06 16:44:10','Inactivo'),(18,18,'Transferencia','2024-03-06 16:44:10','Inactivo'),(19,19,'Efectivo','2024-03-06 16:44:10','Inactivo'),(20,20,'Transferencia','2024-03-06 16:44:10','Inactivo'),(21,21,'Efectivo','2024-03-06 16:44:10','Inactivo'),(22,22,'Transferencia','2024-03-06 16:44:10','Inactivo'),(23,23,'Efectivo','2024-03-06 16:44:10','Inactivo'),(24,24,'Transferencia','2024-03-06 16:44:10','Inactivo'),(25,25,'Efectivo','2024-03-06 16:44:10','Inactivo');
 /*!40000 ALTER TABLE `prc_pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,7 +374,7 @@ CREATE TABLE `sec_usuarios` (
   `usuario_usuario` varchar(30) NOT NULL,
   `clave_usuario` varchar(255) NOT NULL,
   `nombre_usuario` varchar(255) NOT NULL,
-  `apellido_usuario` varchar(255) DEFAULT NULL,
+  `apellido_usuario` varchar(255) NOT NULL,
   `email_usuario` varchar(100) NOT NULL,
   `pin_usuario` varchar(6) NOT NULL,
   `estado_usuario` tinyint(1) DEFAULT 1,
@@ -432,6 +432,38 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insertar_modelo` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_modelo`(
+    IN nombre_marca VARCHAR(255),
+    IN descripcion_modelo VARCHAR(255),
+    IN foto_modelo LONGTEXT
+)
+BEGIN
+    DECLARE id_marca_param INT;
+
+    SELECT id_marca INTO id_marca_param
+    FROM ctg_marcas
+    WHERE descripcion_marca = nombre_marca;
+    
+    INSERT INTO prc_modelos (id_marca, descripcion_modelo, foto_modelo)
+    VALUES (id_marca_param, descripcion_modelo, foto_modelo);
+
+    SELECT LAST_INSERT_ID() AS id_modelo;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -442,4 +474,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-05 22:38:25
+-- Dump completed on 2024-03-06 10:46:17

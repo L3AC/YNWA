@@ -3,42 +3,33 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
-select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
-        precio_modelo_talla,descripcion_talla as talla
-        from prc_modelo_tallas 
-        INNER JOIN ctg_tallas USING(id_talla)
-        INNER JOIN prc_modelos USING(id_modelo)
-        WHERE estado_talla=true AND id_modelo = 1
-        ORDER BY descripcion_talla;
-
-
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
-descripcion_opc VARCHAR(40),
-estado_opc BOOLEAN,
-marcas_opc BOOLEAN,
-modelos_opc BOOLEAN,
-tallas_opc BOOLEAN,
-pedidos_opc BOOLEAN,
-tipo_noticias_opc BOOLEAN,
-noticias_opc BOOLEAN,
-comentarios_opc BOOLEAN,
-clientes_opc BOOLEAN,
-usuarios_opc BOOLEAN,
-roles_opc BOOLEAN,
+descripcion_opc VARCHAR(40) NOT NULL,
+estado_opc BOOLEAN NOT NULL,
+marcas_opc BOOLEAN NOT NULL,
+modelos_opc BOOLEAN NOT NULL,
+tallas_opc BOOLEAN NOT NULL,
+pedidos_opc BOOLEAN NOT NULL,
+tipo_noticias_opc BOOLEAN NOT NULL,
+noticias_opc BOOLEAN NOT NULL,
+comentarios_opc BOOLEAN NOT NULL,
+clientes_opc BOOLEAN NOT NULL,
+usuarios_opc BOOLEAN NOT NULL,
+roles_opc BOOLEAN NOT NULL,
 PRIMARY KEY(id_rol)
 );
 
 CREATE TABLE sec_usuarios(
 id_usuario INT UNSIGNED auto_increment,
-id_rol INT UNSIGNED,
-usuario_usuario VARCHAR(30) UNIQUE,
-clave_usuario VARCHAR(255),
-nombre_usuario VARCHAR(255),
+id_rol INT UNSIGNED NOT NULL,
+usuario_usuario VARCHAR(30) UNIQUE NOT NULL,
+clave_usuario VARCHAR(255) NOT NULL,
+nombre_usuario VARCHAR(255) NOT NULL,
 apellido_usuario VARCHAR(255),
-email_usuario VARCHAR(100),
-pin_usuario VARCHAR(6),
-estado_usuario BOOLEAN,
+email_usuario VARCHAR(100) NOT NULL,
+pin_usuario VARCHAR(6) NOT NULL,
+estado_usuario BOOLEAN DEFAULT TRUE,
 PRIMARY KEY (id_usuario),
 CONSTRAINT fk_usuario_rol
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
@@ -47,28 +38,28 @@ ON DELETE CASCADE ON UPDATE CASCADE
         
 CREATE TABLE prc_clientes(
 id_cliente INT UNSIGNED AUTO_INCREMENT,
-usuario_cliente VARCHAR(30) UNIQUE,
-clave_cliente VARCHAR(30),
+usuario_cliente VARCHAR(30) UNIQUE NOT NULL,
+clave_cliente VARCHAR(30) NOT NULL,
 nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
-email_cliente VARCHAR(100),
-pin_cliente VARCHAR(6),
-estado_cliente BOOLEAN DEFAULT TRUE,
+email_cliente VARCHAR(100) NOT NULL,
+pin_cliente VARCHAR(6) NOT NULL,
+estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY(id_cliente)
 );
 
 CREATE TABLE ctg_marcas(
 id_marca INT UNSIGNED AUTO_INCREMENT,
-descripcion_marca VARCHAR(255),
-estado_marca BOOLEAN DEFAULT TRUE,
+descripcion_marca VARCHAR(255) NOT NULL,
+estado_marca BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_marca)
 );
 
 CREATE TABLE prc_modelos(
 id_modelo INT UNSIGNED AUTO_INCREMENT,
 id_marca INT UNSIGNED,
-descripcion_modelo VARCHAR(255),
-foto_modelo LONGTEXT,
+descripcion_modelo VARCHAR(255) NOT NULL,
+foto_modelo LONGTEXT NOT NULL,
 estado_modelo BOOLEAN DEFAULT TRUE,
 PRIMARY KEY(id_modelo),
 CONSTRAINT fk_modelo_marca
@@ -78,18 +69,18 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE ctg_tallas(
 id_talla INT UNSIGNED AUTO_INCREMENT,
-descripcion_talla VARCHAR(255),
-estado_talla BOOLEAN  DEFAULT TRUE,
+descripcion_talla VARCHAR(255) NOT NULL,
+estado_talla BOOLEAN  DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_talla)
 );
 
 
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla INT UNSIGNED AUTO_INCREMENT,
-id_talla INT UNSIGNED,
-id_modelo INT UNSIGNED,
-stock_modelo_talla INT UNSIGNED,
-precio_modelo_talla FLOAT UNSIGNED,
+id_talla INT UNSIGNED NOT NULL,
+id_modelo INT UNSIGNED NOT NULL,
+stock_modelo_talla INT UNSIGNED NOT NULL,
+precio_modelo_talla FLOAT UNSIGNED NOT NULL,
 PRIMARY KEY (id_modelo_talla),
 CONSTRAINT fk_mt_modelo
 FOREIGN KEY(id_modelo) REFERENCES prc_modelos(id_modelo)
@@ -101,19 +92,19 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,
-    descripcion_tipo_noticia VARCHAR(255),
-    estado_tipo_noticia BOOLEAN DEFAULT TRUE,
+    descripcion_tipo_noticia VARCHAR(255) NOT NULL,
+    estado_tipo_noticia BOOLEAN DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id_tipo_noticia)
 );
 
 CREATE TABLE prc_noticias (
     id_noticia INT UNSIGNED AUTO_INCREMENT,
-    id_tipo_noticia INT UNSIGNED,
-    titulo_noticia VARCHAR(255),
-    foto_noticia LONGTEXT,
-    contenido_noticia TEXT,
-    estado_noticia BOOLEAN DEFAULT TRUE,
-    fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_tipo_noticia INT UNSIGNED NOT NULL,
+    titulo_noticia VARCHAR(255) NOT NULL,
+    foto_noticia LONGTEXT NOT NULL,
+    contenido_noticia TEXT NOT NULL,
+    estado_noticia BOOLEAN DEFAULT TRUE NOT NULL,
+    fecha_noticia TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id_noticia),
     CONSTRAINT fk_noticia_tipo_noticia
     FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
@@ -121,10 +112,10 @@ CREATE TABLE prc_noticias (
 
 CREATE TABLE prc_pedidos(
 id_pedido INT UNSIGNED AUTO_INCREMENT,
-id_cliente INT UNSIGNED,
-forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo',
-fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-estado_pedido enum('Inactivo','En proceso','Entregado') DEFAULT 'En proceso',
+id_cliente INT UNSIGNED NOT NULL,
+forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo' NOT NULL,
+fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+estado_pedido ENUM('Inactivo','En proceso','Entregado') DEFAULT 'En proceso' NOT NULL,
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
@@ -133,9 +124,9 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,
-id_pedido INT UNSIGNED,
-id_modelo_talla INT UNSIGNED,
-cantidad_detalle_pedido INT UNSIGNED,
+id_pedido INT UNSIGNED NOT NULL,
+id_modelo_talla INT UNSIGNED NOT NULL,
+cantidad_detalle_pedido INT UNSIGNED NOT NULL,
 PRIMARY KEY (id_detalle),
 CONSTRAINT fk_detalle_pedido
 FOREIGN KEY(id_pedido) REFERENCES prc_pedidos(id_pedido)
@@ -147,11 +138,11 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE prc_comentarios (
     id_comentario INT UNSIGNED AUTO_INCREMENT,
-    id_detalle INT UNSIGNED ,
-    contenido_comentario TEXT,
-    puntuacion_comentario INT UNSIGNED,
-    fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado_comentario BOOLEAN DEFAULT TRUE,
+    id_detalle INT UNSIGNED  NOT NULL,
+    contenido_comentario TEXT NOT NULL,
+    puntuacion_comentario INT UNSIGNED NOT NULL,
+    fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    estado_comentario BOOLEAN DEFAULT TRUE NOT NULL,
     PRIMARY KEY (id_comentario),
     CONSTRAINT fk_comentario_detalle
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)

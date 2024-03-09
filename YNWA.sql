@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+select * from 
 
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
@@ -39,7 +40,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE prc_clientes(
 id_cliente INT UNSIGNED AUTO_INCREMENT,
 usuario_cliente VARCHAR(30) UNIQUE NOT NULL,
-clave_cliente VARCHAR(30) NOT NULL,
+clave_cliente VARCHAR(100) NOT NULL,
 nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
 email_cliente VARCHAR(100) NOT NULL,

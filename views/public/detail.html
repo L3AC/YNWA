@@ -91,34 +91,23 @@ font-style: normal; ;">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- Formulario para crear o actualizar un registro -->
-                        <form id="saveForm">
-                            <div class="modal-body row gx-5">
-                                <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                                <input type="hidden" id="idMarca" name="idMarca">
-
-                                <!-- Campos del formulario -->
-                                <div class="col-6">
-                                    <div class="p-3">
-                                        <label for="nombreMarca" class="form-label">Nombre</label>
-                                        <input id="nombreMarca" type="text" name="nombreMarca" class="form-control"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="p-3">
-                                        <!-- Interruptor para el estado del registro -->
-                                        <div class="switch-button">
-                                            <p id="">Estado</p>
-                                            <input type="checkbox" name="estadoMarca" id="estadoMarca"
-                                                class="switch-button__checkbox form-control">
-                                            <label for="estadoMarca" id="swa" class="switch-button__label"></label>
-                                        </div>
-                                    </div>
-                                </div>
+                        <form class="row" id="saveForm">
+                            <!-- Campo oculto para asignar el id del Modelo -->
+                            <input type="hidden" id="idModelo" name="idModelo">
+                            <div class="col-6">
+                                <input type="number" id="cantidadModelo" name="cantidadModelo" min="1"
+                                    class="form-control" placeholder="Ingrese cantidad" required>
                             </div>
-                            <!-- Pie del modal con el botón de guardar -->
-                            <div class="modal-footer border-0">
-                                <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                            <div class="col-6 align-self-end">
+                                <button class="btn" type="submit">
+                                    <span class="hover-underline-animation"> Comprar </span>
+                                    <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30"
+                                        height="10" viewBox="0 0 46 16">
+                                        <path id="Path_10" data-name="Path 10"
+                                            d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+                                            transform="translate(30)"></path>
+                                    </svg>
+                                </button>
                             </div>
                         </form>
                     </div>

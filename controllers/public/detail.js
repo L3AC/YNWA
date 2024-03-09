@@ -87,7 +87,7 @@ const openModal= async (id) => {
     
     FORM.append('idMarca', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MARCA_API, 'readOne', FORM);
+    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.

@@ -127,7 +127,6 @@ const loadTemplate = async () => {
                 MAIN_TITLE.textContent = DATA.error;
             }
 
-
         } else {
             location.href = 'index.html';
         }

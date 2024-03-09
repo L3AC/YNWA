@@ -44,8 +44,8 @@ class ClienteHandler
     public function checkStatus()
     {
         if ($this->estado) {
-            $_SESSION['idUsuario'] = $this->id;
-            $_SESSION['Usuarion'] = $this->usuario;
+            $_SESSION['idCliente'] = $this->id;
+            $_SESSION['usuarioc'] = $this->usuario;
             return true;
         } else {
             return false;

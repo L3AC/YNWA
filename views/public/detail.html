@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    
+
 </head>
 
 <body style="font-family: 'Quicksand', sans-serif;
@@ -47,70 +47,65 @@ font-style: normal; ;">
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
                         <div class="card-body">
+                            <input type="hidden" id="idModelo" name="idModelo">
                             <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
                                 id="nombreModelo"></p>
                             <p class="card-title text-center" style="font-size: 25px; text-align: center;" id="">Tallas
                             </p>
-                            <div class="row" id="tallas" style=""></div>
+                            <div class="row" id="tallas"></div>
 
 
-                            <!-- Formulario para agregar el Modelo al carrito de compras -->
-                            <form class="row" id="shoppingForm">
-                                <!-- Campo oculto para asignar el id del Modelo -->
-                                <input type="hidden" id="idModelo" name="idModelo">
-                                <div class="col-6">
-                                    <input type="number" id="cantidadModelo" name="cantidadModelo" min="1"
-                                        class="form-control" placeholder="Ingrese cantidad" required>
-                                </div>
-                                <div class="col-6 align-self-end">
-                                    <button class="btn" type="submit">
-                                        <span class="hover-underline-animation"> Comprar </span>
-                                        <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30"
-                                            height="10" viewBox="0 0 46 16">
-                                            <path id="Path_10" data-name="Path 10"
-                                                d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-                                                transform="translate(30)"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
+                            
                         </div>
                     </div>
                     <div class="col-md-1"></div>
                 </div>
             </div>
-            <!-- Modal para guardar un registro -->
-            <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="modalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content ">
-                        <div class="modal-header">
-                            <!-- Título del modal -->
-                            <h1 class="modal-title fs-5" id="modalTitle"></h1>
-                            <!-- Botón de cierre del modal -->
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <!-- Formulario para crear o actualizar un registro -->
-                        <form class="row" id="saveForm">
-                            <!-- Campo oculto para asignar el id del Modelo -->
-                            <input type="hidden" id="idModeloTalla" name="idModeloTalla">
-                            <div class="col-6">
-                                <input type="number" id="cantidadModelo" name="cantidadModelo" min="1" max="3"
-                                    class="form-control" placeholder="Ingrese cantidad" required>
-                            </div>
-                            <div class="col-6 align-self-end">
-                                <button class="btn" type="submit">
-                                    <span class="hover-underline-animation"> Comprar </span>
-                                    <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30"
-                                        height="10" viewBox="0 0 46 16">
-                                        <path id="Path_10" data-name="Path 10"
-                                            d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
-                                            transform="translate(30)"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
+
+        </div>
+        
+
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <!-- Título del modal -->
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <!-- Botón de cierre del modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row gx-5">
+                            <h1 class="fs-5" id="stock"></h1>
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+
+                            <!-- Campos del formulario -->
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <label for="cantidadModelo" class="form-label">Cantidad</label>
+                                    <input type="number" id="cantidadModelo" name="cantidadModelo" min="1" max="3"
+                                        class="form-control" placeholder="Ingrese cantidad" required>
+                                    <div id="mensajeDiv" style="display: none;"></div>
+                                </div>
+                            </div>
+                
+                        </div>
+                        <!-- Pie del modal con el botón de guardar -->
+                        <div class="modal-footer border-0">
+                            <button class="btn" type="submit" id="idGuardar">
+                                <span class="hover-underline-animation"> Comprar </span>
+                                <svg id="arrow-horizontal" xmlns="http://www.w3.org/2000/svg" width="30" height="10"
+                                    viewBox="0 0 46 16">
+                                    <path id="Path_10" data-name="Path 10"
+                                        d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z"
+                                        transform="translate(30)"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

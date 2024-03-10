@@ -5,8 +5,7 @@ const MODELOTALLAS_API = 'services/public/modelotallas.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
-const SHOPPING_FORM = document.getElementById('shoppingForm'),
-    TALLAS = document.getElementById('tallas'),
+const TALLAS = document.getElementById('tallas'),
     ID_MODELO = document.getElementById('idModelo'),
     IMAGEN_MODELO = document.getElementById('imagenModelo'),
     STOCK_MODELO = document.getElementById('stockModelo'),
@@ -17,9 +16,12 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_PRODUCTO = document.getElementById('idMarca'),
-    NOMBRE_PRODUCTO = document.getElementById('nombreMarca'),
-    ESTADO_PRODUCTO = document.getElementById('estadoMarca');
+    ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
+    CANTIDAD = document.getElementById('cantidadModelo'),
+    STOCK_INFO = document.getElementById('stock'),
+    mensajeDiv = document.getElementById('mensajeDiv'),
+    IDGUARDAR = document.getElementById('idGuardar');
+    let STOCK_VALUE = 0;
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -76,6 +78,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('detalle').innerHTML = '';
     }
 });
+CANTIDAD.addEventListener('input', async function ()  {
+    const FORM = new FormData();
+    FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status === 1) {
+        const ROW = DATA.dataset;
+        if(CANTIDAD.value>ROW.stock_modelo_talla){
+            mensajeDiv.textContent = 'No puede escoger mas del stock';
+            mensajeDiv.style.display = 'block'; 
+            IDGUARDAR.disabled = true;
+        }
+        else if(CANTIDAD.value<0 || CANTIDAD.value>3){
+            mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
+            mensajeDiv.style.display = 'block'; 
+            IDGUARDAR.disabled = true;
+        }
+        else {
+            mensajeDiv.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    } 
+});
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
 *   Parámetros: id (identificador del registro seleccionado).
@@ -84,8 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 const openModal= async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    
-    FORM.append('idMarca', id);
+    FORM.append('idModeloTalla', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -97,20 +122,20 @@ const openModal= async (id) => {
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_PRODUCTO.value = ROW.id_marca;
-        NOMBRE_PRODUCTO.value = ROW.descripcion_marca;
-        ESTADO_PRODUCTO.checked = ROW.estado_marca;
+        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
+        STOCK_INFO.textContent = 'Existencias disponibles '+ROW.stock_modelo_talla;
+        STOCK_VALUE=ROW.stock_modelo_talla;
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
 
 // Método del evento para cuando se envía el formulario de agregar un producto al carrito.
-SHOPPING_FORM.addEventListener('submit', async (event) => {
+SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SHOPPING_FORM);
+    const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(PEDIDO_API, 'createDetail', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se constata si el cliente ha iniciado sesión.

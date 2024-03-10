@@ -2,8 +2,6 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
-select * from 
-
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,
@@ -90,6 +88,15 @@ CONSTRAINT fk_mt_talla
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
+        precio_modelo_talla,descripcion_talla as talla
+        from prc_modelo_tallas 
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        WHERE estado_talla=true AND id_modelo = 1 AND stock_modelo_talla>0
+        ORDER BY descripcion_talla
+
 
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,

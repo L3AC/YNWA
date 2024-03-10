@@ -69,7 +69,7 @@ class ModeloTallaHandler
         from prc_modelo_tallas 
         INNER JOIN ctg_tallas USING(id_talla)
         INNER JOIN prc_modelos USING(id_modelo)
-        WHERE estado_talla=true AND id_modelo = ?
+        WHERE estado_talla=true AND id_modelo = ? AND stock_modelo_talla>0
         ORDER BY descripcion_talla';
         $params = array($this->idModelo); 
         return Database::getRows($sql, $params);

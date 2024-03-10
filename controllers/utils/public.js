@@ -94,39 +94,6 @@ const loadTemplate = async () => {
                 LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
 
-
-            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-            if (DATA.status) {
-                // Se asigna como título principal la categoría de los productos.
-                MAIN_TITLE.textContent = `Categoría: ${PARAMS.get('nombre')}`;
-                // Se inicializa el contenedor de productos.
-                PRODUCTOS.innerHTML = '';
-                // Se recorre el conjunto de registros fila por fila a través del objeto row.
-                DATA.dataset.forEach(row => {
-                    // Se crean y concatenan las tarjetas con los datos de cada producto.
-                    PRODUCTOS.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-3">
-                    <div class="card mb-3">
-                        <img src="${SERVER_URL}images/productos/${row.imagen_producto}" class="card-img-top" alt="${row.nombre_producto}">
-                        <div class="card-body">
-                            <h5 class="card-title">${row.nombre_producto}</h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Precio unitario (US$) ${row.precio_producto}</li>
-                            <li class="list-group-item">Existencias ${row.existencias_producto}</li>
-                        </ul>
-                        <div class="card-body text-center">
-                            <a href="detail.html?id=${row.id_producto}" class="btn btn-primary">Ver detalle</a>
-                        </div>
-                    </div>
-                </div>
-            `;
-                });
-            } else {
-                // Se presenta un mensaje de error cuando no existen datos para mostrar.
-                MAIN_TITLE.textContent = DATA.error;
-            }
-
         } else {
             location.href = 'index.html';
         }

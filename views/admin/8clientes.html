@@ -13,6 +13,7 @@
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/estado.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -122,6 +123,17 @@
                                 <label for="direccionCliente" class="form-label">Dirección</label>
                                 <input type="text" id="direccionCliente" name="direccionCliente" maxlength="250"
                                  class="form-control" required>
+                            </div>
+                            <div class=" col-6">
+                                <div class="p-3">
+                                    <!-- Interruptor para el estado del registro -->
+                                    <div class="switch-button">
+                                        <p id="">Estado</p>
+                                        <input type="checkbox" name="estadoCliente" id="estadoCliente"
+                                            class="switch-button__checkbox form-control">
+                                        <label for="estadoCliente" id="swa" class="switch-button__label"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- Pie del modal con botón de guardar -->

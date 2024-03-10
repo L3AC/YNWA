@@ -31,9 +31,9 @@ class PedidoHandler
     public function getOrder()
     {
         $this->estado = 'Pendiente';
-        $sql = 'SELECT id_pedido
-                FROM pedido
-                WHERE estado_pedido = ? AND id_cliente = ?';
+        $sql = 'SELECT id_pedido FROM prc_pedidos
+         WHERE estado_pedido = ? AND id_cliente = ?';
+
         $params = array($this->estado, $_SESSION['idCliente']);
         if ($data = Database::getRow($sql, $params)) {
             $_SESSION['idPedido'] = $data['id_pedido'];
@@ -49,7 +49,7 @@ class PedidoHandler
         if ($this->getOrder()) {
             return true;
         } else {
-            $sql = 'INSERT INTO pedido(direccion_pedido, id_cliente)
+            $sql = 'INSERT INTO prc_pedidos(direccion_pedido, id_cliente)
                     VALUES((SELECT direccion_cliente FROM cliente WHERE id_cliente = ?), ?)';
             $params = array($_SESSION['idCliente'], $_SESSION['idCliente']);
             // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.

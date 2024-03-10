@@ -13,6 +13,7 @@ class ClienteHandler
     protected $nombre = null;
     protected $apellido = null;
     protected $correo = null;
+    protected $direccion = null;
     protected $usuario = null;
     protected $alias = null;
     protected $clave = null;
@@ -110,16 +111,18 @@ class ClienteHandler
     {
         //echo $this->clave.' ';
         $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
-        apellido_cliente,email_cliente,pin_cliente,estado_cliente) 
-        values(?,?,?,?,?,?,true)';
-        $params = array($this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+        apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
+        values(?,?,?,?,?,?,true,?)';
+        $params = array($this->alias, $this->clave, $this->nombre,
+         $this->apellido, $this->correo, $this->generarPin(),$this->direccion);
+         
         return Database::executeRow($sql, $params);
     }
 
     public function readAll()
     {
         $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
-         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente
+         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
                 from prc_clientes 
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
@@ -127,7 +130,7 @@ class ClienteHandler
     public function readAllActive()
     {
         $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
-         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente
+         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
                 from prc_clientes where estado_cliente=true
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
@@ -136,7 +139,7 @@ class ClienteHandler
     public function readOne()
     {
         $sql = 'SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
-                apellido_cliente,email_cliente,estado_cliente
+                apellido_cliente,email_cliente,estado_cliente,direccion_cliente
                 from prc_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);

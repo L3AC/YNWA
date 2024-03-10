@@ -93,6 +93,19 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setDireccion($value, $min = 2, $max = 250)
+    {
+        if (!Validator::validateString($value)) {
+            $this->data_error = 'La dirección contiene caracteres prohibidos';
+            return false;
+        } elseif(Validator::validateLength($value, $min, $max)) {
+            $this->direccion = $value;
+            return true;
+        } else {
+            $this->data_error = 'La dirección debe tener una longitud entre ' . $min . ' y ' . $max;
+            return false;
+        }
+    }
 
     public function setClave($value)
     {

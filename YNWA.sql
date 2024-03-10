@@ -39,6 +39,7 @@ CREATE TABLE prc_clientes(
 id_cliente INT UNSIGNED AUTO_INCREMENT,
 usuario_cliente VARCHAR(30) UNIQUE NOT NULL,
 clave_cliente VARCHAR(100) NOT NULL,
+direccion_cliente VARCHAR(255) UNIQUE NOT NULL,
 nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
 email_cliente VARCHAR(100) NOT NULL,
@@ -120,7 +121,7 @@ CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+SELECT id_pedido FROM prc_pedidos WHERE estado_pedido = 'Pendiente' AND id_cliente = 1;
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,

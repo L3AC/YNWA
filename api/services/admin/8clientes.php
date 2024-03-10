@@ -30,6 +30,7 @@ if (isset($_GET['action'])) {
                     !$administrador->setNombre($_POST['nombreCliente']) or
                     !$administrador->setApellido($_POST['apellidoCliente']) or
                     !$administrador->setCorreo($_POST['correoCliente']) or
+                    !$administrador->setDireccion($_POST['direccionCliente']) or
                     !$administrador->setAlias($_POST['aliasCliente']) or
                     !$administrador->setClave($_POST['claveCliente'])
                 ) {

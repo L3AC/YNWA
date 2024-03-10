@@ -14,6 +14,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     NOMBRE_ADMINISTRADOR = document.getElementById('nombreCliente'),
     APELLIDO_ADMINISTRADOR = document.getElementById('apellidoCliente'),
     CORREO_ADMINISTRADOR = document.getElementById('correoCliente'),
+    DIRECCION_CLIENTE = document.getElementById('direccionCliente'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasCliente'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
@@ -163,6 +164,7 @@ const openUpdate = async (id) => {
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
+        DIRECCION_CLIENTE.value = ROW.direccion_cliente;
         ID_ADMINISTRADOR.value = ROW.id_cliente;
         NOMBRE_ADMINISTRADOR.value = ROW.nombre_cliente;
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_cliente;

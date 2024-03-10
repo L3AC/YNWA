@@ -58,7 +58,7 @@ class ClienteHandler
         $params = array($_SESSION['idUsuario']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
-        if (password_verify($password, $data['clave_administrador'])) {
+        if (password_verify($password, $data['clave_cliente'])) {
             return true;
         } else {
             return false;

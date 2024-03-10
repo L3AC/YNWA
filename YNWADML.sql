@@ -93,13 +93,13 @@ INSERT INTO prc_modelo_tallas (id_talla, id_modelo, stock_modelo_talla, precio_m
 (7, 21, 12, 69.99),(8, 22, 20, 79.99),(8, 23, 10, 99.99),(8, 24, 18, 69.99),(9, 25, 6, 89.99);
 
 INSERT INTO prc_pedidos (id_cliente, forma_pago_pedido, estado_pedido) VALUES
-(1, 'Efectivo', TRUE),(2, 'Transferencia', TRUE),(3, 'Efectivo', TRUE),(4, 'Transferencia', TRUE),
-(5, 'Efectivo', TRUE),(6, 'Transferencia', TRUE),(7, 'Efectivo', TRUE),(8, 'Transferencia', TRUE),
-(9, 'Efectivo', TRUE),(10, 'Transferencia', TRUE),(11, 'Efectivo', TRUE),(12, 'Transferencia', TRUE),
-(13, 'Efectivo', TRUE),(14, 'Transferencia', TRUE),(15, 'Efectivo', TRUE),(16, 'Transferencia', TRUE),
-(17, 'Efectivo', TRUE),(18, 'Transferencia', TRUE),(19, 'Efectivo', TRUE),(20, 'Transferencia', TRUE),
-(21, 'Efectivo', TRUE),(22, 'Transferencia', TRUE),(23, 'Efectivo', TRUE),(24, 'Transferencia', TRUE),
-(25, 'Efectivo', TRUE);
+(1, 'Efectivo', 'Pendiente'),(2, 'Transferencia', 'Pendiente'),(3, 'Efectivo', 'Pendiente'),(4, 'Transferencia', 'Pendiente'),
+(5, 'Efectivo', 'Pendiente'),(6, 'Transferencia', 'Pendiente'),(7, 'Efectivo', 'Pendiente'),(8, 'Transferencia', 'Pendiente'),
+(9, 'Efectivo', 'Pendiente'),(10, 'Transferencia', 'Pendiente'),(11, 'Efectivo', 'Pendiente'),(12, 'Transferencia', 'Pendiente'),
+(13, 'Efectivo', 'Pendiente'),(14, 'Transferencia', 'Pendiente'),(15, 'Efectivo', 'Pendiente'),(16, 'Transferencia', 'Pendiente'),
+(17, 'Efectivo', 'Pendiente'),(18, 'Transferencia', 'Pendiente'),(19, 'Efectivo', 'Pendiente'),(20, 'Transferencia', 'Pendiente'),
+(21, 'Efectivo', 'Pendiente'),(22, 'Transferencia', 'Pendiente'),(23, 'Efectivo', 'Pendiente'),(24, 'Transferencia', 'Pendiente'),
+(25, 'Efectivo', 'Pendiente');
 
 INSERT INTO prc_detalle_pedidos (id_pedido, id_modelo_talla, cantidad_detalle_pedido) VALUES
 (1, 1, 2),(2, 2, 1),(3, 12, 1),(4, 14, 2),(5, 20, 1),(6, 25, 2),(7, 6, 2),(8, 11, 1),
@@ -165,6 +165,7 @@ INSERT INTO prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_model
 (1,4,30,55),(2,4,30,60),(3,4,30,65);#NAUTICA BLUE
 SELECT * FROM prc_modelo_tallas;
 
+
 INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
 VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
 SELECT * FROM ctg_tipo_noticias;
@@ -178,10 +179,10 @@ tendremos en oferta todos los productos mayores a 200$', true,now()),
 
 
 INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 
-VALUES(1,'Efectivo',now(),true);
+VALUES(1,'Efectivo',now(),'Pendiente');
 SELECT * FROM prc_pedidos;
 
-INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(2,1,1);
+INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(1,1,1);
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
 VALUES(2,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
 SELECT * FROM prc_detalle_pedidos*/

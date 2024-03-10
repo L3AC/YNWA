@@ -89,15 +89,6 @@ FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
-        precio_modelo_talla,descripcion_talla as talla
-        from prc_modelo_tallas 
-        INNER JOIN ctg_tallas USING(id_talla)
-        INNER JOIN prc_modelos USING(id_modelo)
-        WHERE estado_talla=true AND id_modelo = 1 AND stock_modelo_talla>0
-        ORDER BY descripcion_talla
-
-
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,
     descripcion_tipo_noticia VARCHAR(255) NOT NULL,
@@ -123,12 +114,13 @@ id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED NOT NULL,
 forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo' NOT NULL,
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-estado_pedido ENUM('Inactivo','En proceso','Entregado') DEFAULT 'En proceso' NOT NULL,
+estado_pedido ENUM('Pendiente','Finalizado','Entregado','Anulado') NOT NULL,
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,

@@ -75,13 +75,15 @@ class PedidoHandler
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'SELECT id_detalle, CONCAT(descripcion_modelo," ",descripcion_talla) as modelo,
+        $sql = 'SELECT id_detalle, 
+        descripcion_marca,descripcion_modelo,descripcion_talla,
                 precio_modelo_talla, cantidad_detalle_pedido
                 FROM prc_detalle_pedidos
                 INNER JOIN prc_pedidos USING(id_pedido)
                 INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
                 INNER JOIN ctg_tallas USING(id_talla)
                 INNER JOIN prc_modelos USING(id_modelo)
+                INNER JOIN ctg_marcas USING(id_marca)
                 WHERE id_pedido = ?';
         $params = array($_SESSION['idPedido']);
         return Database::getRows($sql, $params);
@@ -111,7 +113,7 @@ class PedidoHandler
     // Método para eliminar un producto que se encuentra en el carrito de compras.
     public function deleteDetail()
     {
-        $sql = 'DELETE FROM detalle_pedido
+        $sql = 'DELETE FROM prc_detalle_pedidos
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);

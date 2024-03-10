@@ -14,6 +14,20 @@ BEGIN
 END;
 //DELIMITER ;
 
+
+
+DELIMITER //
+CREATE TRIGGER actualizar_stock_modelo_tallas
+AFTER DELETE ON prc_detalle_pedidos
+FOR EACH ROW
+BEGIN
+  UPDATE prc_modelo_tallas
+  SET stock_modelo_talla = stock_modelo_talla + OLD.cantidad_detalle_pedido
+  WHERE id_modelo_talla = OLD.id_modelo_talla;
+END;
+//DELIMITER ;
+
+
 /*FUNCION PARA SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
 CREATE FUNCTION idmin(tabla VARCHAR(255))

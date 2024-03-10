@@ -23,7 +23,7 @@ if (isset($_GET['action'])) {
                     
                 } elseif (
                     
-                    !$pedido->setProducto($_POST['idModelo']) or
+                    !$pedido->setProducto($_POST['idModeloTalla']) or
                     !$pedido->setCantidad($_POST['cantidadModelo'])
                 ) {
                     $result['error'] = $pedido->getDataError();

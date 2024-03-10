@@ -56,12 +56,14 @@ async function readDetail() {
         let total = 0;
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            subtotal = row.precio_modelo_talla * row.precio_modelo_talla;
+            subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.modelo}</td>
+                    <td>${row.descripcion_marca}</td>
+                    <td>${row.descripcion_modelo}</td>
+                    <td>${row.descripcion_talla}</td>
                     <td>${row.precio_modelo_talla}</td>
                     <td>${row.cantidad_detalle_pedido}</td>
                     <td>${subtotal.toFixed(2)}</td>

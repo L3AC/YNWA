@@ -30,7 +30,9 @@
                 <!-- Cabeza de la tabla para mostrar los títulos de las columnas -->
                 <thead>
                     <tr>
-                        <th>PRODUCTO</th>
+                        <th>MARCA</th>
+                        <th>MODELO</th>
+                        <th>TALLA</th>
                         <th>PRECIO (US$)</th>
                         <th>CANTIDAD</th>
                         <th>SUBTOTAL (US$)</th>
@@ -67,20 +69,23 @@
                         <!-- Formulario para actualizar cantidad -->
                         <form id="itemForm">
                             <div class="modal-body row">
+                                <h1 class="fs-5" id="stock"></h1>
                                 <input type="hidden" id="idDetalle" name="idDetalle">
                                 <div class="col-sm-12">
                                     <label for="cantidadProducto" class="form-label">Cantidad</label>
                                     <input id="cantidadProducto" type="number" name="cantidadProducto" min="1"
                                         class="form-control" required>
+                                        <div id="mensajeDiv" style="display: none;"></div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div class="modal-footer border-0">
+                                <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->

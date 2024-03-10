@@ -35,7 +35,12 @@ font-style: normal; ;">
         <div id="contenido">
             <!-- Título del contenido principal -->
 
-            <h4 id="mainTitle" class="mt-4"></h4>
+            <h4 id="mainTitle" class="mt-4 "></h4>
+            <div class="d-flex justify-content-end  pb-3">
+                <button class="btn btn-warning" id="btnComentario">
+                  <i class="bi bi-chat-dots"></i> Comentarios
+                </button>
+              </div>
             <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
 
             <div class="card mb-3" id="detalle">
@@ -48,10 +53,11 @@ font-style: normal; ;">
                     <div class="col-md-6">
                         <div class="card-body">
                             <input type="hidden" id="idModelo" name="idModelo">
+                            
                             <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
                                 id="nombreModelo"></p>
-                            <p class="card-title text-center" style="font-size: 25px; text-align: center;" id="">Tallas
-                            </p>
+                            <p class="card-title text-center" style="font-size: 25px; text-align: center;" 
+                            id="">Tallas </p>
                             <div class="row" id="tallas"></div>
 
 

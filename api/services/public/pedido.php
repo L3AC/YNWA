@@ -20,7 +20,9 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (!$pedido->startOrder()) {
                     $result['error'] = 'Ocurrió un problema al iniciar el pedido';
+                    
                 } elseif (
+                    
                     !$pedido->setProducto($_POST['idModelo']) or
                     !$pedido->setCantidad($_POST['cantidadModelo'])
                 ) {

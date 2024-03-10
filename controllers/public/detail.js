@@ -21,7 +21,6 @@ const SAVE_FORM = document.getElementById('saveForm'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
-    let STOCK_VALUE = 0;
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -124,7 +123,6 @@ const openModal= async (id) => {
         const ROW = DATA.dataset;
         ID_MODELO_TALLA.value = ROW.id_modelo_talla;
         STOCK_INFO.textContent = 'Existencias disponibles '+ROW.stock_modelo_talla;
-        STOCK_VALUE=ROW.stock_modelo_talla;
     } else {
         sweetAlert(2, DATA.error, false);
     }

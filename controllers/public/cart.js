@@ -1,11 +1,19 @@
 // Constante para completar la ruta de la API.
-const PEDIDO_API = 'services/public/pedido.php';
+const PEDIDO_API = 'services/public/pedido.php',
+MODELOTALLAS_API = 'services/public/modelotallas.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
 // Constante para establecer la caja de diálogo de cambiar producto.
 const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
+
+const ID_DETALLE = document.getElementById('idModeloTalla'),
+    CANTIDAD = document.getElementById('cantidadModelo'),
+    ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
+    STOCK_INFO = document.getElementById('stock'),
+    mensajeDiv = document.getElementById('mensajeDiv'),
+    IDGUARDAR = document.getElementById('idGuardar');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -68,7 +76,10 @@ async function readDetail() {
                     <td>${row.cantidad_detalle_pedido}</td>
                     <td>${subtotal.toFixed(2)}</td>
                     <td>
-                        <button type="button" onclick="openUpdate(${row.id_detalle}, ${row.cantidad_detalle_pedido})" class="btn btn-info">
+                        <button type="button"
+                        onclick="openUpdate(${row.id_detalle},
+                            ${row.cantidad_detalle_pedido} ,${row.id_modelo_talla})"
+                         class="btn btn-info">
                             <i class="bi bi-plus-slash-minus"></i>
                         </button>
                         <button type="button" onclick="openDelete(${row.id_detalle})" class="btn btn-danger">
@@ -90,12 +101,34 @@ async function readDetail() {
 *   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
 *   Retorno: ninguno.
 */
-function openUpdate(id, quantity) {
+const openUpdate = async (id, quantity,idmt) => {
     // Se abre la caja de diálogo que contiene el formulario.
-    ITEM_MODAL.show();
+    //ITEM_MODAL.show();
     // Se inicializan los campos del formulario con los datos del registro seleccionado.
-    document.getElementById('idDetalle').value = id;
-    document.getElementById('cantidadModelo').value = quantity;
+    /*ID_DETALLE.value = id;
+    CANTIDAD.value = quantity;*/
+
+
+    const FORM = new FormData();
+    FORM.append('idModeloTalla', idmt);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        // Se prepara el formulario.
+        ITEM_MODAL.show();
+        ITEM_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_DETALLE.value = id;
+        CANTIDAD.value = quantity;
+        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
+        STOCK_INFO.textContent = 'Existencias disponibles '+ROW.stock_modelo_talla;
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+
 }
 
 /*

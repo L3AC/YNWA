@@ -149,10 +149,3 @@ CREATE TABLE prc_comentarios (
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-SELECT id_detalle, nombre_producto, detalle_pedido.precio_producto, detalle_pedido.cantidad_producto
-                FROM prc_detalle_pedidos
-                INNER JOIN prc_pedidos USING(id_pedido)
-                INNER JOIN prc_modelos USING(id_modelo)
-                INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
-                WHERE id_pedido = ?

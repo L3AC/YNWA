@@ -49,9 +49,9 @@ class PedidoHandler
         if ($this->getOrder()) {
             return true;
         } else {
-            $sql = 'INSERT INTO prc_pedidos(direccion_pedido, id_cliente)
-                    VALUES((SELECT direccion_cliente FROM prc_clientes WHERE id_cliente = ?), ?)';
-            $params = array($_SESSION['idCliente'], $_SESSION['idCliente']);
+            $sql = 'INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido)
+                    VALUES(?,?,now(),"Pendiente")';
+            $params = array($_SESSION['idCliente'],"Efectivo");
             // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.
             if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
                 return true;
@@ -75,10 +75,12 @@ class PedidoHandler
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'SELECT id_detalle, descripcion_modelo, precio_modelo_talla, cantidad_detalle_pedido
+        $sql = 'SELECT id_detalle, CONCAT(descripcion_modelo," ",descripcion_talla) as modelo,
+                precio_modelo_talla, cantidad_detalle_pedido
                 FROM prc_detalle_pedidos
                 INNER JOIN prc_pedidos USING(id_pedido)
                 INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
+                INNER JOIN ctg_tallas USING(id_talla)
                 INNER JOIN prc_modelos USING(id_modelo)
                 WHERE id_pedido = ?';
         $params = array($_SESSION['idPedido']);

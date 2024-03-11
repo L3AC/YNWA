@@ -30,7 +30,7 @@ END;
 SQL
 DELIMITER //
 
-CREATE TRIGGER dosactualizar_stock_modelo_tallas
+CREATE TRIGGER update_stock_modelo_tallas
 AFTER UPDATE ON prc_detalle_pedidos
 FOR EACH ROW
 BEGIN

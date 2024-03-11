@@ -27,22 +27,23 @@ BEGIN
 END;
 //DELIMITER ;
 
-SQL
-DELIMITER //
 
+DELIMITER //
 CREATE TRIGGER update_stock_modelo_tallas
 AFTER UPDATE ON prc_detalle_pedidos
 FOR EACH ROW
 BEGIN
-  IF OLD.cantidad_detalle_pedido != NEW.cantidad_detalle_pedido THEN
+  IF NEW.cantidad_detalle_pedido > OLD.cantidad_detalle_pedido THEN
     UPDATE prc_modelo_tallas
-    SET stock_modelo_talla = stock_modelo_talla - (OLD.cantidad_detalle_pedido - NEW.cantidad_detalle_pedido)
+    SET stock_modelo_talla = stock_modelo_talla - (NEW.cantidad_detalle_pedido - OLD.cantidad_detalle_pedido)
+    WHERE id_modelo_talla = OLD.id_modelo_talla;
+  ELSE
+    UPDATE prc_modelo_tallas
+    SET stock_modelo_talla = stock_modelo_talla + (OLD.cantidad_detalle_pedido - NEW.cantidad_detalle_pedido)
     WHERE id_modelo_talla = OLD.id_modelo_talla;
   END IF;
 END;
-//
-
-DELIMITER ;
+//DELIMITER ;
 
 /*FUNCION PARA SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //

@@ -1,7 +1,8 @@
 // Constantes para completar la ruta de la API.
-const PRODUCTO_API = 'services/public/producto.php';
-const PEDIDO_API = 'services/public/pedido.php';
-const MODELOTALLAS_API = 'services/public/modelotallas.php';
+const PRODUCTO_API = 'services/public/producto.php',
+PEDIDO_API = 'services/public/pedido.php',
+MODELOTALLAS_API = 'services/public/modelotallas.php',
+COMENTARIOS_API = 'services/public/comentario.php';
 // Constante tipo objeto para obtener los parámetros disponibles en la URL.
 const PARAMS = new URLSearchParams(location.search);
 // Constante para establecer el formulario de agregar un producto al carrito de compras.
@@ -16,11 +17,18 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    BTNCOMENTARIO = document.getElementById('btnComentario'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     CANTIDAD = document.getElementById('cantidadModelo'),
     STOCK_INFO = document.getElementById('stock'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
+    
+const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
+    MODAL_TITLE2 = document.getElementById('modalTitle2');
+// Constantes para establecer los elementos del formulario de guardar.
+const SAVE_FORM2 = document.getElementById('saveForm2'),
+ADDCOMENTARIO = document.getElementById('addComentario');
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -39,6 +47,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         IMAGEN_MODELO.src = SERVER_URL.concat('images/modelos/', DATA.dataset.foto_modelo);
         NOMBRE_MODELO.textContent = DATA.dataset.descripcion_modelo;
         ID_MODELO.value = DATA.dataset.id_modelo;
+        BTNCOMENTARIO.innerHTML =`
+        <button class="btn btn-warning"  onclick="openComentario(${PARAMS.get('id')})">
+            <i class="bi bi-chat-dots"></i> Comentarios
+        </button>`;
 
         const FORM2 = new FormData();
         FORM2.append('idModelo', ID_MODELO.value);
@@ -90,7 +102,7 @@ CANTIDAD.addEventListener('input', async function ()  {
             mensajeDiv.style.display = 'block'; 
             IDGUARDAR.disabled = true;
         }
-        else if(CANTIDAD.value<0 || CANTIDAD.value>3){
+        else if(CANTIDAD.value<=0 || CANTIDAD.value>3){
             mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
             mensajeDiv.style.display = 'block'; 
             IDGUARDAR.disabled = true;
@@ -119,6 +131,27 @@ const openModal= async (id) => {
         MODAL_TITLE.textContent = 'Agregar al carrito';
         // Se prepara el formulario.
         SAVE_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
+        STOCK_INFO.textContent = 'Existencias disponibles '+ROW.stock_modelo_talla;
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+}
+const openComentario= async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
+    const FORM = new FormData();
+    FORM.append('idModeloTalla', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(COMENTARIOS_API, 'readAllActive', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL2.show();
+        MODAL_TITLE2.textContent = 'Agregar al carrito';
+        // Se prepara el formulario.
+        SAVE_FORM2.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_MODELO_TALLA.value = ROW.id_modelo_talla;

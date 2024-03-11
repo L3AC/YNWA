@@ -36,11 +36,9 @@ font-style: normal; ;">
             <!-- Título del contenido principal -->
 
             <h4 id="mainTitle" class="mt-4 "></h4>
-            <div class="d-flex justify-content-end  pb-3">
-                <button class="btn btn-warning" id="btnComentario">
-                  <i class="bi bi-chat-dots"></i> Comentarios
-                </button>
-              </div>
+            <div class="d-flex justify-content-end  pb-3" id="btnComentario">
+                
+            </div>
             <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
 
             <div class="card mb-3" id="detalle">
@@ -53,14 +51,11 @@ font-style: normal; ;">
                     <div class="col-md-6">
                         <div class="card-body">
                             <input type="hidden" id="idModelo" name="idModelo">
-                            
                             <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
                                 id="nombreModelo"></p>
                             <p class="card-title text-center" style="font-size: 25px; text-align: center;" 
                             id="">Tallas </p>
                             <div class="row" id="tallas"></div>
-
-
                             
                         </div>
                     </div>
@@ -84,9 +79,18 @@ font-style: normal; ;">
                     <!-- Formulario para crear o actualizar un registro -->
                     <form id="saveForm">
                         <div class="modal-body row gx-5">
-                            <h1 class="fs-5" id="stock"></h1>
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+                            <div class="row">
+                                <div class="col-6">
+                                    <h1 class="pl-3 fs-5" id="stock"></h1>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end" id="addComentario">
+                                        <button class="btn btn-warning" id="addComentario" onclick="">
+                                          <i class="bi bi-chat-dots"></i> Agregar
+                                        </button>
+                                </div>
+                            </div>
 
                             <!-- Campos del formulario -->
                             <div class="col-6">
@@ -111,6 +115,66 @@ font-style: normal; ;">
                                 </svg>
                             </button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle2" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Título del modal -->
+                        <h1 class="modal-title fs-5" id="modalTitle2"></h1>
+                        <!-- Botón de cierre del modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm2">
+                        <div class="modal-body row g-3">
+                            <!-- Subtabla para modelos tallas -->
+                            <div id="subtable">
+                                <!-- TABLA DE MODELO TALLAS-->
+                                <div class="modal-header border-0">
+                                    <h1 class="modal-title fs-5" id="submodalTitle"></h1>
+                                </div>
+
+                                <!-- Formulario y botones para la subtabla -->
+                                <form class="col-sm-12 col-md-6" id="searchsubForm">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <!-- Campo de búsqueda en la subtabla -->
+                                            <input type="search" class="form-control" name="search" 
+                                            placeholder="Buscar" required>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-end ">
+                                            <!-- Botones para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                                            <button type="button" class="btn btn-primary" onclick="opensubCreate()">
+                                                <i class="bi bi-plus-square-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- Tabla para mostrar los registros en la subtabla -->
+                                <div class="container mt-5">
+                                    <h1>Comentarios</h1>
+                                    <ul class="list-group mt-3">
+                                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                          <h5>Nombre del Cliente</h5>
+                                          <p>Comentario del cliente</p>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">5</span>
+                                      </li>
+                                      <!-- Agrega más elementos li para más comentarios -->
+                                    </ul>
+                                  </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>

@@ -110,6 +110,7 @@ CREATE TABLE prc_noticias (
     FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
 
+
 CREATE TABLE prc_pedidos(
 id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED NOT NULL,
@@ -121,7 +122,6 @@ CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-SELECT id_pedido FROM prc_pedidos WHERE estado_pedido = 'Pendiente' AND id_cliente = 1;
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,

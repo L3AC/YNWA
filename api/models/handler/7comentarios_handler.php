@@ -10,6 +10,7 @@ class ComentarioHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $idModelo = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -74,17 +75,23 @@ class ComentarioHandler
         ORDER BY fecha_comentario DESC, estado_comentario DESC';
         return Database::getRows($sql);
     }
-    public function readsubAll()
+    public function readAllActive()
     {
-        $sql = 'select mt.id_modelo_talla,mt.id_talla,mt.id_modelo,
-        mt.stock_modelo_talla,mt.precio_modelo_talla,t.descripcion_talla as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE mt.id_modelo = ?
-        ORDER BY t.descripcion_talla';
+        $sql = 'select id_modelo,id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
+        from prc_comentarios 
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        WHERE id_modelo = ? AND estado_comentario=true
+        ORDER BY fecha_comentario DESC';
         //echo $this->idModelo. ' que';
-        $params = array($this->id);
+        $params = array($this->idModelo);
 
         return Database::getRows($sql, $params);
     }

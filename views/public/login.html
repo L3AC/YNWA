@@ -12,12 +12,15 @@
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link rel="stylesheet" href="../../resources/css/btn.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body style="font-family: 'Quicksand', sans-serif;
+font-optical-sizing: auto;
+font-style: normal; ;">
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
@@ -33,12 +36,16 @@
                 <input type="password" id="clave" name="clave" class="form-control" required>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill"></i> Enviar</button>
+                <button class="btnn" type="submit" ><a>Iniciar Sesion</a>
+                </button>
             </div>
         </form>
         <div class="text-center p-3">
             <!-- Enlace para crear una cuenta de usuario -->
-            <a href="signup.html" class="btn btn-secondary"><i class="bi bi-person-fill"></i> Registrarme</a>
+            <a href="signup.html"> 
+            <button class="btnn" type="submit" > Registrarme
+            </button>
+            </a>
         </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->

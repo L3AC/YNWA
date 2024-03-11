@@ -1,5 +1,5 @@
 .btnn {
-    --color: #CCC8AA;
+    --color: #000000;
     padding: 0.3em 1.7em;
     background-color: transparent;
     border-radius: .3em;
@@ -43,7 +43,7 @@
    }
    
    .btnn:hover {
-    color: rgb(2, 2, 2);
+    color: rgb(255, 255, 255);
    }
    
    .btnn:active {

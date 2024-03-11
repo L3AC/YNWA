@@ -95,7 +95,30 @@ async function readDetail() {
         sweetAlert(4, DATA.error, false, 'index.html');
     }
 }
-
+CANTIDAD.addEventListener('input', async function ()  {
+    const FORM = new FormData();
+    FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status === 1) {
+        const ROW = DATA.dataset;
+        if(CANTIDAD.value>ROW.stock_modelo_talla){
+            mensajeDiv.textContent = 'No puede escoger mas del stock';
+            mensajeDiv.style.display = 'block'; 
+            IDGUARDAR.disabled = true;
+        }
+        else if(CANTIDAD.value<0 || CANTIDAD.value>3){
+            mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
+            mensajeDiv.style.display = 'block'; 
+            IDGUARDAR.disabled = true;
+        }
+        else {
+            mensajeDiv.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    } 
+});
 /*
 *   Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
 *   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).

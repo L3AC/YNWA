@@ -103,8 +103,8 @@ class PedidoHandler
     // Método para actualizar la cantidad de un producto agregado al carrito de compras.
     public function updateDetail()
     {
-        $sql = 'UPDATE detalle_pedido
-                SET cantidad_producto = ?
+        $sql = 'UPDATE prc_detalle_pedidos
+                SET cantidad_detalle_pedido = ?
                 WHERE id_detalle = ? AND id_pedido = ?';
         $params = array($this->cantidad, $this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);

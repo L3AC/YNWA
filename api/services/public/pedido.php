@@ -49,7 +49,7 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$pedido->setIdDetalle($_POST['idDetalle']) or
-                    !$pedido->setCantidad($_POST['cantidadProducto'])
+                    !$pedido->setCantidad($_POST['cantidadModelo'])
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($pedido->updateDetail()) {

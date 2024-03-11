@@ -13,9 +13,15 @@
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link rel="stylesheet" href="../../resources/css/btn.css">
+    <link rel="stylesheet" href="../../resources/css/detcar.css ">
+    <link rel="stylesheet" href="../../resources/css/input.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">    
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body style="font-family: 'Quicksand', sans-serif;
@@ -26,14 +32,13 @@ font-style: normal; ;">
         <!-- Título del contenido principal -->
         <h4 id="mainTitle"></h4>
         <!-- Formulario para iniciar sesión -->
+        <div class="cardno">
         <form class="row g-3" id="sessionForm">
             <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <label for="usu" class="form-label">Usuario</label>
-                <input type="text" id="usu" name="usu" class="form-control" required>
+                <input style="margin-top: 80px;" type="text" placeholder="Usuario"  id="usu" name="usu" class="input" required>
             </div>
             <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <label for="clave" class="form-label">Contraseña</label>
-                <input type="password" id="clave" name="clave" class="form-control" required>
+                <input type="password" placeholder="Contraseña" id="clave" name="clave"class="input" required>
             </div>
             <div class="text-center">
                 <button class="btnn" type="submit" ><a>Iniciar Sesion</a>
@@ -47,6 +52,7 @@ font-style: normal; ;">
             </button>
             </a>
         </div>
+    </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

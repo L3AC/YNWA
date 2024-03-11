@@ -8,7 +8,7 @@ const ITEM_MODAL = new bootstrap.Modal('#itemModal');
 // Constante para establecer el formulario de cambiar producto.
 const ITEM_FORM = document.getElementById('itemForm');
 
-const ID_DETALLE = document.getElementById('idModeloTalla'),
+const ID_DETALLE = document.getElementById('idDetalle'),
     CANTIDAD = document.getElementById('cantidadModelo'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     STOCK_INFO = document.getElementById('stock'),
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ITEM_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
+    console.log(ID_DETALLE.value); 
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(ITEM_FORM);
     // Petición para actualizar la cantidad de producto.

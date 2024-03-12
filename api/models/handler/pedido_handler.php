@@ -28,6 +28,19 @@ class PedidoHandler
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
     // Método para verificar si existe un pedido en proceso con el fin de iniciar o continuar una compra.
+    public function searchRows($value)
+    {
+        $value = ($value === '') ? '%%' : '%' . $value . '%';
+
+        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
+                FROM ctg_tallas
+                WHERE descripcion_talla LIKE  ? 
+                ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+
+        $params = array($value);
+        return Database::getRows($sql, $params);
+    }
+
     public function getOrder()
     {
         $this->estado = 'Pendiente';
@@ -93,7 +106,7 @@ class PedidoHandler
     public function finishOrder()
     {
         $this->estado = 'Finalizado';
-        $sql = 'UPDATE pedido
+        $sql = 'UPDATE prc_pedidos
                 SET estado_pedido = ?
                 WHERE id_pedido = ?';
         $params = array($this->estado, $_SESSION['idPedido']);

@@ -199,15 +199,13 @@ const openComentario = async (id) => {
             `;
             let ratingValue = parseInt(row.puntuacion_comentario);
             let stars = document.querySelectorAll('.rating input[type="radio"]');
-
-            stars.forEach(star => {
-                if (parseInt(star.getAttribute('data-rating')) <= ratingValue) {
+            stars.forEach((star, index) => {
+                if (index < 6- ratingValue) {
                     star.checked = true;
                 } else {
                     star.checked = false;
                 }
             });
-            console.log("Star:", stars);
 
         });
         document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {

@@ -193,5 +193,9 @@ select * from prc_comentarios
 
 INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(1,1,1);
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
-VALUES(5,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
+VALUES(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
+
+
+update prc_comentarios set puntuacion_comentario=3 where id_comentario=1
+
 SELECT * FROM prc_detalle_pedidos*/

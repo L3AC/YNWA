@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../../resources/css/btnTallas.css">
     <link rel="stylesheet" href="../../resources/css/btnCom.css">
     <link href="../../resources/css/nav.css" rel="stylesheet">
+    <link href="../../resources/css/stars.css" rel="stylesheet">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -39,6 +40,7 @@ font-style: normal; ;">
             <div class="d-flex justify-content-end  pb-3" id="btnComentario">
                 
             </div>
+            
             <!-- Componente Horizontal Card para mostrar el detalle de un Modelo -->
 
             <div class="card mb-3" id="detalle">
@@ -85,11 +87,6 @@ font-style: normal; ;">
                                 <div class="col-6">
                                     <h1 class="pl-3 fs-5" id="stock"></h1>
                                 </div>
-                                <div class="col-6 d-flex justify-content-end" id="addComentario">
-                                        <button class="btn btn-warning" id="addComentario" onclick="">
-                                          <i class="bi bi-chat-dots"></i> Agregar
-                                        </button>
-                                </div>
                             </div>
 
                             <!-- Campos del formulario -->
@@ -127,7 +124,7 @@ font-style: normal; ;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <!-- Título del modal -->
-                        <h1 class="modal-title fs-5" id="modalTitle2"></h1>
+                        <h1 class="modal-title fs-5" id="modalTitle2">Comentarios</h1>
                         <!-- Botón de cierre del modal -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -135,11 +132,7 @@ font-style: normal; ;">
                     <form id="saveForm2">
                         <div class="modal-body row g-3">
                             <!-- Subtabla para modelos tallas -->
-                            <div id="subtable">
-                                <!-- TABLA DE MODELO TALLAS-->
-                                <div class="modal-header border-0">
-                                    <h1 class="modal-title fs-5" id="submodalTitle"></h1>
-                                </div>
+                            <div id="subtable2">
 
                                 <!-- Formulario y botones para la subtabla -->
                                 <form class="col-sm-12 col-md-6" id="searchsubForm">
@@ -149,29 +142,17 @@ font-style: normal; ;">
                                             <input type="search" class="form-control" name="search" 
                                             placeholder="Buscar" required>
                                         </div>
-                                        <div class="col-6 d-flex justify-content-end ">
-                                            <!-- Botones para abrir una caja de diálogo al momento de crear un nuevo registro -->
-                                            <button type="button" class="btn btn-primary" onclick="opensubCreate()">
-                                                <i class="bi bi-plus-square-fill"></i>
-                                            </button>
-                                        </div>
                                     </div>
                                 </form>
 
-                                <!-- Tabla para mostrar los registros en la subtabla -->
-                                <div class="container mt-5">
-                                    <h1>Comentarios</h1>
-                                    <ul class="list-group mt-3">
-                                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                          <h5>Nombre del Cliente</h5>
-                                          <p>Comentario del cliente</p>
-                                        </div>
-                                        <span class="badge bg-primary rounded-pill">5</span>
-                                      </li>
-                                      <!-- Agrega más elementos li para más comentarios -->
+                                <!-- LISTA DE COMENTARIOS -->
+                                <div class="container mt-2" >
+                                                                        
+                                    <ul class="list-group" id="listComentario">
                                     </ul>
-                                  </div>
+                                </div>
+
+
                             </div>
                         </div>
 

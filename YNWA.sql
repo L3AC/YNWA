@@ -149,3 +149,5 @@ CREATE TABLE prc_comentarios (
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+

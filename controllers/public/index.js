@@ -76,18 +76,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             CATEGORIAS.innerHTML += `
-<div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
-    <div class="car hadow">
-        <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
-                alt="${row.descripcion_modelo}"></div>
-        <div class="title">${row.descripcion_modelo}</div>
-        <p class="marca">${row.marca}</p>
-        <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
-                    class="text">Comprar</span><span>Adquirir!</span></a></div>
-    </div>
-</div>
-
-`;
+            <div style="margin-bottom: 20px;" class="col-sm-12 col-md-6 col-lg-3">
+                <div class="car hadow">
+                    <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
+                            alt="${row.descripcion_modelo}"></div>
+                    <div class="title">${row.descripcion_modelo}</div>
+                    <p class="marca">${row.marca}</p>
+                    <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
+                                class="text">Comprar</span><span>Adquirir!</span></a></div>
+                </div>
+            </div>`;
         });
     } else {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.

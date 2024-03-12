@@ -25,7 +25,22 @@
     <main>
         <div id="contenido">
             <!-- Título del contenido principal -->
-            <h4 id="mainTitle"></h4>
+            <h4 id="mainTitle" class="mt-3"></h4>
+            <div class="row m-2">
+                <!-- Formulario de búsqueda -->
+                <form class="col-sm-12 col-md-12" id="searchForm">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
+                            <!-- Campo de búsqueda -->
+                            <input id="inputsearch" type="search" 
+                            class="form-control" name="search" placeholder="Buscar"
+                                required>
+                        </div>
+    
+                    </div>
+                </form>
+    
+            </div>
             <!-- Tabla para mostrar el detalle de los productos agregados al carrito de compras -->
             <table class="table table-striped">
                 <!-- Cabeza de la tabla para mostrar los títulos de las columnas -->
@@ -34,29 +49,16 @@
                         <th>MARCA</th>
                         <th>MODELO</th>
                         <th>TALLA</th>
-                        <th>PRECIO (US$)</th>
+                        <th>PRECIO</th>
                         <th>CANTIDAD</th>
-                        <th>SUBTOTAL (US$)</th>
+                        <th>SUBTOTAL</th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
                 <!-- Cuerpo de la tabla para mostrar un registro por fila -->
                 <tbody id="tableBody"></tbody>
             </table>
-            <!-- Párrafo para mostrar el monto total a pagar -->
-            <p class="text-end">TOTAL A PAGAR (US$) <b id="pago"></b></p>
-            <!-- Párrafo para mostrar un botón que finaliza el pedido -->
-            <p class="text-end">
-                <button type="button" class="btn btn-primary" onclick="finishOrder()">
-                    <i class="bi bi-credit-card-fill"></i> Finalizar pedido
-                </button>
-            </p>
-            <!-- Párrafo para mostrar un enlace a la página web principal -->
-            <p class="text-end">
-                <a href="index.html" class="btn btn-success">
-                    <i class="bi bi-cart-fill"></i> Seguir comprando
-                </a>
-            </p>
+            
             <!-- Componente Modal para mostrar una caja de diálogo -->
             <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="modalTitle" aria-hidden="true">

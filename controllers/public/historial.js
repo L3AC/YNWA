@@ -54,7 +54,9 @@ ITEM_FORM.addEventListener('submit', async (event) => {
 */
 async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
-    const DATA = await fetchData(PEDIDO_API, 'readDetail');
+    const FORM = new FormData();
+    FORM.append('valor', '');
+    const DATA = await fetchData(PEDIDO_API, 'searchRows',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el cuerpo de la tabla.

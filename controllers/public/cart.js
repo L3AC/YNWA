@@ -73,9 +73,9 @@ async function readDetail() {
                     <td>${row.descripcion_marca}</td>
                     <td>${row.descripcion_modelo}</td>
                     <td>${row.descripcion_talla}</td>
-                    <td>${row.precio_modelo_talla}</td>
+                    <td>$ ${row.precio_modelo_talla}</td>
                     <td>${row.cantidad_detalle_pedido}</td>
-                    <td>${subtotal.toFixed(2)}</td>
+                    <td>$ ${subtotal.toFixed(2)}</td>
                     <td>
                         <button type="button"
                         onclick="openUpdate(${row.id_detalle},

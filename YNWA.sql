@@ -137,7 +137,7 @@ FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-SELECT ,id_cliente,id_detalle, id_modelo_talla,estado_pedido,
+SELECT id_cliente,id_detalle, id_modelo_talla,estado_pedido,
         descripcion_marca,descripcion_modelo,descripcion_talla,
                 precio_modelo_talla, cantidad_detalle_pedido
                 FROM prc_detalle_pedidos
@@ -147,8 +147,8 @@ SELECT ,id_cliente,id_detalle, id_modelo_talla,estado_pedido,
                 INNER JOIN prc_modelos USING(id_modelo)
                 INNER JOIN ctg_marcas USING(id_marca)
                 INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_pedido = ?
-
+                WHERE id_cliente =1 AND estado_pedido='Finalizado';
+update pedido
 
 CREATE TABLE prc_comentarios (
     id_comentario INT UNSIGNED AUTO_INCREMENT,

@@ -45,7 +45,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
                 case 'searchRows':
-                    if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
+                    if ($result['dataset'] = $pedido->searchRows($_POST['valor'])) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                     } else {

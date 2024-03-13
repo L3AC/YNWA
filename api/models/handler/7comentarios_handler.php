@@ -11,6 +11,7 @@ class ComentarioHandler
     */
     protected $id = null;
     protected $idModelo = null;
+    protected $idDetalle = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -95,6 +96,45 @@ class ComentarioHandler
 
         return Database::getRows($sql, $params);
     }
+    public function readByIdDetalle()
+    {
+        $sql = 'select id_modelo,id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
+        from prc_comentarios 
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        WHERE id_detalle = ?';
+        //echo $this->idModelo. ' que';
+        $params = array($this->idDetalle);
+
+        return Database::getRows($sql, $params);
+    }
+    public function readByIdComentario()
+    {
+        $sql = 'select id_modelo,id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
+        from prc_comentarios 
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+        WHERE id_comentario = ? ';
+        //echo $this->idModelo. ' que';
+        $params = array($this->id);
+
+        return Database::getRows($sql, $params);
+    }
+
 
     public function readOne()
     {

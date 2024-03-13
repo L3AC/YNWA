@@ -44,6 +44,14 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' no existen registrosen el carrito';
                 }
                 break;
+                case 'searchRows':
+                    if ($result['dataset'] = $pedido->searchRows($_POST['valor'])) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                    } else {
+                        
+                    }
+                    break;
             // Acción para actualizar la cantidad de un producto en el carrito de compras.
             case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);

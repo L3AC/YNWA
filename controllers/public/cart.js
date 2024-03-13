@@ -73,7 +73,7 @@ async function readDetail() {
                         <div class="row">
                             <div class="col-md-4 cardno">
                                 <!-- Se muestra la imagen del Modelo -->
-                                <img height="120px" width="150px" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
+                                <img height="120px" width="50px" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
                             alt="${row.descripcion_modelo}">
                             </div>
                             <div class="col-md-1"></div>

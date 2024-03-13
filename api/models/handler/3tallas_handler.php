@@ -26,11 +26,7 @@ class TallaHandler
     */
     public function searchRows($value)
     {
-        if ($value === '') {
-            $value = '%%';
-        } else {
-            $value = '%' . $value.'%';
-        }
+        $value = ($value === '') ? '%%' : '%' . $value . '%';
 
         $sql = 'SELECT id_talla, descripcion_talla, estado_talla
                 FROM ctg_tallas

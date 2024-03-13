@@ -33,7 +33,7 @@ class ComentarioData extends ComentarioHandler
             $this->idModelo = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador 1 es incorrecto';
             return false;
         }
     }
@@ -43,7 +43,7 @@ class ComentarioData extends ComentarioHandler
             $this->idDetalle = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador es incorrecto';
+            $this->data_error = 'El identificador 2 es incorrecto';
             return false;
         }
     }

@@ -52,6 +52,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $pedido->readByIdDetalle()) {
                     $result['status'] = 1;
                 } else {
+                    $result['status'] = 0;
                     $result['error'] = 'No hay comentarios de este modelo';
                 }
                 break;

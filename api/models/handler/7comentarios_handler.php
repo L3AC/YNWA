@@ -130,7 +130,7 @@ class ComentarioHandler
         INNER JOIN ctg_marcas ma USING (id_marca)
         WHERE id_comentario = ? ';
         //echo $this->idModelo. ' que';
-        $params = array($this->idDetalle);
+        $params = array($this->id);
 
         return Database::getRows($sql, $params);
     }

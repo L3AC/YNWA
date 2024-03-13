@@ -17,6 +17,7 @@ const ID_DETALLE = document.getElementById('idDetalle'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
+    SAVE_FORM2 = document.getElementById('saveForm2'),
     MODAL_TITLE2 = document.getElementById('modalTitle2'),
     COMENTARIO = document.getElementById('contenidoComentario'),
     FECHA_COMENTARIO = document.getElementById('fechaComentario'),
@@ -73,7 +74,7 @@ async function readDetail() {
         // Se declara e inicializa una variable para sumar cada subtotal y obtener el monto final a pagar.
         let total = 0;
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
+        DATA.dataset.forEach(async row => {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
 
@@ -82,11 +83,12 @@ async function readDetail() {
             const FORM3 = new FormData();
             FORM3.append('idDetalle', row.id_detalle);
             // Petición para obtener los datos del registro solicitado.
-            const DATA3 = fetchData(COMENTARIO_API, 'readByIdDetalle', FORM3);
-
-            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-            if (DATA3.status) {
-                btnComentario = `openRead(${DATA3.dataset.id_comentario})`;
+            const DATA3 = await fetchData(COMENTARIO_API, 'readByIdDetalle', FORM3);
+            /*const ROW = DATA3.dataset;
+            console.log(ROW.id_comentario);*/
+            if (DATA3.dataset.length > 0) {
+                btnComentario = `openRead(${DATA3.dataset[0].id_comentario})`;
+                console.log(DATA3.dataset[0].id_comentario);
             } else {
                 btnComentario = `openCreate(${row.id_detalle})`;
             }
@@ -146,6 +148,7 @@ const openRead = async (id) => {
 
     const FORM = new FormData();
     FORM.append('idComentario', id);
+    console.log(id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -159,8 +162,8 @@ const openRead = async (id) => {
         const ROW = DATA.dataset;
         COMENTARIO.value = ROW.contenido_comentario;
         FECHA_COMENTARIO.value = ROW.fecha_comentario;
-        DIVSTARS.innerHTML = 
-        `<div class="rating rating-${row.id_comentario}">
+        DIVSTARS.innerHTML =
+            `<div class="rating rating-${row.id_comentario}">
             <input type="radio" id="star-1-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="1" data-rating="1">
             <label for="star-1-${row.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
@@ -183,15 +186,15 @@ const openRead = async (id) => {
             </label>
         </div>`;
         let ratingValue = parseInt(row.puntuacion_comentario);
-            let stars = document.querySelectorAll(`.rating-${row.id_comentario} input[type="radio"]`);
-        
-            stars.forEach((star, index) => {
-                if (index < 6-ratingValue) {
-                    star.checked = true;
-                } else {
-                    star.checked = false;
-                }
-            });
+        let stars = document.querySelectorAll(`.rating-${row.id_comentario} input[type="radio"]`);
+
+        stars.forEach((star, index) => {
+            if (index < 6 - ratingValue) {
+                star.checked = true;
+            } else {
+                star.checked = false;
+            }
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -204,6 +207,29 @@ const openCreate = async (id) => {
     ID_DETALLE.value = id;
     // Se prepara el formulario.
     SAVE_FORM2.reset();
+    DIVSTARS.innerHTML =
+        `<div class="rating">
+            <input type="radio" id="star-1" name="star-radio" value="star-1">
+            <label for="star-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-2" name="star-radio" value="star-1">
+            <label for="star-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-3" name="star-radio" value="star-1">
+            <label for="star-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-4" name="star-radio" value="star-1">
+            <label for="star-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-5" name="star-radio" value="star-1">
+            <label for="star-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+        </div>`;
 }
 
 /*

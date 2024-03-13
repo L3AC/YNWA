@@ -188,8 +188,13 @@ INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedid
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
 VALUES(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
 
+
+
+select * from prc_detalle_pedidos
+select * from prc_comentarios
+delete from prc_comentarios where id_comentario>0
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
-VALUES(2,'Bien ',3,now(),true);
+VALUES(2,'Me gusto debido a que',3,now(),true);
 
 
 

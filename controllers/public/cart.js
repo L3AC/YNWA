@@ -68,26 +68,38 @@ async function readDetail() {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.descripcion_marca}</td>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.descripcion_talla}</td>
-                    <td>$${row.precio_modelo_talla}</td>
-                    <td>${row.cantidad_detalle_pedido}</td>
-                    <td>$${subtotal.toFixed(2)}</td>
-                    <td>
-                        <button type="button"
-                        onclick="openUpdate(${row.id_detalle},
-                            ${row.cantidad_detalle_pedido} ,${row.id_modelo_talla})"
-                         class="btn btn-info">
-                            <i class="bi bi-plus-slash-minus"></i>
-                        </button>
-                        <button type="button" onclick="openDelete(${row.id_detalle})" class="btn btn-danger">
-                            <i class="bi bi-cart-dash"></i>
-                        </button>
-                    </td>
-                </tr>
+            TABLE_BODY.innerHTML += ` 
+                <div class=" card mb-3 col-6"  id="detalle">
+                        <div class="row">
+                            <div class="col-md-4 cardno">
+                                <!-- Se muestra la imagen del Modelo -->
+                                <img height="120px" width="50px" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
+                            alt="${row.descripcion_modelo}">
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <input type="hidden" id="idModelo" name="idModelo">
+                                    <p class="card-title text-center mt-2 mb-5" style="font-size: 30px; text-align: center;"
+                                        id="nombreModelo"></p>
+                                    <div class="container">
+                        <div class="contenedor-botones">
+                        <h4 style="text-align: center; margin-top: 0px;">${row.descripcion_modelo}</h4>
+
+                            <p>${row.descripcion_marca}
+                                
+                                ${row.descripcion_talla}
+                                ${row.precio_modelo_talla}
+                                ${row.cantidad_detalle_pedido}
+                                ${subtotal.toFixed(2)}
+                                </p>
+                        </div>
+                </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                    </div>
             `;
         });
         // Se muestra el total a pagar con dos decimales.

@@ -31,18 +31,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 `;
             CARDSLIDE.innerHTML += `
-            <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-                <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
-                    <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
-                        style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
-                </div>
-                <div class="carousel-caption d-none d-md-block text-center">
-                    <div style="background-color: transparent; display: inline-block; padding: 5px;">
-                        <h5>${row.titulo_noticia}</h5>
-                        <p>${row.contenido_noticia}</p>
-                    </div>
-                </div>
+    <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
+        <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
+            <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
+                style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
+        </div>
+        <div class="carousel-caption d-none d-md-block text-center">
+            <div style="background-color: transparent; display: inline-block;">
+                <h5
+                    style="color: white; background-color: rgba(0, 0, 0, 0.5); border: none; font-size: 1.5rem; margin-bottom: 0.0rem;">
+                    ${row.titulo_noticia}</h5>
+                <p style="color: white; background-color: rgba(0, 0, 0, 0.5); border: none; font-size: 1.5rem;">
+                    ${row.contenido_noticia}</p>
             </div>
+        </div>
+    </div>
 `;
             cBtn++;
             cElemento++;
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true"
                 aria-label="Slide 1"></button>`;
 
-                    CARDSLIDE.innerHTML += `
+        CARDSLIDE.innerHTML += `
             <div class="carousel-item active">
                 <img src="../../resources/img/carousel/img1.jpg" class="d-block w-100" alt="Slide 1">
                 <div class="carousel-caption d-none d-md-block">

@@ -97,7 +97,7 @@ class PedidoHandler
     // Método para obtener los productos que se encuentran en el carrito de compras.
     public function readDetail()
     {
-        $sql = 'SELECT id_detalle, id_modelo_talla,
+        $sql = 'SELECT id_detalle, id_modelo_talla, foto_modelo,
         descripcion_marca,descripcion_modelo,descripcion_talla,
                 precio_modelo_talla, cantidad_detalle_pedido
                 FROM prc_detalle_pedidos

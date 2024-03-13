@@ -14,13 +14,16 @@
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link href="../../resources/css/nav.css" rel="stylesheet">
     <link rel="stylesheet" href="../../resources/css/correc.css">
+    <link rel="stylesheet" href="../../resources/css/car.css">
 
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body style="font-family: 'Quicksand', sans-serif;
+font-optical-sizing: auto;
+font-style: normal; ;">
     <!-- Contenido principal del documento -->
     <main>
         <div id="contenido">
@@ -34,9 +37,9 @@
                         <th>MARCA</th>
                         <th>MODELO</th>
                         <th>TALLA</th>
-                        <th>PRECIO</th>
+                        <th>PRECIO (US$)</th>
                         <th>CANTIDAD</th>
-                        <th>SUBTOTAL</th>
+                        <th>SUBTOTAL (US$)</th>
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
@@ -77,11 +80,12 @@
                                     <label for="cantidadModelo" class="form-label">Cantidad</label>
                                     <input id="cantidadModelo" type="number" name="cantidadModelo" min="1"
                                         class="form-control" required>
-                                        <div id="mensajeDiv" style="display: none;"></div>
+                                    <div id="mensajeDiv" style="display: none;"></div>
                                 </div>
                             </div>
                             <div class="modal-footer border-0">
-                                <button type="submit" id="idGuardar" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                                <button type="submit" id="idGuardar" class="btn"
+                                    style="background-color: #CCC8AA;">Guardar</button>
                             </div>
                         </form>
                     </div>

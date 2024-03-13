@@ -100,35 +100,56 @@ const loadTemplate = async () => {
     } else {
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
-                <header>
-                <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: #CCC8AA; " >
-                    <div class="container">
-                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60" alt="YNWA" ></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav ms-auto">
-                            
-                            <div class="col-3 nav-link">
-                                    <div class="input-group">
-                                        <input id="searchMain" type="text" name="searchMain" class="form-control" placeholder="Búsqueda">
-                                    </div>
-                            </div>
+        <header>
+        <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: #CCC8AA; ">
+            <div class="container">
+                    <!-- Left elements -->
+                    <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+                        <!-- Logo -->
+                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
+                                alt="YNWA"></a>
+                    </div>
+                    <!-- Left elements -->
 
-                                <li class="nav-item dropdown ">
-                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
-                                    href="index.html"><i class="bi bi-tags-fill"></i> Marcas</a>
-                                    <ul class="dropdown-menu" id="listmarca">
-                                        
-                                    </ul>
-                                </li>
-                                <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
+                    <!-- Center elements -->
+                    <div class="col-md-4">
+                        <div class="nav-link">
+                            <div class="input-group">
+                                <input id="searchMain" type="text" name="searchMain" class="form-control"
+                                    placeholder="Búsqueda">
                             </div>
                         </div>
                     </div>
-                </nav>
-            </header>
+                    <!-- Center elements -->
+
+                    <!-- Right elements -->
+                    <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+                        <div class="d-flex">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav ms-auto">
+                                    <li class="nav-item dropdown ">
+                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                                            aria-expanded="false" href="index.html"><i class="bi bi-tags-fill"></i>
+                                            Marcas</a>
+                                        <ul class="dropdown-menu" id="listmarca">
+
+                                        </ul>
+                                    </li>
+                                    <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar
+                                        sesión</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right elements -->
+            </div>
+        </nav>
+    </header>
         `);
 
         const SEARCH_MAIN = document.getElementById('searchMain');

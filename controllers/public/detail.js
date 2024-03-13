@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             DATA2.dataset.forEach(row => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
-                    <div class="col-lg-3 col-md-6 col-sm-3" onclick="openModal(${row.id_comentario_modelo_talla})">
+                    <div class="col-lg-3 col-md-6 col-sm-3" onclick="openModal(${row.id_modelo_talla})">
                     <div class="container">
                         <div class="contenedor-botones">
                             <button class="boton-numero">
@@ -134,7 +134,7 @@ const openModal = async (id) => {
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_MODELO_TALLA.value = row.id_comentario_modelo_talla;
+        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
         STOCK_INFO.textContent = 'Existencias disponibles ' + ROW.stock_modelo_talla;
     } else {
         sweetAlert(2, DATA.error, false);

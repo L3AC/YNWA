@@ -25,24 +25,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA2.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
             BTNSLIDE.innerHTML += `
-<button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}"
-    class="${cBtn === 0 ? 'active' : ''}" aria-current="${cBtn === 0 ? 'true' : 'false'}"
-    aria-label="Slide ${cElemento}"></button>
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="${cBtn}"
+                class="${cBtn === 0 ? 'active' : ''}" aria-current="${cBtn === 0 ? 'true' : 'false'}"
+                aria-label="Slide ${cElemento}"></button>
 
 `;
             CARDSLIDE.innerHTML += `
-<div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-    <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
-        <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
-            style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
-    </div>
-    <div class="carousel-caption d-none d-md-block text-center">
-        <div style="background-color: transparent; display: inline-block; padding: 5px;">
-            <h5>${row.titulo_noticia}</h5>
-            <p>${row.contenido_noticia}</p>
-        </div>
-    </div>
-</div>
+            <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
+                <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
+                    <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
+                        style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
+                </div>
+                <div class="carousel-caption d-none d-md-block text-center">
+                    <div style="background-color: transparent; display: inline-block; padding: 5px;">
+                        <h5>${row.titulo_noticia}</h5>
+                        <p>${row.contenido_noticia}</p>
+                    </div>
+                </div>
+            </div>
 `;
             cBtn++;
             cElemento++;
@@ -52,17 +52,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Se asigna al título del contenido de la excepción cuando no existen datos para mostrar.
         // Se crean y concatenan las tarjetas con los datos de cada categoría.
         BTNSLIDE.innerHTML += `
-<button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true"
-    aria-label="Slide 1"></button>`;
+            <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true"
+                aria-label="Slide 1"></button>`;
 
-        CARDSLIDE.innerHTML += `
-<div class="carousel-item active">
-    <img src="../../resources/img/carousel/img1.jpg" class="d-block w-100" alt="Slide 1">
-    <div class="carousel-caption d-none d-md-block">
-        <h5>¿Sabías que...?</h5>
-        <p>El café reduce el riesgo de padecer Alzheimer.</p>
-    </div>
-</div>`;
+                    CARDSLIDE.innerHTML += `
+            <div class="carousel-item active">
+                <img src="../../resources/img/carousel/img1.jpg" class="d-block w-100" alt="Slide 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>¿Sabías que...?</h5>
+                    <p>El café reduce el riesgo de padecer Alzheimer.</p>
+                </div>
+            </div>`;
     }
 
 

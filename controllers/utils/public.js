@@ -42,7 +42,7 @@ const loadTemplate = async () => {
                     <!-- Left elements -->
 
                     <!-- Center elements -->
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="nav-link">
                             <div class="input-group">
                                 <input id="searchMain" type="text" name="searchMain" class="form-control"
@@ -53,7 +53,7 @@ const loadTemplate = async () => {
                     <!-- Center elements -->
 
                     <!-- Right elements -->
-                    <div class="col-md-6 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center">
                         <div class="d-flex">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
@@ -64,16 +64,16 @@ const loadTemplate = async () => {
                                 <div class="navbar-nav ms-auto">
                                     <li class="nav-item dropdown ">
                                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false" href="index.html"><i class="bi bi-tags-fill"></i>
-                                            Marcas</a>
+                                            aria-expanded="false" href="index.html"><i class="bi bi-tags-fill h3"></i>
+                                            </a>
                                         <ul class="dropdown-menu" id="listmarca">
 
                                         </ul>
                                     </li>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-cart"></i> Carrito</a>
-                                    <a class="nav-link" href="historial.html"><i class="bi bi-clock-history"></i> Historial</a>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-person-fill"></i>Cuenta</a>
-                                    <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left"></i> Cerrar sesión</a>
+                                    <a class="nav-link" href="cart.html"><i class="bi bi-cart h3"></i></a>
+                                    <a class="nav-link" href="historial.html"><i class="bi bi-clock-history h3"></i></a>
+                                    <a class="nav-link" href="cart.html"><i class="bi bi-person-fill h3"></i></a>
+                                    <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left h3"></i></a>
                                 </div>
                             </div>
                         </div>

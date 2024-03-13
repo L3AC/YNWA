@@ -42,7 +42,7 @@ const loadTemplate = async () => {
                     <!-- Left elements -->
 
                     <!-- Center elements -->
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="nav-link">
                             <div class="input-group">
                                 <input id="searchMain" type="text" name="searchMain" class="form-control"
@@ -53,7 +53,7 @@ const loadTemplate = async () => {
                     <!-- Center elements -->
 
                     <!-- Right elements -->
-                    <div class="col-md-5 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <div class="col-md-6 d-flex justify-content-center justify-content-md-end align-items-center">
                         <div class="d-flex">
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"

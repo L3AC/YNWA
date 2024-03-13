@@ -14,23 +14,23 @@ if (isset($_GET['action'])) {
     // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
     switch ($_GET['action']) {
             // Acción para agregar un producto al carrito de compras.
-            /*case 'createDetail':
+            case 'createRow':
                 $_POST = Validator::validateForm($_POST);
-                if (!$pedido->startOrder()) {
-                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';
-                    
-                } elseif (
-                    !$pedido->setProducto($_POST['idModeloTalla']) or
-                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                if (
+                    !$categoria->setId($_POST['idDetalle'])or
+                    !$categoria->setMensaje($_POST['contenidoComentario'])or
+                    !$categoria->setPuntuacion($_POST['puntuacionComentario'])
                 ) {
-                    $result['error'] = $pedido->getDataError();
-                } elseif ($pedido->createDetail()) {
+                    $result['error'] = $categoria->getDataError();
+                } elseif ($categoria->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto agregado correctamente';
+                    $result['message'] = 'Categoría creada correctamente';
+                    // Se asigna el estado del archivo después de insertar.
+                    
                 } else {
-                    $result['error'] = 'Ocurrió un problema al agregar el producto';
+                    $result['error'] = 'Ocurrió un problema al crear la categoría';
                 }
-                break;*/
+                break;
             // Acción para obtener los productos agregados en el carrito de compras.
         case 'readAllActive':
             if (

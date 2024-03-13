@@ -62,16 +62,16 @@ class ComentarioData extends ComentarioHandler
         }
     }
 
-    public function setDescripcion($value, $min = 2, $max = 250)
+    public function setMensaje($value, $min = 2, $max = 250)
     {
         if (!Validator::validateString($value)) {
-            $this->data_error = 'La descripción contiene caracteres prohibidos';
+            $this->data_error = 'El mensaje contiene caracteres prohibidos';
             return false;
         } elseif (Validator::validateLength($value, $min, $max)) {
-            $this->descripcion = $value;
+            $this->mensaje = $value;
             return true;
         } else {
-            $this->data_error = 'La descripción debe tener una longitud entre ' . $min . ' y ' . $max;
+            $this->data_error = 'El mensaje debe tener una longitud entre ' . $min . ' y ' . $max;
             return false;
         }
     }

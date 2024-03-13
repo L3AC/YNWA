@@ -12,6 +12,9 @@ class ComentarioHandler
     protected $id = null;
     protected $idModelo = null;
     protected $idDetalle = null;
+    protected $puntuacion = null;
+    protected $mensaje = null;
+
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -54,9 +57,9 @@ class ComentarioHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
-                VALUES(?, ?, ?, ?)';
-        $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
+        $sql = 'INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,
+        fecha_comentario,estado_comentario) VALUES(?,?,?,now(),true)';
+        $params = array($this->idDetalle,$this->mensaje ,$this->puntuacion);
         return Database::executeRow($sql, $params);
     }
 

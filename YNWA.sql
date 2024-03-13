@@ -147,7 +147,8 @@ SELECT id_cliente,id_detalle, id_modelo_talla,estado_pedido,
                 INNER JOIN prc_modelos USING(id_modelo)
                 INNER JOIN ctg_marcas USING(id_marca)
                 INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_cliente =1 AND estado_pedido='Finalizado';
+                WHERE id_cliente =1 AND CONCAT(descripcion_marca,' ',descripcion_modelo,' ',descripcion_talla) like '%%'
+                AND estado_pedido='Finalizado' or AND estado_pedido='Finalizado';
 update pedido
 
 CREATE TABLE prc_comentarios (

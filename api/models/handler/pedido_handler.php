@@ -43,7 +43,7 @@ class PedidoHandler
                 INNER JOIN prc_modelos USING(id_modelo)
                 INNER JOIN ctg_marcas USING(id_marca)
                 INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_cliente =? AND estado_pedido!="Pendiente"
+                WHERE id_cliente =? AND estado_pedido!="Pendiente" AND estado_pedido!="Anulado"
                 AND CONCAT(descripcion_marca," ",descripcion_modelo," ",descripcion_talla) like ?';
 
         $params = array($_SESSION['idCliente'],$value);

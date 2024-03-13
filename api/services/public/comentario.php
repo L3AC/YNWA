@@ -44,6 +44,18 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'No hay comentarios de este modelo';
             }
             break;
+            case 'readByIdDetalle':
+                if (
+                    !$pedido->setIdDetalle($_POST['idDetalle'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->readByIdDetalle()) {
+                    $result['status'] = 1;
+                    $result['message'] = count($result['dataset']);
+                } else {
+                    $result['error'] = 'No hay comentarios de este modelo';
+                }
+                break;
             // Acción para actualizar la cantidad de un producto en el carrito de compras.
             /*case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);

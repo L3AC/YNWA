@@ -37,6 +37,16 @@ class ComentarioData extends ComentarioHandler
             return false;
         }
     }
+    public function setIdDetalle($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idDetalle = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
 
     public function setNombre($value, $min = 2, $max = 50)
     {

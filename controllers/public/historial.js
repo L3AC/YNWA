@@ -1,6 +1,7 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedido.php',
-MODELOTALLAS_API = 'services/public/modelotallas.php';
+MODELOTALLAS_API = 'services/public/modelotallas.php',
+COMENTARIO_API = 'services/public/comentario.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
 // Constante para establecer la caja de diálogo de cambiar producto.
@@ -70,6 +71,7 @@ async function readDetail() {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+
             TABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.descripcion_marca}</td>
@@ -79,6 +81,13 @@ async function readDetail() {
                     <td>${row.cantidad_detalle_pedido}</td>
                     <td>$${subtotal.toFixed(2)}</td>
                     <td>${row.fecha_pedido}</td>
+                    <td>
+                        <button type="button"
+                        onclick="openUpdate(${row.id_detalle})"
+                         class="btn btn-info">
+                            <i class="bi bi-plus-slash-minus"></i>
+                        </button>
+                    </td>
                 </tr>
             `;
         });

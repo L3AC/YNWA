@@ -179,23 +179,22 @@ tendremos en oferta todos los productos mayores a 200$', true,now()),
 
 
 INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido) 
-VALUES(1,'Efectivo',now(),'Pendiente');
-SELECT * FROM prc_detalle_pedidos;
-SELECT * FROM prc_modelo_tallas where id_modelo_talla = 12;
-
-UPDATE prc_detalle_pedidos
-                SET cantidad_detalle_pedido = ?
-                WHERE id_detalle = ? AND id_pedido = ?
-
-select * from prc_comentarios
-
+VALUES(2,'Efectivo',now(),'Pendiente');
 
 
 INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(1,1,1);
+INSERT INTO prc_detalle_pedidos(id_pedido,id_modelo_talla,cantidad_detalle_pedido) VALUES(2,1,1);
+
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
 VALUES(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),true);
 
+INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
+VALUES(2,'Bien ',3,now(),true);
 
-update prc_comentarios set puntuacion_comentario=3 where id_comentario=1
+
+
+select * from prc_comentarios
+
+update prc_comentarios set puntuacion_comentario=4 where id_comentario=1
 
 SELECT * FROM prc_detalle_pedidos*/

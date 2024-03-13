@@ -12,7 +12,7 @@
     <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <link rel="stylesheet" href="../../resources/css/correc.css">
-    
+
     <link href="../../resources/css/nav.css" rel="stylesheet">
 
     <!-- Llamada a las hojas de estilos del framework e iconos -->
@@ -32,14 +32,13 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-5 col-sm-6 mx-auto">
                             <!-- Campo de búsqueda -->
-                            <input id="inputsearch" type="search" 
-                            class="form-control" name="search" placeholder="Buscar"
-                                required>
+                            <input id="inputsearch" type="search" class="form-control" name="search"
+                                placeholder="Buscar" required>
                         </div>
-    
+
                     </div>
                 </form>
-    
+
             </div>
             <!-- Tabla para mostrar el detalle de los productos agregados al carrito de compras -->
             <table class="table table-striped">
@@ -59,7 +58,7 @@
                 <!-- Cuerpo de la tabla para mostrar un registro por fila -->
                 <tbody id="tableBody"></tbody>
             </table>
-            
+
             <!-- Componente Modal para mostrar una caja de diálogo -->
             <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="modalTitle" aria-hidden="true">
@@ -80,17 +79,61 @@
                                     <label for="cantidadModelo" class="form-label">Cantidad</label>
                                     <input id="cantidadModelo" type="number" name="cantidadModelo" min="1"
                                         class="form-control" required>
-                                        <div id="mensajeDiv" style="display: none;"></div>
+                                    <div id="mensajeDiv" style="display: none;"></div>
                                 </div>
                             </div>
                             <div class="modal-footer border-0">
-                                <button type="submit" id="idGuardar" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                                <button type="submit" id="idGuardar" class="btn"
+                                    style="background-color: #CCC8AA;">Guardar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle2" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- Título del modal -->
+                        <h1 class="modal-title fs-5" id="modalTitle2"></h1>
+                        <!-- Botón de cierre del modal -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm2">
+                        <div class="modal-body row g-4">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idDetalle" name="idDetalle">
+
+                            <che></che>
+                            <div class="col-sm-12 col-md-12">
+                                <label for="contenidoComentario" class="form-label">Contenido</label>
+                                <textarea id="contenidoComentario" name="contenidoComentario" class="form-control"
+                                    rows="6"></textarea>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="puntuacionComentario" class="form-label">Puntuacion</label>
+                                <input id="puntuacionComentario" type="text" name="puntuacionComentario"
+                                    class="form-control">
+                            </div>
+                            <div class="col-sm-12 col-md-6" id="divstars">
+                                
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="fechaComentario" class="form-label">Fecha</label>
+                                <input id="fechaComentario" type="text" name="fechaComentario" class="form-control">
+                            </div>
+                        </div>
+                        <!-- Pie del modal con botón de guardar -->
+                        <div class="modal-footer border-0">
+                            <button type="submit" id="idGuardar" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->

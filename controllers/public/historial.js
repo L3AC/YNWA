@@ -1,7 +1,7 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedido.php',
-MODELOTALLAS_API = 'services/public/modelotallas.php',
-COMENTARIO_API = 'services/public/comentario.php';
+    MODELOTALLAS_API = 'services/public/modelotallas.php',
+    COMENTARIO_API = 'services/public/comentario.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
 // Constante para establecer la caja de diálogo de cambiar producto.
@@ -16,12 +16,18 @@ const ID_DETALLE = document.getElementById('idDetalle'),
     mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
+const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
+    MODAL_TITLE2 = document.getElementById('modalTitle2'),
+    COMENTARIO = document.getElementById('contenidoComentario'),
+    FECHA_COMENTARIO = document.getElementById('fechaComentario'),
+    DIVSTARS = document.getElementById('divstars');
+
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Carrito de compras';
+    MAIN_TITLE.textContent = 'Historial de compras';
     // Llamada a la función para mostrar los productos del carrito de compras.
     readDetail();
 });
@@ -30,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ITEM_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    console.log(ID_DETALLE.value); 
+    console.log(ID_DETALLE.value);
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(ITEM_FORM);
     // Petición para actualizar la cantidad de producto.
@@ -57,7 +63,7 @@ async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
     const FORM = new FormData();
     FORM.append('valor', '');
-    const DATA = await fetchData(PEDIDO_API, 'searchRows',FORM);
+    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el cuerpo de la tabla.
@@ -70,8 +76,22 @@ async function readDetail() {
         DATA.dataset.forEach(row => {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
 
+            /*PARA VERIFICAR SI YA HAY UN COMENTARIO*/
+            btnComentario = '';
+            const FORM3 = new FormData();
+            FORM3.append('idDetalle', row.id_detalle);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA3 = fetchData(COMENTARIO_API, 'readByIdDetalle', FORM3);
+
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA3.status) {
+                btnComentario = `openRead(${DATA3.dataset.id_comentario})`;
+            } else {
+                btnComentario = `openCreate(${row.id_detalle})`;
+            }
+
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.descripcion_marca}</td>
@@ -82,22 +102,18 @@ async function readDetail() {
                     <td>$${subtotal.toFixed(2)}</td>
                     <td>${row.fecha_pedido}</td>
                     <td>
-                        <button type="button"
-                        onclick="openUpdate(${row.id_detalle})"
-                         class="btn btn-info">
-                            <i class="bi bi-plus-slash-minus"></i>
+                        <button type="button" class="btn btn-warning" onclick="${btnComentario}">
+                            <i class="bi bi-chat-dots"></i>
                         </button>
                     </td>
                 </tr>
             `;
         });
-        // Se muestra el total a pagar con dos decimales.
-        document.getElementById('pago').textContent = total.toFixed(2);
     } else {
         sweetAlert(4, DATA.error, false, 'index.html');
     }
 }
-CANTIDAD.addEventListener('input', async function ()  {
+CANTIDAD.addEventListener('input', async function () {
     const FORM = new FormData();
     FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
     // Petición para obtener los datos del registro solicitado.
@@ -105,55 +121,89 @@ CANTIDAD.addEventListener('input', async function ()  {
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status === 1) {
         const ROW = DATA.dataset;
-        if(CANTIDAD.value>ROW.stock_modelo_talla){
+        if (CANTIDAD.value > ROW.stock_modelo_talla) {
             mensajeDiv.textContent = 'No puede escoger mas del stock';
-            mensajeDiv.style.display = 'block'; 
+            mensajeDiv.style.display = 'block';
             IDGUARDAR.disabled = true;
         }
-        else if(CANTIDAD.value<0 || CANTIDAD.value>3){
+        else if (CANTIDAD.value < 0 || CANTIDAD.value > 3) {
             mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
-            mensajeDiv.style.display = 'block'; 
+            mensajeDiv.style.display = 'block';
             IDGUARDAR.disabled = true;
         }
         else {
             mensajeDiv.textContent = "";
             IDGUARDAR.disabled = false;
         }
-    } 
+    }
 });
 /*
 *   Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
 *   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
 *   Retorno: ninguno.
 */
-const openUpdate = async (id, quantity,idmt) => {
-    // Se abre la caja de diálogo que contiene el formulario.
-    //ITEM_MODAL.show();
-    // Se inicializan los campos del formulario con los datos del registro seleccionado.
-    /*ID_DETALLE.value = id;
-    CANTIDAD.value = quantity;*/
-
+const openRead = async (id) => {
 
     const FORM = new FormData();
-    FORM.append('idModeloTalla', idmt);
+    FORM.append('idComentario', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+    const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         // Se prepara el formulario.
-        ITEM_MODAL.show();
-        ITEM_FORM.reset();
+        SAVE_MODAL2.show();
+        SAVE_FORM2.reset();
         // Se inicializan los campos con los datos.
+        IDGUARDAR.disabled = false;
         const ROW = DATA.dataset;
-        ID_DETALLE.value = id;
-        CANTIDAD.value = quantity;
-        ID_MODELO_TALLA.value = ROW.id_modelo_talla;
-        STOCK_INFO.textContent = 'Existencias disponibles '+ROW.stock_modelo_talla;
+        COMENTARIO.value = ROW.contenido_comentario;
+        FECHA_COMENTARIO.value = ROW.fecha_comentario;
+        DIVSTARS.innerHTML = 
+        `<div class="rating rating-${row.id_comentario}">
+            <input type="radio" id="star-1-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="1" data-rating="1">
+            <label for="star-1-${row.id_comentario}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-2-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="2" data-rating="2">
+            <label for="star-2-${row.id_comentario}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-3-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="3" data-rating="3">
+            <label for="star-3-${row.id_comentario}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-4-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="4" data-rating="4">
+            <label for="star-4-${row.id_comentario}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+            <input type="radio" id="star-5-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="5" data-rating="5">
+            <label for="star-5-${row.id_comentario}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+            </label>
+        </div>`;
+        let ratingValue = parseInt(row.puntuacion_comentario);
+            let stars = document.querySelectorAll(`.rating-${row.id_comentario} input[type="radio"]`);
+        
+            stars.forEach((star, index) => {
+                if (index < 6-ratingValue) {
+                    star.checked = true;
+                } else {
+                    star.checked = false;
+                }
+            });
     } else {
         sweetAlert(2, DATA.error, false);
     }
 
+}
+const openCreate = async (id) => {
+    // Se muestra la caja de diálogo con su título.
+    SAVE_MODAL2.show();
+    MODAL_TITLE2.textContent = 'Comentario';
+    ID_DETALLE.value = id;
+    // Se prepara el formulario.
+    SAVE_FORM2.reset();
 }
 
 /*

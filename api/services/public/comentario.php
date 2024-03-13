@@ -51,11 +51,21 @@ if (isset($_GET['action'])) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($result['dataset'] = $pedido->readByIdDetalle()) {
                     $result['status'] = 1;
-                    $result['message'] = count($result['dataset']);
                 } else {
                     $result['error'] = 'No hay comentarios de este modelo';
                 }
                 break;
+            case 'readByIdComentario':
+                    if (
+                        !$pedido->setId($_POST['idComentario'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->readByIdComentario()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'No hay comentarios de este modelo';
+                    }
+                    break;
             // Acción para actualizar la cantidad de un producto en el carrito de compras.
             /*case 'updateDetail':
                 $_POST = Validator::validateForm($_POST);

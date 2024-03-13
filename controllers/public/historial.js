@@ -4,16 +4,8 @@ const PEDIDO_API = 'services/public/pedido.php',
     COMENTARIO_API = 'services/public/comentario.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
-// Constante para establecer la caja de diálogo de cambiar producto.
-const ITEM_MODAL = new bootstrap.Modal('#itemModal');
-// Constante para establecer el formulario de cambiar producto.
-const ITEM_FORM = document.getElementById('itemForm');
 
 const ID_DETALLE = document.getElementById('idDetalle'),
-    CANTIDAD = document.getElementById('cantidadModelo'),
-    ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
-    STOCK_INFO = document.getElementById('stock'),
-    mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
@@ -33,27 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     readDetail();
 });
 
-// Método del evento para cuando se envía el formulario de cambiar cantidad de producto.
-ITEM_FORM.addEventListener('submit', async (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
-    event.preventDefault();
-    console.log(ID_DETALLE.value);
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(ITEM_FORM);
-    // Petición para actualizar la cantidad de producto.
-    const DATA = await fetchData(PEDIDO_API, 'updateDetail', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se actualiza la tabla para visualizar los cambios.
-        readDetail();
-        // Se cierra la caja de diálogo del formulario.
-        ITEM_MODAL.hide();
-        // Se muestra un mensaje de éxito.
-        sweetAlert(1, DATA.message, true);
-    } else {
-        sweetAlert(2, DATA.error, false);
-    }
-});
+
 
 /*
 *   Función para obtener el detalle del carrito de compras.
@@ -88,7 +60,6 @@ async function readDetail() {
             console.log(ROW.id_comentario);*/
             if (DATA3.dataset.length > 0) {
                 btnComentario = `openRead(${DATA3.dataset[0].id_comentario})`;
-                console.log(DATA3.dataset[0].id_comentario);
             } else {
                 btnComentario = `openCreate(${row.id_detalle})`;
             }
@@ -115,30 +86,7 @@ async function readDetail() {
         sweetAlert(4, DATA.error, false, 'index.html');
     }
 }
-CANTIDAD.addEventListener('input', async function () {
-    const FORM = new FormData();
-    FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status === 1) {
-        const ROW = DATA.dataset;
-        if (CANTIDAD.value > ROW.stock_modelo_talla) {
-            mensajeDiv.textContent = 'No puede escoger mas del stock';
-            mensajeDiv.style.display = 'block';
-            IDGUARDAR.disabled = true;
-        }
-        else if (CANTIDAD.value < 0 || CANTIDAD.value > 3) {
-            mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
-            mensajeDiv.style.display = 'block';
-            IDGUARDAR.disabled = true;
-        }
-        else {
-            mensajeDiv.textContent = "";
-            IDGUARDAR.disabled = false;
-        }
-    }
-});
+
 /*
 *   Función para abrir la caja de diálogo con el formulario de cambiar cantidad de producto.
 *   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
@@ -149,6 +97,7 @@ const openRead = async (id) => {
     const FORM = new FormData();
     FORM.append('idComentario', id);
     console.log(id);
+    IDGUARDAR.hidden = true;
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -157,37 +106,39 @@ const openRead = async (id) => {
         // Se prepara el formulario.
         SAVE_MODAL2.show();
         SAVE_FORM2.reset();
-        // Se inicializan los campos con los datos.
-        IDGUARDAR.disabled = false;
-        const ROW = DATA.dataset;
+
+        const ROW = DATA.dataset[0];
         COMENTARIO.value = ROW.contenido_comentario;
         FECHA_COMENTARIO.value = ROW.fecha_comentario;
+        console.log(DATA.dataset);
+        console.log(ROW.contenido_comentario);
         DIVSTARS.innerHTML =
-            `<div class="rating rating-${row.id_comentario}">
-            <input type="radio" id="star-1-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="1" data-rating="1">
-            <label for="star-1-${row.id_comentario}">
+        `<div class="rating rating-${ROW.id_comentario}">
+            <input type="radio" id="star-1-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="1" data-rating="1">
+            <label for="star-1-${ROW.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-2-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="2" data-rating="2">
-            <label for="star-2-${row.id_comentario}">
+            <input type="radio" id="star-2-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="2" data-rating="2">
+            <label for="star-2-${ROW.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-3-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="3" data-rating="3">
-            <label for="star-3-${row.id_comentario}">
+            <input type="radio" id="star-3-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="3" data-rating="3">
+            <label for="star-3-${ROW.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-4-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="4" data-rating="4">
-            <label for="star-4-${row.id_comentario}">
+            <input type="radio" id="star-4-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="4" data-rating="4">
+            <label for="star-4-${ROW.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-5-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="5" data-rating="5">
-            <label for="star-5-${row.id_comentario}">
+            <input type="radio" id="star-5-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="5" data-rating="5">
+            <label for="star-5-${ROW.id_comentario}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
         </div>`;
-        let ratingValue = parseInt(row.puntuacion_comentario);
-        let stars = document.querySelectorAll(`.rating-${row.id_comentario} input[type="radio"]`);
+        let ratingValue = parseInt(ROW.puntuacion_comentario);
+        let stars = document.querySelectorAll(`.rating-${ROW.id_comentario} input[type="radio"]`);
 
+        console.log(ratingValue);
         stars.forEach((star, index) => {
             if (index < 6 - ratingValue) {
                 star.checked = true;

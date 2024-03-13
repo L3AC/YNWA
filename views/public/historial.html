@@ -60,37 +60,7 @@
                 <tbody id="tableBody"></tbody>
             </table>
 
-            <!-- Componente Modal para mostrar una caja de diálogo -->
-            <div class="modal fade" id="itemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="modalTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <!-- Contenido del componente Modal -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="modalTitle">Cambiar cantidad</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <!-- Formulario para actualizar cantidad -->
-                        <form id="itemForm">
-                            <div class="modal-body row">
-                                <h1 class="fs-5" id="stock"></h1>
-                                <input type="hidden" id="idModeloTalla" name="idModeloTalla">
-                                <input type="hidden" id="idDetalle" name="idDetalle">
-                                <div class="col-sm-12">
-                                    <label for="cantidadModelo" class="form-label">Cantidad</label>
-                                    <input id="cantidadModelo" type="number" name="cantidadModelo" min="1"
-                                        class="form-control" required>
-                                    <div id="mensajeDiv" style="display: none;"></div>
-                                </div>
-                            </div>
-                            <div class="modal-footer border-0">
-                                <button type="submit" id="idGuardar" class="btn"
-                                    style="background-color: #CCC8AA;">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <!-- Componente Modal para guardar un registro -->
         <div class="modal fade" id="saveModal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -115,7 +85,7 @@
                                     rows="6"></textarea>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="puntuacionComentario" class="form-label">Puntuacion</label>
+                                <label for="puntuacionComentario" class="form-label">Puntuación</label>
                             </div>
                             <div class="col-sm-12 col-md-6" id="divstars">
                                 

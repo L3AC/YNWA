@@ -36,6 +36,7 @@ async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
     const FORM = new FormData();
     FORM.append('valor', '');
+    
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
@@ -50,6 +51,7 @@ async function readDetail() {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
 
+            
             /*PARA VERIFICAR SI YA HAY UN COMENTARIO*/
             btnComentario = '';
             const FORM3 = new FormData();
@@ -82,6 +84,9 @@ async function readDetail() {
                 </tr>
             `;
         });
+        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
+            element.disabled = false;
+        });
     } else {
         sweetAlert(4, DATA.error, false, 'index.html');
     }
@@ -96,8 +101,7 @@ const openRead = async (id) => {
 
     const FORM = new FormData();
     FORM.append('idComentario', id);
-    console.log(id);
-    IDGUARDAR.hidden = true;
+
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -105,13 +109,16 @@ const openRead = async (id) => {
         // Se muestra la caja de diálogo con su título.
         // Se prepara el formulario.
         SAVE_MODAL2.show();
+        MODAL_TITLE2.textContent = 'Comentario enviado';
+        IDGUARDAR.hidden = true;
+        COMENTARIO.disabled=true;
+        FECHA_COMENTARIO.disabled=true; 
         SAVE_FORM2.reset();
+        
 
         const ROW = DATA.dataset[0];
         COMENTARIO.value = ROW.contenido_comentario;
         FECHA_COMENTARIO.value = ROW.fecha_comentario;
-        console.log(DATA.dataset);
-        console.log(ROW.contenido_comentario);
         DIVSTARS.innerHTML =
         `<div class="rating rating-${ROW.id_comentario}">
             <input type="radio" id="star-1-${ROW.id_comentario}" name="star-radio-${ROW.id_comentario}" value="1" data-rating="1">
@@ -146,6 +153,9 @@ const openRead = async (id) => {
                 star.checked = false;
             }
         });
+        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
+            element.disabled = true;
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -154,8 +164,11 @@ const openRead = async (id) => {
 const openCreate = async (id) => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL2.show();
-    MODAL_TITLE2.textContent = 'Comentario';
+    MODAL_TITLE2.textContent = 'Enviar Comentario';
     ID_DETALLE.value = id;
+    IDGUARDAR.hidden = false;
+    COMENTARIO.disabled=false;
+    FECHA_COMENTARIO.disabled=false; 
     // Se prepara el formulario.
     SAVE_FORM2.reset();
     DIVSTARS.innerHTML =
@@ -181,6 +194,9 @@ const openCreate = async (id) => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
         </div>`;
+        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
+            element.disabled = false;
+        });
 }
 
 /*

@@ -38,10 +38,13 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
     FORM.append('starValue', 6-starValue);
 
     const DATA = await fetchData(COMENTARIO_API, 'createRow', FORM);
+    
 
     if (DATA.status) {
-        console.log(1);
+        SAVE_MODAL2.hide();
         sweetAlert(1, DATA.message, false);
+        readDetail();
+        
     } else if (DATA.session) {
         console.log(2);
         sweetAlert(2, DATA.error, false);

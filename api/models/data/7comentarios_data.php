@@ -47,6 +47,16 @@ class ComentarioData extends ComentarioHandler
             return false;
         }
     }
+    public function setPuntuacion($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->puntuacion = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador 2 es incorrecto';
+            return false;
+        }
+    }
 
     public function setNombre($value, $min = 2, $max = 50)
     {

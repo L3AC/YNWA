@@ -17,18 +17,18 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setId($_POST['idDetalle'])or
-                    !$categoria->setMensaje($_POST['contenidoComentario'])or
-                    !$categoria->setPuntuacion($_POST['puntuacionComentario'])
+                    !$pedido->setIdDetalle($_POST['idDetalle'])or
+                    !$pedido->setMensaje($_POST['contenidoComentario'])or
+                    !$pedido->setPuntuacion($_POST['starValue'])
                 ) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($categoria->createRow()) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($pedido->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Categoría creada correctamente';
+                    $result['message'] = 'Comentario enviado correctamente';
                     // Se asigna el estado del archivo después de insertar.
                     
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear la categoría';
+                    $result['error'] = 'Ocurrió un problema al registrar';
                 }
                 break;
             // Acción para obtener los productos agregados en el carrito de compras.

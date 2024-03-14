@@ -57,6 +57,7 @@ class ComentarioHandler
 
     public function createRow()
     {
+        
         $sql = 'INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,
         fecha_comentario,estado_comentario) VALUES(?,?,?,now(),true)';
         $params = array($this->idDetalle,$this->mensaje ,$this->puntuacion);

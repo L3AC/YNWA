@@ -27,21 +27,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Método del evento para cuando se envía el formulario de agregar un producto al carrito.
 SAVE_FORM2.addEventListener('submit', async (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
+
+    // Obtener el valor de las estrellas seleccionadas
+    const selectedStars = document.querySelector('input[name="star-radio"]:checked');
+    const starValue = selectedStars ? selectedStars.value : null;
+
     const FORM = new FormData(SAVE_FORM2);
-    // Petición para guardar los datos del formulario.
+    // Agregar el valor de las estrellas al FormData
+    FORM.append('starValue', 6-starValue);
+
     const DATA = await fetchData(COMENTARIO_API, 'createRow', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se constata si el cliente ha iniciado sesión.
+
     if (DATA.status) {
+        console.log(1);
         sweetAlert(1, DATA.message, false);
     } else if (DATA.session) {
+        console.log(2);
         sweetAlert(2, DATA.error, false);
     } else {
+        console.log(3);
         sweetAlert(3, DATA.error, true);
     }
 });
+
+
 
 
 /*
@@ -128,6 +138,8 @@ const openRead = async (id) => {
         MODAL_TITLE2.textContent = 'Comentario enviado';
         IDGUARDAR.hidden = true;
         COMENTARIO.disabled = true;
+        FECHA_COMENTARIO.hidden = false;
+        document.getElementById('fechaDiv').hidden = false;
         FECHA_COMENTARIO.disabled = true;
 
         const ROW = DATA.dataset[0];
@@ -184,26 +196,27 @@ const openCreate = async (id) => {
     ID_DETALLE.value = id;
     IDGUARDAR.hidden = false;
     COMENTARIO.disabled = false;
-    FECHA_COMENTARIO.disabled = false;
+    FECHA_COMENTARIO.hidden = true;
+    document.getElementById('fechaDiv').hidden = true;
     DIVSTARS.innerHTML =
         `<div class="rating">
-            <input type="radio" id="star-1" name="star-radio" value="star-1">
+            <input type="radio" id="star-1" name="star-radio" value="1">
             <label for="star-1">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-2" name="star-radio" value="star-1">
+            <input type="radio" id="star-2" name="star-radio" value="2">
             <label for="star-2">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-3" name="star-radio" value="star-1">
+            <input type="radio" id="star-3" name="star-radio" value="3">
             <label for="star-3">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-4" name="star-radio" value="star-1">
+            <input type="radio" id="star-4" name="star-radio" value="4">
             <label for="star-4">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>
-            <input type="radio" id="star-5" name="star-radio" value="star-1">
+            <input type="radio" id="star-5" name="star-radio" value="5">
             <label for="star-5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
             </label>

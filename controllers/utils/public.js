@@ -30,19 +30,18 @@ const loadTemplate = async () => {
         if (!location.pathname.endsWith('login.html')) {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-    <header>
-        <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: #CCC8AA; ">
-            <div class="container">
+            <nav class="navbar navbar-expand-lg " style="background-color: #CCC8AA; ">
+                <div class="container-fluid">
                     <!-- Left elements -->
-                    <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+                    <div class="col-lg-2 d-flex justify-content-center >
                         <!-- Logo -->
                         <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
                                 alt="YNWA"></a>
                     </div>
                     <!-- Left elements -->
-
+    
                     <!-- Center elements -->
-                    <div class="col-md-4">
+                    <div class="col-lg-4">
                         <div class="nav-link">
                             <div class="input-group">
                                 <input id="searchMain" type="text" name="searchMain" class="form-control"
@@ -51,37 +50,31 @@ const loadTemplate = async () => {
                         </div>
                     </div>
                     <!-- Center elements -->
-
+    
                     <!-- Right elements -->
-                    <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center">
-                        <div class="d-flex">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav ms-auto">
-                                    <li class="nav-item dropdown ">
-                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false" href="index.html"><i class="bi bi-tags-fill h3"></i>
-                                            </a>
-                                        <ul class="dropdown-menu" id="listmarca">
-
-                                        </ul>
-                                    </li>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-cart h3"></i></a>
-                                    <a class="nav-link" href="historial.html"><i class="bi bi-clock-history h3"></i></a>
-                                    <a class="nav-link" href="cart.html"><i class="bi bi-person-fill h3"></i></a>
-                                    <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left h3"></i></a>
-                                </div>
-                            </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+                        <div class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown ">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+                                    href="index.html"><i class="bi bi-tags-fill h3"></i>
+                                </a>
+                                <ul class="dropdown-menu" id="listmarca">
+    
+                                </ul>
+                            </li>
+                            <a class="nav-link" href="cart.html"><i class="bi bi-cart h3"></i></a>
+                            <a class="nav-link" href="historial.html"><i class="bi bi-clock-history h3"></i></a>
+                            <a class="nav-link" href="cart.html"><i class="bi bi-person-fill h3"></i></a>
+                            <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left h3"></i></a>
                         </div>
                     </div>
                     <!-- Right elements -->
-            </div>
-        </nav>
-    </header>
+                </div>
+            </nav>
             `);
 
             const SEARCH_MAIN = document.getElementById('searchMain');

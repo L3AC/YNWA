@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="../../resources/css/input.css">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css"> 
-    <link href="../../resources/css/nav.css" rel="stylesheet">   
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link href="../../resources/css/nav.css" rel="stylesheet">
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,29 +31,53 @@ font-style: normal; ;">
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
-        <h4 id="mainTitle"></h4>
+        <h4 id="mainTitle" class="m-4"></h4>
         <!-- Formulario para iniciar sesión -->
-        <div class="cardno">
-        <form class="row g-3" id="sessionForm">
-            <div class="col-sm-12 col-md-6 offset-md-2 col-lg-4 offset-lg-4">
-                <input style="margin-top: 80px;" type="text" placeholder="Usuario"  id="usu" name="usu" class="input" required>
+        <form class="row g-4 " id="sessionForm">
+            <!-- Campo oculto para asignar el token del reCAPTCHA -->
+            <div class="col-12 d-flex justify-content-center">
+                <input type="text" placeholder="Usuario" id="usu" name="usu" class="input"
+                    required>
             </div>
-            <div class="col-sm-12 col-md-6 offset-md-2 col-lg-4 offset-lg-4">
-                <input type="password" placeholder="Contraseña" id="clave" name="clave"class="input" required>
+            <div class="col-12 d-flex justify-content-center mt-5">
+                <input type="password" placeholder="Contraseña" id="clave" name="clave" class="input" required>
             </div>
-            <div class="text-center">
-                <button class="btnn" type="submit" ><a>Iniciar Sesion</a>
+            <div class="col-12 text-center mt-5 mb-4">
+                <button class="btnn" type="submit"><a>Iniciar Sesion</a>
                 </button>
             </div>
+
+            <div class="col-12 text-center">
+                <!-- Enlace para crear una cuenta de usuario -->
+                <a href="signup.html">
+                    <button class="btnn" type="submit"> Registrarme
+                    </button>
+                </a>
+            </div>
         </form>
-        <div class="text-center p-3">
-            <!-- Enlace para crear una cuenta de usuario -->
-            <a href="signup.html"> 
-            <button class="btnn" type="submit" > Registrarme
-            </button>
-            </a>
-        </div>
-    </div>
+
+           <!-- <form class="row g-3" id="sessionForm">
+                
+                <div class="col-sm-12 col-md-6 offset-md-2 col-lg-4 offset-lg-4">
+                    <input style="margin-top: 80px;" type="text" placeholder="Usuario" id="usu" name="usu" class="input"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6 offset-md-2 col-lg-4 offset-lg-4">
+                    <input type="password" placeholder="Contraseña" id="clave" name="clave" class="input" required>
+                </div>
+                <div class="text-center">
+                    <button class="btnn" type="submit"><a>Iniciar Sesion</a>
+                    </button>
+                </div>
+            </form>
+            <div class="text-center p-3">
+                <!-- Enlace para crear una cuenta de usuario 
+                <a href="signup.html">
+                    <button class="btnn" type="submit"> Registrarme
+                    </button>
+                </a>
+            </div>-->
+        
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

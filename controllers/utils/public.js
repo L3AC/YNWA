@@ -8,8 +8,6 @@ const USER_API = 'services/public/cliente.php';
 const MARCA_API = 'services/public/marca.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
-MAIN.style.paddingTop = '75px';
-MAIN.style.paddingBottom = '100px';
 MAIN.classList.add('container');
 // Se establece el título de la página web.
 document.querySelector('title').textContent = 'YNWA';
@@ -28,6 +26,7 @@ const loadTemplate = async () => {
     if (DATA.session) {
         // Se verifica si la página web no es el inicio de sesión, de lo contrario se direcciona a la página web principal.
         if (!location.pathname.endsWith('login.html')) {
+            MAIN.style.paddingBottom = '120px';
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
             <nav class="navbar navbar-expand-lg " style="background-color: #CCC8AA; ">
@@ -112,6 +111,8 @@ const loadTemplate = async () => {
             location.href = 'index.html';
         }
     } else {
+        MAIN.style.paddingTop = '75px';
+        MAIN.style.paddingBottom = '100px';
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
         <header>

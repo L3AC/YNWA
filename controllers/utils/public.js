@@ -30,9 +30,9 @@ const loadTemplate = async () => {
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
             <nav class="navbar navbar-expand-lg " style="background-color: #CCC8AA; ">
-                <div class="container-fluid">
+                <div class="container">
                     <!-- Left elements -->
-                    <div class="col-lg-2 d-flex justify-content-center >
+                    <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
                         <!-- Logo -->
                         <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
                                 alt="YNWA"></a>
@@ -67,7 +67,7 @@ const loadTemplate = async () => {
                             </li>
                             <a class="nav-link" href="cart.html"><i class="bi bi-cart h3"></i></a>
                             <a class="nav-link" href="historial.html"><i class="bi bi-clock-history h3"></i></a>
-                            <a class="nav-link" href="cart.html"><i class="bi bi-person-fill h3"></i></a>
+                            <a class="nav-link" href="perfil.html"><i class="bi bi-person-fill h3"></i></a>
                             <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left h3"></i></a>
                         </div>
                     </div>

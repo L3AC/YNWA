@@ -78,9 +78,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada categoría.
+            /*col-sm-12 col-md-6 col-lg-3*/ 
             CATEGORIAS.innerHTML += `
             
-                <div class="d-flex justify-content-center col-sm-12 col-md-6 col-lg-3 mb-4 ">
+                <div class="d-flex justify-content-center col-md-3 col-sm-6 mb-4 ">
                     <div class="car hadow">
                         <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
                                 alt="${row.descripcion_modelo}"></div>

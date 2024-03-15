@@ -30,24 +30,24 @@
         <form class="row g-3 pt-3" id="profileForm">
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                 <!--Se muestra su nombre-->
-                <label for="nombreAdministrador" class="form-label">Nombre</label>
-                <input id="nombreAdministrador" type="text" name="nombreAdministrador" class="form-control" required>
+                <label for="nombreCliente" class="form-label">Nombre</label>
+                <input id="nombreCliente" type="text" name="nombreCliente" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <!--Se muestra su apellido-->
-                <label for="apellidoAdministrador" class="form-label">Apellido</label>
-                <input id="apellidoAdministrador" type="text" name="apellidoAdministrador" class="form-control"
+                <label for="apellidoCliente" class="form-label">Apellido</label>
+                <input id="apellidoCliente" type="text" name="apellidoCliente" class="form-control"
                     required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                 <!--Se muestra su correo-->
-                <label for="correoAdministrador" class="form-label">Correo</label>
-                <input id="correoAdministrador" type="email" name="correoAdministrador" class="form-control" required>
+                <label for="correoCliente" class="form-label">Correo</label>
+                <input id="correoCliente" type="email" name="correoCliente" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <!--Se muestra su usuario-->
-                <label for="aliasAdministrador" class="form-label">Usuario</label>
-                <input id="aliasAdministrador" type="text" name="aliasAdministrador" class="form-control" required>
+                <label for="aliasCliente" class="form-label">Usuario</label>
+                <input id="aliasCliente" type="text" name="aliasCliente" class="form-control" required>
             </div>
             <div class="text-center">
                 <button type="submit" class="btn" style="background-color: #CCC8AA;"><i class="bi bi-save"></i> Guardar</button>
@@ -110,9 +110,9 @@
     <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
     <!-- Llamada al controlador del sitio privado -->
-    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <script type="text/javascript" src="../../controllers/utils/public.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/admin/profile.js"></script>
+    <script type="text/javascript" src="../../controllers/public/perfil.js"></script>
 </body>
 
 </html>

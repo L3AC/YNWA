@@ -64,10 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             DATA2.dataset.forEach(row => {
                 // Se crean y concatenan las tarjetas con los datos de cada producto.
                 TALLAS.innerHTML += `
-                    <div class="col-lg-3 col-md-6 col-sm-3" onclick="openModal(${row.id_modelo_talla})">
-                    <div class="container">
+                    <div class="col-4 " 
+                    onclick="openModal(${row.id_modelo_talla})">
+                    <div class="container d-flex justify-content-center">
                         <div class="contenedor-botones">
-                            <button class="boton-numero">
+                            <button class="boton-numero ">
                                 ${row.talla}
                                 <div class="precio" style="font-weight: bold; opacity: 50%;
                                 font-size: 14px;">$${row.precio_modelo_talla}</div>

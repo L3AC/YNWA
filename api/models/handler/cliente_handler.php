@@ -60,6 +60,14 @@ class ClienteHandler
         $params = array($this->clave, $this->id);
         return Database::executeRow($sql, $params);
     }
+    public function readProfile()
+    {
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, email_cliente, usuario_cliente
+                FROM prc_clientes
+                WHERE id_cliente = ?';
+        $params = array($_SESSION['idCliente']);
+        return Database::getRow($sql, $params);
+    }
 
     public function editProfile()
     {

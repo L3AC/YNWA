@@ -29,10 +29,10 @@ const loadTemplate = async () => {
             MAIN.style.paddingBottom = '120px';
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-            <nav class="navbar navbar-expand-lg " style="background-color: #CCC8AA; ">
+            <nav class="navbar navbar-expand-md " style="background-color: #CCC8AA; ">
                 <div class="container">
                     <!-- Left elements -->
-                    <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+                    <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
                         <!-- Logo -->
                         <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
                                 alt="YNWA"></a>
@@ -40,7 +40,7 @@ const loadTemplate = async () => {
                     <!-- Left elements -->
     
                     <!-- Center elements -->
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <div class="nav-link">
                             <div class="input-group">
                                 <input id="searchMain" type="text" name="searchMain" class="form-control"

@@ -59,16 +59,16 @@ const loadTemplate = async () => {
                         <div class="navbar-nav ms-auto">
                             <li class="nav-item dropdown ">
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
-                                    href="index.html"><i class="bi bi-tags-fill h3"></i>
+                                    href="index.html"><i class="bi bi-tags-fill h3" title="Ver marcas"></i>
                                 </a>
                                 <ul class="dropdown-menu" id="listmarca">
     
                                 </ul>
                             </li>
-                            <a class="nav-link" href="cart.html"><i class="bi bi-cart h3"></i></a>
-                            <a class="nav-link" href="historial.html"><i class="bi bi-clock-history h3"></i></a>
-                            <a class="nav-link" href="perfil.html"><i class="bi bi-person-fill h3"></i></a>
-                            <a class="nav-link" href="#" onclick="logOut()"><i class="bi bi-box-arrow-left h3"></i></a>
+                            <a class="nav-link" href="cart.html" title="Ir al carrito de compras"><i class="bi bi-cart h3"></i></a>
+                            <a class="nav-link" href="historial.html" title="Ver historial de compras"><i class="bi bi-clock-history h3"></i></a>
+                            <a class="nav-link" href="perfil.html" title="Ver perfil de usuario"><i class="bi bi-person-fill h3"></i></a>
+                            <a class="nav-link" href="#" onclick="logOut()" title="Cerrar sesión"><i class="bi bi-box-arrow-left h3"></i></a>
                         </div>
                     </div>
                     <!-- Right elements -->

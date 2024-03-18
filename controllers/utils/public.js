@@ -115,56 +115,48 @@ const loadTemplate = async () => {
         MAIN.style.paddingBottom = '100px';
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
-        <header>
-        <nav class="navbar navbar-expand-lg  fixed-top" style="background-color: #CCC8AA; ">
-            <div class="container">
-                    <!-- Left elements -->
-                    <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
-                        <!-- Logo -->
-                        <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
-                                alt="YNWA"></a>
-                    </div>
-                    <!-- Left elements -->
-
-                    <!-- Center elements -->
-                    <div class="col-md-4">
-                        <div class="nav-link">
-                            <div class="input-group">
-                                <input id="searchMain" type="text" name="searchMain" class="form-control"
-                                    placeholder="Búsqueda">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Center elements -->
-
-                    <!-- Right elements -->
-                    <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
-                        <div class="d-flex">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav ms-auto">
-                                    <li class="nav-item dropdown ">
-                                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                            aria-expanded="false" href="index.html"><i class="bi bi-tags-fill"></i>
-                                            Marcas</a>
-                                        <ul class="dropdown-menu" id="listmarca">
-
-                                        </ul>
-                                    </li>
-                                    <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar
-                                        sesión</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Right elements -->
+        <nav class="navbar navbar-expand-md " style="background-color: #CCC8AA; ">
+        <div class="container">
+            <!-- Left elements -->
+            <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
+                <!-- Logo -->
+                <a class="navbar-brand" href="index.html"><img src="../../resources/img/logo.png" height="60"
+                        alt="YNWA"></a>
             </div>
-        </nav>
-    </header>
+            <!-- Left elements -->
+
+            <!-- Center elements -->
+            <div class="col-md-4">
+                <div class="nav-link">
+                    <div class="input-group">
+                        <input id="searchMain" type="text" name="searchMain" class="form-control"
+                            placeholder="Búsqueda">
+                    </div>
+                </div>
+            </div>
+            <!-- Center elements -->
+
+            <!-- Right elements -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+                <div class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
+                            href="index.html"><i class="bi bi-tags-fill">Ver marcas</i>
+                        </a>
+                        <ul class="dropdown-menu" id="listmarca">
+
+                        </ul>
+                    </li>
+                    <a class="nav-link" href="login.html"><i class="bi bi-box-arrow-right"></i> Iniciar sesión</a>
+                </div>
+            </div>
+            <!-- Right elements -->
+        </div>
+    </nav>
         `);
 
         const SEARCH_MAIN = document.getElementById('searchMain');
@@ -200,46 +192,36 @@ const loadTemplate = async () => {
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
             
-                <footer class="text-center text-white" 
-                id="foot">
+                <footer class="text-center text-white fixed-bottom" 
+                id="foot" style="min-height: auto; ">
                     <!-- Grid container -->
-                    <div class="container pt-4">
+                    <div class="container pt-1">
                         <!-- Section: Social media -->
-                        <section class="mb-4">
-                            <!-- Facebook -->
+                        <section class="mb-1">
+                        <!-- Acerca de nosotros -->
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutUs.html" role="button"
+                        data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill"></i></a>
+
                         <!-- Facebook -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://facebook.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-facebook"></i></a>
 
                         <!-- Twitter -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-twitter"></i></a>
 
-                        <!-- Google -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-google"></i></a>
-
                         <!-- Instagram -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://instagram.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-instagram"></i></a>
 
-                        <!-- Linkedin -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-linkedin"></i></a>
-
-                        <!-- Github -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-github"></i></a>
 
                         </section>
                         <!-- Section: Social media -->
                     </div>
-                    <!-- Grid container -->
     
                     <!-- Copyright -->
-                    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                        © 2020 Copyright:
-                        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                    <div class="text-center text-dark p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+                        © 2024 Copyright YNWA
                     </div>
                     <!-- Copyright -->
                 </footer>

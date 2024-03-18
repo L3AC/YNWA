@@ -7,10 +7,10 @@
     <title></title>
     <!-- Metadatos de la página web -->
     <meta charset="utf-8">
-    <meta name="author" content="Daniel Carranza">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
     <!-- Llamada al icono de la página web -->
+    <link rel="stylesheet" href="../../resources/css/cartita.css">
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
@@ -35,9 +35,13 @@
                 <label for="apellidoCliente" class="form-label">Apellido</label>
                 <input type="text" id="apellidoCliente" name="apellidoCliente" class="form-control" required>
             </div>
-            <div class="col-sm-12 col-lg-8 offset-lg-2">
+            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                 <label for="correoCliente" class="form-label">Correo electrónico</label>
                 <input type="email" id="correoCliente" name="correoCliente" maxlength="100" class="form-control" required>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <label for="usuarioCliente" class="form-label">Usuario</label>
+                <input type="text" id="usuarioCliente" name="usuarioCliente" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                 <label for="claveCliente" class="form-label">Contraseña</label>

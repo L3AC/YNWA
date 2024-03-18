@@ -83,7 +83,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="d-flex justify-content-center col-md-3 col-sm-6 mb-4">
             <div class="card hadow">
                 <div class="text-center">
-                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img img-fluid img-hover" alt="${row.descripcion_modelo}">
+                <a href="detail.html?id=${row.id_modelo}">
+                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img img-fluid img-hover" style="height: 220px; width: 260px;" alt="${row.descripcion_modelo}">
+                    </a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title title ew-truncate">${row.descripcion_modelo}</h5>

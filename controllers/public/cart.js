@@ -90,16 +90,25 @@ TABLE_BODY.innerHTML += `
                 </p>
             </div>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 flex-row-reverse">
-            <button class="btn1 "
-                onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"
-                style=" margin-right: 10px;">
-                Editar
-            </button>
-            <button class="btn1 " onclick="openDelete(${row.id_detalle})"
-                style="">
-                Eliminar
-            </button>
+        <div class="col-lg-3 col-md-12 col-sm-12 ">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-5">
+                    <button class="btn1 "
+                        onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"
+                        style=" margin-right: 10px;">
+                        Edit
+                    </button>
+                </div>
+                <div class="col-5">
+                    <button class="btn1 " onclick="openDelete(${row.id_detalle})" style="text-align: center;">
+                        Delete
+                    </button>
+                </div>
+                <div class="col-1"></div>
+            </div>
+
+
         </div>
     </div>
 </div>

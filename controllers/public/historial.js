@@ -96,20 +96,38 @@ async function readDetail() {
             }
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.descripcion_marca}</td>
-                    <td>${row.descripcion_modelo}</td>
-                    <td>${row.descripcion_talla}</td>
-                    <td>$${row.precio_modelo_talla}</td>
-                    <td>${row.cantidad_detalle_pedido}</td>
-                    <td>$${subtotal.toFixed(2)}</td>
-                    <td>${row.fecha_pedido}</td>
-                    <td>
-                        <button type="button" class="btn btn-warning" onclick="${btnComentario}">
-                            <i class="bi bi-chat-dots"></i>
-                        </button>
-                    </td>
-                </tr>
+
+                
+                    <div class="card mb-3 col-6" id="detalle" style="background-color: #F1EFEF;">
+                        <div class="row g-0" style="background-color: #F1EFEF;">
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
+                                    class="img-fluid rounded" alt="${row.descripcion_modelo}">
+                    
+                    
+                            </div>
+                            <div class="col-lg-5 col-md-12 col-sm-12">
+                                <div class="card-body">
+                                    <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
+                                    <h5 class="card-title" style="font-size: 40px;">${row.descripcion_modelo}</h5>
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Marca:</strong> ${row.descripcion_marca}<br>
+                                        <strong>Talla:</strong> ${row.descripcion_talla}<br>
+                                        <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
+                                        <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
+                                        <strong>Fecha:</strong> ${row.fecha_pedido}<br>
+                                        <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
+                                    </p>
+                                    <button type="button" class="btn btn-warning" onclick="${btnComentario}">
+                                        <i class="bi bi-chat-dots"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+            
             `;
         });
         document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {

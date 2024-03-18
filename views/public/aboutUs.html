@@ -24,36 +24,44 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body style="font-family: 'Quicksand', sans-serif;
-font-optical-sizing: auto;
-font-style: normal; ;">
+<body>
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
         <h4 id="mainTitle" class="m-4"></h4>
-        <!-- Formulario para iniciar sesión -->
-        <form class="row g-4 " id="sessionForm">
-            <!-- Campo oculto para asignar el token del reCAPTCHA -->
-            <div class="col-12 d-flex justify-content-center">
-                <input type="text" placeholder="Usuario" id="usu" name="usu" class="input"
-                    required>
-            </div>
-            <div class="col-12 d-flex justify-content-center mt-5">
-                <input type="password" placeholder="Contraseña" id="clave" name="clave" class="input" required>
-            </div>
-            <div class="col-12 text-center mt-5 mb-4">
-                <button class="btnn" type="submit"><a>Ingresar</a>
-                </button>
-            </div>
-
-            
-        </form>
-        <div class="col-12 text-center">
-            <!-- Enlace para crear una cuenta de usuario -->
-            <a href="signup.html">
-                <button class="btn" type="submit"> Crear cuenta
-                </button>
-            </a>
+        <div class="container">
+            <h1 class="mt-5">Bienvenidos a nuestra tienda de zapatos casuales para todas las edades</h1>
+            <p>En YNWA, nos apasiona brindar comodidad y estilo a nuestros clientes, ofreciendo una amplia selección de
+                zapatos de alta calidad que se adaptan a diferentes estilos de vida y personalidades.</p>
+            <h2 class="mt-4">Misión</h2>
+            <p>En YNWA, nos apasiona proporcionar a nuestros clientes una experiencia excepcional al ofrecerles zapatos
+                casuales de alta calidad para todas las edades. Nuestra misión es brindar comodidad, estilo y confianza
+                a cada paso que den, asegurando que nuestros productos cumplan con los estándares más exigentes.</p>
+            <h2 class="mt-4">Visión</h2>
+            <p>Nuestra visión es convertirnos en la tienda de referencia en el mercado de zapatos casuales, reconocida
+                por nuestra amplia gama de productos de calidad y por la excelencia en el servicio al cliente. Aspiramos
+                a ser una marca confiable y respetada que inspire a nuestros clientes a expresar su estilo único a
+                través de nuestros zapatos.</p>
+            <h2 class="mt-4">Valores</h2>
+            <ul>
+                <li>Calidad: Nos comprometemos a ofrecer zapatos casuales fabricados con materiales duraderos y de alta
+                    calidad para garantizar la satisfacción de nuestros clientes.</li>
+                <li>Estilo y tendencia: Nos mantenemos actualizados con las últimas tendencias de la moda para ofrecer
+                    una selección diversa de zapatos casuales que reflejen el estilo de vida de nuestros clientes.</li>
+                <li>Servicio al cliente excepcional: Nuestro equipo se esfuerza por brindar una atención personalizada y
+                    amigable, asegurando que cada experiencia de compra sea positiva y satisfactoria.</li>
+                <li>Responsabilidad social: Nos preocupamos por el impacto que generamos en el medio ambiente y en
+                    nuestras comunidades, por lo que nos comprometemos a adoptar prácticas sostenibles y éticas en todas
+                    nuestras operaciones.</li>
+            </ul>
+            <h2 class="mt-4">Patrocinadores y socios</h2>
+            <p>Agradecemos a nuestros valiosos patrocinadores y socios que nos han apoyado en nuestro crecimiento y
+                éxito continuo. Su colaboración ha sido fundamental para ofrecer productos de calidad y mejorar la
+                experiencia de compra para nuestros clientes.</p>
+            <h2 class="mt-4">Marcas</h2>
+            <p>En YNWA, trabajamos con una selección de marcas reconocidas y de confianza en la industria del calzado
+                casual. Trabajamos de cerca con nuestros proveedores para garantizar que los productos que ofrecemos
+                sean de la más alta calidad y reflejen nuestro compromiso con la satisfacción del cliente.</p>
         </div>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
@@ -65,7 +73,7 @@ font-style: normal; ;">
     <!-- Llamada al controlador del sitio público -->
     <script type="text/javascript" src="../../controllers/utils/public.js"></script>
     <!-- Llamada al controlador de la página web -->
-    <script type="text/javascript" src="../../controllers/public/login.js"></script>
+    <script type="text/javascript" src="../../controllers/public/aboutus.js"></script>
 </body>
 
 </html>

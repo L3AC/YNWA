@@ -74,6 +74,7 @@ async function readDetail() {
               <div class="col-md-4">
                 <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img-fluid rounded" alt="${row.descripcion_modelo}">
                 <button class="btn btn-danger btn-sm delete-btn" style="position: absolute; top: 5px; right: 5px;">X</button>
+                <button class="btn btn-info btn-sm update-btn" style="position: absolute; top: 5px; right: 35px;"><i class="bi bi-pencil-fill"></i></button>
               </div>
               <div class="col-md-8">
                 <div class="card-body">

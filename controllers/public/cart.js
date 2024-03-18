@@ -73,8 +73,10 @@ async function readDetail() {
             <div class="row g-0" style="background-color: #F1EFEF;">
               <div class="col-md-4">
                 <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img-fluid rounded" alt="${row.descripcion_modelo}">
-                <button class="btn btn-danger btn-sm delete-btn" style="position: absolute; top: 5px; right: 5px;">X</button>
-                <button class="btn btn-info btn-sm update-btn" style="position: absolute; top: 5px; right: 35px;"><i class="bi bi-pencil-fill"></i></button>
+                <button class="btn btn-danger btn-sm delete-btn" onclick="openDelete(${row.id_detalle})" style="position: absolute; top: 5px; right: 5px;">X</button>
+                <button class="btn btn-info btn-sm update-btn"  
+                onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"  
+                style="position: absolute; top: 5px; right: 35px;"><i class="bi bi-pencil-fill"></i></button>
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -90,7 +92,7 @@ async function readDetail() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>    
             `;
         });
         // Se muestra el total a pagar con dos decimales.

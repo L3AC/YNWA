@@ -19,6 +19,10 @@
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,31 +30,43 @@
     <main>
         <div id="contenido">
             <!-- Título del contenido principal -->
-            <h4 id="mainTitle"></h4>
+            <h4 id="mainTitle" style="visibility: hidden;"></h4>
             <!-- Cabeza de la tabla para mostrar los títulos de las columnas -->
             <div class="row">
-                <div class="col-lg-8 col-md-12 col-sm-12">
-                    <p style="font-weight: bold;">CESTA</p>
-                </div>
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <p style="font-weight: bold;">CESTA</p>
+                    </div>
                 <!-- Cuerpo de la tabla para mostrar un registro por fila -->
                 <div class="row">
                     <div class="col-lg-9 col-md-12 col-sm-12">
                         <div id="tableBody"></div>
                     </div>
-                    <div class="col-lg-3 col-sm-12 card" style="height: 300px;">
-                        <p class=" text-end">TOTAL A PAGAR $<b id="pago"></b></p>
+                    <div class="col-lg-3 col-sm-12 card" style="height: 150px;">
+
                         <!-- Párrafo para mostrar un botón que finaliza el pedido -->
-                        <p class="text-end">
-                            <button type="button" class="btn btn-primary" onclick="finishOrder()">
-                                <i class="bi bi-credit-card-fill"></i> Finalizar pedido
-                            </button>
-                        </p>
+                        <p style="font-weight: bold; font-size: 20px;">Facturar Pedido</p>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <p class="text-end">
+                                    <button type="button" class="btn2" onclick="finishOrder()">
+                                        Finalizar
+                                    </button>
+                                </p>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <p class="text-end">
+                                    <a href="index.html" style="text-decoration: none; color: #FFFFFF;" class="btn2 ">
+                                        Volver
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+
                         <!-- Párrafo para mostrar un enlace a la página web principal -->
-                        <p class="text-end">
-                            <a href="index.html" class="btn btn-success">
-                                <i class="bi bi-cart-fill"></i> Seguir comprando
-                            </a>
-                        </p>
+
+                        <p class=" text-end">TOTAL A PAGAR $<b id="pago"></b></p>
                     </div>
                 </div>
             </div>

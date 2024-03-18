@@ -200,46 +200,36 @@ const loadTemplate = async () => {
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `
             
-                <footer class="text-center text-white" 
-                id="foot">
+                <footer class="text-center text-white fixed-bottom" 
+                id="foot" style="min-height: auto; ">
                     <!-- Grid container -->
-                    <div class="container pt-4">
+                    <div class="container pt-1">
                         <!-- Section: Social media -->
-                        <section class="mb-4">
-                            <!-- Facebook -->
+                        <section class="mb-1">
+                        <!-- Acerca de nosotros -->
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutUs.html" role="button"
+                        data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill"></i></a>
+
                         <!-- Facebook -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://facebook.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-facebook"></i></a>
 
                         <!-- Twitter -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://twitter.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-twitter"></i></a>
 
-                        <!-- Google -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-google"></i></a>
-
                         <!-- Instagram -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="https://instagram.com/" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-instagram"></i></a>
 
-                        <!-- Linkedin -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-linkedin"></i></a>
-
-                        <!-- Github -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="#!" role="button"
-                        data-mdb-ripple-color="dark"><i class="bi bi-github"></i></a>
 
                         </section>
                         <!-- Section: Social media -->
                     </div>
-                    <!-- Grid container -->
     
                     <!-- Copyright -->
-                    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-                        © 2020 Copyright:
-                        <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                    <div class="text-center text-dark p-1" style="background-color: rgba(0, 0, 0, 0.2);">
+                        © 2024 Copyright YNWA
                     </div>
                     <!-- Copyright -->
                 </footer>

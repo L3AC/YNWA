@@ -29,7 +29,7 @@ const loadTemplate = async () => {
             MAIN.style.paddingBottom = '120px';
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-            <nav class="navbar navbar-expand-md " style="background-color: #CCC8AA; ">
+            <nav class="navbar navbar-expand-md fixed-top" style="background-color: #CCC8AA; ">
                 <div class="container">
                     <!-- Left elements -->
                     <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
@@ -115,7 +115,7 @@ const loadTemplate = async () => {
         MAIN.style.paddingBottom = '100px';
         // Se agrega el encabezado de la página web antes del contenido principal.
         MAIN.insertAdjacentHTML('beforebegin', `
-        <nav class="navbar navbar-expand-md " style="background-color: #CCC8AA; ">
+        <nav class="navbar navbar-expand-md fixed-top" style="background-color: #CCC8AA; ">
         <div class="container">
             <!-- Left elements -->
             <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">
@@ -145,7 +145,7 @@ const loadTemplate = async () => {
                 <div class="navbar-nav ms-auto">
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
-                            href="index.html"><i class="bi bi-tags-fill">Ver marcas</i>
+                            href="index.html"><i class="bi bi-tags-fill"> Ver marcas</i>
                         </a>
                         <ul class="dropdown-menu" id="listmarca">
 

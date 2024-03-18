@@ -73,10 +73,15 @@ async function readDetail() {
             <div class="row g-0" style="background-color: #F1EFEF;">
               <div class="col-md-4">
                 <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img-fluid rounded" alt="${row.descripcion_modelo}">
-                <button class="btn btn-danger btn-sm delete-btn" onclick="openDelete(${row.id_detalle})" style="position: absolute; top: 5px; right: 5px;">X</button>
-                <button class="btn btn-info btn-sm update-btn"  
+                <button class="btn "  
                 onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"  
-                style="position: absolute; top: 5px; right: 35px;"><i class="bi bi-pencil-fill"></i></button>
+                style="position: absolute; top: 5px; right: 35px; margin-right: 70px;">
+                    Edit
+                  </button>
+                <button class="btn " onclick="openDelete(${row.id_detalle})" style="position: absolute; top: 5px; right: 5px; margin-right: 10px;">
+                    Delete
+                </button>
+                
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -85,9 +90,9 @@ async function readDetail() {
                   <p class="card-text" style="font-size: 20px;">
                     <strong>Marca:</strong> ${row.descripcion_marca}<br>
                     <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                    <strong>Precio:</strong> ${row.precio_modelo_talla}<br>
+                    <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
                     <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                    <strong>Subtotal:</strong> ${subtotal.toFixed(2)}
+                    <strong>Subtotal:</strong> $    ${subtotal.toFixed(2)}
                   </p>
                 </div>
               </div>

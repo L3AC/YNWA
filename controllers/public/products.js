@@ -33,14 +33,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         DATA.dataset.forEach(row => {
             // Se crean y concatenan las tarjetas con los datos de cada producto.
             PRODUCTOS.innerHTML += `
-            <div class="d-flex justify-content-center col-sm-12 col-md-6 col-lg-3 mb-4 ">
-            <div class="car hadow">
-                <div class=""><img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img"
-                        alt="${row.descripcion_modelo}"></div>
-                <div class="title">${row.descripcion_modelo}</div>
-                <p class="marca">${row.marca}</p>
-                <div class="mmm"><a href="detail.html?id=${row.id_modelo}" class="btn"><span
-                            class="text">Comprar</span><span>Adquirir!</span></a></div>
+            <div class="d-flex justify-content-center col-md-3 col-sm-6 mb-4">
+            <div class="card hadow">
+                <div class="text-center">
+                <a href="detail.html?id=${row.id_modelo}">
+                    <img src="${SERVER_URL}images/modelos/${row.foto_modelo}" class="img img-fluid img-hover" style="height: 220px; width: 260px;" alt="${row.descripcion_modelo}">
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title title ew-truncate">${row.descripcion_modelo}</h5>
+                    <p class="card-text marca ew-truncate">${row.marca}</p>
+                    <div class="d-grid gap-2 mmm">
+                        <a href="detail.html?id=${row.id_modelo}" class="btn">
+                            <span class="text">Comprar</span>
+                            <span>Adquirir!</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
             `;

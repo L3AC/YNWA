@@ -44,7 +44,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' no existen registrosen el carrito';
                 }
                 break;
-                case 'searchRows':
+            case 'searchRows':
                     if ($result['dataset'] = $pedido->searchRows($_POST['valor'])) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';

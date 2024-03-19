@@ -190,15 +190,27 @@ VALUES(1,'Me llego en buenas condiciones y los colores son muy bonitos',5,now(),
 
 
 
-select * from prc_detalle_pedidos
+select * from prc_detalle_pedidos where 
 select * from prc_comentarios
-delete from prc_comentarios where id_comentario>0
+
 INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
 VALUES(2,'Me gusto debido a que',3,now(),true);
+INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,fecha_comentario,estado_comentario) 
+VALUES(1,'El mejor producto',5,now(),true);
 
-
-
-select * from prc_comentarios
+select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
+        CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
+        puntuacion_comentario,estado_comentario,
+        DATE_FORMAT(cm.fecha_comentario, "%d-%m-%Y - %h:%i %p") AS fecha_comentario
+        from prc_comentarios cm
+        INNER JOIN prc_detalle_pedidos dp USING(id_detalle)
+        INNER JOIN prc_pedidos p USING(id_pedido)
+        INNER JOIN prc_clientes c USING(id_cliente)
+        INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
+        INNER JOIN prc_modelos mo USING (id_modelo)
+        INNER JOIN ctg_marcas ma USING (id_marca)
+use db_ynwa
+delete from prc_comentarios where id_comentario>0
 
 update prc_comentarios set puntuacion_comentario=4 where id_comentario=1
 

@@ -137,34 +137,6 @@ FOREIGN KEY(id_modelo_talla) REFERENCES prc_modelo_tallas(id_modelo_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-SELECT id_cliente,id_detalle, id_modelo_talla,estado_pedido,
-        descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido
-                FROM prc_detalle_pedidos
-                INNER JOIN prc_pedidos USING(id_pedido)
-                INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
-                INNER JOIN ctg_tallas USING(id_talla)
-                INNER JOIN prc_modelos USING(id_modelo)
-                INNER JOIN ctg_marcas USING(id_marca)
-                INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_cliente =1 AND CONCAT(descripcion_marca,' ',descripcion_modelo,' ',descripcion_talla) like '%%'
-                AND estado_pedido='Finalizado' or AND estado_pedido='Finalizado';
-			
-
-SELECT id_cliente,id_detalle, id_modelo_talla,estado_pedido,
-                descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido,
-                DATE_FORMAT(fecha_pedido, "%d-%m-%Y - %h:%i %p") AS fecha_pedido
-                FROM prc_detalle_pedidos
-                INNER JOIN prc_pedidos USING(id_pedido)
-                INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
-                INNER JOIN ctg_tallas USING(id_talla)
-                INNER JOIN prc_modelos USING(id_modelo)
-                INNER JOIN ctg_marcas USING(id_marca)
-                INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_cliente =? AND estado_pedido!="Pendiente" AND estado_pedido!="Anulado"
-                AND CONCAT(descripcion_marca," ",descripcion_modelo," ",descripcion_talla)
-
 CREATE TABLE prc_comentarios (
     id_comentario INT UNSIGNED AUTO_INCREMENT,
     id_detalle INT UNSIGNED  NOT NULL,

@@ -34,7 +34,7 @@ class PedidoHandler
 
         $sql = 'SELECT id_cliente,id_detalle, id_modelo_talla,estado_pedido,
                 descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido,
+                precio_modelo_talla, cantidad_detalle_pedido,foto_modelo,
                 DATE_FORMAT(fecha_pedido, "%d-%m-%Y - %h:%i %p") AS fecha_pedido
                 FROM prc_detalle_pedidos
                 INNER JOIN prc_pedidos USING(id_pedido)

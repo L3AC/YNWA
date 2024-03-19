@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <h5 class="card-title title ew-truncate">${row.descripcion_modelo}</h5>
                     <p class="card-text marca ew-truncate">${row.marca}</p>
                     <div class="d-grid gap-2 mmm">
-                        <a href="detail.html?id=${row.id_modelo}" class="btn">
+                        <a href="detail.html?id=${row.id_modelo}" class="btn90">
                             <span class="text">Comprar</span>
                             <span>Adquirir!</span>
                         </a>

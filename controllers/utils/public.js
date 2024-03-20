@@ -26,10 +26,11 @@ const loadTemplate = async () => {
     if (DATA.session) {
         // Se verifica si la página web no es el inicio de sesión, de lo contrario se direcciona a la página web principal.
         if (!location.pathname.endsWith('login.html')) {
-            MAIN.style.paddingBottom = '120px';
+            MAIN.style.paddingTop = '75px';
+            MAIN.style.paddingBottom = '100px';
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
-            <nav class="navbar navbar-expand-md " style="background-color: #CCC8AA; ">
+            <nav class="navbar navbar-expand-md fixed-top" style="background-color: #CCC8AA; ">
                 <div class="container">
                     <!-- Left elements -->
                     <div class="col-md-2 d-flex justify-content-center justify-content-md-start mb-md-0">

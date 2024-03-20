@@ -171,10 +171,11 @@ VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
 SELECT * FROM ctg_tipo_noticias;
 
 INSERT INTO prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )
-VALUES(1,'Nuevas ofertas por el dia de san valentin','234342asd12.jpg','Este 14 de febrero, 
+VALUES(1,'Nuevas ofertas por el día de San Valentín','234342asd12.jpg','Este 14 de febrero, 
 tendremos en oferta todos los productos mayores a 200$', true,now()),
-(2,'Nuevas productos','pr3241jsksd.jpg','Este 8 de marzo vendran nuevos productos de la marca Nike edición 2024',
+(2,'Nuevas productos','pr3241jsksd.jpg','Este 8 de marzo vendrán nuevos productos de la marca Nike edición 2024',
  true,now());
+ 
  SELECT * FROM prc_noticias;
 
 

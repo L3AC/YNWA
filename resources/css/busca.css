@@ -47,9 +47,9 @@
   }
   
 
-  @media (max-width: 1250px) {
+  @media (max-width: 1050px) {
     .input2 {
-      width: 400px; /* Cambia el ancho a 100% de la pantalla */
+      width: 280px; /* Cambia el ancho a 100% de la pantalla */
     }
   }
   
@@ -59,7 +59,7 @@
     }
   }
 
-  @media (max-width: 250px) {
+  @media (max-width: 350px) {
     .input2 {
       width: 100px; /* Cambia el ancho a 100% de la pantalla */
     }

@@ -200,7 +200,7 @@ const loadTemplate = async () => {
                         <!-- Section: Social media -->
                         <section class="mb-1">
                         <!-- Acerca de nosotros -->
-                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutUs.html" role="button"
+                        <a class="btn btn-link btn-floating btn-lg text-dark m-1" href="aboutus.html" role="button"
                         data-mdb-ripple-color="dark"><i class="bi bi-question-circle-fill"></i></a>
 
                         <!-- Facebook -->

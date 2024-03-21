@@ -73,6 +73,7 @@ class ModeloHandler
         $sql = 'SELECT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca AS marca
         FROM prc_modelos
         INNER JOIN ctg_marcas USING(id_marca)
+        WHERE estado_marca=true AND estado_modelo=true
         ORDER BY id_modelo DESC
         LIMIT 8';
         return Database::getRows($sql);

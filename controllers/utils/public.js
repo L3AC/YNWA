@@ -44,8 +44,10 @@ const loadTemplate = async () => {
                     <div class="col-md-4">
                         <div class="nav-link">
                             <div class="input-group">
-                                <input id="searchMain" type="text" name="searchMain" class="form-control"
-                                    placeholder="Búsqueda">
+                                <div class="input-container">
+                                    <input id="searchMain" type="text" name="searchMain" class="input2 "
+                                        placeholder="Buscar...">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -130,8 +132,10 @@ const loadTemplate = async () => {
             <div class="col-md-4">
                 <div class="nav-link">
                     <div class="input-group">
-                        <input id="searchMain" type="text" name="searchMain" class="form-control"
-                            placeholder="Búsqueda">
+                        <div class="input-container">
+                            <input id="searchMain" type="text" name="searchMain" class="input2 "
+                                placeholder="Buscar...">
+                        </div>
                     </div>
                 </div>
             </div>

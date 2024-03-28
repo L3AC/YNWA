@@ -175,7 +175,7 @@
     border-color: #e0b722;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
     .veen {
         padding: 5px;
         margin: 0;

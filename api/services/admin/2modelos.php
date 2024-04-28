@@ -32,6 +32,8 @@ if (isset($_GET['action'])) {
                     !$producto->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
                     !$producto->setImagen($_FILES['imagenModelo'])
                 ) {
+                    /*echo 'DATOS '.$_POST['nombreModelo'].' '.$_POST['marcaModelo'].' '.$_POST['estadoModelo']
+                    .' '.$_FILES['imagenModelo'];*/
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;

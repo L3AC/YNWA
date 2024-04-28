@@ -56,7 +56,7 @@ class ModeloHandler
     {
         $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
                 VALUES(?, ?, ?, ?)';
-        $params = array($this->descripcion, $this->id, $this->imagen, $this->estado);
+        $params = array($this->nombre, $this->categoria, $this->imagen, $this->estado);
         return Database::executeRow($sql, $params);
     }
 

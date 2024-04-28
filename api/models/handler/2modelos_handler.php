@@ -108,7 +108,7 @@ class ModeloHandler
 
     public function readFilename()
     {
-        $sql = 'SELECT foto
+        $sql = 'SELECT foto_modelo
                 FROM prc_modelos
                 WHERE id_modelo = ?';
         $params = array($this->id);

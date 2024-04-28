@@ -151,7 +151,7 @@ class ModeloData extends ModeloHandler
     {
         // Obtiene el nombre de archivo desde la lectura.
         if ($data = $this->readFilename()) {
-            $this->filename = $data['imagen_producto'];
+            $this->filename = $data['foto_modelo'];
             return true;
         } else {
             $this->data_error = 'Producto inexistente';

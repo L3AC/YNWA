@@ -47,11 +47,23 @@ class TallaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_talla, descripcion_talla, estado_talla
-        FROM ctg_tallas
-        ORDER BY CAST(descripcion_talla AS UNSIGNED)';
+        $sql = 'SELECT * FROM ctg_tallas;';
         return Database::getRows($sql);
     }
+    public function readAllBy()
+    {
+        $sql = 'SELECT id_talla, descripcion_talla
+        FROM ctg_tallas
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM prc_modelo_tallas
+            WHERE prc_modelo_tallas.id_talla = ctg_tallas.id_talla
+            AND id_modelo=?
+        );';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
+
 
     public function readOne()
     {

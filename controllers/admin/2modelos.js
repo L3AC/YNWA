@@ -25,8 +25,9 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_PRODUCTO = document.getElementById('precioProducto'),
     EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
-IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
-    IMAGEN_PRE = document.getElementById('imgPre');
+    IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
+    IMAGEN_PRE = document.getElementById('imgPre'),
+    ADD_MODELOTALLA = document.getElementById('addModeloTalla');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
@@ -34,7 +35,9 @@ const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
 const SAVE_TREFORM = document.getElementById('savetreForm'),
     SELECTALLA = document.getElementById('selectTalla'),
     ID_MODELOTALLA = document.getElementById('idModeloTalla'),
+    SUB_IDMODELO= document.getElementById('subidModelo'),
     PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
+    TALLA_MODELOTALLA = document.getElementById('tallaModeloTalla'),
     STOCK_MODELOTALLA = document.getElementById('stockModeloTalla');
 
 // Método del evento para cuando el documento ha cargado.
@@ -196,6 +199,11 @@ const openUpdate = async (id) => {
         ID_PRODUCTO.value = ROW.id_modelo;
         NOMBRE_PRODUCTO.value = ROW.descripcion_modelo;
         ESTADO_PRODUCTO.checked = ROW.estado_modelo;
+        ADD_MODELOTALLA.innerHTML=`
+        <button type="button" class="btn btn-primary" onclick="opensubCreate(${ROW.id_modelo})">
+            <i class="bi bi-plus-square-fill"></i>
+        </button>`;
+
         IMAGEN_PRE.style.maxWidth = '300px';
         IMAGEN_PRE.style.maxHeight = 'auto';
         IMAGEN_PRE.style.margin = '20px auto';
@@ -237,6 +245,47 @@ const openDelete = async (id) => {
         }
     }
 }
+// Método del evento para cuando se envía el formulario de guardar.
+SAVE_TREFORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    const FORM = new FormData(SAVE_TREFORM);
+    // Se verifica la acción a realizar.
+    if(ID_MODELOTALLA.value){
+        action = 'updateRow';
+        FORM.append('idModeloTalla',  ID_MODELOTALLA.value);
+        FORM.append('subidModelo',  SUB_IDMODELO.value);
+        FORM.append('stockModeloTalla',  STOCK_MODELOTALLA.value);
+        FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
+    }
+    else{
+        action = 'createRow';
+        FORM.append('idModeloTalla',  ID_MODELOTALLA.value);
+        FORM.append('subidModelo',  SUB_IDMODELO.value);
+        FORM.append('stockModeloTalla',  STOCK_MODELOTALLA.value);
+        FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
+        FORM.append('tallaModeloTalla',  TALLA_MODELOTALLA.value);
+    }
+    //(ID_MODELOTALLA.value) ? action = 'updateRow' : action = 'createRow';
+    // Constante tipo objeto con los datos del formulario.
+    /*COMO 
+    (ID_MODELOTALLA.value) ? FORM.append('idModeloTalla', id) : action = 'createRow';*/
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(MODELOTALLAS_API, action, FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se cierra la caja de diálogo.
+        SAVE_TREMODAL.hide();
+        SAVE_MODAL.show();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+        ID_MODELOTALLA.value = null;
+        // Se carga nuevamente la tabla para visualizar los cambios.
+        fillsubTable();
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+});
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -281,16 +330,17 @@ const subclose = () => {
     SAVE_MODAL.show();
 }
 
-const opensubCreate = () => {
+const opensubCreate = (id) => {
     SAVE_MODAL.hide();
     SAVE_TREMODAL.show();
     SELECTALLA.hidden = false;
+    SUB_IDMODELO.value=id;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
     SAVE_TREFORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAll', 'tallaModeloTalla');
+    fillSelect(TALLA_API, 'readByModelo','tallaModeloTalla',null,id);
 }
 
 /*
@@ -316,7 +366,8 @@ const opensubUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_MODELOTALLA.value = ROW.id_modelo_talla;
-        console.log(ROW.stock + ' ' + ROW.precio_modelo_talla);
+        SUB_IDMODELO.value=ROW.id_modelo;
+        console.log(ROW.stock_modelo_talla + ' ' + ROW.precio_modelo_talla);
         STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
         PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 

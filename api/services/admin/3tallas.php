@@ -37,6 +37,17 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }
                 break;
+            case 'readByModelo':
+                    if (!$producto->setId($_POST['id'])) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($result['dataset'] = $producto->readAllBy()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                    } else {
+                        $result['error'] = 'No se encontraron registros';
+                    }
+                    break;
+
             case 'readAll':
                 if ($result['dataset'] = $producto->readAll()) {
                     $result['status'] = 1;

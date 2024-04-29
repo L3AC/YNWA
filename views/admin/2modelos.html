@@ -136,11 +136,8 @@
                                             <input type="search" class="form-control" name="search" placeholder="Buscar"
                                                 >
                                         </div>
-                                        <div class="col-6 d-flex justify-content-end ">
-                                            <!-- Botones para abrir una caja de diálogo al momento de crear un nuevo registro -->
-                                            <button type="button" class="btn btn-primary" onclick="opensubCreate()">
-                                                <i class="bi bi-plus-square-fill"></i>
-                                            </button>
+                                        <div class="col-6 d-flex justify-content-end " id="addModeloTalla">
+                                            
                                         </div>
                                     </div>
                                 </form>
@@ -187,6 +184,7 @@
                         <div class="modal-body row g-3 ">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                             <input type="hidden" id="idModeloTalla" name="idModeloTalla">
+                            <input type="hidden" id="subidModelo" name="subidModelo">
                             <div class="col-sm-12 col-md-6">
                                 <label for="precioModeloTalla" class="form-label">Precio (US$)</label>
                                 <input id="precioModeloTalla" type="number" name="precioModeloTalla" min="0.01"

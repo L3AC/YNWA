@@ -83,9 +83,53 @@ const sweetAlert = async (type, text, timer, url = null) => {
 *   Parámetros: filename (nombre del archivo), action (acción a realizar), select (identificador del select en el formulario) y selected (dato opcional con el valor seleccionado).
 *   Retorno: ninguno.
 */
-const fillSelect = async (filename, action, select, selected = null) => {
+const fillSelect = async (filename, action, select, selected = null,id=null) => {
     // Petición para obtener los datos.
-    const DATA = await fetchData(filename, action);
+    const FORM = new FormData();
+    console.log(id);
+    if(id){
+        console.log(1);
+        FORM.append('id', id);
+    }
+    else{
+        console.log(2);
+    }
+    const DATA = await fetchData(filename, action,FORM);
+    let content = '';
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
+    if (DATA.status) {
+        content += '<option value="" selected>Seleccione una opción</option>';
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se obtiene el dato del primer campo.
+            value = Object.values(row)[0];
+            // Se obtiene el dato del segundo campo.
+            text = Object.values(row)[1];
+            // Se verifica cada valor para enlistar las opciones.
+            if (value != selected) {
+                content += `<option value="${value}">${text}</option>`;
+            } else {
+                content += `<option value="${value}" selected>${text}</option>`;
+            }
+        });
+    } else {
+        content += '<option>No hay opciones disponibles</option>';
+    }
+    // Se agregan las opciones a la etiqueta select mediante el id.
+    document.getElementById(select).innerHTML = content;
+}
+const fillSelectBy = async (filename, action, select,id) => {
+    // Petición para obtener los datos.
+    const FORM = new FormData();
+    console.log(id);
+    if(id){
+        console.log(1);
+        FORM.append('id', id);
+    }
+    else{
+        console.log(2);
+    }
+    const DATA = await fetchData(filename, action,FORM);
     let content = '';
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
     if (DATA.status) {

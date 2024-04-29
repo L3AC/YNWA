@@ -99,10 +99,10 @@ class ModeloTallaHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE prc_modelo_tallas 
+                SET  stock_modelo_talla = ?, precio_modelo_talla = ?
+                WHERE id_modelo_talla = ?';
+        $params = array($this->existencias, $this->precio, $this->id);
         return Database::executeRow($sql, $params);
     }
 

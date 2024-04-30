@@ -4,8 +4,14 @@ require_once('../../models/data/cliente_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
+    if(isset($_GET['app'])){
+
+    }
+    else{
+        session_start();
+    }
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
-    session_start();
+    //session_start();
     // Se instancia la clase correspondiente.
     $cliente = new ClienteData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
@@ -89,16 +95,21 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                $_POST = Validator::validateForm($_POST);
-                if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
-                    $result['error'] = 'Datos incorrectos';
-                } elseif ($cliente->checkStatus()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Autenticación correcta';
-                } else {
-                    $result['error'] = 'La cuenta ha sido desactivada';
-                }
+                    $_POST = Validator::validateForm($_POST);
+                    if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                        if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
+                            $result['error'] = 'Datos incorrectos';
+                        } elseif ($cliente->checkStatus()) {
+                            $result['status'] = 1;
+                            $result['message'] = 'Autenticación correcta';
+                        } else {
+                            $result['error'] = 'La cuenta ha sido desactivada';
+                        }
+                    } else {
+                        $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                    }
                 break;
+                
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }

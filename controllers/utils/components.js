@@ -83,16 +83,17 @@ const sweetAlert = async (type, text, timer, url = null) => {
 *   Parámetros: filename (nombre del archivo), action (acción a realizar), select (identificador del select en el formulario) y selected (dato opcional con el valor seleccionado).
 *   Retorno: ninguno.
 */
-const fillSelect = async (filename, action, select, selected = null,id=null) => {
+const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null) => {
     // Petición para obtener los datos.
     const FORM = new FormData();
     console.log(id);
-    if(id){
+    if(id && idsub){
+        FORM.append('id', idsub);
+        FORM.append('idsub', id);
+    }
+    else if(id){
         console.log(1);
         FORM.append('id', id);
-    }
-    else{
-        console.log(2);
     }
     const DATA = await fetchData(filename, action,FORM);
     let content = '';

@@ -27,6 +27,16 @@ class TallaData extends TallaHandler
             return false;
         }
     }
+    public function setIdModelo($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->idModelo = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
 
     public function setNombre($value, $min = 2, $max = 50)
     {

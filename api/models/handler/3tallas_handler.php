@@ -10,6 +10,7 @@ class TallaHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $idModelo = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -50,7 +51,7 @@ class TallaHandler
         $sql = 'SELECT * FROM ctg_tallas;';
         return Database::getRows($sql);
     }
-    public function readAllBy()
+    public function readAllById()
     {
         $sql = 'SELECT id_talla, descripcion_talla
         FROM ctg_tallas
@@ -62,6 +63,26 @@ class TallaHandler
         );';
         $params = array($this->id);
         return Database::getRows($sql, $params);
+    }
+    public function readAllByIdTalla()
+    {
+        $sql = 'SELECT id_talla, descripcion_talla
+        FROM (
+            SELECT id_talla, descripcion_talla
+            FROM ctg_tallas
+            WHERE id_talla =?
+            UNION
+            SELECT id_talla, descripcion_talla
+            FROM ctg_tallas
+            WHERE id_talla NOT IN (
+                SELECT id_talla
+                FROM prc_modelo_tallas
+                WHERE id_modelo = ?
+            )
+        ) AS tallas;';
+        $params = array($this->id,$this->idModelo);
+        return Database::getRows($sql, $params);
+
     }
 
 

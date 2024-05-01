@@ -37,10 +37,22 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
                 }
                 break;
-            case 'readByModelo':
+            case 'readAllByIdTalla':
+                    if (!$producto->setId($_POST['id'])
+                    or!$producto->setIdModelo($_POST['idsub'])
+                    ) {
+                        $result['error'] = $producto->getDataError();
+                    } elseif ($result['dataset'] = $producto->readAllByIdTalla()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                    } else {
+                        $result['error'] = 'No se encontraron registros';
+                    }
+                    break;
+            case 'readAllById':
                     if (!$producto->setId($_POST['id'])) {
                         $result['error'] = $producto->getDataError();
-                    } elseif ($result['dataset'] = $producto->readAllBy()) {
+                    } elseif ($result['dataset'] = $producto->readAllById()) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     } else {

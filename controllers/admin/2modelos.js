@@ -246,12 +246,14 @@ const openDelete = async (id) => {
     }
 }
 // Método del evento para cuando se envía el formulario de guardar.
+//const treCreate = async() =>{
 SAVE_TREFORM.addEventListener('submit', async (event) => {
+
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    const FORM = new FormData(SAVE_TREFORM);
+    const FORM = new FormData();
     // Se verifica la acción a realizar.
-    if(ID_MODELOTALLA.value){
+    /*if(ID_MODELOTALLA.value){
         action = 'updateRow';
         FORM.append('idModeloTalla',  ID_MODELOTALLA.value);
         FORM.append('subidModelo',  SUB_IDMODELO.value);
@@ -265,8 +267,8 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         FORM.append('stockModeloTalla',  STOCK_MODELOTALLA.value);
         FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
         FORM.append('tallaModeloTalla',  TALLA_MODELOTALLA.value);
-    }
-    //(ID_MODELOTALLA.value) ? action = 'updateRow' : action = 'createRow';
+    }*/
+    (ID_MODELOTALLA.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     /*COMO 
     (ID_MODELOTALLA.value) ? FORM.append('idModeloTalla', id) : action = 'createRow';*/
@@ -333,14 +335,14 @@ const subclose = () => {
 const opensubCreate = (id) => {
     SAVE_MODAL.hide();
     SAVE_TREMODAL.show();
-    SELECTALLA.hidden = false;
+    //SELECTALLA.hidden = false;
     SUB_IDMODELO.value=id;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
     SAVE_TREFORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readByModelo','tallaModeloTalla',null,id);
+    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,id,null);
 }
 
 /*
@@ -351,7 +353,7 @@ const opensubCreate = (id) => {
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODAL.hide();
-    SELECTALLA.hidden = true;
+    //SELECTALLA.hidden = true;
     const FORM = new FormData();
     FORM.append('idModeloTalla', id);
     // Petición para obtener los datos del registro solicitado.
@@ -367,10 +369,11 @@ const opensubUpdate = async (id) => {
         const ROW = DATA.dataset;
         ID_MODELOTALLA.value = ROW.id_modelo_talla;
         SUB_IDMODELO.value=ROW.id_modelo;
-        console.log(ROW.stock_modelo_talla + ' ' + ROW.precio_modelo_talla);
         STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
         PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
+        console.log(ROW.id_talla);
+        fillSelect(TALLA_API, 'readAllByIdTalla','tallaModeloTalla',ROW.id_talla,ROW.id_modelo,ROW.id_talla);
     } else {
         sweetAlert(2, DATA.error, false);
     }

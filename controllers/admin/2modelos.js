@@ -268,6 +268,7 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
         FORM.append('tallaModeloTalla',  TALLA_MODELOTALLA.value);
     }*/
+    console.log(SUB_IDMODELO.value);
     (ID_MODELOTALLA.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     /*COMO 
@@ -342,7 +343,7 @@ const opensubCreate = (id) => {
     // Se prepara el formulario.
     SAVE_TREFORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,id,null);
+    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,SUB_IDMODELO.value,null);
 }
 
 /*
@@ -372,7 +373,6 @@ const opensubUpdate = async (id) => {
         STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
         PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
-        console.log(ROW.id_talla);
         fillSelect(TALLA_API, 'readAllByIdTalla','tallaModeloTalla',ROW.id_talla,ROW.id_modelo,ROW.id_talla);
     } else {
         sweetAlert(2, DATA.error, false);

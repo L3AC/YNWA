@@ -86,13 +86,11 @@ const sweetAlert = async (type, text, timer, url = null) => {
 const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null) => {
     // Petición para obtener los datos.
     const FORM = new FormData();
-    console.log(id);
     if(id && idsub){
         FORM.append('id', idsub);
         FORM.append('idsub', id);
     }
     else if(id){
-        console.log(1);
         FORM.append('id', id);
     }
     const DATA = await fetchData(filename, action,FORM);
@@ -119,42 +117,6 @@ const fillSelect = async (filename, action, select, selected = null,id=null,idsu
     // Se agregan las opciones a la etiqueta select mediante el id.
     document.getElementById(select).innerHTML = content;
 }
-const fillSelectBy = async (filename, action, select,id) => {
-    // Petición para obtener los datos.
-    const FORM = new FormData();
-    console.log(id);
-    if(id){
-        console.log(1);
-        FORM.append('id', id);
-    }
-    else{
-        console.log(2);
-    }
-    const DATA = await fetchData(filename, action,FORM);
-    let content = '';
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
-    if (DATA.status) {
-        content += '<option value="" selected>Seleccione una opción</option>';
-        // Se recorre el conjunto de registros fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se obtiene el dato del primer campo.
-            value = Object.values(row)[0];
-            // Se obtiene el dato del segundo campo.
-            text = Object.values(row)[1];
-            // Se verifica cada valor para enlistar las opciones.
-            if (value != selected) {
-                content += `<option value="${value}">${text}</option>`;
-            } else {
-                content += `<option value="${value}" selected>${text}</option>`;
-            }
-        });
-    } else {
-        content += '<option>No hay opciones disponibles</option>';
-    }
-    // Se agregan las opciones a la etiqueta select mediante el id.
-    document.getElementById(select).innerHTML = content;
-}
-
 /*
 *   Función para generar un gráfico de barras verticales. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), xAxis (datos para el eje X), yAxis (datos para el eje Y), legend (etiqueta para los datos) y title (título del gráfico).

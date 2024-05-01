@@ -80,6 +80,7 @@ class TallaHandler
                 WHERE id_modelo = ?
             )
         ) AS tallas;';
+
         $params = array($this->id,$this->idModelo);
         return Database::getRows($sql, $params);
 

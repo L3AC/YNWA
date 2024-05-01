@@ -19,7 +19,6 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    
                 }
                 break;
             case 'createRow':
@@ -28,7 +27,7 @@ if (isset($_GET['action'])) {
                     !$producto->setIdModelo($_POST['subidModelo']) or
                     !$producto->setExistencias($_POST['stockModeloTalla']) or
                     !$producto->setPrecio($_POST['precioModeloTalla']) or
-                    !$producto->setIdTalla($_POST['tallaModeloTalla']) 
+                    !$producto->setIdTalla($_POST['tallaModeloTalla'])
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
@@ -36,6 +35,22 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Registro creado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
+                }
+                break;
+            case 'updateRow':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$producto->setId($_POST['idModeloTalla']) or
+                    !$producto->setIdModelo($_POST['subidModelo']) or
+                    !$producto->setExistencias($_POST['stockModeloTalla']) or
+                    !$producto->setPrecio($_POST['precioModeloTalla'])
+                ) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($producto->updateRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro modificado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el registro';
                 }
                 break;
             case 'readAll':
@@ -57,22 +72,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
-            case 'updateRow':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$producto->setId($_POST['idModeloTalla']) or
-                    !$producto->setIdModelo($_POST['subidModelo']) or
-                    !$producto->setExistencias($_POST['stockModeloTalla']) or
-                    !$producto->setPrecio($_POST['precioModeloTalla'])
-                ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Registro modificado correctamente';
-                } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el registro';
-                }
-                break;
+
             case 'deleteRow':
                 if (
                     !$producto->setId($_POST['idProducto']) or

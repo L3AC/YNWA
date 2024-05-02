@@ -50,7 +50,7 @@ if (isset($_GET['action'])) {
                     }
                     break;
             case 'readAllById':
-                    if (!$producto->setId($_POST['id'])) {
+                    if (!$producto->setIdModelo($_POST['id'])) {
                         $result['error'] = $producto->getDataError();
                     } elseif ($result['dataset'] = $producto->readAllById()) {
                         $result['status'] = 1;

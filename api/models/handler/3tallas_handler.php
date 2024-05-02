@@ -61,7 +61,7 @@ class TallaHandler
             WHERE prc_modelo_tallas.id_talla = ctg_tallas.id_talla
             AND id_modelo=?
         );';
-        $params = array($this->id);
+        $params = array($this->idModelo);
         return Database::getRows($sql, $params);
     }
     public function readAllByIdTalla()

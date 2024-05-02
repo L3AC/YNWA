@@ -83,20 +83,27 @@ const sweetAlert = async (type, text, timer, url = null) => {
 *   Parámetros: filename (nombre del archivo), action (acción a realizar), select (identificador del select en el formulario) y selected (dato opcional con el valor seleccionado).
 *   Retorno: ninguno.
 */
-const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null) => {
+const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null,btnId=null) => {
     // Petición para obtener los datos.
     const FORM = new FormData();
+    
     if(id && idsub){
         FORM.append('id', idsub);
         FORM.append('idsub', id);
     }
     else if(id){
+        console.log(23)
         FORM.append('id', id);
+    }
+    else{
+        console.log(id)
+        console.log(72837)
     }
     const DATA = await fetchData(filename, action,FORM);
     let content = '';
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
     if (DATA.status) {
+        btnId.disabled = false;
         content += '<option value="" selected>Seleccione una opción</option>';
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
@@ -113,6 +120,7 @@ const fillSelect = async (filename, action, select, selected = null,id=null,idsu
         });
     } else {
         content += '<option>No hay opciones disponibles</option>';
+        btnId.disabled = true;
     }
     // Se agregan las opciones a la etiqueta select mediante el id.
     document.getElementById(select).innerHTML = content;

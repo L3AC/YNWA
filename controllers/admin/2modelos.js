@@ -38,7 +38,8 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
     SUB_IDMODELO= document.getElementById('subidModelo'),
     PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
     TALLA_MODELOTALLA = document.getElementById('tallaModeloTalla'),
-    STOCK_MODELOTALLA = document.getElementById('stockModeloTalla');
+    STOCK_MODELOTALLA = document.getElementById('stockModeloTalla'),
+    BTN_TREFORM = document.getElementById('btnTreForm');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -83,7 +84,6 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -128,7 +128,6 @@ const fillTable = async (form = null) => {
         sweetAlert(4, DATA.error, true);
     }
 }
-
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
 *   Parámetros: ninguno.
@@ -251,24 +250,7 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
 
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    const FORM = new FormData();
-    // Se verifica la acción a realizar.
-    /*if(ID_MODELOTALLA.value){
-        action = 'updateRow';
-        FORM.append('idModeloTalla',  ID_MODELOTALLA.value);
-        FORM.append('subidModelo',  SUB_IDMODELO.value);
-        FORM.append('stockModeloTalla',  STOCK_MODELOTALLA.value);
-        FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
-    }
-    else{
-        action = 'createRow';
-        FORM.append('idModeloTalla',  ID_MODELOTALLA.value);
-        FORM.append('subidModelo',  SUB_IDMODELO.value);
-        FORM.append('stockModeloTalla',  STOCK_MODELOTALLA.value);
-        FORM.append('precioModeloTalla',  PRECIO_MODELOTALLA.value);
-        FORM.append('tallaModeloTalla',  TALLA_MODELOTALLA.value);
-    }*/
-    console.log(SUB_IDMODELO.value);
+    const FORM = new FormData(SAVE_TREFORM);
     (ID_MODELOTALLA.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     /*COMO 
@@ -341,9 +323,10 @@ const opensubCreate = (id) => {
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
+    console.log('SUB '+SUB_IDMODELO.value);
     SAVE_TREFORM.reset();
     //EXISTENCIAS_PRODUCTO.disabled = false;
-    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,SUB_IDMODELO.value,null);
+    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,id,null,BTN_TREFORM);
 }
 
 /*
@@ -373,7 +356,7 @@ const opensubUpdate = async (id) => {
         STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
         PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
-        fillSelect(TALLA_API, 'readAllByIdTalla','tallaModeloTalla',ROW.id_talla,ROW.id_modelo,ROW.id_talla);
+        fillSelect(TALLA_API, 'readAllByIdTalla','tallaModeloTalla',ROW.id_talla,ROW.id_modelo,ROW.id_talla,BTN_TREFORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }

@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,
@@ -54,7 +55,7 @@ descripcion_marca VARCHAR(255) NOT NULL,
 estado_marca BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_marca)
 );
-
+                
 CREATE TABLE prc_modelos(
 id_modelo INT UNSIGNED AUTO_INCREMENT,
 id_marca INT UNSIGNED NOT NULL,
@@ -89,6 +90,8 @@ CONSTRAINT fk_mt_talla
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
 
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,

@@ -116,6 +116,16 @@ class AdministradorData extends AdministradorHandler
             return false;
         }
     }
+    public function setEstado($value)
+    {
+        if (Validator::validateBoolean($value)) {
+            $this->estado = $value;
+            return true;
+        } else {
+            $this->data_error = 'Estado incorrecto';
+            return false;
+        }
+    }
 
     // Método para obtener el error de los datos.
     public function getDataError()

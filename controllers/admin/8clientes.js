@@ -17,9 +17,10 @@ const SAVE_FORM = document.getElementById('saveForm'),
     DIRECCION_CLIENTE = document.getElementById('direccionCliente'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasCliente'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
+    ESTADO_CLIENTE = document.getElementById('estadoCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
 
-const mensajeDiv = document.getElementById('mensajeDiv'),
+const MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 // Método del evento para cuando el documento ha cargado.
@@ -73,11 +74,11 @@ ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
     const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status === 1) {
-        mensajeDiv.textContent = 'Ya existe el usuario';
-        mensajeDiv.style.display = 'block'; 
+        MENSAJE_DIV.textContent = 'Ya existe el usuario';
+        MENSAJE_DIV.style.display = 'block'; 
         IDGUARDAR.disabled = true;
     } else {
-        mensajeDiv.textContent = "";
+        MENSAJE_DIV.textContent = "";
         IDGUARDAR.disabled = false;
     }
 });
@@ -105,7 +106,6 @@ const fillTable = async (form = null) => {
                 <tr>
                     <td>${row.apellido_cliente}</td>
                     <td>${row.nombre_cliente}</td>
-                    <td>${row.email_cliente}</td>
                     <td>${row.usuario_cliente}</td>
                     <td><i class="${icon}"></i></td>
                     <td>
@@ -170,6 +170,7 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_cliente;
         CORREO_ADMINISTRADOR.value = ROW.email_cliente;
         ALIAS_ADMINISTRADOR.value = ROW.usuario_cliente;
+        ESTADO_CLIENTE.cheked=ROW.estado_cliente;
     } else {
         sweetAlert(2, DATA.error, false);
     }

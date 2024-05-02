@@ -55,8 +55,8 @@ class RolHandler
         values(?,?,?,?,?,?,?,?,?,?,?,?);';
         $params = array(
             $this->descripcion, $this->estado, $this->marcas, $this->modelos, $this->tallas,
-            $this->pedidos, $this->tiponoticias, $this->noticias, $this->comentarios, $this->roles,
-            $this->clientes, $this->usuarios
+            $this->pedidos, $this->tiponoticias, $this->noticias, $this->comentarios, 
+            $this->clientes, $this->usuarios,$this->roles
         );
         return Database::executeRow($sql, $params);
     }
@@ -106,10 +106,17 @@ class RolHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE ctg_tallas
-                SET descripcion_talla = ?,estado_talla = ?
-                WHERE id_talla = ?';
-        $params = array($this->descripcion, $this->estado, $this->id);
+        $sql = 'UPDATE sec_roles
+            SET descripcion_opc = ?,
+            estado_opc = ?,marcas_opc = ?,modelos_opc = ?,tallas_opc = ?,
+            pedidos_opc = ?,tipo_noticias_opc = ?,noticias_opc = ?,comentarios_opc = ?,
+            clientes_opc = ?,usuarios_opc = ?,roles_opc = ?
+            WHERE id_rol = ?;';
+        $params = array(
+            $this->descripcion, $this->estado, $this->marcas, $this->modelos, $this->tallas,
+            $this->pedidos, $this->tiponoticias, $this->noticias, $this->comentarios, 
+            $this->clientes, $this->usuarios,$this->roles, $this->id
+        );
         return Database::executeRow($sql, $params);
     }
 

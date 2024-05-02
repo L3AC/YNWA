@@ -35,14 +35,15 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$administrador->setIdRol($_POST['rolUsuario']) or
-                    !$administrador->setNombre($_POST['nombreAdministrador']) or
-                    !$administrador->setApellido($_POST['apellidoAdministrador']) or
-                    !$administrador->setCorreo($_POST['correoAdministrador']) or
-                    !$administrador->setAlias($_POST['aliasAdministrador']) or
-                    !$administrador->setClave($_POST['claveAdministrador'])
+                    !$administrador->setNombre($_POST['nombreUsuario']) or
+                    !$administrador->setApellido($_POST['apellidoUsuario']) or
+                    !$administrador->setCorreo($_POST['correoUsuario']) or
+                    !$administrador->setAlias($_POST['aliasUsuario']) or
+                    !$administrador->setClave($_POST['claveUsuario']) or 
+                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $administrador->getDataError();
-                } elseif ($_POST['claveAdministrador'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($administrador->createRow()) {
                     $result['status'] = 1;
@@ -68,7 +69,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$administrador->setId($_POST['idAdministrador'])) {
+                if (!$administrador->setId($_POST['idUsuario'])) {
                     $result['error'] = 'Administrador incorrecto';
                 } elseif ($result['dataset'] = $administrador->readOne()) {
                     $result['status'] = 1;
@@ -79,10 +80,12 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setId($_POST['id_usuario']) or
-                    !$administrador->setNombre($_POST['nombres']) or
-                    !$administrador->setApellido($_POST['apellidos']) or
-                    !$administrador->setCorreo($_POST['email'])
+                    !$administrador->setId($_POST['idUsuario']) or
+                    !$administrador->setIdRol($_POST['rolUsuario'])or
+                    !$administrador->setNombre($_POST['nombreUsuario']) or
+                    !$administrador->setApellido($_POST['apellidoUsuario']) or
+                    !$administrador->setCorreo($_POST['correoUsuario']) or
+                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($administrador->updateRow()) {
@@ -93,7 +96,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if ($_POST['idAdministrador'] == $_SESSION['idAdministrador']) {
+                if ($_POST['idUsuario'] == $_SESSION['idAdministrador']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
                 } elseif (!$administrador->setId($_POST['idAdministrador'])) {
                     $result['error'] = $administrador->getDataError();

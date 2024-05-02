@@ -12,14 +12,15 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
 INPUTSEARCH = document.getElementById('inputsearch'),   
-    ID_ADMINISTRADOR = document.getElementById('idAdministrador'),
+    ID_ADMINISTRADOR = document.getElementById('idUsuario'),
     ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
-    NOMBRE_ADMINISTRADOR = document.getElementById('nombreAdministrador'),
-    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoAdministrador'),
-    CORREO_ADMINISTRADOR = document.getElementById('correoAdministrador'),
-    ALIAS_ADMINISTRADOR = document.getElementById('aliasAdministrador'),
-    CLAVE_ADMINISTRADOR = document.getElementById('claveAdministrador'),
-    CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
+    NOMBRE_ADMINISTRADOR = document.getElementById('nombreUsuario'),
+    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoUsuario'),
+    CORREO_ADMINISTRADOR = document.getElementById('correoUsuario'),
+    ALIAS_ADMINISTRADOR = document.getElementById('aliasUsuario'),
+    CLAVE_ADMINISTRADOR = document.getElementById('claveUsuario'),
+    CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
+    ESTADO_USUARIO = document.getElementById('estadoUsuario');
 
     const mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
@@ -136,13 +137,14 @@ const fillTable = async (form = null) => {
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
         DATA.dataset.forEach(row => {
+            (row.estado_usuario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.apellido_usuario}</td>
                     <td>${row.nombre_usuario}</td>
-                    <td>${row.email_usuario}</td>
                     <td>${row.usuario_usuario}</td>
+                    <td><i class="${icon}"></i></td>
                     <td>
                         <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_usuario})">
                             <i class="bi bi-pencil-fill"></i>
@@ -187,7 +189,7 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define una constante tipo objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idAdministrador', id);
+    FORM.append('idUsuario', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(ADMINISTRADOR_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -207,6 +209,7 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
+        ESTADO_USUARIO.checked=ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
     } else {
         sweetAlert(2, DATA.error, false);

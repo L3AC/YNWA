@@ -129,7 +129,7 @@ class AdministradorHandler
     }
     public function fillTab($idrol)
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+        $sql = 'SELECT *
         FROM sec_usuarios
         WHERE id_usuario != idmin("sec_usuarios") 
         AND id_rol!=?
@@ -146,7 +146,8 @@ class AdministradorHandler
         $sql = 'INSERT INTO sec_usuarios(id_rol,usuario_usuario, clave_usuario,nombre_usuario, 
         apellido_usuario,email_usuario,pin_usuario,estado_usuario)
                 VALUES(?, ?, ?, ?, ?,?,?,true)';
-        $params = array($this->idRol, $this->alias, $this->clave, $this->nombre, $this->apellido, $this->correo, $this->generarPin());
+        $params = array($this->idRol, $this->alias, $this->clave,
+         $this->nombre, $this->apellido, $this->correo, $this->generarPin(),$this->estado);
         return Database::executeRow($sql, $params);
     }
 
@@ -191,9 +192,9 @@ class AdministradorHandler
     public function updateRow()
     {
         $sql = 'UPDATE sec_usuarios
-                SET nombre_usuario = ?, apellido_usuario= ?, email_usuario = ?
+                SET nombre_usuario = ?, apellido_usuario= ?, email_usuario = ?,estado_usuario = ?
                 WHERE id_usuario = ?';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->id);
+        $params = array($this->nombre, $this->apellido, $this->correo,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 

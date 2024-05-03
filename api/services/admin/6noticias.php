@@ -31,17 +31,37 @@ if (isset($_GET['action'])) {
                     !$producto->setDescripcion($_POST['contenidoNoticia']) or
                     !$producto->setCategoria($_POST['tipoNoticia']) or
                     !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenModelo'])
-                    
+                    !$producto->setImagen($_FILES['imagenNoticia'])
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Producto creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenModelo'], $producto::RUTA_IMAGEN);
+                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenNoticia'], $producto::RUTA_IMAGEN);
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el producto';
+                }
+                break;
+            case 'updateRow':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$producto->setId($_POST['idNoticia']) or
+                    !$producto->setFilename() or
+                    !$producto->setNombre($_POST['tituloNoticia']) or
+                    !$producto->setDescripcion($_POST['contenidoNoticia']) or
+                    !$producto->setCategoria($_POST['tipoNoticia']) or
+                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
+                    !$producto->setImagen($_FILES['imagenNoticia'], $producto->getFilename())
+                ) {
+                    $result['error'] = $producto->getDataError();
+                } elseif ($producto->updateRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro modificado correctamente';
+                    // Se asigna el estado del archivo después de actualizar.
+                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenNoticia'], $producto::RUTA_IMAGEN, $producto->getFilename());
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el producto';
                 }
                 break;
             case 'readAll':
@@ -61,28 +81,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Producto inexistente';
                 }
                 break;
-            case 'updateRow':
-                $_POST = Validator::validateForm($_POST);
-                if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename())
-                ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
-                    // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN, $producto->getFilename());
-                } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el producto';
-                }
-                break;
+
             case 'deleteRow':
                 if (
                     !$producto->setId($_POST['idProducto']) or

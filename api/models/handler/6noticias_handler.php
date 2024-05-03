@@ -41,9 +41,10 @@ class NoticiaHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO prc_noticias( titulo_noticia, foto_noticia, contenido_noticia, estado_noticia, fecha_noticia)
+        $sql = 'INSERT INTO prc_noticias(id_tipo_noticia, titulo_noticia, foto_noticia, contenido_noticia, 
+        estado_noticia, fecha_noticia)
                 VALUES(?, ?, ?, ?, ?, now())';
-        $params = array($this->nombre, $this->imagen, $this->descripcion, $this->estado);
+        $params = array($this->idtiponoticia,$this->nombre, $this->imagen, $this->descripcion, $this->estado);
         return Database::executeRow($sql, $params);
     }
 
@@ -82,19 +83,24 @@ class NoticiaHandler
 
     public function readFilename()
     {
-        $sql = 'SELECT foto
-                FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'SELECT foto_noticia
+                FROM prc_noticias
+                WHERE id_noticia = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
     }
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelo 
-                SET foto = ?, descripcion = ?,estado = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre,$this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE prc_noticias
+            SET id_tipo_noticia = ?,
+            foto_noticia = ?,
+            titulo_noticia = ?,
+            contenido_noticia = ?,
+            estado_noticia = ?
+            WHERE id_noticia = ?;';
+        $params = array($this->idtiponoticia,$this->imagen, $this->nombre,
+        $this->descripcion,$this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 

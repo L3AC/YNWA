@@ -84,6 +84,7 @@ class NoticiaData extends NoticiaHandler
             $this->imagen = Validator::getFileName();
             return true;
         } elseif (Validator::getFileError()) {
+            $this->data_error = Validator::getFileError();
             return false;
         } elseif ($filename) {
             $this->imagen = $filename;
@@ -119,10 +120,10 @@ class NoticiaData extends NoticiaHandler
     public function setFilename()
     {
         if ($data = $this->readFilename()) {
-            $this->filename = $data['imagen_producto'];
+            $this->filename = $data['foto_noticia'];
             return true;
         } else {
-            $this->data_error = 'Producto inexistente';
+            $this->data_error = 'Registro inexistente';
             return false;
         }
     }

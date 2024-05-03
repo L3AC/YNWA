@@ -87,7 +87,7 @@ class Validator
                 self::$file_error = 'El tamaño de la imagen debe ser menor a 2MB';
                 return false;
             } elseif ($image[0] > $max_width || $image[1] > $max_heigth) {
-                self::$file_error = 'La dimensión de la imagen es incorrecta';
+                self::$file_error = 'La dimensión de la imagen tiene que ser '.$max_width.'px x '.$max_heigth.'px';
                 return false;
             } elseif ($image['mime'] == 'image/jpeg' || $image['mime'] == 'image/png') {
                 // Se obtiene la extensión del archivo (.jpg o .png) y se convierte a minúsculas.

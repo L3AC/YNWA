@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
-
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,
@@ -75,7 +74,6 @@ estado_talla BOOLEAN  DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_talla)
 );
 
-
 CREATE TABLE prc_modelo_tallas(
 id_modelo_talla INT UNSIGNED AUTO_INCREMENT,
 id_talla INT UNSIGNED NOT NULL,
@@ -90,8 +88,6 @@ CONSTRAINT fk_mt_talla
 FOREIGN KEY(id_talla) REFERENCES ctg_tallas(id_talla)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
 
 CREATE TABLE ctg_tipo_noticias(
     id_tipo_noticia INT UNSIGNED AUTO_INCREMENT,
@@ -119,12 +115,13 @@ id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED NOT NULL,
 forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo' NOT NULL,
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-estado_pedido ENUM('Pendiente','Finalizado','Entregado','Anulado') NOT NULL,
+estado_pedido ENUM('Pendiente','Aceptado','Finalizado') NOT NULL,
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,

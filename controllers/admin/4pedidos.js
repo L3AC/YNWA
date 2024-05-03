@@ -127,17 +127,19 @@ const fillTable = async (form = null) => {
         DATA.dataset.forEach(row => {
             console.log(DATA.dataset);
             // Se establece un icono para el estado del PEDIDO.
-            (row.estado_pedido) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
                     <td>${row.cliente}</td>
                     <td>${row.forma_pago_pedido}</td>
                     <td>${row.fecha}</td>
-                    <td><i class="${icon}"></i></td>
+                    <td>${row.estado_pedido}</i></td>
                     <td>
                         <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_pedido})">
-                        <i class="bi bi-info-circle"></i>
+                            <i class="bi bi-info-circle"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_pedido})">
+                            <i class="bi bi-trash"></i>
                         </button>
                     </td>
                 </tr>
@@ -195,15 +197,20 @@ const openUpdate = async (id) => {
         CLIENTE_PEDIDO.disabled = true;
         FECHA_PEDIDO.disabled = true;
         FORMA_PAGO.disabled = true;
-        ESTADO_PEDIDO.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_PEDIDO.value = ROW.id_pedido;
         CLIENTE_PEDIDO.value = ROW.cliente;
         FECHA_PEDIDO.value = ROW.fecha;
         FORMA_PAGO.value = ROW.forma_pago_pedido;
-        ESTADO_PEDIDO.checked = ROW.estado_pedido;
-        
+        for (var i = 0; i < ESTADO_PEDIDO.options.length; i++) {
+            // Si el valor de la opción es igual al valor que quieres seleccionar
+            if (ESTADO_PEDIDO.options[i].value === ROW.estado_pedido) {
+                // Seleccionar la opción
+                ESTADO_PEDIDO.selectedIndex = i;
+                break; // Salir del bucle una vez seleccionada la opción
+            }
+        }
         fillsubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);

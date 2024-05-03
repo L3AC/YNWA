@@ -118,6 +118,14 @@ class ClienteHandler
          
         return Database::executeRow($sql, $params);
     }
+    public function updateRow()
+    {
+        $sql = 'UPDATE prc_clientes 
+                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,estado_cliente = ?
+                WHERE id_cliente = ?';
+        $params = array($this->nombre, $this->apellido, $this->email,$this->estado, $this->id);
+        return Database::executeRow($sql, $params);
+    }
 
     public function readAll()
     {
@@ -161,14 +169,6 @@ class ClienteHandler
     }
 
 
-    public function updateRow()
-    {
-        $sql = 'UPDATE prc_clientes 
-                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?
-                WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->id);
-        return Database::executeRow($sql, $params);
-    }
 
     public function deleteRow()
     {

@@ -67,21 +67,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
-    const FORM = new FormData();
-    FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status === 1) {
-        MENSAJE_DIV.textContent = 'Ya existe el usuario';
-        MENSAJE_DIV.style.display = 'block'; 
-        IDGUARDAR.disabled = true;
-    } else {
-        MENSAJE_DIV.textContent = "";
-        IDGUARDAR.disabled = false;
-    }
-});
+
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -140,6 +126,21 @@ const openCreate = () => {
     ALIAS_ADMINISTRADOR.disabled = false;
     CLAVE_ADMINISTRADOR.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
+    ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
+        const FORM = new FormData();
+        FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+        // Petición para obtener los datos del registro solicitado.
+        const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status === 1) {
+            MENSAJE_DIV.textContent = 'Ya existe el usuario';
+            MENSAJE_DIV.style.display = 'block'; 
+            IDGUARDAR.disabled = true;
+        } else {
+            MENSAJE_DIV.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    });
 }
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -170,7 +171,7 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_cliente;
         CORREO_ADMINISTRADOR.value = ROW.email_cliente;
         ALIAS_ADMINISTRADOR.value = ROW.usuario_cliente;
-        ESTADO_CLIENTE.cheked=ROW.estado_cliente;
+        ESTADO_CLIENTE.checked=ROW.estado_cliente;
     } else {
         sweetAlert(2, DATA.error, false);
     }

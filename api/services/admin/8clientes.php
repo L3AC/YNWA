@@ -33,7 +33,7 @@ if (isset($_GET['action'])) {
                     !$administrador->setDireccion($_POST['direccionCliente']) or
                     !$administrador->setAlias($_POST['aliasCliente']) or
                     !$administrador->setClave($_POST['claveCliente']) or
-                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$administrador->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
                 ) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
@@ -76,7 +76,7 @@ if (isset($_GET['action'])) {
                     !$administrador->setNombre($_POST['nombreCliente']) or
                     !$administrador->setApellido($_POST['apellidoCliente']) or
                     !$administrador->setCorreo($_POST['correoCliente']) or
-                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$administrador->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
                 ) {
                     $result['error'] = $administrador->getDataError();
                 } elseif ($administrador->updateRow()) {

@@ -1,6 +1,6 @@
 // Constante para completar la ruta de la API.
 const ADMINISTRADOR_API = 'services/admin/9usuarios.php',
-       ROL_API = 'services/admin/10roles.php'; 
+    ROL_API = 'services/admin/10roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -11,7 +11,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-INPUTSEARCH = document.getElementById('inputsearch'),   
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_ADMINISTRADOR = document.getElementById('idUsuario'),
     ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
     NOMBRE_ADMINISTRADOR = document.getElementById('nombreUsuario'),
@@ -22,7 +22,7 @@ INPUTSEARCH = document.getElementById('inputsearch'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
     ESTADO_USUARIO = document.getElementById('estadoUsuario');
 
-    const mensajeDiv = document.getElementById('mensajeDiv'),
+const mensajeDiv = document.getElementById('mensajeDiv'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 // Método del evento para cuando el documento ha cargado.
@@ -69,7 +69,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 //METODO PARA BUSCAR 
-INPUTSEARCH.addEventListener('input', async function ()  {
+INPUTSEARCH.addEventListener('input', async function () {
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -101,24 +101,10 @@ INPUTSEARCH.addEventListener('input', async function ()  {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        // sweetAlert(4, DATA.error, true);
     }
 });
-ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
-    const FORM = new FormData();
-    FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
-    // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status === 1) {
-        mensajeDiv.textContent = 'Ya existe el usuario';
-        mensajeDiv.style.display = 'block'; 
-        IDGUARDAR.disabled = true;
-    } else {
-        mensajeDiv.textContent = "";
-        IDGUARDAR.disabled = false;
-    }
-});
+
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
@@ -132,7 +118,7 @@ const fillTable = async (form = null) => {
     (form) ? action = 'searchRows' : action = 'fillTab';
     // Petición para obtener los registros disponibles.
 
-    const DATA = await fetchData(ADMINISTRADOR_API,action, form);
+    const DATA = await fetchData(ADMINISTRADOR_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
@@ -179,6 +165,21 @@ const openCreate = () => {
     CONFIRMAR_CLAVE.disabled = false;
 
     fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
+    ALIAS_ADMINISTRADOR.addEventListener('input', async function () {
+        const FORM = new FormData();
+        FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+        // Petición para obtener los datos del registro solicitado.
+        const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status === 1) {
+            mensajeDiv.textContent = 'Ya existe el usuario';
+            mensajeDiv.style.display = 'block';
+            IDGUARDAR.disabled = true;
+        } else {
+            mensajeDiv.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    });
 }
 
 /*
@@ -209,8 +210,9 @@ const openUpdate = async (id) => {
         APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
         CORREO_ADMINISTRADOR.value = ROW.email_usuario;
         ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
-        ESTADO_USUARIO.checked=ROW.estado_usuario;
-        fillSelect(ROL_API, 'fillSelect', 'rolUsuario',ROW.id_rol);
+        ESTADO_USUARIO.checked = ROW.estado_usuario;
+        fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
+        //IDGUARDAR.disabled = false;
     } else {
         sweetAlert(2, DATA.error, false);
     }

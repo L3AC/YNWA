@@ -14,8 +14,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idNoticia'),
     NOMBRE_PRODUCTO = document.getElementById('tituloNoticia'),
     CONTENIDO_NOTICIA = document.getElementById('contenidoNoticia'),
-    //PRECIO_PRODUCTO = document.getElementById('precioProducto'),
-    //EXISTENCIAS_PRODUCTO = document.getElementById('existenciasProducto'),
+    IMAGEN_PRE = document.getElementById('imgPre'),
+    IMAGEN_PRODUCTO = document.getElementById('imagenNoticia'),
     ESTADO_PRODUCTO = document.getElementById('estadoNoticia');
 
 // Método del evento para cuando el documento ha cargado.
@@ -105,7 +105,22 @@ const fillTable = async (form = null) => {
         sweetAlert(4, DATA.error, true);
     }
 }
-
+/*CARGAR VISTA PREVIA DE LA IMAGEN ESCOGIDA*/
+IMAGEN_PRODUCTO.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        imgPre.innerHTML = '';
+        imgPre.appendChild(img);
+        // Establecer los estilos CSS de la imagen
+        img.style.maxWidth = '300px';
+        img.style.maxHeight = 'auto';
+        img.style.margin = '20px auto';
+    };
+    reader.readAsDataURL(file);
+});
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
 *   Parámetros: ninguno.
@@ -146,6 +161,15 @@ const openUpdate = async (id) => {
         NOMBRE_PRODUCTO.value = ROW.titulo_noticia;
         CONTENIDO_NOTICIA.value = ROW.contenido_noticia;
         ESTADO_PRODUCTO.checked = ROW.estado_noticia;
+        
+        IMAGEN_PRE.style.maxWidth = '300px';
+        IMAGEN_PRE.style.maxHeight = 'auto';
+        IMAGEN_PRE.style.margin = '20px auto';
+        IMAGEN_PRE.innerHTML = '';
+        IMAGEN_PRE.insertAdjacentHTML(
+            "beforeend",
+            `<img src="${SERVER_URL}images/noticias/${ROW.foto_noticia}">` // Backticks para img variable
+        );
         fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia', ROW.id_tipo_noticia);
     } else {
         sweetAlert(2, DATA.error, false);

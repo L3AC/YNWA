@@ -145,7 +145,7 @@ const openCreate = () => {
     //EXISTENCIAS_PRODUCTO.disabled = false;
     fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
-
+/*CARGAR VISTA PREVIA DE LA IMAGEN ESCOGIDA*/
 IMAGEN_PRODUCTO.addEventListener('change', function (event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -163,14 +163,13 @@ IMAGEN_PRODUCTO.addEventListener('change', function (event) {
 });
 
 // Agregar un evento click a la imagen para aplicar un zoom
-IMAGEN_PRE.addEventListener('click', function () {
-    IMAGEN_PRE.style.transform = 'scale(3)'; /* Escala de 1.5 (ampliar al 150% del tamaño original) al hacer clic en la imagen */
+/*IMAGEN_PRE.addEventListener('click', function () {
+    IMAGEN_PRE.style.transform = 'scale(3)'; 
     event.stopPropagation(); 
 });
-
 document.addEventListener('click', function() {
-    IMAGEN_PRE.style.transform = 'scale(1)'; /* Restablecer el tamaño original de la imagen */
-});
+    IMAGEN_PRE.style.transform = 'scale(1)'; 
+});*/
 
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.

@@ -17,6 +17,11 @@ class PedidoData extends PedidoHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+    public function setSearch($value)
+    {
+        $this->search= $value;
+        return true;
+    }
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -107,12 +112,12 @@ class PedidoData extends PedidoHandler
 
     public function setEstado($value)
     {
-        if (Validator::validateBoolean($value)) {
+        if (!Validator::validateAlphanumeric($value)) {
+            $this->data_error = 'El nombre debe ser un valor alfanumérico';
+            return false;
+        } else {
             $this->estado = $value;
             return true;
-        } else {
-            $this->data_error = 'Estado incorrecto';
-            return false;
         }
     }
 

@@ -9,6 +9,7 @@ class PedidoHandler
     /*
     *   Declaración de atributos para el manejo de datos.
     */
+    protected $search = null;
     protected $id = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -24,22 +25,18 @@ class PedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        if ($value === '') {
-            $value = '%%';
-        } else {
-            $value = '%' . $value . '%';
-        }
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
         p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
         FROM prc_pedidos p
         INNER JOIN prc_clientes c USING(id_cliente)
-        WHERE CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ?
+        WHERE estado_pedido=? AND CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ?
         ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
 
-        $params = array($value);
+        $params = array($this->estado,$this->search);
         return Database::getRows($sql, $params);
     }
 
@@ -100,10 +97,10 @@ class PedidoHandler
 
     public function updateRow()
     {
-        $sql = 'UPDATE prc_modelos 
-                SET foto_modelo = ?, descripcion_modelo = ?,estado_modelo = ?, id_marca = ?
-                WHERE id_modelo = ?';
-        $params = array($this->imagen, $this->nombre, $this->estado, $this->categoria, $this->id);
+        $sql = 'UPDATE prc_pedidos 
+                SET estado_pedido = ?
+                WHERE id_pedido = ?';
+        $params = array($this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 

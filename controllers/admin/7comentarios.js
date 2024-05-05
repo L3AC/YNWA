@@ -29,15 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fillTable();
 });
 
-// Método del evento para cuando se envía el formulario de buscar.
-SEARCH_FORM.addEventListener('submit', (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
-    event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SEARCH_FORM);
-    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
-    fillTable(FORM);
-});
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
@@ -104,14 +95,15 @@ INPUTSEARCH.addEventListener('input', async function () {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(COMENTARIO_API, action, form);
+    const DATA = await fetchData(COMENTARIO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -137,10 +129,17 @@ const fillTable = async (form = null) => {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-        sweetAlert(4, DATA.error, true);
+        //sweetAlert(4, DATA.error, true);
     }
 }
-
+let timeoutId;
+/*Busqueda en tiempo real*/
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
+});
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
 *   Parámetros: ninguno.

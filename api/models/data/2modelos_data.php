@@ -159,6 +159,11 @@ class ModeloData extends ModeloHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
 
     /*
      *  Métodos para obtener los atributos adicionales.

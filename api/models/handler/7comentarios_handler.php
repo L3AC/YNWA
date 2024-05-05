@@ -10,11 +10,11 @@ class ComentarioHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $idModelo = null;
     protected $idDetalle = null;
     protected $puntuacion = null;
     protected $mensaje = null;
-
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -29,13 +29,9 @@ class ComentarioHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        if ($value === '') {
-            $value = '%%';
-        } else {
-            $value = '%' . $value . '%';
-        }
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'select id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
@@ -48,10 +44,11 @@ class ComentarioHandler
         INNER JOIN prc_modelo_tallas mt USING (id_modelo_talla)
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN ctg_marcas ma USING (id_marca)
-        WHERE CONCAT(descripcion_marca," ",descripcion_modelo) like ?
+        WHERE CONCAT(nombre_cliente," ",apellido_cliente) like ? 
+        OR CONCAT(descripcion_marca," ",descripcion_modelo) like ?
         ORDER BY fecha_comentario DESC, estado_comentario DESC';
 
-        $params = array($value);
+        $params = array($this->search,$this->search);
         return Database::getRows($sql, $params);
     }
 

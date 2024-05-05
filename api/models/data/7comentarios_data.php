@@ -145,7 +145,11 @@ class ComentarioData extends ComentarioHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
     public function setFilename()
     {
         if ($data = $this->readFilename()) {

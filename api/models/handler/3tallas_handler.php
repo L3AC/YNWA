@@ -10,6 +10,7 @@ class TallaHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $idModelo = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -25,16 +26,16 @@ class TallaHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        $value = ($value === '') ? '%%' : '%' . $value . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT id_talla, descripcion_talla, estado_talla
                 FROM ctg_tallas
                 WHERE descripcion_talla LIKE  ? 
                 ORDER BY CAST(descripcion_talla AS UNSIGNED)';
 
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

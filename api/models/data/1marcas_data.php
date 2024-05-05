@@ -17,6 +17,7 @@ class MarcaData extends MarcaHandler
     /*
      *   Métodos para validar y establecer los datos.
      */
+
     public function setId($value)
     {
         if (Validator::validateNaturalNumber($value)) {
@@ -46,9 +47,8 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece la descripción de la marca.
- */
+    //Establece la descripción de la marca.
+
     public function setDescripcion($value, $min = 2, $max = 250)
     {
         // Validación de la descripción.
@@ -64,9 +64,8 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece el precio de la marca.
- */
+    //Establece el precio de la marca.
+
     public function setPrecio($value)
     {
         // Validación del precio.
@@ -79,9 +78,9 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece las existencias de la marca.
- */
+
+    //Establece las existencias.
+
     public function setExistencias($value)
     {
         // Validación de las existencias.
@@ -93,10 +92,8 @@ class MarcaData extends MarcaHandler
             return false;
         }
     }
+    //Establece la imagen.
 
-    /*
- * Establece la imagen de la marca.
- */
     public function setImagen($file, $filename = null)
     {
         // Validación de la imagen.
@@ -114,9 +111,8 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece la categoría de la marca.
- */
+    //Establece la categoría.
+
     public function setCategoria($value)
     {
         // Validación del identificador de la categoría.
@@ -129,9 +125,9 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece el estado de la marca.
- */
+
+    //Establece el estado
+
     public function setEstado($value)
     {
         // Validación del estado.
@@ -144,9 +140,9 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    /*
- * Establece el nombre de archivo.
- */
+
+    //Establece el nombre de archivo.
+
     public function setFilename()
     {
         // Obtiene el nombre de archivo desde la lectura.
@@ -158,7 +154,11 @@ class MarcaData extends MarcaHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
 
     /*
      *  Métodos para obtener los atributos adicionales.

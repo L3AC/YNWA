@@ -10,6 +10,7 @@ class NoticiaHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -27,15 +28,16 @@ class NoticiaHandler
     */
     public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT mo.id_modelo, mo.descripcion,mo.foto, mo.estado,ma.descripcion as marca
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        WHERE mo.descripcion LIKE ? OR ma.descripcion LIKE ?
-        ORDER BY mo.descripcion';
+        $sql = 'select n.id_noticia,n.id_tipo_noticia,n.titulo_noticia,
+        n.foto_noticia,n.contenido_noticia,n.estado_noticia,
+        DATE_FORMAT(n.fecha_noticia, "%d-%m-%Y") AS fecha from prc_noticias n
+        INNER JOIN ctg_tipo_noticias tn USING(id_tipo_noticia)
+        WHERE  n.titulo_noticia like ? OR n.contenido_noticia like ?
+        ORDER BY n.titulo_noticia';
 
-        $params = array($value, $value);
+        $params = array($this->search,$this->search);
         return Database::getRows($sql, $params);
     }
 

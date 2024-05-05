@@ -10,6 +10,7 @@ class ModeloHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -24,9 +25,9 @@ class ModeloHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($idMarca,$value)
+    public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT id_modelo, descripcion_modelo,foto_modelo, estado_modelo,descripcion_marca as marca
         FROM prc_modelos 
@@ -34,7 +35,7 @@ class ModeloHandler
         WHERE descripcion_modelo LIKE ? OR descripcion_marca LIKE ?
         ORDER BY descripcion_modelo';
 
-        $params = array($value, $value);
+        $params = array($this->search,$this->search);
         return Database::getRows($sql, $params);
     }
     public function searchModelos($value)

@@ -116,6 +116,12 @@ class TipoNoticiaData extends TipoNoticiaHandler
         }
     }
 
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
+    
     public function setFilename()
     {
         if ($data = $this->readFilename()) {

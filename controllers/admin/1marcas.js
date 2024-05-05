@@ -11,6 +11,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ID_PRODUCTO = document.getElementById('idMarca'),
     NOMBRE_PRODUCTO = document.getElementById('nombreMarca'),
     ESTADO_PRODUCTO = document.getElementById('estadoMarca');
@@ -25,15 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fillTable();
 });
 
-// Método del evento para cuando se envía el formulario de buscar.
-SEARCH_FORM.addEventListener('submit', (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
-    event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SEARCH_FORM);
-    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
-    fillTable(FORM);
-});
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
@@ -42,7 +34,8 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se verifica la acción a realizar.
     (ID_PRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SAVE_FORM);
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(MARCA_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -65,14 +58,15 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(MARCA_API, action, form);
+    const DATA = await fetchData(MARCA_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -102,7 +96,15 @@ const fillTable = async (form = null) => {
         sweetAlert(4, DATA.error, true);
     }
 }
+let timeoutId;
 
+/*Busqueda en tiempo real*/
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
+});
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
 *   Parámetros: ninguno.

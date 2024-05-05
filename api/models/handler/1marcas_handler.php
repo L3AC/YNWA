@@ -9,6 +9,7 @@ class MarcaHandler
     /*
     *   Declaración de atributos para el manejo de datos.
     */
+    protected $search = null;
     protected $id = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -26,12 +27,12 @@ class MarcaHandler
     */
     public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
         $sql = 'SELECT id_marca, descripcion_marca, estado_marca
                 FROM ctg_marcas
                 WHERE descripcion_marca LIKE ? 
                 ORDER BY descripcion_marca';
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

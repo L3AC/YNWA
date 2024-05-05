@@ -105,9 +105,14 @@ const fillTable = async (estado=null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
-/*BUSQUEDA EN TIEMPO REAL*/
-INPUTSEARCH.addEventListener('input', async function () {
-    fillTable(ESTADO_BUSQUEDA);
+let timeoutId;
+
+/*Busqueda en tiempo real*/
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
 });
 
 /*

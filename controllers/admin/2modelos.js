@@ -27,6 +27,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ESTADO_PRODUCTO = document.getElementById('estadoModelo');
     IMAGEN_PRODUCTO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     ADD_MODELOTALLA = document.getElementById('addModeloTalla');
 
 // Constantes para establecer los elementos del formulario de modelo tallas de guardar.
@@ -89,14 +90,15 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, action, form);
+    const DATA = await fetchData(PRODUCTO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
@@ -128,6 +130,15 @@ const fillTable = async (form = null) => {
         sweetAlert(4, DATA.error, true);
     }
 }
+let timeoutId;
+
+/*Busqueda en tiempo real*/
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
+});
 /*
 *   Función para preparar el formulario al momento de insertar un registro.
 *   Parámetros: ninguno.

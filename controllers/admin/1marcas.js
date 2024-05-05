@@ -15,6 +15,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_PRODUCTO = document.getElementById('idMarca'),
     NOMBRE_PRODUCTO = document.getElementById('nombreMarca'),
     ESTADO_PRODUCTO = document.getElementById('estadoMarca');
+    let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -100,8 +101,8 @@ let timeoutId;
 
 /*Busqueda en tiempo real*/
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(async function () {
+    clearTimeout(TIMEOUT_ID);
+    TIMEOUT_ID = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 500ms
 });

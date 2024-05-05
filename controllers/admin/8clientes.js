@@ -18,10 +18,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasCliente'),
     CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
     ESTADO_CLIENTE = document.getElementById('estadoCliente'),
-    CONFIRMAR_CLAVE = document.getElementById('confirmarClave');
-
-const MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
+    CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
+    MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
     IDGUARDAR = document.getElementById('idGuardar');
+    let TIMEOUT_ID;
+
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {

@@ -24,7 +24,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido');
-    let ESTADO_BUSQUEDA = "Pendiente";
+    let ESTADO_BUSQUEDA = "Pendiente",
+    TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -105,12 +106,10 @@ const fillTable = async (estado=null) => {
         //sweetAlert(4, DATA.error, true);
     }
 }
-let timeoutId;
-
 /*Busqueda en tiempo real*/
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(async function () {
+    clearTimeout(TIMEOUT_ID);
+    TIMEOUT_ID = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 500ms
 });

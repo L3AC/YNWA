@@ -17,11 +17,16 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
-                if ($result['dataset'] = $producto->searchRows($_POST['valor'])) {
+                if (
+                    !$administrador->setSearch($_POST['valor']) 
+                ) {
+                    $result['error'] = $administrador->getDataError();
+                } 
+                elseif ($result['dataset'] = $administrador->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    
+                    $result['error'] = 'No hay coincidencias';
                 }
                 break;
             case 'createRow':

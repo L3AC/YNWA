@@ -10,6 +10,7 @@ class ClienteHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $search = null;
     protected $nombre = null;
     protected $apellido = null;
     protected $email = null;
@@ -98,12 +99,13 @@ class ClienteHandler
      */
     public function searchRows()
     {
-        $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_cliente,id_rol, nombre_cliente, apellido_cliente, email_cliente, alias_cliente
-                FROM cliente
-                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ?
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
+                nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
+               from prc_clientes
+                WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ? OR usuario_cliente LIKE ?
                 ORDER BY apellido_cliente';
-        $params = array($value, $value);
+        $params = array($this->search,$this->search,$this->search);
         return Database::getRows($sql, $params);
     }
 

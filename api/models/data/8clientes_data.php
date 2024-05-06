@@ -129,6 +129,11 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
 
     // Método para obtener el error de los datos.
     public function getDataError()

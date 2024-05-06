@@ -55,40 +55,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 /*BUSQUEDA EN TIEMPO REAL*/
-INPUTSEARCH.addEventListener('input', async function () {
-    ROWS_FOUND.textContent = '';
-    TABLE_BODY.innerHTML = '';
-    const FORM = new FormData();
-    FORM.append('valor', INPUTSEARCH.value);
-    // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(COMENTARIO_API, 'searchRows', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
-            // Se establece un icono para el estado del comentario.
-            (row.estado_comentario) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.cliente}</td>
-                    <td>${row.modelo}</td>
-                    <td>${row.puntuacion_comentario}</td>
-                    <td><i class="${icon}"></i></td>
-                    <td>
-                        <button type="button" class="btn btn-success" onclick="openUpdate(${row.id_comentario})">
-                        <i class="bi bi-info-circle"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
-        // Se muestra un mensaje de acuerdo con el resultado.
-        ROWS_FOUND.textContent = DATA.message;
-    } else {
-        // sweetAlert(4, DATA.error, true);
-    }
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(TIMEOUT_ID);
+    TIMEOUT_ID = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
 });
 
 /*

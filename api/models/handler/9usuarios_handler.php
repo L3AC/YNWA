@@ -10,6 +10,7 @@ class AdministradorHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $search = null;
     protected $idRol = null;
     protected $nombre = null;
     protected $apellido = null;
@@ -112,19 +113,22 @@ class AdministradorHandler
     /*
      *  Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
      */
-    public function searchRows($idrol, $value/*,$value2,$value3*/)
+    public function searchRows()
     {
-        $value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+        //$value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
         /*$value2 = ($value2 === '') ? '%%' : '%' . $value2 . '%';
         $value3 = ($value3 === '') ? '%%' : '%' . $value3 . '%';*/
 
         $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
         FROM sec_usuarios
-        WHERE id_usuario != idmin("sec_usuarios") 
-        AND id_rol!=?
-        ORDER BY apellido_usuario';
+        WHERE id_usuario != idmin("sec_usuarios")
+        AND id_rol != ?
+        AND (nombre_usuario LIKE ? OR apellido_usuario LIKE ? 
+        OR email_usuario LIKE ? OR usuario_usuario LIKE ?)
+        ORDER BY apellido_usuario;';
 
-        $params = array($idrol);
+        $params = array($_SESSION['idRol'],$this->search,$this->search,$this->search,$this->search);
         return Database::getRows($sql, $params);
     }
     public function fillTab($idrol)

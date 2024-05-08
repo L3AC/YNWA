@@ -10,6 +10,7 @@ class ModeloTallaHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $idModelo = null;
     protected $idTalla = null;
     protected $nombre = null;
@@ -26,19 +27,19 @@ class ModeloTallaHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($valor)
+    public function searchRows()
     {
-        $valor='';
-        $value = '%' . Validator::getSearchValue() . '%';
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql='select mt.id_modelotalla,mt.id_talla,mt.id_modelo,mt.stock,mt.precio,t.descripcion as talla
-        from prc_modelo_tallas mt 
-        INNER JOIN ctg_tallas t USING(id_talla)
-        INNER JOIN prc_modelos m USING(id_modelo)
-        WHERE t.descripcion LIKE ? AND mt.id_modelo=?
-        ORDER BY t.descripcion';
+        $sql='select id_modelo_talla,id_talla,id_modelo,stock_modelo_talla,
+        precio_modelo_talla,descripcion_talla as talla
+        from prc_modelo_tallas 
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        WHERE descripcion_talla LIKE ? AND id_modelo=?
+        ORDER BY descripcion_talla';
 
-        $params = array($value,$this->idModelo);
+        $params = array($this->search,$this->idModelo);
         return Database::getRows($sql, $params);
     }
 

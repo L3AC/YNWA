@@ -27,10 +27,10 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
-    public function setIdModelo($value)
+    public function setIdPedido($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idModelo = $value;
+            $this->idPedido = $value;
             return true;
         } else {
             $this->data_error = 'El identificador del modelo es incorrecto';
@@ -147,7 +147,11 @@ class DetallePedidoData extends DetallePedidoHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
     /*
      *  Métodos para obtener los atributos adicionales.
      */

@@ -28,6 +28,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadopRol');
+    let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,15 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fillTable();
 });
 
-// Método del evento para cuando se envía el formulario de buscar.
-SEARCH_FORM.addEventListener('submit', (event) => {
-    // Se evita recargar la página web después de enviar el formulario.
-    event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SEARCH_FORM);
-    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
-    fillTable(FORM);
-});
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
@@ -72,56 +64,29 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-//METODO PARA BUSCAR 
-INPUTSEARCH.addEventListener('input', async function ()  {
-    ROWS_FOUND.textContent = '';
-    TABLE_BODY.innerHTML = '';
-    const FORM = new FormData();
-    FORM.append('valor', INPUTSEARCH.value);
-    // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(ROL_API, 'searchRows', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
-            // Se establece un icono para el estado del ROL.
-            (row.estado_opc) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
-            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
-            TABLE_BODY.innerHTML += `
-                <tr>
-                    <td>${row.descripcion_opc}</td>
-                    <td><i class="${icon}"></i></td>
-                    <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_rol})">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_rol})">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </td>
-                </tr>
-            `;
-        });
-        // Se muestra un mensaje de acuerdo con el resultado.
-        ROWS_FOUND.textContent = DATA.message;
-    } else {
-       // sweetAlert(4, DATA.error, true);
-    }
+//METODO PARA BUSCAR EN TIEMPO REAL
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(TIMEOUT_ID);
+    TIMEOUT_ID = setTimeout(async function () {
+        fillTable();
+    }, 50); // Delay de 500ms
 });
+
 
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.
 *   Parámetros: form (objeto opcional con los datos de búsqueda).
 *   Retorno: ninguno.
 */
-const fillTable = async (form = null) => {
+const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    (form) ? action = 'searchRows' : action = 'readAll';
+    const FORM = new FormData();
+    FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(ROL_API, action, form);
+    const DATA = await fetchData(ROL_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

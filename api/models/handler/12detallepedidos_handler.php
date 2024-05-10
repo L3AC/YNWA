@@ -31,18 +31,17 @@ class DetallePedidoHandler
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
-        $sql = 'SELECT id_pedido,descripcion_modelo,descripcion_marca,
+        $sql = 'SELECT id_detalle,id_pedido,descripcion_modelo,descripcion_marca,
         precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido
-        FROM prc_pedidos 
-        INNER JOIN prc_detalle_pedidos USING (id_pedido)
+        from prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING (id_pedido)
         INNER JOIN prc_modelo_tallas USING (id_modelo_talla)
         INNER JOIN prc_modelos USING (id_modelo)
-        INNER JOIN prc_clientes USING (id_cliente)
         INNER JOIN ctg_marcas USING (id_marca)
         INNER JOIN ctg_tallas USING (id_talla)
         WHERE id_pedido =? AND (descripcion_modelo like ? 
         OR descripcion_marca like ? OR precio_modelo_talla like ?)
-        ORDER BY mo.descripcion_modelo';
+        ORDER BY descripcion_modelo';
 
         $params = array($this->idPedido,$this->search,$this->search,$this->search);
         return Database::getRows($sql, $params);

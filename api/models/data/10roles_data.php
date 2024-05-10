@@ -153,7 +153,11 @@ class RolData extends RolHandler
             return false;
         }
     }
-
+    public function setSearch($value)
+    {
+        $this->search = $value;
+        return true;
+    }
 
     public function setFilename()
     {

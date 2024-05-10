@@ -10,6 +10,7 @@ class RolHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
+    protected $search = null;
     protected $estado = null;
     protected $descripcion = null;
     protected $marcas = null;
@@ -29,13 +30,9 @@ class RolHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
-    public function searchRows($value)
+    public function searchRows()
     {
-        if ($value === '') {
-            $value = '%%';
-        } else {
-            $value = '%' . $value . '%';
-        }
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT id_rol, descripcion_opc, estado_opc, marcas_opc, modelos_opc,
         tallas_opc, pedidos_opc, tipo_noticias_opc, noticias_opc,
@@ -44,7 +41,7 @@ class RolHandler
         WHERE id_rol != idmin("sec_roles")  AND descripcion_opc like ?
         ORDER BY descripcion_opc';
 
-        $params = array($value);
+        $params = array($this->search);
         return Database::getRows($sql, $params);
     }
 

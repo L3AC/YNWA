@@ -35,8 +35,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se verifica la acción a realizar.
     (ID_PRODUCTO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData();
-    FORM.append('valor', INPUTSEARCH.value);
+    const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(MARCA_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -97,7 +96,6 @@ const fillTable = async () => {
         sweetAlert(4, DATA.error, true);
     }
 }
-let timeoutId;
 
 /*Busqueda en tiempo real*/
 INPUTSEARCH.addEventListener('input', function () {
@@ -127,7 +125,6 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    
     FORM.append('idMarca', id);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(MARCA_API, 'readOne', FORM);

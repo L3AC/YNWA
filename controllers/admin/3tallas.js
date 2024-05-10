@@ -76,7 +76,7 @@ const fillTable = async () => {
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(PRODUCTO_API, 'searchRows', FORM);
+    const DATA = await fetchData(TALLA_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.

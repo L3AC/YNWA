@@ -369,20 +369,20 @@ const opensubUpdate = async (id) => {
 */
 const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea inactivar el producto de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea inactivar el registro de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idModelo', id);
+        FORM.append('idModeloTalla', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(PRODUCTO_API, 'deleteRow', FORM);
+        const DATA = await fetchData(MODELOTALLAS_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            fillTable();
+            fillsubTable();
         } else {
             sweetAlert(2, DATA.error, false);
         }

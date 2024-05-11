@@ -125,9 +125,6 @@ const openCreate = () => {
     IMAGEN_PRE.innerHTML = '';
     MODAL_TITLE.textContent = 'Crear PEDIDO';
     SUBTABLE.hidden = true;
-    /*SUBMODAL_TITLE.innerHTML = '';
-    SUBTABLE_HEAD.innerHTML = '';
-    SUBTABLE_BODY.innerHTML = '';*/
 
     // Se prepara el formulario.
     SAVE_FORM.reset();

@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/9usuarios.php',
+const USUARIO_API = 'services/admin/9usuarios.php',
     ROL_API = 'services/admin/10roles.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
@@ -12,13 +12,13 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
-    ID_ADMINISTRADOR = document.getElementById('idUsuario'),
-    ROL_ADMINISTRADOR = document.getElementById('rolUsuario'),
-    NOMBRE_ADMINISTRADOR = document.getElementById('nombreUsuario'),
-    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoUsuario'),
-    CORREO_ADMINISTRADOR = document.getElementById('correoUsuario'),
-    ALIAS_ADMINISTRADOR = document.getElementById('aliasUsuario'),
-    CLAVE_ADMINISTRADOR = document.getElementById('claveUsuario'),
+    ID_USUARIO = document.getElementById('idUsuario'),
+    ROL_USUARIO = document.getElementById('rolUsuario'),
+    NOMBRE_USUARIO = document.getElementById('nombreUsuario'),
+    APELLIDO_USUARIO = document.getElementById('apellidoUsuario'),
+    CORREO_USUARIO = document.getElementById('correoUsuario'),
+    ALIAS_USUARIO = document.getElementById('aliasUsuario'),
+    CLAVE_USUARIO = document.getElementById('claveUsuario'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
     ESTADO_USUARIO = document.getElementById('estadoUsuario'),
     mensajeDiv = document.getElementById('mensajeDiv'),
@@ -43,18 +43,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_ADMINISTRADOR.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_USUARIO.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(ADMINISTRADOR_API, action, FORM);
+    const DATA = await fetchData(USUARIO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
-        ID_ADMINISTRADOR.value = null;
+        ID_USUARIO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
@@ -82,7 +82,7 @@ const fillTable = async () => {
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'searchRows', FORM);
+    const DATA = await fetchData(USUARIO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
@@ -121,19 +121,19 @@ const fillTable = async () => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear administrador';
+    MODAL_TITLE.textContent = 'Crear usuario';
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    ALIAS_ADMINISTRADOR.disabled = false;
-    CLAVE_ADMINISTRADOR.disabled = false;
+    ALIAS_USUARIO.disabled = false;
+    CLAVE_USUARIO.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
 
     fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
-    ALIAS_ADMINISTRADOR.addEventListener('input', async function () {
+    ALIAS_USUARIO.addEventListener('input', async function () {
         const FORM = new FormData();
-        FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+        FORM.append('usuario', ALIAS_USUARIO.value);
         // Petición para obtener los datos del registro solicitado.
-        const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+        const DATA = await fetchData(USUARIO_API, 'readExist', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status === 1) {
             mensajeDiv.textContent = 'Ya existe el usuario';
@@ -156,24 +156,24 @@ const openUpdate = async (id) => {
     const FORM = new FormData();
     FORM.append('idUsuario', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readOne', FORM);
+    const DATA = await fetchData(USUARIO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar administrador';
+        MODAL_TITLE.textContent = 'Actualizar usuario';
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        ALIAS_ADMINISTRADOR.disabled = true;
-        CLAVE_ADMINISTRADOR.disabled = true;
+        ALIAS_USUARIO.disabled = true;
+        CLAVE_USUARIO.disabled = true;
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_ADMINISTRADOR.value = ROW.id_usuario;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombre_usuario;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellido_usuario;
-        CORREO_ADMINISTRADOR.value = ROW.email_usuario;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario_usuario;
+        ID_USUARIO.value = ROW.id_usuario;
+        NOMBRE_USUARIO.value = ROW.nombre_usuario;
+        APELLIDO_USUARIO.value = ROW.apellido_usuario;
+        CORREO_USUARIO.value = ROW.email_usuario;
+        ALIAS_USUARIO.value = ROW.usuario_usuario;
         ESTADO_USUARIO.checked = ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
         //IDGUARDAR.disabled = false;
@@ -189,14 +189,14 @@ const openUpdate = async (id) => {
 */
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea eliminar el administrador de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar el usuario de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idAdministrador', id);
+        FORM.append('idusuario', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(ADMINISTRADOR_API, 'deleteRow', FORM);
+        const DATA = await fetchData(USUARIO_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.

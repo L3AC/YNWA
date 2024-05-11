@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const ADMINISTRADOR_API = 'services/admin/8clientes.php';
+const CLIENTE_API = 'services/admin/8clientes.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -10,13 +10,13 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_ADMINISTRADOR = document.getElementById('idCliente'),
-    NOMBRE_ADMINISTRADOR = document.getElementById('nombreCliente'),
-    APELLIDO_ADMINISTRADOR = document.getElementById('apellidoCliente'),
-    CORREO_ADMINISTRADOR = document.getElementById('correoCliente'),
+    ID_CLIENTE = document.getElementById('idCliente'),
+    NOMBRE_CLIENTE = document.getElementById('nombreCliente'),
+    APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
+    CORREO_CLIENTE = document.getElementById('correoCliente'),
     DIRECCION_CLIENTE = document.getElementById('direccionCliente'),
-    ALIAS_ADMINISTRADOR = document.getElementById('aliasCliente'),
-    CLAVE_ADMINISTRADOR = document.getElementById('claveCliente'),
+    ALIAS_CLIENTE = document.getElementById('aliasCliente'),
+    CLAVE_CLIENTE = document.getElementById('claveCliente'),
     ESTADO_CLIENTE = document.getElementById('estadoCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
     MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
@@ -41,18 +41,18 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_ADMINISTRADOR.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_CLIENTE.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(ADMINISTRADOR_API, action, FORM);
+    const DATA = await fetchData(CLIENTE_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
-        ID_ADMINISTRADOR.value = null;
+        ID_CLIENTE.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
     } else {
@@ -74,7 +74,7 @@ const fillTable = async () => {
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'searchRows', FORM);
+    const DATA = await fetchData(CLIENTE_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
@@ -122,14 +122,14 @@ const openCreate = () => {
     MODAL_TITLE.textContent = 'Crear registro';
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    ALIAS_ADMINISTRADOR.disabled = false;
-    CLAVE_ADMINISTRADOR.disabled = false;
+    ALIAS_CLIENTE.disabled = false;
+    CLAVE_CLIENTE.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
-    ALIAS_ADMINISTRADOR.addEventListener('input', async function ()  {
+    ALIAS_CLIENTE.addEventListener('input', async function ()  {
         const FORM = new FormData();
-        FORM.append('usuario', ALIAS_ADMINISTRADOR.value);
+        FORM.append('usuario', ALIAS_CLIENTE.value);
         // Petición para obtener los datos del registro solicitado.
-        const DATA = await fetchData(ADMINISTRADOR_API, 'readExist', FORM);
+        const DATA = await fetchData(CLIENTE_API, 'readExist', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status === 1) {
             MENSAJE_DIV.textContent = 'Ya existe el usuario';
@@ -151,7 +151,7 @@ const openUpdate = async (id) => {
     const FORM = new FormData();
     FORM.append('idCliente', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(ADMINISTRADOR_API, 'readOne', FORM);
+    const DATA = await fetchData(CLIENTE_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
@@ -159,17 +159,17 @@ const openUpdate = async (id) => {
         MODAL_TITLE.textContent = 'Actualizar registro';
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        ALIAS_ADMINISTRADOR.disabled = true;
-        CLAVE_ADMINISTRADOR.disabled = true;
+        ALIAS_CLIENTE.disabled = true;
+        CLAVE_CLIENTE.disabled = true;
         CONFIRMAR_CLAVE.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         DIRECCION_CLIENTE.value = ROW.direccion_cliente;
-        ID_ADMINISTRADOR.value = ROW.id_cliente;
-        NOMBRE_ADMINISTRADOR.value = ROW.nombre_cliente;
-        APELLIDO_ADMINISTRADOR.value = ROW.apellido_cliente;
-        CORREO_ADMINISTRADOR.value = ROW.email_cliente;
-        ALIAS_ADMINISTRADOR.value = ROW.usuario_cliente;
+        ID_CLIENTE.value = ROW.id_cliente;
+        NOMBRE_CLIENTE.value = ROW.nombre_cliente;
+        APELLIDO_CLIENTE.value = ROW.apellido_cliente;
+        CORREO_CLIENTE.value = ROW.email_cliente;
+        ALIAS_CLIENTE.value = ROW.usuario_cliente;
         ESTADO_CLIENTE.checked=ROW.estado_cliente;
     } else {
         sweetAlert(2, DATA.error, false);
@@ -190,7 +190,7 @@ const openDelete = async (id) => {
         const FORM = new FormData();
         FORM.append('idCliente', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(ADMINISTRADOR_API, 'deleteRow', FORM);
+        const DATA = await fetchData(CLIENTE_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.

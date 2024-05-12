@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $categoria = new MarcaData;
+    $marca = new MarcaData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -16,11 +16,11 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$categoria->setSearch($_POST['valor']) 
+                    !$marca->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $categoria->getDataError();
+                    $result['error'] = $marca->getDataError();
                 } 
-                elseif ($result['dataset'] = $categoria->searchRows()) {
+                elseif ($result['dataset'] = $marca->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -31,31 +31,31 @@ if (isset($_GET['action'])) {
                 
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setNombre($_POST['nombreMarca'])or
-                    !$categoria->setEstado(isset($_POST['estadoMarca']) ? 1 : 0) 
+                    !$marca->setNombre($_POST['nombreMarca'])or
+                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($categoria->createRow()) {
+                    $result['error'] = $marca->getDataError();
+                } elseif ($marca->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Categoría creada correctamente';
+                    $result['message'] = 'registro creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
                     
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear la categoría';
+                    $result['error'] = 'Ocurrió un problema al crear la registro';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $categoria->readAll()) {
+                if ($result['dataset'] = $marca->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = 'No existen categorías registradas';
+                    $result['error'] = 'No existen registros registradas';
                 }
                 break;
             case 'readOne':
-                if (!$categoria->setId($_POST['idMarca'])) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($result['dataset'] = $categoria->readOne()) {
+                if (!$marca->setId($_POST['idMarca'])) {
+                    $result['error'] = $marca->getDataError();
+                } elseif ($result['dataset'] = $marca->readOne()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Registro inexistente';
@@ -64,30 +64,30 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$categoria->setId($_POST['idMarca']) or
-                    !$categoria->setNombre($_POST['nombreMarca']) or
-                    !$categoria->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)  
+                    !$marca->setId($_POST['idMarca']) or
+                    !$marca->setNombre($_POST['nombreMarca']) or
+                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)  
                 ) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($categoria->updateRow()) {
+                    $result['error'] = $marca->getDataError();
+                } elseif ($marca->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Categoría modificada correctamente';
+                    $result['message'] = 'registro modificada correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar la categoría';
+                    $result['error'] = 'Ocurrió un problema al modificar la registro';
                 }
                 break;
             case 'deleteRow':
                 if (
-                    !$categoria->setId($_POST['idMarca']) 
+                    !$marca->setId($_POST['idMarca']) 
                 ) {
-                    $result['error'] = $categoria->getDataError();
-                } elseif ($categoria->deleteRow()) {
+                    $result['error'] = $marca->getDataError();
+                } elseif ($marca->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Categoría eliminada correctamente';
+                    $result['message'] = 'registro eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($categoria::RUTA_IMAGEN, $categoria->getFilename());
+                    $result['fileStatus'] = Validator::deleteFile($marca::RUTA_IMAGEN, $marca->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar la categoría';
+                    $result['error'] = 'Ocurrió un problema al eliminar la registro';
                 }
                 break;
             default:

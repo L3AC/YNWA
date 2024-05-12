@@ -2,9 +2,9 @@
 // Se incluye la clase para trabajar con la base de datos.
 require_once('../../helpers/database.php');
 /*
- *  Clase para manejar el comportamiento de los datos de la tabla administrador.
+ *  Clase para manejar el comportamiento de los datos de la tabla usuario.
  */
-class AdministradorHandler
+class UsuarioHandler
 {
     /*
      *  Declaración de atributos para el manejo de datos.
@@ -21,7 +21,7 @@ class AdministradorHandler
     protected $estado = null;
 
     /*
-     *  Métodos para gestionar la cuenta del administrador.
+     *  Métodos para gestionar la cuenta del usuario.
      */
     /*GENERAR PIN*/
     public function generarPin()

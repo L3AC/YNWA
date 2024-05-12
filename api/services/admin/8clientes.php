@@ -8,21 +8,21 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $administrador = new ClienteData;
+    $cliente = new ClienteData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'session' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'username' => null);
-    // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
+    // Se verifica si existe una sesión iniciada como cliente, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idUsuario'])) {
         $result['session'] = 1;
-        // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
+        // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$administrador->setSearch($_POST['valor']) 
+                    !$cliente->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $cliente->getDataError();
                 } 
-                elseif ($result['dataset'] = $administrador->searchRows()) {
+                elseif ($result['dataset'] = $cliente->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -32,18 +32,18 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setNombre($_POST['nombreCliente']) or
-                    !$administrador->setApellido($_POST['apellidoCliente']) or
-                    !$administrador->setCorreo($_POST['correoCliente']) or
-                    !$administrador->setDireccion($_POST['direccionCliente']) or
-                    !$administrador->setAlias($_POST['aliasCliente']) or
-                    !$administrador->setClave($_POST['claveCliente']) or
-                    !$administrador->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) or
+                    !$cliente->setDireccion($_POST['direccionCliente']) or
+                    !$cliente->setAlias($_POST['aliasCliente']) or
+                    !$cliente->setClave($_POST['claveCliente']) or
+                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $cliente->getDataError();
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
-                } elseif ($administrador->createRow()) {
+                } elseif ($cliente->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro creado correctamente';
                 } else {
@@ -51,24 +51,24 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $administrador->readAll()) {
+                if ($result['dataset'] = $cliente->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = 'No existen administradores registrados';
+                    $result['error'] = 'No existen clientees registrados';
                 }
                 break;
             case 'readExist':
-                if ($administrador->readExist($_POST['usuario'])) {
+                if ($cliente->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
                 } else {
                     $result['status'] = 2;
                 }
                 break;
             case 'readOne':
-                if (!$administrador->setId($_POST['idCliente'])) {
+                if (!$cliente->setId($_POST['idCliente'])) {
                     $result['error'] = 'Registro incorrecto';
-                } elseif ($result['dataset'] = $administrador->readOne()) {
+                } elseif ($result['dataset'] = $cliente->readOne()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Registro inexistente';
@@ -77,14 +77,14 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setId($_POST['idCliente']) or
-                    !$administrador->setNombre($_POST['nombreCliente']) or
-                    !$administrador->setApellido($_POST['apellidoCliente']) or
-                    !$administrador->setCorreo($_POST['correoCliente']) or
-                    !$administrador->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
+                    !$cliente->setId($_POST['idCliente']) or
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) or
+                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->updateRow()) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro modificado correctamente';
                 } else {
@@ -92,13 +92,13 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if (!$administrador->setId($_POST['idCliente'])) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->deleteRow()) {
+                if (!$cliente->setId($_POST['idCliente'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el administrador';
+                    $result['error'] = 'Ocurrió un problema al eliminar el cliente';
                 }
                 break;
             case 'getUser':
@@ -118,7 +118,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readProfile':
-                if ($result['dataset'] = $administrador->readProfile()) {
+                if ($result['dataset'] = $cliente->readProfile()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
@@ -127,29 +127,29 @@ if (isset($_GET['action'])) {
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setNombre($_POST['nombreAdministrador']) or
-                    !$administrador->setApellido($_POST['apellidoAdministrador']) or
-                    !$administrador->setCorreo($_POST['correoAdministrador']) or
-                    !$administrador->setAlias($_POST['aliasAdministrador'])
+                    !$cliente->setNombre($_POST['nombrecliente']) or
+                    !$cliente->setApellido($_POST['apellidocliente']) or
+                    !$cliente->setCorreo($_POST['correocliente']) or
+                    !$cliente->setAlias($_POST['aliascliente'])
                 ) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->editProfile()) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['aliasAdministrador'] = $_POST['aliasAdministrador'];
+                    $_SESSION['aliascliente'] = $_POST['aliascliente'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
-                if (!$administrador->checkPassword($_POST['claveActual'])) {
+                if (!$cliente->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Confirmación de contraseña diferente';
-                } elseif (!$administrador->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->changePassword()) {
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePassword()) {
                     $result['status'] = 1;
                     $result['message'] = 'Contraseña cambiada correctamente';
                 } else {
@@ -160,40 +160,40 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
-        // Se compara la acción a realizar cuando el administrador no ha iniciado sesión.
+        // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
             case 'readUsers':
-                if ($administrador->readAll()) {
+                if ($cliente->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Debe autenticarse para ingresar';
                 } else {
-                    $result['error'] = 'Debe crear un administrador para comenzar';
+                    $result['error'] = 'Debe crear un cliente para comenzar';
                 }
                 break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setNombre($_POST['nombre']) or
-                    !$administrador->setApellido($_POST['apellido']) or
-                    !$administrador->setCorreo($_POST['correo']) or
-                    !$administrador->setAlias($_POST['usuario']) or
-                    !$administrador->setClave($_POST['clave'])
+                    !$cliente->setNombre($_POST['nombre']) or
+                    !$cliente->setApellido($_POST['apellido']) or
+                    !$cliente->setCorreo($_POST['correo']) or
+                    !$cliente->setAlias($_POST['usuario']) or
+                    !$cliente->setClave($_POST['clave'])
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $cliente->getDataError();
                 } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
-                } elseif ($administrador->createRow()) {
+                } elseif ($cliente->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador registrado correctamente';
+                    $result['message'] = 'cliente registrado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al registrar el administrador';
+                    $result['error'] = 'Ocurrió un problema al registrar el cliente';
                 }
                 break;
             case 'logIn':
 
                 $_POST = Validator::validateForm($_POST);
 
-                if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
+                if ($cliente->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {

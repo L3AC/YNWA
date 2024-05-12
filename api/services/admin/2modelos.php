@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $producto = new ModeloData;
+    $modelo = new ModeloData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -16,11 +16,11 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$producto->setSearch($_POST['valor']) 
+                    !$modelo->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
+                    $result['error'] = $modelo->getDataError();
                 } 
-                elseif ($result['dataset'] = $producto->searchRows()) {
+                elseif ($result['dataset'] = $modelo->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -30,25 +30,25 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenModelo'])
+                    !$modelo->setNombre($_POST['nombreModelo']) or
+                    !$modelo->setCategoria($_POST['marcaModelo']) or
+                    !$modelo->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
+                    !$modelo->setImagen($_FILES['imagenModelo'])
                 ) {
                     /*echo 'DATOS '.$_POST['nombreModelo'].' '.$_POST['marcaModelo'].' '.$_POST['estadoModelo']
                     .' '.$_FILES['imagenModelo'];*/
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                    $result['error'] = $modelo->getDataError();
+                } elseif ($modelo->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Modelo creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenModelo'], $producto::RUTA_IMAGEN);
+                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenModelo'], $modelo::RUTA_IMAGEN);
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el modelo';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $modelo->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -56,9 +56,9 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readsubAll':
-                    if (!$producto->setId($_SESSION['idmod'])) {
-                        $result['error'] = $producto->getDataError();
-                    } elseif ($result['dataset'] = $producto->readsubAll()) {
+                    if (!$modelo->setId($_SESSION['idmod'])) {
+                        $result['error'] = $modelo->getDataError();
+                    } elseif ($result['dataset'] = $modelo->readsubAll()) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     } else {
@@ -66,59 +66,59 @@ if (isset($_GET['action'])) {
                     }
                     break;
             case 'readOne':
-                if (!$producto->setId($_POST['idModelo'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                if (!$modelo->setId($_POST['idModelo'])) {
+                    $result['error'] = $modelo->getDataError();
+                } elseif ($result['dataset'] = $modelo->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Registro inexistente';
                 }
                 break;
                 
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idModelo']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenModelo'], $producto->getFilename())
+                    !$modelo->setId($_POST['idModelo']) or
+                    !$modelo->setFilename() or
+                    !$modelo->setNombre($_POST['nombreModelo']) or
+                    !$modelo->setCategoria($_POST['marcaModelo']) or
+                    !$modelo->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) or
+                    !$modelo->setImagen($_FILES['imagenModelo'], $modelo->getFilename())
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
+                    $result['error'] = $modelo->getDataError();
+                } elseif ($modelo->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Modelo modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenModelo'], $producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenModelo'], $modelo::RUTA_IMAGEN, $modelo->getFilename());
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el modelo';
                 }
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idModelo']) or
-                    !$producto->setFilename()
+                    !$modelo->setId($_POST['idModelo']) or
+                    !$modelo->setFilename()
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
+                    $result['error'] = $modelo->getDataError();
+                } elseif ($modelo->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Modelo eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['fileStatus'] = Validator::deleteFile($modelo::RUTA_IMAGEN, $modelo->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    $result['error'] = 'Ocurrió un problema al eliminar el registro';
                 }
                 break;
             case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
+                if ($result['dataset'] = $modelo->cantidadProductosCategoria()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
             case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
+                if ($result['dataset'] = $modelo->porcentajeProductosCategoria()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';

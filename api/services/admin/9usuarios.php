@@ -8,21 +8,21 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $administrador = new AdministradorData;
+    $usuario = new UsuarioData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'session' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'username' => null);
-    // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
+    // Se verifica si existe una sesión iniciada como usuario, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idUsuario'])) {
         $result['session'] = 1;
-        // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
+        // Se compara la acción a realizar cuando un usuario ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$administrador->setSearch($_POST['valor']) 
+                    !$usuario->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $usuario->getDataError();
                 } 
-                elseif ($result['dataset'] = $administrador->searchRows()) {
+                elseif ($result['dataset'] = $usuario->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -30,87 +30,87 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'fillTab':
-                if ($result['dataset'] = $administrador->fillTab($_SESSION['idRol'])) {
+                if ($result['dataset'] = $usuario->fillTab($_SESSION['idRol'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error'] = 'No existen administradores registrados';
+                    $result['error'] = 'No existen usuarioes registrados';
                 }
                 break;
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setIdRol($_POST['rolUsuario']) or
-                    !$administrador->setNombre($_POST['nombreUsuario']) or
-                    !$administrador->setApellido($_POST['apellidoUsuario']) or
-                    !$administrador->setCorreo($_POST['correoUsuario']) or
-                    !$administrador->setAlias($_POST['aliasUsuario']) or
-                    !$administrador->setClave($_POST['claveUsuario']) or 
-                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$usuario->setIdRol($_POST['rolUsuario']) or
+                    !$usuario->setNombre($_POST['nombreUsuario']) or
+                    !$usuario->setApellido($_POST['apellidoUsuario']) or
+                    !$usuario->setCorreo($_POST['correoUsuario']) or
+                    !$usuario->setAlias($_POST['aliasUsuario']) or
+                    !$usuario->setClave($_POST['claveUsuario']) or 
+                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $usuario->getDataError();
                 } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
-                } elseif ($administrador->createRow()) {
+                } elseif ($usuario->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador creado correctamente';
+                    $result['message'] = 'usuario creado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el administrador';
+                    $result['error'] = 'Ocurrió un problema al crear el usuario';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $administrador->readAll()) {
+                if ($result['dataset'] = $usuario->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     $result['username'] = $_SESSION['usuarion'];
                 } else {
-                    $result['error'] = 'No existen administradores registrados';
+                    $result['error'] = 'No existen usuarioes registrados';
                 }
                 break;
             case 'readExist':
-                if ($administrador->readExist($_POST['usuario'])) {
+                if ($usuario->readExist($_POST['usuario'])) {
                     $result['status'] = 1;
                 } else {
                     $result['status'] = 2;
                 }
                 break;
             case 'readOne':
-                if (!$administrador->setId($_POST['idUsuario'])) {
-                    $result['error'] = 'Administrador incorrecto';
-                } elseif ($result['dataset'] = $administrador->readOne()) {
+                if (!$usuario->setId($_POST['idUsuario'])) {
+                    $result['error'] = 'usuario incorrecto';
+                } elseif ($result['dataset'] = $usuario->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Administrador inexistente';
+                    $result['error'] = 'usuario inexistente';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setId($_POST['idUsuario']) or
-                    !$administrador->setIdRol($_POST['rolUsuario'])or
-                    !$administrador->setNombre($_POST['nombreUsuario']) or
-                    !$administrador->setApellido($_POST['apellidoUsuario']) or
-                    !$administrador->setCorreo($_POST['correoUsuario']) or
-                    !$administrador->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$usuario->setId($_POST['idUsuario']) or
+                    !$usuario->setIdRol($_POST['rolUsuario'])or
+                    !$usuario->setNombre($_POST['nombreUsuario']) or
+                    !$usuario->setApellido($_POST['apellidoUsuario']) or
+                    !$usuario->setCorreo($_POST['correoUsuario']) or
+                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->updateRow()) {
+                    $result['error'] = $usuario->getDataError();
+                } elseif ($usuario->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador modificado correctamente';
+                    $result['message'] = 'usuario modificado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el administrador';
+                    $result['error'] = 'Ocurrió un problema al modificar el usuario';
                 }
                 break;
             case 'deleteRow':
-                if ($_POST['idUsuario'] == $_SESSION['idAdministrador']) {
+                if ($_POST['idUsuario'] == $_SESSION['idusuario']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
-                } elseif (!$administrador->setId($_POST['idAdministrador'])) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->deleteRow()) {
+                } elseif (!$usuario->setId($_POST['idusuario'])) {
+                    $result['error'] = $usuario->getDataError();
+                } elseif ($usuario->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador eliminado correctamente';
+                    $result['message'] = 'usuario eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el administrador';
+                    $result['error'] = 'Ocurrió un problema al eliminar el usuario';
                 }
                 break;
             case 'getUser':
@@ -129,7 +129,7 @@ if (isset($_GET['action'])) {
                     $result['usuarios_opc']      = $_SESSION['usuarios_opc'];
                     $result['roles_opc']         = $_SESSION['roles_opc'];
                 } else {
-                    $result['error'] = 'Alias de administrador indefinido';
+                    $result['error'] = 'Alias de usuario indefinido';
                 }
                 break;
             case 'logOut':
@@ -141,7 +141,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readProfile':
-                if ($result['dataset'] = $administrador->readProfile()) {
+                if ($result['dataset'] = $usuario->readProfile()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
@@ -151,29 +151,29 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
 
                 if (
-                    !$administrador->setNombre($_POST['nombreAdministrador']) or
-                    !$administrador->setApellido($_POST['apellidoAdministrador']) or
-                    !$administrador->setCorreo($_POST['correoAdministrador']) or
-                    !$administrador->setAlias($_POST['aliasAdministrador'])
+                    !$usuario->setNombre($_POST['nombreusuario']) or
+                    !$usuario->setApellido($_POST['apellidousuario']) or
+                    !$usuario->setCorreo($_POST['correousuario']) or
+                    !$usuario->setAlias($_POST['aliasusuario'])
                 ) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->editProfile()) {
+                    $result['error'] = $usuario->getDataError();
+                } elseif ($usuario->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['usuarion'] = $_POST['aliasAdministrador'];
+                    $_SESSION['usuarion'] = $_POST['aliasusuario'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
                 break;
             case 'changePassword':
                 $_POST = Validator::validateForm($_POST);
-                if (!$administrador->checkPassword($_POST['claveActual'])) {
+                if (!$usuario->checkPassword($_POST['claveActual'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Confirmación de contraseña diferente';
-                } elseif (!$administrador->setClave($_POST['claveNueva'])) {
-                    $result['error'] = $administrador->getDataError();
-                } elseif ($administrador->changePassword()) {
+                } elseif (!$usuario->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $usuario->getDataError();
+                } elseif ($usuario->changePassword()) {
                     $result['status'] = 1;
                     $result['message'] = 'Contraseña cambiada correctamente';
                 } else {
@@ -184,40 +184,40 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
-        // Se compara la acción a realizar cuando el administrador no ha iniciado sesión.
+        // Se compara la acción a realizar cuando el usuario no ha iniciado sesión.
         switch ($_GET['action']) {
             case 'readUsers':
-                if ($administrador->readAll()) {
+                if ($usuario->readAll()) {
                     $result['status'] = 1;
                     //$result['message'] = 'Debe autenticarse para ingresar';
                 } else {
-                    $result['error'] = 'Debe crear un administrador para comenzar';
+                    $result['error'] = 'Debe crear un usuario para comenzar';
                 }
                 break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$administrador->setNombre($_POST['nombre']) or
-                    !$administrador->setApellido($_POST['apellido']) or
-                    !$administrador->setCorreo($_POST['correo']) or
-                    !$administrador->setAlias($_POST['usuario']) or
-                    !$administrador->setClave($_POST['clave'])
+                    !$usuario->setNombre($_POST['nombre']) or
+                    !$usuario->setApellido($_POST['apellido']) or
+                    !$usuario->setCorreo($_POST['correo']) or
+                    !$usuario->setAlias($_POST['usuario']) or
+                    !$usuario->setClave($_POST['clave'])
                 ) {
-                    $result['error'] = $administrador->getDataError();
+                    $result['error'] = $usuario->getDataError();
                 } elseif ($_POST['clave'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
-                } elseif ($administrador->createRow()) {
+                } elseif ($usuario->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador registrado correctamente';
+                    $result['message'] = 'usuario registrado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al registrar el administrador';
+                    $result['error'] = 'Ocurrió un problema al registrar el usuario';
                 }
                 break;
             case 'logIn':
 
                 $_POST = Validator::validateForm($_POST);
 
-                if ($administrador->checkUser($_POST['usuariol'], $_POST['clavel'])) {
+                if ($usuario->checkUser($_POST['usuariol'], $_POST['clavel'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Autenticación correcta';
                 } else {

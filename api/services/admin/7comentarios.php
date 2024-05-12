@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $producto = new ComentarioData;
+    $comentario = new ComentarioData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -16,11 +16,11 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$producto->setSearch($_POST['valor']) 
+                    !$comentario->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
+                    $result['error'] = $comentario->getDataError();
                 } 
-                elseif ($result['dataset'] = $producto->searchRows()) {
+                elseif ($result['dataset'] = $comentario->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -30,24 +30,24 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['nombreModelo']) or
-                    //!$producto->setDescripcion($_POST['descripcionModelo']) or
-                    !$producto->setCategoria($_POST['marcaModelo']) or
-                    !$producto->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
-                    !$producto->setImagen($_FILES['imagenModelo'])
+                    !$comentario->setNombre($_POST['nombreModelo']) or
+                    //!$comentario->setDescripcion($_POST['descripcionModelo']) or
+                    !$comentario->setCategoria($_POST['marcaModelo']) or
+                    !$comentario->setEstado(isset($_POST['estadoModelo']) ? "A" : "I") or
+                    !$comentario->setImagen($_FILES['imagenModelo'])
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                    $result['error'] = $comentario->getDataError();
+                } elseif ($comentario->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
+                    $result['message'] = 'comentario creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
+                    $result['fileStatus'] = Validator::saveFile($_FILES['imagencomentario'], $comentario::RUTA_IMAGEN);
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el comentario';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $comentario->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -55,55 +55,41 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$producto->setId($_POST['idComentario'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                if (!$comentario->setId($_POST['idComentario'])) {
+                    $result['error'] = $comentario->getDataError();
+                } elseif ($result['dataset'] = $comentario->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'comentario inexistente';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idComentario']) or
-                    !$producto->setEstado(isset($_POST['estadoComentario']) ? 1 : 0) 
+                    !$comentario->setId($_POST['idComentario']) or
+                    !$comentario->setEstado(isset($_POST['estadoComentario']) ? 1 : 0) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
+                    $result['error'] = $comentario->getDataError();
+                } elseif ($comentario->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro modificado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el producto';
+                    $result['error'] = 'Ocurrió un problema al modificar el comentario';
                 }
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename()
+                    !$comentario->setId($_POST['idcomentario']) or
+                    !$comentario->setFilename()
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
+                    $result['error'] = $comentario->getDataError();
+                } elseif ($comentario->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'comentario eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['fileStatus'] = Validator::deleteFile($comentario::RUTA_IMAGEN, $comentario->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
-                }
-                break;
-            case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
-                }
-                break;
-            case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
+                    $result['error'] = 'Ocurrió un problema al eliminar el comentario';
                 }
                 break;
             default:

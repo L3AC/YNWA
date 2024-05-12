@@ -7,7 +7,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
-    $producto = new NoticiaData;
+    $noticia = new NoticiaData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
@@ -16,11 +16,11 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$producto->setSearch($_POST['valor']) 
+                    !$noticia->setSearch($_POST['valor']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
+                    $result['error'] = $noticia->getDataError();
                 } 
-                elseif ($result['dataset'] = $producto->searchRows()) {
+                elseif ($result['dataset'] = $noticia->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -30,45 +30,45 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setNombre($_POST['tituloNoticia']) or
-                    !$producto->setDescripcion($_POST['contenidoNoticia']) or
-                    !$producto->setCategoria($_POST['tipoNoticia']) or
-                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenNoticia'])
+                    !$noticia->setNombre($_POST['tituloNoticia']) or
+                    !$noticia->setDescripcion($_POST['contenidoNoticia']) or
+                    !$noticia->setCategoria($_POST['tipoNoticia']) or
+                    !$noticia->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
+                    !$noticia->setImagen($_FILES['imagenNoticia'])
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                    $result['error'] = $noticia->getDataError();
+                } elseif ($noticia->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
+                    $result['message'] = 'noticia creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenNoticia'], $producto::RUTA_IMAGEN);
+                    $result['fileStatus'] = Validator::saveFile($_FILES['imagenNoticia'], $noticia::RUTA_IMAGEN);
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el noticia';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idNoticia']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['tituloNoticia']) or
-                    !$producto->setDescripcion($_POST['contenidoNoticia']) or
-                    !$producto->setCategoria($_POST['tipoNoticia']) or
-                    !$producto->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenNoticia'], $producto->getFilename())
+                    !$noticia->setId($_POST['idNoticia']) or
+                    !$noticia->setFilename() or
+                    !$noticia->setNombre($_POST['tituloNoticia']) or
+                    !$noticia->setDescripcion($_POST['contenidoNoticia']) or
+                    !$noticia->setCategoria($_POST['tipoNoticia']) or
+                    !$noticia->setEstado(isset($_POST['estadoNoticia']) ? 1 : 0) or
+                    !$noticia->setImagen($_FILES['imagenNoticia'], $noticia->getFilename())
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
+                    $result['error'] = $noticia->getDataError();
+                } elseif ($noticia->updateRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Registro modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenNoticia'], $producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenNoticia'], $noticia::RUTA_IMAGEN, $noticia->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el producto';
+                    $result['error'] = 'Ocurrió un problema al modificar el noticia';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $noticia->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -76,42 +76,28 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$producto->setId($_POST['idNoticia'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                if (!$noticia->setId($_POST['idNoticia'])) {
+                    $result['error'] = $noticia->getDataError();
+                } elseif ($result['dataset'] = $noticia->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'noticia inexistente';
                 }
                 break;
 
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename()
+                    !$noticia->setId($_POST['idNoticia']) or
+                    !$noticia->setFilename()
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
+                    $result['error'] = $noticia->getDataError();
+                } elseif ($noticia->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'noticia eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['fileStatus'] = Validator::deleteFile($noticia::RUTA_IMAGEN, $noticia->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
-                }
-                break;
-            case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
-                }
-                break;
-            case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
+                    $result['error'] = 'Ocurrió un problema al eliminar el noticia';
                 }
                 break;
             default:

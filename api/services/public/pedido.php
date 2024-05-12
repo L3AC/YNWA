@@ -19,19 +19,22 @@ if (isset($_GET['action'])) {
             case 'createDetail':
                 $_POST = Validator::validateForm($_POST);
                 if (!$pedido->startOrder()) {
-                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';
-                    
+                    $result['error'] = 'Ocurrió un problema al iniciar el pedido';   
                 } elseif (
                     
                     !$pedido->setProducto($_POST['idModeloTalla']) or
                     !$pedido->setCantidad($_POST['cantidadModelo'])
                 ) {
                     $result['error'] = $pedido->getDataError();
-                } elseif ($pedido->createDetail()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Producto agregado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al agregar el producto';
+                    $id_pedido = $producto->createDetail();
+                    if ($id_pedido) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Registro creado correctamente';
+                        $result['dataset'] = array('id_pedido' => $id_pedido);
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al crear el registro';
+                    }
                 }
                 break;
             // Acción para obtener los productos agregados en el carrito de compras.

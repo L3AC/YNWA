@@ -10,19 +10,12 @@ class PedidoHandler
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id_pedido = null;
+    protected $id_modelo_talla = null;
     protected $id_detalle = null;
     protected $cliente = null;
     protected $producto = null;
     protected $cantidad = null;
     protected $estado = null;
-
-    /*
-    *   ESTADOS DEL PEDIDO
-    *   Pendiente (valor por defecto en la base de datos). Pedido en proceso y se puede modificar el detalle.
-    *   Finalizado. Pedido terminado por el cliente y ya no es posible modificar el detalle.
-    *   Entregado. Pedido enviado al cliente.
-    *   Anulado. Pedido cancelado por el cliente después de ser finalizado.
-    */
 
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
@@ -69,6 +62,7 @@ class PedidoHandler
     public function startOrder()
     {
         if ($this->getOrder()) {
+            
             return true;
         } else {
             $sql = 'INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido)
@@ -87,7 +81,7 @@ class PedidoHandler
     public function createDetail()
     {
         // Se realiza una subconsulta para obtener el precio del producto.
-
+        
         $sql = 'INSERT INTO prc_detalle_pedidos(id_modelo_talla, cantidad_detalle_pedido, id_pedido)
                 VALUES(?, ?, ?)';
         $params = array($this->producto, $this->cantidad, $_SESSION['idPedido']);

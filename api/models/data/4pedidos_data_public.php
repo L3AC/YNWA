@@ -24,6 +24,17 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+    public function setIdModeloTalla($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_modelo_talla = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+
 
     public function setIdDetalle($value)
     {

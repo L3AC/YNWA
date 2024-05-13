@@ -5,6 +5,7 @@ VALUES('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
 ('Asistente',true,true,true,true,false,false,false,true,true,false,false);
 
+/*
 INSERT INTO sec_usuarios (id_rol, usuario_usuario, clave_usuario, nombre_usuario, apellido_usuario, email_usuario, pin_usuario, estado_usuario) VALUES
 (1, 'admin01', '$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je', 'Adriana', 'Hernández', 'adriana.hernandez@example.com', '123456', 1),
 (2, 'emp01', 'claveEmp01', 'Emilio', 'Pérez', 'emilio.perez@example.com', '234567', 1),
@@ -30,7 +31,7 @@ INSERT INTO sec_usuarios (id_rol, usuario_usuario, clave_usuario, nombre_usuario
 (2, 'emp07', 'claveEmp07', 'Eduardo', 'Ríos', 'eduardo.rios@example.com', '890123', 1),
 (3, 'vendedor08', 'claveVend08', 'Vanesa', 'Iglesias', 'vanesa.iglesias@example.com', '901234', 1),
 (2, 'emp08', 'claveEmp08', 'Antonio', 'Luna', 'antonio.luna@example.com', '234561', 1),
-(2, 'emp09', 'claveEmp09', 'Angela', 'Mendoza', 'angela.mendoza@example.com', '345678', 1);
+(2, 'emp09', 'claveEmp09', 'Angela', 'Mendoza', 'angela.mendoza@example.com', '345678', 1);*/
 
 INSERT INTO prc_clientes (direccion_cliente,usuario_cliente, clave_cliente,nombre_cliente, apellido_cliente, email_cliente, pin_cliente, estado_cliente) VALUES
 ('Avenida calle poniente #4', 'cliente01', 'claveCliente01', 'Ana', 'González', 'ana.gonzalez@example.com', '123456', 1),

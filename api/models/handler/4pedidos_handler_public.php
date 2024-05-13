@@ -82,7 +82,6 @@ class PedidoHandler
     {
         // Se realiza una subconsulta para obtener el precio del producto.
 
-
         $sql = 'select * from prc_detalle_pedidos
         WHERE id_pedido=? AND id_modelo_talla=?;';
         $params = array($_SESSION['idPedido'], $this->id_modelo_talla);

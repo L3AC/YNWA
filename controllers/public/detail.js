@@ -100,7 +100,7 @@ CANTIDAD.addEventListener('input', async function () {
     if (DATA.status === 1) {
         const ROW = DATA.dataset;
         if (CANTIDAD.value > ROW.stock_modelo_talla) {
-            mensajeDiv.textContent = 'No puede escoger mas del stock';
+            mensajeDiv.textContent = 'No puede escoger más del stock';
             mensajeDiv.style.display = 'block';
             IDGUARDAR.disabled = true;
         }

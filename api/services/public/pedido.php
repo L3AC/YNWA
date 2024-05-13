@@ -21,17 +21,15 @@ if (isset($_GET['action'])) {
                 if (!$pedido->startOrder()) {
                     $result['error'] = 'Ocurrió un problema al iniciar el pedido';   
                 } elseif (
-                    
-                    !$pedido->setProducto($_POST['idModeloTalla']) or
-                    !$pedido->setCantidad($_POST['cantidadModelo'])
+                    !$pedido->setIdModeloTalla($_POST['idModeloTalla']) or
+                    !$pedido->setCantidad($_POST['cantidadModelo']) 
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } else {
-                    $id_pedido = $producto->createDetail();
-                    if ($id_pedido) {
+                    $respuesta = $pedido->createDetail();
+                    if ($respuesta) {
                         $result['status'] = 1;
-                        $result['message'] = 'Registro creado correctamente';
-                        $result['dataset'] = array('id_pedido' => $id_pedido);
+                        $result['message'] = $respuesta;
                     } else {
                         $result['error'] = 'Ocurrió un problema al crear el registro';
                     }

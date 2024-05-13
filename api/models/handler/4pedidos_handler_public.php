@@ -39,7 +39,7 @@ class PedidoHandler
                 WHERE id_cliente =? AND estado_pedido!="Pendiente" AND estado_pedido!="Anulado"
                 AND CONCAT(descripcion_marca," ",descripcion_modelo," ",descripcion_talla) like ?';
 
-        $params = array($_SESSION['idCliente'],$value);
+        $params = array($_SESSION['idCliente'], $value);
         return Database::getRows($sql, $params);
     }
 
@@ -62,12 +62,12 @@ class PedidoHandler
     public function startOrder()
     {
         if ($this->getOrder()) {
-            
+
             return true;
         } else {
             $sql = 'INSERT INTO prc_pedidos(id_cliente,forma_pago_pedido,fecha_pedido,estado_pedido)
                     VALUES(?,?,now(),"Pendiente")';
-            $params = array($_SESSION['idCliente'],"Efectivo");
+            $params = array($_SESSION['idCliente'], "Efectivo");
             // Se obtiene el ultimo valor insertado de la llave primaria en la tabla pedido.
             if ($_SESSION['idPedido'] = Database::getLastRow($sql, $params)) {
                 return true;
@@ -81,11 +81,36 @@ class PedidoHandler
     public function createDetail()
     {
         // Se realiza una subconsulta para obtener el precio del producto.
-        
-        $sql = 'INSERT INTO prc_detalle_pedidos(id_modelo_talla, cantidad_detalle_pedido, id_pedido)
+
+
+        $sql = 'select * from prc_detalle_pedidos
+        WHERE id_pedido=? AND id_modelo_talla=?;';
+        $params = array($_SESSION['idPedido'], $this->id_modelo_talla);
+        $result = Database::getRow($sql, $params);
+        $mensaje = null;
+
+        if ($result) {
+            $this->cantidad = $this->cantidad + $result['cantidad_detalle_pedido'];
+            if ($this->cantidad <= 3) {
+                $sql = 'UPDATE prc_detalle_pedidos 
+                SET cantidad_detalle_pedido= ? WHERE id_detalle=?';
+                $params = array($this->cantidad, $result['id_detalle']);
+                if (Database::executeRow($sql, $params)) {
+                    $mensaje = 'Registro exitoso';
+                }
+            } else {
+                $mensaje = 'Solo se permite tener 3 existencias por producto';
+            }
+        } else {
+
+            $sql = 'INSERT INTO prc_detalle_pedidos(id_modelo_talla, cantidad_detalle_pedido, id_pedido)
                 VALUES(?, ?, ?)';
-        $params = array($this->producto, $this->cantidad, $_SESSION['idPedido']);
-        return Database::executeRow($sql, $params);
+            $params = array($this->id_modelo_talla, $this->cantidad, $_SESSION['idPedido']);
+            if (Database::executeRow($sql, $params)) {
+                $mensaje = 'Registro exitoso';
+            }
+        }
+        return $mensaje;
     }
 
     // Método para obtener los productos que se encuentran en el carrito de compras.

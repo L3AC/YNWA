@@ -224,9 +224,12 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(PEDIDO_API, 'createDetail', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se constata si el cliente ha iniciado sesión.
-    if (DATA.status) {
+    if (DATA.status==1) {
         sweetAlert(1, DATA.message, false, 'cart.html');
-    } else if (DATA.session) {
+    } 
+    else if (DATA.status==2) {
+        sweetAlert(3, DATA.message, false);
+    }else if (DATA.session) {
         sweetAlert(2, DATA.error, false);
     } else {
         sweetAlert(3, DATA.error, true, 'login.html');

@@ -33,7 +33,7 @@ if (isset($_GET['action'])) {
                     }
                     if($respuesta==2){
                         $result['status'] = 2;
-                        $result['error']='Solo se permite tener 3 existencias por producto';
+                        $result['message']='Solo se permite tener 3 existencias por producto';
                     } else {
                         $result['error'] = 'Ocurrió un problema al crear el registro';
                     }

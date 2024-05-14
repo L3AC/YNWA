@@ -27,9 +27,13 @@ if (isset($_GET['action'])) {
                     $result['error'] = $pedido->getDataError();
                 } else {
                     $respuesta = $pedido->createDetail();
-                    if ($respuesta) {
+                    if ($respuesta==1) {
                         $result['status'] = 1;
-                        $result['message'] = $respuesta;
+                        $result['message']='Registro exitoso';
+                    }
+                    if($respuesta==2){
+                        $result['status'] = 2;
+                        $result['error']='Solo se permite tener 3 existencias por producto';
                     } else {
                         $result['error'] = 'Ocurrió un problema al crear el registro';
                     }

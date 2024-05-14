@@ -90,15 +90,17 @@ class PedidoHandler
 
         if ($result) {
             $this->cantidad = $this->cantidad + $result['cantidad_detalle_pedido'];
-            if ($this->cantidad <= 3) {
+            if ($this->cantidad < 4) {
                 $sql = 'UPDATE prc_detalle_pedidos 
                 SET cantidad_detalle_pedido= ? WHERE id_detalle=?';
                 $params = array($this->cantidad, $result['id_detalle']);
                 if (Database::executeRow($sql, $params)) {
-                    $mensaje = 'Registro exitoso';
+                    $mensaje = 1;
+                    //$mensaje = 'Registro exitoso';
                 }
             } else {
-                $mensaje = 'Solo se permite tener 3 existencias por producto';
+                $mensaje = 2;
+                //$mensaje = 'Solo se permite tener 3 existencias por producto';
             }
         } else {
 
@@ -106,7 +108,8 @@ class PedidoHandler
                 VALUES(?, ?, ?)';
             $params = array($this->id_modelo_talla, $this->cantidad, $_SESSION['idPedido']);
             if (Database::executeRow($sql, $params)) {
-                $mensaje = 'Registro exitoso';
+                $mensaje = 1;
+                //$mensaje = 'Registro exitoso';
             }
         }
         return $mensaje;

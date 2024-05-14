@@ -66,17 +66,24 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Petición para guardar los datos del formulario.
     const DATA = await fetchData(MODELO_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
+    if (DATA.status==1) {
+        console.log('SDFS');
         // Se cierra la caja de diálogo.
         SAVE_MODAL.hide();
         // Se muestra un mensaje de éxito.
-        sweetAlert(1, DATA.message, true);
+        sweetAlert(1, DATA.message, true,'cart.html');
         ID_MODELO.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
         fillTable();
-    } else {
+    } 
+    else{
         sweetAlert(2, DATA.error, false);
     }
+    if(DATA.status==2) {
+        console.log('QUESR');
+        sweetAlert(3, DATA.error, false);
+    }
+    
 });
 /*
 *   Función asíncrona para llenar la tabla con los registros disponibles.

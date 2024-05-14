@@ -116,11 +116,8 @@ class UsuarioHandler
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
-        //$value = ($value === '') ? '' : 'AND nombre_usuario like %' . $value . '%';
-        /*$value2 = ($value2 === '') ? '%%' : '%' . $value2 . '%';
-        $value3 = ($value3 === '') ? '%%' : '%' . $value3 . '%';*/
 
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
+        $sql = 'SELECT *
         FROM sec_usuarios
         WHERE id_usuario != idmin("sec_usuarios")
         AND id_rol != ?

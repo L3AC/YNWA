@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useAuth } from './AuthContext';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'; // Asegúrate de que Text esté importado
+import { useAuth } from '../../auth/AuthContext';
 
 const Login = ({ navigation }) => {
     const { setIsLoggedIn } = useAuth();
@@ -14,7 +14,7 @@ const Login = ({ navigation }) => {
         formData.append('usu', username);
         formData.append('clave', password);
     
-        const response = await fetch('http://10.10.3.90:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
+        const response = await fetch('http://192.168.137.1:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
           method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data',

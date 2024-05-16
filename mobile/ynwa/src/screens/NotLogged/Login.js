@@ -1,40 +1,45 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'; // Asegúrate de que Text esté importado
+import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native'; // Asegúrate de que Text esté importado
 import { useAuth } from '../../auth/AuthContext';
 
 const Login = ({ navigation }) => {
-    const { setIsLoggedIn } = useAuth();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-
-  const handleLogin = async () => {
-    try {
+  const { setIsLoggedIn } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  
+    const handleLogin = async () => {
+      try {
         const formData = new FormData();
         formData.append('usu', username);
         formData.append('clave', password);
-    
-        const response = await fetch('http://192.168.137.1:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
+  
+        const response = await fetch('http://192.168.1.3:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
           method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data',
           },
           body: formData,
         });
-
-      if (response.ok) {
-        // Autenticación exitosa
-        setIsLoggedIn(true);
-        navigation.navigate('Main');
-      } else {
-        // Autenticación fallida
-        setError('Credenciales inválidas');
+  
+        const text = await response.text();
+        const responseData = JSON.parse(text);
+        if (response.ok) {
+          if (responseData.status === 1) {
+            setIsLoggedIn(true);
+            navigation.navigate('Home', { usuario: username });
+          } else {
+            Alert.alert('Credenciales inválidas');
+          }
+        } else {
+          Alert.alert('Login failed', 'Invalid username or password');
+        }
+  
+      } catch (error) {
+        console.error('Error :', error);
+        setError('Error');
       }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      setError('Error de conexión');
-    }
-  };
+    };
 
   return (
     <View style={styles.container}>

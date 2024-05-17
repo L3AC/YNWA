@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet } from 'react-native'; // Asegúrate de que Text esté importado
-import { useAuth } from '../../auth/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useUser } from '../../contexts/UserContext';
 
 const Login = ({ navigation }) => {
   const { setIsLoggedIn } = useAuth();
+  const { setUsuario } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -27,7 +29,8 @@ const Login = ({ navigation }) => {
         if (response.ok) {
           if (responseData.status === 1) {
             setIsLoggedIn(true);
-            navigation.navigate('Home', { usuario: username });
+            setUsuario(username);
+            navigation.navigate('Home');
           } else {
             Alert.alert('Credenciales inválidas');
           }

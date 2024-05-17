@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useUser } from '../../contexts/UserContext';
 
-const Home = ({ route }) => {
-  const { usuario } = route.params ? route.params : {};
+const Home = () => {
+  const { usuario } = useUser();
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

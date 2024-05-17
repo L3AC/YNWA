@@ -2,7 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthProvider, useAuth } from './src/auth/AuthContext';
+import { AuthProvider, useAuth } from './src/contexts/AuthContext';
+import { UserProvider } from './src/contexts/UserContext';
 import Login from './src/screens/NotLogged/Login';
 import Home from './src/screens/Logged/Home';
 import Cuenta from './src/screens/Logged/Cuenta';
@@ -33,22 +34,24 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {isLoggedIn ? (
-          <Stack.Screen
-            name="Main"
-            component={MainStack}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="Auth"
-            component={AuthStack}
-            options={{ headerShown: false }}
-          />
-          
-        )}
-      </Stack.Navigator>
+      <UserProvider>
+        <Stack.Navigator>
+          {isLoggedIn ? (
+            <Stack.Screen
+              name="Main"
+              component={MainStack}
+              options={{ headerShown: false }}
+            />
+          ) : (
+            <Stack.Screen
+              name="Auth"
+              component={AuthStack}
+              options={{ headerShown: false }}
+            />
+
+          )}
+        </Stack.Navigator>
+      </UserProvider>
     </NavigationContainer>
   );
 };

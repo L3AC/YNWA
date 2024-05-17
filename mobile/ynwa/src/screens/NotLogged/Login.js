@@ -16,7 +16,7 @@ const Login = ({ navigation }) => {
         formData.append('usu', username);
         formData.append('clave', password);
   
-        const response = await fetch('http://192.168.1.3:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
+        const response = await fetch('http://192.168.1.8:80//YNWA/api/services/public/cliente.php?action=logIn&app=j', {
           method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data',

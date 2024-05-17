@@ -96,7 +96,6 @@ const fillTable = async () => {
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
-            console.log(DATA.dataset);
             // Se establece un icono para el estado del modelo.
             (row.estado_modelo) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
@@ -138,6 +137,7 @@ INPUTSEARCH.addEventListener('input', function () {
 */
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
+    ID_MODELO.value = null;
     SAVE_MODAL.show();
     IMAGEN_PRE.innerHTML = '';
     MODAL_TITLE.textContent = 'Crear registro';

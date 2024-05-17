@@ -9,6 +9,10 @@ const Explorar = () => {
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const fetchData = async (query = '') => {
     try {
       setLoading(true);
@@ -39,12 +43,9 @@ const Explorar = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const handleSearch = () => {
-    fetchData(search);
+  const handleSearchChange = (text) => {
+    setSearch(text);
+    fetchData(text);
   };
 
   const onRefresh = () => {
@@ -63,8 +64,7 @@ const Explorar = () => {
         style={styles.searchInput}
         placeholder="Buscar modelos..."
         value={search}
-        onChangeText={setSearch}
-        onSubmitEditing={handleSearch}
+        onChangeText={handleSearchChange}
       />
       {loading ? (
         <Text>Cargando...</Text>

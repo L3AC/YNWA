@@ -17,9 +17,9 @@ const MainStack = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Cuenta" component={Cuenta} />
       <Tab.Screen name="Explorar" component={Explorar} />
       <Tab.Screen name="Carrito" component={Carrito} />
+      <Tab.Screen name="Cuenta" component={Cuenta} />
     </Tab.Navigator>
   );
 };

@@ -111,16 +111,16 @@ class MarcaData extends MarcaHandler
         }
     }
 
-    //Establece la categoría.
+    //Establece la marca.
 
     public function setCategoria($value)
     {
-        // Validación del identificador de la categoría.
+        // Validación del identificador de la marca.
         if (Validator::validateNaturalNumber($value)) {
             $this->categoria = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador de la categoría es incorrecto';
+            $this->data_error = 'El identificador de la marca es incorrecto';
             return false;
         }
     }
@@ -150,7 +150,7 @@ class MarcaData extends MarcaHandler
             $this->filename = $data['imagen_producto'];
             return true;
         } else {
-            $this->data_error = 'Producto inexistente';
+            $this->data_error = 'Marca inexistente';
             return false;
         }
     }

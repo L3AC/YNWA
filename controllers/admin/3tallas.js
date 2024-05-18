@@ -18,6 +18,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_TALLA = document.getElementById('idTalla'),
     NOMBRE_TALLA = document.getElementById('nombreTalla'),
     ESTADO_TALLA = document.getElementById('estadoTalla');
+    //Variable para poner un tiempo de espera
     let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
@@ -60,14 +61,10 @@ INPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
         fillTable();
-    }, 50); // Delay de 500ms
+    }, 50); // Delay de 50ms
 });
 
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -106,11 +103,7 @@ const fillTable = async () => {
     }
 }
 
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
@@ -120,13 +113,8 @@ const openCreate = () => {
     SAVE_FORM.reset();
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
-    
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idTalla', id);
@@ -139,7 +127,6 @@ const openUpdate = async (id) => {
         MODAL_TITLE.textContent = 'Actualizar registro';
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        //EXISTENCIAS_TALLA.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_TALLA.value = ROW.id_talla;
@@ -151,11 +138,7 @@ const openUpdate = async (id) => {
     }
 }
 
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el registro?');
@@ -178,11 +161,7 @@ const openDelete = async (id) => {
     }
 }
 
-/*
-*   Función para abrir un reporte automático de TALLAs por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de un registro
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/3tallas.php`);

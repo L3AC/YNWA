@@ -115,11 +115,7 @@ CANTIDAD.addEventListener('input', async function () {
         }
     }
 });
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openModal = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();

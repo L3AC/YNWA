@@ -30,7 +30,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ADD_MODELOTALLA = document.getElementById('addModeloTalla');
 
-// Constantes para establecer los elementos del formulario de modelo tallas de guardar.
+// Constantes para establecer los elementos del formulario de modelo tallas.
 const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
     TREMODAL_TITLE = document.getElementById('tremodalTitle');
 const SAVE_TREFORM = document.getElementById('savetreForm'),
@@ -42,6 +42,7 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
     STOCK_MODELOTALLA = document.getElementById('stockModeloTalla'),
     SUB_INPUTSEARCH = document.getElementById('subInputSearch'),
     BTN_TREFORM = document.getElementById('btnTreForm');
+//Variable para poner un tiempo de espera
     let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
@@ -53,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
-
 
 // Método del evento para cuando se envía el formulario de guardar.
 SAVE_FORM.addEventListener('submit', async (event) => {
@@ -78,11 +78,8 @@ SAVE_FORM.addEventListener('submit', async (event) => {
         sweetAlert(2, DATA.error, false);
     }
 });
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -128,13 +125,10 @@ INPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
         fillTable();
-    }, 50); // Delay de 500ms
+    }, 50); // Delay de 50ms
 });
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     ID_MODELO.value = null;
@@ -145,7 +139,6 @@ const openCreate = () => {
 
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    //EXISTENCIAS_MODELO.disabled = false;
     fillSelect(MARCA_API, 'readAll', 'marcaModelo');
 }
 /*CARGAR VISTA PREVIA DE LA IMAGEN ESCOGIDA*/
@@ -165,16 +158,11 @@ IMAGEN_MODELO.addEventListener('change', function (event) {
     reader.readAsDataURL(file);
 });
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idModelo', id);
-    
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(MODELO_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -195,7 +183,6 @@ const openUpdate = async (id) => {
         <button type="button" class="btn btn-primary" onclick="opensubCreate(${ROW.id_modelo})">
             <i class="bi bi-plus-square-fill"></i>
         </button>`;
-
         IMAGEN_PRE.style.maxWidth = '300px';
         IMAGEN_PRE.style.maxHeight = 'auto';
         IMAGEN_PRE.style.margin = '20px auto';
@@ -206,16 +193,13 @@ const openUpdate = async (id) => {
         );
 
         fillSelect(MARCA_API, 'readAll', 'marcaModelo', ROW.id_marca);
-        fillsubTable(SEARCHSUB_FORM);
+        fillSubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el modelo de forma permanente?');
@@ -238,9 +222,7 @@ const openDelete = async (id) => {
     }
 }
 // Método del evento para cuando se envía el formulario de guardar.
-//const treCreate = async() =>{
 SAVE_TREFORM.addEventListener('submit', async (event) => {
-
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     const FORM = new FormData(SAVE_TREFORM);
@@ -259,17 +241,14 @@ SAVE_TREFORM.addEventListener('submit', async (event) => {
         sweetAlert(1, DATA.message, true);
         ID_MODELOTALLA.value = null;
         // Se carga nuevamente la tabla para visualizar los cambios.
-        fillsubTable();
+        fillSubTable();
     } else {
         sweetAlert(2, DATA.error, false);
     }
 });
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
-const fillsubTable = async () => {
+
+//Función asíncrona para llenar la tabla con los registros disponibles.
+const fillSubTable = async () => {
     // Se inicializa el contenido de la tabla.
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
@@ -303,19 +282,22 @@ const fillsubTable = async () => {
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
-        //sweetAlert(4, DATA.error, true);
+        sweetAlert(4, DATA.error, true);
     }
 }
+//BUSCADOR EN TIEMPO REAL DE LA TABLA DENTRO DEL MODAL
 SUB_INPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
-        fillsubTable();
-    }, 50); // Delay de 500ms
+        fillSubTable();
+    }, 50); // Delay de 50ms
 });
-const subclose = () => {
+//ABRIR UN MODAL DESDE EL HTML
+const subClose = () => {
     SAVE_MODAL.show();
 }
 
+//Función para preparar el formulario al momento de insertar un registro dentro del modal.
 const opensubCreate = (id) => {
     SAVE_MODAL.hide();
     SAVE_TREMODAL.show();
@@ -330,11 +312,7 @@ const opensubCreate = (id) => {
     fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,id,null,BTN_TREFORM);
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro dentro del modal.
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODAL.hide();
@@ -362,11 +340,8 @@ const opensubUpdate = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+
+//Función asíncrona para eliminar un registro.
 const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el registro de forma permanente?');
@@ -382,19 +357,14 @@ const opensubDelete = async (id) => {
             // Se muestra un mensaje de éxito.
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            fillsubTable();
+            fillSubTable();
         } else {
             sweetAlert(2, DATA.error, false);
         }
     }
 }
 
-
-/*
-*   Función para abrir un reporte automático de modelos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de un registro.
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/modelos.php`);

@@ -18,6 +18,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     IMAGEN_NOTICIA = document.getElementById('imagenNoticia'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ESTADO_NOTICIA = document.getElementById('estadoNoticia');
+    //Variable para poner un tiempo de espera
     let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
@@ -54,11 +55,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async () => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -104,7 +101,7 @@ INPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
         fillTable();
-    }, 50); // Delay de 500ms
+    }, 50); // Delay de 50ms
 });
 /*CARGAR VISTA PREVIA DE LA IMAGEN ESCOGIDA*/
 IMAGEN_NOTICIA.addEventListener('change', function (event) {
@@ -122,11 +119,7 @@ IMAGEN_NOTICIA.addEventListener('change', function (event) {
     };
     reader.readAsDataURL(file);
 });
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
@@ -138,11 +131,7 @@ const openCreate = () => {
     fillSelect(TIPONOTICIA_API, 'readAll', 'tipoNoticia');
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
@@ -176,11 +165,7 @@ const openUpdate = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el registro de forma permanente?');

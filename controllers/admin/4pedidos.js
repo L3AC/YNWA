@@ -62,11 +62,7 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     }
 });
 
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para llenar la tabla con los registros disponibles.
 const fillTable = async (estado=null) => {
     // Se inicializa el contenido de la tabla.
     ROWS_FOUND.textContent = '';
@@ -111,21 +107,16 @@ INPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
         fillTable();
-    }, 50); // Delay de 500ms
+    }, 50); // Delay de 50ms
 });
 
-/*
-*   Función para preparar el formulario al momento de insertar un registro.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para preparar el formulario al momento de insertar un registro.
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     IMAGEN_PRE.innerHTML = '';
     MODAL_TITLE.textContent = 'Crear PEDIDO';
     SUBTABLE.hidden = true;
-
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_PEDIDO.disabled = false;
@@ -133,11 +124,7 @@ const openCreate = () => {
 }
 
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
@@ -162,6 +149,7 @@ const openUpdate = async (id) => {
         CLIENTE_PEDIDO.value = ROW.cliente;
         FECHA_PEDIDO.value = ROW.fecha;
         FORMA_PAGO.value = ROW.forma_pago_pedido;
+        //SE COLOCA EL VALOR QUE VIENE DE LA BASE AL SELECT EN EL HTML
         for (var i = 0; i < ESTADO_PEDIDO.options.length; i++) {
             // Si el valor de la opción es igual al valor que quieres seleccionar
             if (ESTADO_PEDIDO.options[i].value === ROW.estado_pedido) {
@@ -170,17 +158,13 @@ const openUpdate = async (id) => {
                 break; // Salir del bucle una vez seleccionada la opción
             }
         }
-        fillsubTable(SEARCHSUB_FORM);
+        fillSubTable(SEARCHSUB_FORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
 }
 
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el PEDIDO de forma permanente?');
@@ -202,12 +186,8 @@ const openDelete = async (id) => {
         }
     }
 }
-/*
-*   Función asíncrona para llenar la tabla con los registros disponibles.
-*   Parámetros: form (objeto opcional con los datos de búsqueda).
-*   Retorno: ninguno.
-*/
-const fillsubTable = async () => {
+//Función asíncrona para llenar la tabla con los registros disponibles.
+const fillSubTable = async () => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
@@ -233,16 +213,18 @@ const fillsubTable = async () => {
         // Se muestra un mensaje de acuerdo con el resultado.
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
-       // sweetAlert(4, DATA.error, true);
+        sweetAlert(4, DATA.error, true);
     }
 }
+/*Busqueda en tiempo real dentro del modal*/
 SUBINPUTSEARCH.addEventListener('input', function () {
     clearTimeout(TIMEOUT_ID);
     TIMEOUT_ID = setTimeout(async function () {
-        fillsubTable();
-    }, 50); // Delay de 500ms
+        fillSubTable();
+    }, 50); // Delay de 50ms
 });
-const subclose = () => {
+//ABRIR EL MODAL DESDE EL HTML
+const subClose = () => {
     SAVE_MODAL.show();
 }
 
@@ -258,11 +240,7 @@ const opensubCreate = () => {
     fillSelect(TALLA_API, 'readAll', 'tallaModeloTalla');
 }
 
-/*
-*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const opensubUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     SAVE_MODAL.hide();
@@ -289,11 +267,7 @@ const opensubUpdate = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
-/*
-*   Función asíncrona para eliminar un registro.
-*   Parámetros: id (identificador del registro seleccionado).
-*   Retorno: ninguno.
-*/
+//Función asíncrona para eliminar un registro.
 const opensubDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
     const RESPONSE = await confirmAction('¿Desea inactivar el PEDIDO de forma permanente?');

@@ -80,7 +80,7 @@ class NoticiaData extends NoticiaHandler
 
     public function setImagen($file, $filename = null)
     {
-        if (Validator::validateImageFile($file, 500, 500)) {
+        if (Validator::validateImageFile($file,1600, 400)) {
             $this->imagen = Validator::getFileName();
             return true;
         } elseif (Validator::getFileError()) {

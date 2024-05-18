@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 `;
             CARDSLIDE.innerHTML += `
                 <div class="carousel-item ${cBtn === 0 ? 'active' : ''}">
-                    <div class="d-flex justify-content-center align-items-center" style="height: 600px; ">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 400px; ">
                         <img src="../../api/images/noticias/${row.foto_noticia}" class="d-block w-100 mx-auto"
                             style="max-height: 100%; max-width: 100%; object-fit: contain;" alt="Slide ${cElemento}">
                     </div>

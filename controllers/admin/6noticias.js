@@ -74,7 +74,7 @@ const fillTable = async () => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td><img src="${SERVER_URL}images/noticias/${row.foto_noticia}" height="50"></td>
+                    <td><img src="${SERVER_URL}images/noticias/${row.foto_noticia}" height="50" width="150"></td>
                     <td>${row.titulo_noticia}</td>
                     <td>${row.fecha}</td>
                     <td><i class="${icon}"></i></td>
@@ -123,8 +123,9 @@ IMAGEN_NOTICIA.addEventListener('change', function (event) {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
+    ID_NOTICIA.value = null;
     MODAL_TITLE.textContent = 'Crear registro';
-
+    imgPre.innerHTML = "";
     // Se prepara el formulario.
     SAVE_FORM.reset();
     //EXISTENCIAS_NOTICIA.disabled = false;

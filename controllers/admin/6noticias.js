@@ -92,7 +92,7 @@ const fillTable = async () => {
         // Se muestra un mensaje de acuerdo con el resultado.
         ROWS_FOUND.textContent = DATA.message;
     } else {
-        // sweetAlert(4, DATA.error, true);
+        sweetAlert(4, DATA.error, true);
     }
 }
 
@@ -188,11 +188,7 @@ const openDelete = async (id) => {
     }
 }
 
-/*
-*   Función para abrir un reporte automático de registros por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de un registro.
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/registros.php`);

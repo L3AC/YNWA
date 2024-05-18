@@ -158,11 +158,8 @@ const openDelete = async (id) => {
     }
 }
 
-/*
-*   Función para abrir un reporte automático de registros por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de registros por categoría.
+
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/3tallas.php`);

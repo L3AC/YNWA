@@ -28,8 +28,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLIENTE_OPC = document.getElementById('estadoCliente'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadopRol');
-    //Variable para poner un tiempo de espera
-    let TIMEOUT_ID;
+//Variable para poner un tiempo de espera
+let TIMEOUT_ID;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -118,14 +118,12 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear registro';
-
     // Se prepara el formulario.
     SAVE_FORM.reset();
 }
 
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
-    
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
     FORM.append('idRol', id);
@@ -138,24 +136,20 @@ const openUpdate = async (id) => {
         MODAL_TITLE.textContent = 'Actualizar registro';
         // Se prepara el formulario.
         SAVE_FORM.reset();
-        //EXISTENCIAS_ROL.disabled = true;
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_ROL.value = ROW.id_rol;
         NOMBRE_OPC.value = ROW.descripcion_opc;
         ESTADO_ROL.checked = ROW.estado_opc;
-        MARCA_OPC.checked        = ROW.marcas_opc;
-        MODELO_OPC.checked       = ROW.modelos_opc;
-        TALLA_OPC.checked        = ROW.tallas_opc;
-        PEDIDO_OPC.checked       = ROW.pedidos_opc;
-        TIPONOTICIA_OPC.checked  = ROW.tipo_noticias_opc;
-        NOTICIA_OPC.checked      = ROW.noticias_opc;
-        COMENTARIO_OPC.checked   = ROW.comentarios_opc;
-        CLIENTE_OPC.checked      = ROW.clientes_opc;
-        USUARIO_OPC.checked      = ROW.usuarios_opc;
-        //ROL_OPC.checked          = ROW.roles_opc;
- 
-        
+        MARCA_OPC.checked = ROW.marcas_opc;
+        MODELO_OPC.checked = ROW.modelos_opc;
+        TALLA_OPC.checked = ROW.tallas_opc;
+        PEDIDO_OPC.checked = ROW.pedidos_opc;
+        TIPONOTICIA_OPC.checked = ROW.tipo_noticias_opc;
+        NOTICIA_OPC.checked = ROW.noticias_opc;
+        COMENTARIO_OPC.checked = ROW.comentarios_opc;
+        CLIENTE_OPC.checked = ROW.clientes_opc;
+        USUARIO_OPC.checked = ROW.usuarios_opc;
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -184,11 +178,7 @@ const openDelete = async (id) => {
     }
 }
 
-/*
-*   Función para abrir un reporte automático de ROLs por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
+//Función para abrir un reporte automático de un registro.
 const openReport = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
     const PATH = new URL(`${SERVER_URL}reports/admin/3ROLs.php`);

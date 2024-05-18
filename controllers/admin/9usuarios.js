@@ -26,8 +26,6 @@ const SAVE_FORM = document.getElementById('saveForm'),
     //Variable para poner un tiempo de espera
     let TIMEOUT_ID;
 
-
-
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
@@ -165,7 +163,6 @@ const openUpdate = async (id) => {
         ALIAS_USUARIO.value = ROW.usuario_usuario;
         ESTADO_USUARIO.checked = ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
-        //IDGUARDAR.disabled = false;
     } else {
         sweetAlert(2, DATA.error, false);
     }

@@ -53,7 +53,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($usuario->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'usuario creado correctamente';
+                    $result['message'] = 'Usuario creado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el usuario';
                 }
@@ -208,7 +208,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($usuario->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'usuario registrado correctamente';
+                    $result['message'] = 'Usuario registrado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al registrar el usuario';
                 }

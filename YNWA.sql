@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+select * from prc_pedidos
+
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,
@@ -115,13 +117,12 @@ id_pedido INT UNSIGNED AUTO_INCREMENT,
 id_cliente INT UNSIGNED NOT NULL,
 forma_pago_pedido enum('Efectivo','Transferencia') DEFAULT 'Efectivo' NOT NULL,
 fecha_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-estado_pedido ENUM('Pendiente','Aceptado','Finalizado') NOT NULL,
+estado_pedido ENUM('Pendiente','Aceptado','Finalizado','Anulado') NOT NULL,
 PRIMARY KEY (id_pedido),
 CONSTRAINT fk_pedido_cliente
 FOREIGN KEY(id_cliente) REFERENCES prc_clientes(id_cliente)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE prc_detalle_pedidos(
 id_detalle INT UNSIGNED AUTO_INCREMENT,

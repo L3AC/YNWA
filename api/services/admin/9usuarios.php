@@ -151,16 +151,16 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
 
                 if (
-                    !$usuario->setNombre($_POST['nombreusuario']) or
-                    !$usuario->setApellido($_POST['apellidousuario']) or
-                    !$usuario->setCorreo($_POST['correousuario']) or
-                    !$usuario->setAlias($_POST['aliasusuario'])
+                    !$usuario->setNombre($_POST['nombreUsuario']) or
+                    !$usuario->setApellido($_POST['apellidoUsuario']) or
+                    !$usuario->setCorreo($_POST['correoUsuario']) or
+                    !$usuario->setAlias($_POST['aliasUsuario'])
                 ) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($usuario->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['usuarion'] = $_POST['aliasusuario'];
+                    $_SESSION['usuarion'] = $_POST['aliasUsuario'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }

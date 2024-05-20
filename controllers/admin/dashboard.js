@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const PRODUCTO_API = 'services/admin/2modelos.php';
+const MODELO_API = 'services/admin/2modelos.php';
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 const graficoBarrasCategorias = async () => {
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PRODUCTO_API, 'cantidadProductosCategoria');
+    const DATA = await fetchData(MODELO_API, 'cantidadProductosCategoria');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -58,7 +58,7 @@ const graficoBarrasCategorias = async () => {
 */
 const graficoPastelCategorias = async () => {
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PRODUCTO_API, 'porcentajeProductosCategoria');
+    const DATA = await fetchData(MODELO_API, 'porcentajeProductosCategoria');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a gráficar.

@@ -41,7 +41,7 @@ SIGNUP_FORM.addEventListener('submit', async (event) => {
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'index.html');
     } else {
-        //sweetAlert(2, DATA.error, false);
+        sweetAlert(2, DATA.error, false);
     }
 });
 
@@ -57,6 +57,6 @@ LOGIN_FORM.addEventListener('submit', async (event) => {
     if (DATA.status) {
         sweetAlert(1, DATA.message, true, 'dashboard.html');
     } else {
-        alerta(4, DATA.error, true,"https://unsplash.it/400/200");
+        sweetAlert(2, DATA.error, false);
     }
 });

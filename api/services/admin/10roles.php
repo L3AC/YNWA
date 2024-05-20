@@ -108,14 +108,12 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$rol->setId($_POST['idTalla']) 
+                    !$rol->setId($_POST['idRol']) 
                 ) {
                     $result['error'] = $rol->getDataError();
                 } elseif ($rol->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'rol eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($rol::RUTA_IMAGEN, $rol->getFilename());
+                    $result['message'] = 'Rol eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el rol';
                 }

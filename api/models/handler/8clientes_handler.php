@@ -44,7 +44,7 @@ class ClienteHandler
         $params = array($username);
         $data = Database::getRow($sql, $params);
         //echo $data['clave'];
-        if (password_verify($password, $data['clave_cliente'])) {
+        if ($data && password_verify($password, $data['clave_cliente'])) {
             //echo ($_SESSION['usuario']).' 1';
             return true;
         } else {

@@ -31,7 +31,7 @@ class ClienteHandler
                 WHERE usuario_cliente = ?';
         $params = array($usuario);
         $data = Database::getRow($sql, $params);
-        if (password_verify($password, $data['clave_cliente'])) {
+        if ($data && password_verify($password, $data['clave_cliente'])) {
             $this->id = $data['id_cliente'];
             $this->usuario = $data['usuario_cliente'];
             $this->estado = $data['estado_cliente'];

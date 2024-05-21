@@ -67,19 +67,19 @@ INSERT INTO ctg_marcas (descripcion_marca) VALUES
 ('Jimmy Choo'),('Dior');
 
 INSERT INTO prc_modelos (id_marca, descripcion_modelo, foto_modelo) VALUES
-(1, 'Nike Air Force 1', 'ruta/a/foto1.jpg'),(1, 'Nike Air Max 90', 'ruta/a/foto2.jpg'),
-(1, 'Nike Roshe Run', 'ruta/a/foto3.jpg'),(2, 'Adidas Stan Smith', 'ruta/a/foto4.jpg'),
-(2, 'Adidas Superstar', 'ruta/a/foto5.jpg'),(2, 'Adidas Gazelle', 'ruta/a/foto6.jpg'),
-(3, 'Puma Suede Classic', 'ruta/a/foto7.jpg'),(3, 'Puma Basket Classic', 'ruta/a/foto8.jpg'),
-(3, 'Puma Roma', 'ruta/a/foto9.jpg'),(4, 'Vans Old Skool', 'ruta/a/foto10.jpg'),
-(4, 'Vans Authentic', 'ruta/a/foto11.jpg'),(4, 'Vans Era', 'ruta/a/foto12.jpg'),
-(5, 'Converse Chuck Taylor All Star', 'ruta/a/foto13.jpg'),(5, 'Converse One Star', 'ruta/a/foto14.jpg'),
-(5, 'Converse Jack Purcell', 'ruta/a/foto15.jpg'),(6, 'New Balance 574', 'ruta/a/foto16.jpg'),
-(6, 'New Balance 990', 'ruta/a/foto17.jpg'),(6, 'New Balance Fresh Foam', 'ruta/a/foto18.jpg'),
-(7, 'Reebok Classic Leather', 'ruta/a/foto19.jpg'),(7, 'Reebok Club C', 'ruta/a/foto20.jpg'),
-(7, 'Reebok Workout Plus', 'ruta/a/foto21.jpg'),(8, 'Skechers Go Walk', 'ruta/a/foto22.jpg'),
-(8, 'Skechers D"Lites"', 'ruta/a/foto23.jpg'),(8, 'Skechers Energy', 'ruta/a/foto24.jpg'),
-(9, 'Fila Disruptor II', 'ruta/a/foto25.jpg');
+(1, 'Nike Air Force 1', '3728asb23423.png'),(1, 'Nike Air Max 90', '66426d44021f6.jpg'),
+(1, 'Nike Roshe Run', '3728asb23423.png'),(2, 'Adidas Stan Smith', '66426d44021f6.jpg'),
+(2, 'Adidas Superstar', '3728asb23423.png'),(2, 'Adidas Gazelle', '66426d44021f6.jpg'),
+(3, 'Puma Suede Classic', '3728asb23423.png'),(3, 'Puma Basket Classic', '66426d44021f6.jpg'),
+(3, 'Puma Roma', '664790c7651d4.jpg'),(4, 'Vans Old Skool', '664790c7651d4.jpg'),
+(4, 'Vans Authentic', '664790c7651d4.jpg'),(4, 'Vans Era', '664790c7651d4.jpg'),
+(5, 'Converse Chuck Taylor All Star', '664790c7651d4.jpg'),(5, 'Converse One Star', '664790c7651d4.jpg'),
+(5, 'Converse Jack Purcell', '43jnd344ksnw.jpg'),(6, 'New Balance 574', '43jnd344ksnw.jpg'),
+(6, 'New Balance 990', 'r43jnd344ksnw.jpg'),(6, 'New Balance Fresh Foam', '43jnd344ksnw.jpg'),
+(7, 'Reebok Classic Leather', '43jnd344ksnw.jpg'),(7, 'Reebok Club C', '43jnd344ksnw.jpg'),
+(7, 'Reebok Workout Plus', '23dfb234nsd.jpg'),(8, 'Skechers Go Walk', '23dfb234nsd.jpg'),
+(8, 'Skechers D"Lites"', '23dfb234nsd.jpg'),(8, 'Skechers Energy', '23dfb234nsd.jpg'),
+(9, 'Fila Disruptor II', '23dfb234nsd.jpg');
 
 INSERT INTO ctg_tallas (descripcion_talla) VALUES
 ('4'),('4.5'),('5'),('5.5'),('6'),('6.5'),('7'),('7.5'),('8'),('8.5'),('9'),('9.5'),('10'),
@@ -88,6 +88,11 @@ INSERT INTO ctg_tallas (descripcion_talla) VALUES
 
 INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
 VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
+
+INSERT INTO prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )
+VALUES(1,'Adidas Back','6648fd8f022e0.jpg','Vuelve Adidas', true,now()),
+(2,'Nike Return','6648fd50a5590.jpg','Vuelve Nike',true,now()),
+(3,'Puma Feeling','6648fcbd13740.jpg','Vuelve Puma',true,now());
 
 INSERT INTO prc_modelo_tallas (id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla) VALUES
 (1, 1, 10, 99.99),(1, 2, 5, 129.99),(1, 3, 15, 89.99),(2, 4, 8, 79.99),(2, 5, 3, 109.99),

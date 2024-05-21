@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { IP } from '../../contexts/Network';
 
 const Card = ({ item }) => (
   <View style={styles.card}>
-    <Image source={{ uri: `http://192.168.1.8:80/YNWA/api/images/modelos/${item.foto_modelo}` }} style={styles.image} />
+    <Image source={{ uri: `http://${IP}:80/YNWA/api/images/modelos/${item.foto_modelo}` }} style={styles.image} />
     <Text style={styles.cardTitle}>{item.descripcion_modelo}</Text>
     <Text style={styles.cardSubtitle}>{item.marca}</Text>
   </View>

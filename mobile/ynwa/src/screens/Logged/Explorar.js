@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, RefreshControl } from 'react-native';
 import Card from '../../components/containers/Card'; // Asume que tienes un componente de tarjeta para renderizar cada ítem
-import { IP } from '../../contexts/Network';
+import { SERVER } from '../../contexts/Network';
 
 const Explorar = () => {
   const [data, setData] = useState([]);
@@ -19,7 +19,7 @@ const Explorar = () => {
       const formData = new FormData();
       formData.append('modelo', query);
 
-      const response = await fetch(`http://${IP}:80//YNWA/api/services/public/producto.php?action=searchModelos`, {
+      const response = await fetch(`${SERVER}services/public/producto.php?action=searchModelos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'multipart/form-data',

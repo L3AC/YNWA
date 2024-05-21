@@ -34,7 +34,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
-                    $result['error'] = 'No existen usuarioes registrados';
+                    $result['error'] = 'No existen usuarios registrados';
                 }
                 break;
             case 'createRow':
@@ -76,7 +76,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'readOne':
                 if (!$usuario->setId($_POST['idUsuario'])) {
-                    $result['error'] = 'Usuario incorrecto';
+                    $result['error'] = 'usuario incorrecto';
                 } elseif ($result['dataset'] = $usuario->readOne()) {
                     $result['status'] = 1;
                 } else {

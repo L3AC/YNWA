@@ -40,11 +40,11 @@ if (isset($_GET['action'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
+                    $result['message'] = 'El detalle del pedido se ha creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
                     $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN);
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el detalle del pedido';
                 }
                 break;
             case 'readAll':
@@ -63,7 +63,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $producto->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Pedido inexistente';
                 }
                 break;
             case 'updateRow':
@@ -81,7 +81,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
+                    $result['message'] = 'El detalle del pedido se ha modificado correctamente';
                     // Se asigna el estado del archivo después de actualizar.
                     $result['fileStatus'] = Validator::changeFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN, $producto->getFilename());
                 } else {
@@ -96,11 +96,11 @@ if (isset($_GET['action'])) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($producto->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'Detalle del pedido eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    $result['error'] = 'Ocurrió un problema al eliminar el detalle del pedido';
                 }
                 break;
             case 'cantidadProductosCategoria':

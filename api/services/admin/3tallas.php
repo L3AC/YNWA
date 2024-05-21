@@ -36,7 +36,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'talla creado correctamente';
+                    $result['message'] = 'Talla creada correctamente';
                     // Se asigna el estado del archivo después de insertar.
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el talla';
@@ -80,7 +80,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $talla->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'talla inexistente';
+                    $result['error'] = 'Talla inexistente';
                 }
                 break;
             case 'updateRow':
@@ -93,10 +93,10 @@ if (isset($_GET['action'])) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'talla modificado correctamente';
+                    $result['message'] = 'Talla modificada correctamente';
                     // Se asigna el estado del archivo después de actualizar.
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el talla';
+                    $result['error'] = 'Ocurrió un problema al modificar la talla';
                 }
                 break;
             case 'deleteRow':
@@ -106,11 +106,11 @@ if (isset($_GET['action'])) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'talla eliminado correctamente';
+                    $result['message'] = 'Talla eliminada correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($talla::RUTA_IMAGEN, $talla->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el talla';
+                    $result['error'] = 'Ocurrió un problema al eliminar la talla';
                 }
                 break;
             

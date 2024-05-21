@@ -36,7 +36,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $tiponoticia->getDataError();
                 } elseif ($tiponoticia->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'registro creado correctamente';
+                    $result['message'] = 'Registro creado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
@@ -69,7 +69,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $tiponoticia->getDataError();
                 } elseif ($tiponoticia->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'registro modificado correctamente';
+                    $result['message'] = 'Registro modificado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el registro';
                 }
@@ -81,7 +81,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $tiponoticia->getDataError();
                 } elseif ($tiponoticia->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'registro eliminado correctamente';
+                    $result['message'] = 'Registro eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($tiponoticia::RUTA_IMAGEN, $tiponoticia->getFilename());
                 } else {

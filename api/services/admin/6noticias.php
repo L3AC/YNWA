@@ -39,7 +39,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $noticia->getDataError();
                 } elseif ($noticia->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'noticia creado correctamente';
+                    $result['message'] = 'Noticia creada correctamente';
                     // Se asigna el estado del archivo después de insertar.
                     $result['fileStatus'] = Validator::saveFile($_FILES['imagenNoticia'], $noticia::RUTA_IMAGEN);
                 } else {
@@ -81,7 +81,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $noticia->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'noticia inexistente';
+                    $result['error'] = 'Noticia inexistente';
                 }
                 break;
 
@@ -93,11 +93,11 @@ if (isset($_GET['action'])) {
                     $result['error'] = $noticia->getDataError();
                 } elseif ($noticia->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'noticia eliminado correctamente';
+                    $result['message'] = 'Noticia eliminada correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($noticia::RUTA_IMAGEN, $noticia->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el noticia';
+                    $result['error'] = 'Ocurrió un problema al eliminar la noticia';
                 }
                 break;
             default:

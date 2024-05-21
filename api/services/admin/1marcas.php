@@ -71,7 +71,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $marca->getDataError();
                 } elseif ($marca->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'registro modificada correctamente';
+                    $result['message'] = 'Registro modificado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar la registro';
                 }
@@ -83,7 +83,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $marca->getDataError();
                 } elseif ($marca->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'registro eliminado correctamente';
+                    $result['message'] = 'Registro eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($marca::RUTA_IMAGEN, $marca->getFilename());
                 } else {

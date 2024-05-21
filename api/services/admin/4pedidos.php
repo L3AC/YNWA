@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
                     // Se asigna el estado del archivo después de insertar.
                     $result['fileStatus'] = Validator::saveFile($_FILES['imagenProducto'], $pedido::RUTA_IMAGEN);
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el pedido';
                 }
                 break;
             case 'readAll':
@@ -61,7 +61,7 @@ if (isset($_GET['action'])) {
                         $result['status'] = 1;
                         $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                     } else {
-                        $result['error'] = 'Tallas no registradas';
+                        $result['error'] = 'Pedidos no registrados';
                     }
                     break;
             case 'readOne':
@@ -70,7 +70,7 @@ if (isset($_GET['action'])) {
                 } elseif ($result['dataset'] = $pedido->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Pedido inexistente';
                 }
                 break;
                 
@@ -96,11 +96,11 @@ if (isset($_GET['action'])) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($pedido->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
+                    $result['message'] = 'Pedido eliminado correctamente';
                     // Se asigna el estado del archivo después de eliminar.
                     $result['fileStatus'] = Validator::deleteFile($pedido::RUTA_IMAGEN, $pedido->getFilename());
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
+                    $result['error'] = 'Ocurrió un problema al eliminar el pedido';
                 }
                 break;
             case 'cantidadProductosCategoria':

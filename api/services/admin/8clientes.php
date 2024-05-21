@@ -45,7 +45,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($cliente->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Registro creado correctamente';
+                    $result['message'] = 'Cliente creado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el registro';
                 }
@@ -184,7 +184,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($cliente->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'cliente registrado correctamente';
+                    $result['message'] = 'Cliente registrado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al registrar el cliente';
                 }

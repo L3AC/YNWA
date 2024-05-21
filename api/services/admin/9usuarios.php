@@ -76,11 +76,11 @@ if (isset($_GET['action'])) {
                 break;
             case 'readOne':
                 if (!$usuario->setId($_POST['idUsuario'])) {
-                    $result['error'] = 'usuario incorrecto';
+                    $result['error'] = 'Usuario incorrecto';
                 } elseif ($result['dataset'] = $usuario->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'usuario inexistente';
+                    $result['error'] = 'Usuario inexistente';
                 }
                 break;
             case 'updateRow':
@@ -96,7 +96,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($usuario->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'usuario modificado correctamente';
+                    $result['message'] = 'Usuario modificado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el usuario';
                 }
@@ -108,7 +108,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($usuario->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'usuario eliminado correctamente';
+                    $result['message'] = 'Usuario eliminado correctamente';
                 } else {
                     $result['error'] = 'Ocurrió un problema al eliminar el usuario';
                 }

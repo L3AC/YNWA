@@ -86,6 +86,9 @@ INSERT INTO ctg_tallas (descripcion_talla) VALUES
 ('10.5'),('11'),('11.5'),('12'),('12.5'),('13'),('13.5'),('14'),('14.5'),('15'),('15.5'),
 ('16');
 
+INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
+VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
+
 INSERT INTO prc_modelo_tallas (id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla) VALUES
 (1, 1, 10, 99.99),(1, 2, 5, 129.99),(1, 3, 15, 89.99),(2, 4, 8, 79.99),(2, 5, 3, 109.99),
 (2, 6, 12, 69.99),(3, 7, 20, 79.99),(3, 8, 10, 99.99),(3, 9, 18, 69.99),(4, 10, 6, 89.99),
@@ -167,8 +170,7 @@ INSERT INTO prc_modelo_tallas(id_talla,id_modelo,stock_modelo_talla,precio_model
 SELECT * FROM prc_modelo_tallas;
 
 
-INSERT INTO ctg_tipo_noticias(descripcion_tipo_noticia,estado_tipo_noticia) 
-VALUES('Oferta',true),('Nuevos productos',true),('Temporada',true);
+
 SELECT * FROM ctg_tipo_noticias;
 
 INSERT INTO prc_noticias(id_tipo_noticia,titulo_noticia,foto_noticia,contenido_noticia,estado_noticia,fecha_noticia )

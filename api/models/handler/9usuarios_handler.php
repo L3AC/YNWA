@@ -78,6 +78,7 @@ class UsuarioHandler
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
         if (password_verify($password, $data['clave_usuario'])) {
+
             return true;
         } else {
             return false;
@@ -201,7 +202,7 @@ class UsuarioHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE sec_usuarios
+        $sql = 'DELETE FROM sec_usuarios
                 WHERE id_usuario = ?';
         /*$sql = 'DELETE FROM sec_usuarios
                 WHERE id_usuario = ?';*/

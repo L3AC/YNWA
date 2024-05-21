@@ -102,9 +102,9 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if ($_POST['idUsuario'] == $_SESSION['idusuario']) {
+                if ($_POST['idUsuario'] == $_SESSION['idUsuario']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
-                } elseif (!$usuario->setId($_POST['idusuario'])) {
+                } elseif (!$usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($usuario->deleteRow()) {
                     $result['status'] = 1;

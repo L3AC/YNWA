@@ -1,1 +1,1 @@
-export const SERVER = "http://192.168.137.1:80//YNWA/api/";
+export const SERVER = "http://192.168.1.11:80//YNWA/api/";

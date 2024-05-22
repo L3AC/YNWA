@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 
-const Card = ({ item }) => (
-  <View style={styles.card}>
+const Card = ({ item, onPress }) => (
+  <TouchableOpacity style={styles.card} onPress={() => onPress(item.id_modelo)}>
     <Image source={{ uri: `${SERVER}images/modelos/${item.foto_modelo}` }} style={styles.image} />
     <Text style={styles.cardTitle}>{item.descripcion_modelo}</Text>
     <Text style={styles.cardSubtitle}>{item.marca}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, RefreshControl } from 'react-native';
-import Card from '../../components/containers/Card'; // Asume que tienes un componente de tarjeta para renderizar cada ítem
+import { useNavigation } from '@react-navigation/native';
+import Card from '../../components/containers/Card';
 import { SERVER } from '../../contexts/Network';
 
 const Explorar = () => {
@@ -8,6 +9,7 @@ const Explorar = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchData();
@@ -31,7 +33,7 @@ const Explorar = () => {
       const responseData = JSON.parse(text);
 
       if (response.ok && responseData.status === 1) {
-        setData(responseData.dataset); // Almacena el dataset en el estado
+        setData(responseData.dataset);
       } else {
         console.error('Error fetching data:', responseData.message);
       }
@@ -54,7 +56,7 @@ const Explorar = () => {
   };
 
   const renderItem = ({ item }) => (
-    <Card item={item} />
+    <Card item={item} onPress={(id) => navigation.navigate('Modelo', { idModelo: id })} />
   );
 
   return (
@@ -72,8 +74,8 @@ const Explorar = () => {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id_modelo.toString()} // Ajusta esto según tu estructura de datos
-          numColumns={2} // Mostrar en dos columnas
+          keyExtractor={(item) => item.id_modelo.toString()}
+          numColumns={2}
           columnWrapperStyle={styles.column}
           refreshControl={
             <RefreshControl
@@ -81,7 +83,7 @@ const Explorar = () => {
               onRefresh={onRefresh}
             />
           }
-          key={2} // Cambia la clave para forzar un nuevo renderizado cuando cambies el número de columnas
+          key={2}
         />
       )}
     </View>

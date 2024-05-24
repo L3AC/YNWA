@@ -17,20 +17,19 @@ const Login = ({ navigation }) => {
         formData.append('usu', username);
         formData.append('clave', password);
   
-        const response = await fetch(`${SERVER}services/public/cliente.php?action=logIn&app=j`, {
+        const response = await fetch(`${SERVER}services/public/cliente.php?action=logInM&app=j`, {
           method: 'POST',
           headers: {
             'Content-Type': 'multipart/form-data',
           },
           body: formData,
         });
-  
         const text = await response.text();
         const responseData = JSON.parse(text);
         if (response.ok) {
           if (responseData.status === 1) {
             setIsLoggedIn(true);
-            setUsuario(username);
+            setUsuario(responseData.dataset);
             navigation.navigate('Home');
           } else {
             Alert.alert('Credenciales inválidas');

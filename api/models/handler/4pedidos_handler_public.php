@@ -132,6 +132,80 @@ class PedidoHandler
         return Database::getRows($sql, $params);
     }
 
+    public function getOrderM()
+    {
+        $this->estado = 'Pendiente';
+        $sql = 'SELECT id_pedido FROM prc_pedidos
+            WHERE estado_pedido = ? AND id_cliente = ?';
+
+        $params = array($this->estado, $this->cliente);
+        $data = Database::getRow($sql, $params);
+
+        if ($data) {
+            return $data['id_pedido'];
+        } else {
+            return null;
+        }
+    }
+
+    public function startOrderM()
+    {
+        if ($this->getOrderM()) {
+            return true;
+        } else {
+            $sql = 'INSERT INTO prc_pedidos(id_cliente, forma_pago_pedido, fecha_pedido, estado_pedido)
+                VALUES (?, ?, now(), "Pendiente")';
+            $params = array($this->cliente, "Efectivo");
+
+            if ($idPedido = Database::getLastRow($sql, $params)) {
+                return $idPedido;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public function createDetailM()
+    {
+        $clientId = $this->cliente;
+        $idModeloTalla = $this->id_modelo_talla;
+        $cantidadModelo = $this->cantidad;
+
+        $idPedido = $this->getOrderM($clientId);
+        $mensaje = null;
+
+        if ($idPedido) {
+            $sql = 'SELECT * FROM prc_detalle_pedidos
+                WHERE id_pedido = ? AND id_modelo_talla = ?';
+            $params = array($idPedido, $idModeloTalla);
+            $result = Database::getRow($sql, $params);
+
+            if ($result) {
+                $cantidad = $cantidadModelo + $result['cantidad_detalle_pedido'];
+                if ($cantidad < 4) {
+                    $sql = 'UPDATE prc_detalle_pedidos 
+                        SET cantidad_detalle_pedido = ? WHERE id_detalle = ?';
+                    $params = array($cantidad, $result['id_detalle']);
+                    if (Database::executeRow($sql, $params)) {
+                        $mensaje = array('status' => 1, 'idPedido' => $idPedido);
+                    }
+                } else {
+                    $mensaje = array('status' => 2);
+                }
+            } else {
+                $sql = 'INSERT INTO prc_detalle_pedidos(id_modelo_talla, cantidad_detalle_pedido, id_pedido)
+                    VALUES (?, ?, ?)';
+                $params = array($idModeloTalla, $cantidadModelo, $idPedido);
+                if (Database::executeRow($sql, $params)) {
+                    $mensaje = array('status' => 1, 'idPedido' => $idPedido);
+                }
+            }
+        }
+
+        return $mensaje;
+    }
+
+
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {

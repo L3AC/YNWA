@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, FlatList, Modal, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, FlatList, Modal,TextInput, Button } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import TallaCard from '../../components/containers/TallaCard';
@@ -14,6 +14,7 @@ const Modelo = () => {
   const [selectedTalla, setSelectedTalla] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [tallaDetalles, setTallaDetalles] = useState(null);
+  const [cantidad, setCantidad] = useState([]);
 
   useEffect(() => {
     fetchModelo();
@@ -84,7 +85,6 @@ const Modelo = () => {
     try {
       const formData = new FormData();
       formData.append('idModeloTalla', idTalla);
-
       const response = await fetch(`${SERVER}services/public/modelotallas.php?action=readOne`, {
         method: 'POST',
         headers: {
@@ -92,10 +92,8 @@ const Modelo = () => {
         },
         body: formData,
       });
-
       const text = await response.text();
       const responseData = JSON.parse(text);
-
       if (response.ok && responseData.status === 1) {
         setTallaDetalles(responseData.dataset);
       } else {
@@ -129,6 +127,8 @@ const Modelo = () => {
       </View>
     );
   }
+
+
 
   return (
     <ScrollView
@@ -178,9 +178,8 @@ const Modelo = () => {
                 value={cantidad}
                 onChangeText={setCantidad}
               />
-              <Button title="Verificar Stock" onPress={verificarStock} />
-              {stock !== null && (
-                <Text>Stock disponible: {stock}</Text>
+              {tallaDetalles.stock_modelo_talla !== null && (
+                <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
               )}
               <Button title="Cerrar" onPress={() => setModalVisible(false)} />
             </>

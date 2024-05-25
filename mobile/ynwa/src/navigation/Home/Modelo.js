@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, FlatList, Modal,TextInput, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, FlatList, Modal, TextInput, Button } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import TallaCard from '../../components/containers/TallaCard';
+import ModalMensaje from '../../components/alerts/ModalMensaje';
+import { useCliente } from '../../contexts/UserContext';
 
 const Modelo = () => {
   const route = useRoute();
+  const { idCliente } = useCliente();
   const { idModelo } = route.params;
   const [modelo, setModelo] = useState(null);
   const [tallas, setTallas] = useState([]);
@@ -15,6 +18,8 @@ const Modelo = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [tallaDetalles, setTallaDetalles] = useState(null);
   const [cantidad, setCantidad] = useState([]);
+  const [cantidadError, setCantidadError] = useState('');
+  const [mensajeEmergente, setMensajeEmergente] = useState('');
 
   useEffect(() => {
     fetchModelo();
@@ -127,6 +132,69 @@ const Modelo = () => {
       </View>
     );
   }
+  const handleCantidadChange = (value) => {
+    setCantidad(value);
+    setCantidadError('');
+  };
+
+  const handleCantidadSubmit = () => {
+    const stockDisponible = tallaDetalles.stock_modelo_talla;
+    const cantidadIngresada = parseInt(cantidad);
+
+    if (isNaN(cantidadIngresada)) {
+      setCantidadError('Ingrese un número válido.');
+    } else if (cantidadIngresada > stockDisponible) {
+      setCantidadError('La cantidad ingresada supera el stock disponible.');
+    } else if (cantidadIngresada > 3) {
+      setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
+    } else {
+      // Aquí puedes realizar las acciones correspondientes al aceptar la cantidad ingresada.
+      setModalVisible(false);
+    }
+  };
+
+  const createDetail = async () => {
+    try {
+      const stockDisponible = tallaDetalles.stock_modelo_talla;
+      const cantidadIngresada = parseInt(cantidad);
+  
+      if (isNaN(cantidadIngresada)) {
+        setCantidadError('Ingrese un número válido.');
+      } else if (cantidadIngresada > stockDisponible) {
+        setCantidadError('La cantidad ingresada supera el stock disponible.');
+      } else if (cantidadIngresada > 3) {
+        setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
+      } else {
+        const formData = new FormData();
+        formData.append('idCliente', parseInt(idCliente)); // Reemplaza con el valor correcto
+        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); // Reemplaza con el valor correcto
+        formData.append('cantidadModelo', parseInt(cantidad)); // Reemplaza con el valor correcto
+  
+        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          body: formData,
+        });
+  
+        const text = await response.text();
+        const responseData = JSON.parse(text);
+  
+        if (responseData.status === 1) {
+          setMensajeEmergente(responseData.message);
+          // Aquí puedes realizar la navegación a otra pantalla
+        } else if (responseData.status === 2) {
+          setMensajeEmergente(responseData.error);
+        } else {
+          setMensajeEmergente(responseData.error);
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMensajeEmergente('Error en la consulta');
+    }
+  };
 
 
 
@@ -145,50 +213,54 @@ const Modelo = () => {
       <Text style={styles.subtitle}>{modelo.marca}</Text>
       <Text>{modelo.detalles}</Text>
       <Text style={styles.tallasTitle}>Tallas Disponibles:</Text>
-      
+
       <View style={styles.gridContainer}>
-      <View style={styles.centeredContainer}>
-        {tallas.map((item) => (
-          <View style={styles.tallaCard} key={item.id_talla}>
-            <TallaCard
-              talla={item.talla}
-              precio={item.precio_modelo_talla}
-              onPress={() => handleTallaPress(item)}
-            />
-          </View>
-        ))}
-      </View>
-    </View>
-    <Modal
-      visible={modalVisible}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={() => setModalVisible(false)}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          {tallaDetalles ? (
-            <>
-              <Text style={styles.modalTitle}>Talla: {tallaDetalles.talla}</Text>
-              <Text>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Ingrese la cantidad"
-                keyboardType="numeric"
-                value={cantidad}
-                onChangeText={setCantidad}
+        <View style={styles.centeredContainer}>
+          {tallas.map((item) => (
+            <View style={styles.tallaCard} key={item.id_talla}>
+              <TallaCard
+                talla={item.talla}
+                precio={item.precio_modelo_talla}
+                onPress={() => handleTallaPress(item)}
               />
-              {tallaDetalles.stock_modelo_talla !== null && (
-                <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-              )}
-              <Button title="Cerrar" onPress={() => setModalVisible(false)} />
-            </>
-          ) : (
-            <ActivityIndicator size="large" color="#0000ff" />
-          )}
+            </View>
+          ))}
         </View>
       </View>
-    </Modal>
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {tallaDetalles ? (
+              <>
+                <Text style={styles.modalTitle}>Talla: {tallaDetalles.talla}</Text>
+                <Text>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                <TextInput
+                  style={[styles.input, cantidadError && styles.inputError]}
+                  placeholder="Ingrese la cantidad"
+                  keyboardType="numeric"
+                  value={cantidad}
+                  onChangeText={handleCantidadChange}
+                />
+                {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+                {tallaDetalles.stock_modelo_talla !== null && (
+                  <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                )}
+                <Button title="Crear Detalle" onPress={createDetail} />
+                <Button title="Cerrar" onPress={handleCantidadSubmit} />
+
+              </>
+            ) : (
+              <ActivityIndicator size="large" color="#0000ff" />
+            )}
+          </View>
+        </View>
+        <ModalMensaje mensaje={mensajeEmergente} onClose={() => setMensajeEmergente('')} />
+      </Modal>
     </ScrollView>
   );
 }
@@ -253,6 +325,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
+  },
+  input: {
+    // Estilos del TextInput
+  },
+  inputError: {
+    borderColor: 'red',
+    borderWidth: 1,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 5,
   },
 });
 

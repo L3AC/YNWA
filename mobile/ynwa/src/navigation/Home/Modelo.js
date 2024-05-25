@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, Modal, TextInput, Button } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import {
+  View, Text, Image, StyleSheet, ActivityIndicator,
+  RefreshControl, ScrollView, FlatList, Modal, TextInput, Button, TouchableWithoutFeedback
+} from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import TallaCard from '../../components/containers/TallaCard';
 import ModalMensaje from '../../components/alerts/ModalMensaje';
@@ -9,6 +12,7 @@ import { useUser } from '../../contexts/UserContext';
 const Modelo = () => {
   const route = useRoute();
   const { usuario } = useUser();
+  const navigation = useNavigation();
   const { idModelo } = route.params;
   const [modelo, setModelo] = useState(null);
   const [tallas, setTallas] = useState([]);
@@ -25,10 +29,7 @@ const Modelo = () => {
   useEffect(() => {
     fetchModelo();
     fetchTallas();
-    if (detalleCreado) {
-      setModalVisible(false);
-    }
-  }, [detalleCreado]);
+  }, []);
 
   const fetchModelo = async () => {
     try {
@@ -125,18 +126,6 @@ const Modelo = () => {
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
-
-  if (!modelo) {
-    return (
-      <View style={styles.container}>
-        <Text>No se encontraron detalles para este modelo.</Text>
-      </View>
-    );
-  }
-
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
@@ -150,8 +139,8 @@ const Modelo = () => {
     try {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
       const cantidadIngresada = parseInt(cantidad);
-  
-      if (isNaN(cantidadIngresada)) {
+
+      if (isNaN(cantidadIngresada) ||cantidadIngresada<1) {
         setCantidadError('Ingrese un número válido.');
       } else if (cantidadIngresada > stockDisponible) {
         setCantidadError('La cantidad ingresada supera el stock disponible.');
@@ -163,7 +152,7 @@ const Modelo = () => {
         formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); // Reemplaza con el valor correcto
         formData.append('cantidadModelo', parseInt(cantidad)); // Reemplaza con el valor correcto
         console.log(formData);
-  
+
         const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
           method: 'POST',
           headers: {
@@ -171,13 +160,15 @@ const Modelo = () => {
           },
           body: formData,
         });
-  
+
         const text = await response.text();
         const responseData = JSON.parse(text);
-  
+
         if (responseData.status === 1) {
           setDetalleCreado(true);
           setMensajeEmergente(responseData.message);
+          setModalVisible(false);
+          
         } else if (responseData.status === 2) {
           setMensajeEmergente(responseData.message);
         } else {
@@ -189,6 +180,18 @@ const Modelo = () => {
       setMensajeEmergente('Error en la consulta');
     }
   };
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (!modelo) {
+    return (
+      <View style={styles.container}>
+        <Text>No se encontraron detalles para este modelo.</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -223,38 +226,45 @@ const Modelo = () => {
         visible={modalVisible}
         transparent={true}
         animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={handleCerrarModal}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {tallaDetalles ? (
-              <>
-                <Text style={styles.modalTitle}>Talla: {tallaDetalles.talla}</Text>
-                <Text>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
-                <TextInput
-                  style={[styles.input, cantidadError && styles.inputError]}
-                  placeholder="Ingrese la cantidad"
-                  keyboardType="numeric"
-                  value={cantidad}
-                  onChangeText={handleCantidadChange}
-                />
-                {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                {tallaDetalles.stock_modelo_talla !== null && (
-                  <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+        <TouchableWithoutFeedback onPress={handleCerrarModal}>
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                {tallaDetalles ? (
+                  <>
+                    <Text style={styles.modalTitle}>Talla: {tallaDetalles.talla}</Text>
+                    <Text>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                    <TextInput
+                      style={[styles.input, cantidadError && styles.inputError]}
+                      placeholder="Ingrese la cantidad"
+                      keyboardType="numeric"
+                      value={cantidad}
+                      onChangeText={handleCantidadChange}
+                    />
+                    {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+                    {tallaDetalles.stock_modelo_talla !== null && (
+                      <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                    )}
+                    <Button title="Crear Detalle" onPress={createDetail} />
+                  </>
+                ) : (
+                  <ActivityIndicator size="large" color="#0000ff" />
                 )}
-                <Button title="Crear Detalle" onPress={createDetail} />
-                <Button title="Cerrar" onPress={handleCerrarModal} />
-              </>
-            ) : (
-              <ActivityIndicator size="large" color="#0000ff" />
-            )}
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
-      <ModalMensaje visible={detalleCreado} mensaje={mensajeEmergente} onClose={() => {
-        setDetalleCreado(false);
-        setMensajeEmergente('');
-      }} />
+      <ModalMensaje
+        visible={detalleCreado}
+        mensaje={mensajeEmergente}
+        onClose={() => {
+          setDetalleCreado(false);
+          navigation.navigate('Carrito');
+        }}
+      />
     </ScrollView>
   );
 };

@@ -24,7 +24,7 @@ const MainStack = () => {
       <Tab.Screen name="Cuenta" component={Cuenta} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
-};
+}; 
 
 const AuthStack = () => (
   <Stack.Navigator>

@@ -1,15 +1,22 @@
 import React from 'react';
-import { View, Text, Modal, StyleSheet, Button } from 'react-native';
+import { Modal, View, Text, Button, StyleSheet,TouchableWithoutFeedback } from 'react-native';
 
-const ModalMensaje = ({ mensaje, onClose }) => {
+const ModalMensaje = ({ visible, mensaje, onClose }) => {
   return (
-    <Modal visible={mensaje !== ''} transparent={true} animationType="fade" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="fade"
+      onRequestClose={onClose}
+    >
+      <TouchableWithoutFeedback onPress={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text>{mensaje}</Text>
-          <Button title="Cerrar" onPress={onClose} />
+          <Text style={styles.modalMessage}>{mensaje}</Text>
+          
         </View>
       </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -25,7 +32,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
+    width: '80%',
+  },
+  modalMessage: {
+    fontSize: 18,
+    marginBottom: 16,
+    textAlign: 'center',
   },
 });
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, FlatList, Modal, TextInput, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, RefreshControl, ScrollView, Modal, TextInput, Button } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import TallaCard from '../../components/containers/TallaCard';
 import ModalMensaje from '../../components/alerts/ModalMensaje';
-import { useCliente } from '../../contexts/UserContext';
+import { useUser } from '../../contexts/UserContext';
 
 const Modelo = () => {
   const route = useRoute();
-  const { idCliente } = useCliente();
+  const { usuario } = useUser();
   const { idModelo } = route.params;
   const [modelo, setModelo] = useState(null);
   const [tallas, setTallas] = useState([]);
@@ -17,14 +17,18 @@ const Modelo = () => {
   const [selectedTalla, setSelectedTalla] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [tallaDetalles, setTallaDetalles] = useState(null);
-  const [cantidad, setCantidad] = useState([]);
+  const [cantidad, setCantidad] = useState('');
   const [cantidadError, setCantidadError] = useState('');
   const [mensajeEmergente, setMensajeEmergente] = useState('');
+  const [detalleCreado, setDetalleCreado] = useState(false);
 
   useEffect(() => {
     fetchModelo();
     fetchTallas();
-  }, []);
+    if (detalleCreado) {
+      setModalVisible(false);
+    }
+  }, [detalleCreado]);
 
   const fetchModelo = async () => {
     try {
@@ -132,25 +136,14 @@ const Modelo = () => {
       </View>
     );
   }
+
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
 
-  const handleCantidadSubmit = () => {
-    const stockDisponible = tallaDetalles.stock_modelo_talla;
-    const cantidadIngresada = parseInt(cantidad);
-
-    if (isNaN(cantidadIngresada)) {
-      setCantidadError('Ingrese un número válido.');
-    } else if (cantidadIngresada > stockDisponible) {
-      setCantidadError('La cantidad ingresada supera el stock disponible.');
-    } else if (cantidadIngresada > 3) {
-      setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
-    } else {
-      // Aquí puedes realizar las acciones correspondientes al aceptar la cantidad ingresada.
-      setModalVisible(false);
-    }
+  const handleCerrarModal = () => {
+    setModalVisible(false);
   };
 
   const createDetail = async () => {
@@ -166,9 +159,10 @@ const Modelo = () => {
         setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
         const formData = new FormData();
-        formData.append('idCliente', parseInt(idCliente)); // Reemplaza con el valor correcto
+        formData.append('idCliente', parseInt(usuario)); // Reemplaza con el valor correcto
         formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); // Reemplaza con el valor correcto
         formData.append('cantidadModelo', parseInt(cantidad)); // Reemplaza con el valor correcto
+        console.log(formData);
   
         const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
           method: 'POST',
@@ -182,10 +176,10 @@ const Modelo = () => {
         const responseData = JSON.parse(text);
   
         if (responseData.status === 1) {
+          setDetalleCreado(true);
           setMensajeEmergente(responseData.message);
-          // Aquí puedes realizar la navegación a otra pantalla
         } else if (responseData.status === 2) {
-          setMensajeEmergente(responseData.error);
+          setMensajeEmergente(responseData.message);
         } else {
           setMensajeEmergente(responseData.error);
         }
@@ -195,8 +189,6 @@ const Modelo = () => {
       setMensajeEmergente('Error en la consulta');
     }
   };
-
-
 
   return (
     <ScrollView
@@ -251,19 +243,21 @@ const Modelo = () => {
                   <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
                 )}
                 <Button title="Crear Detalle" onPress={createDetail} />
-                <Button title="Cerrar" onPress={handleCantidadSubmit} />
-
+                <Button title="Cerrar" onPress={handleCerrarModal} />
               </>
             ) : (
               <ActivityIndicator size="large" color="#0000ff" />
             )}
           </View>
         </View>
-        <ModalMensaje mensaje={mensajeEmergente} onClose={() => setMensajeEmergente('')} />
       </Modal>
+      <ModalMensaje visible={detalleCreado} mensaje={mensajeEmergente} onClose={() => {
+        setDetalleCreado(false);
+        setMensajeEmergente('');
+      }} />
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

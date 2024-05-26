@@ -117,6 +117,8 @@ const fillTable = async () => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
+        INPUTSEARCH.value='';
+        fillTable();
     }
 }
 
@@ -283,6 +285,8 @@ const fillSubTable = async () => {
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
+        INPUTSEARCH.value='';
+        fillTable();
     }
 }
 //BUSCADOR EN TIEMPO REAL DE LA TABLA DENTRO DEL MODAL

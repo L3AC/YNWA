@@ -88,6 +88,8 @@ const fillTable = async () => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
+        INPUTSEARCH.value='';
+        fillTable();
     }
 }
 

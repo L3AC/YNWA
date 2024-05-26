@@ -100,6 +100,8 @@ const fillTable = async (estado=null) => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
+        INPUTSEARCH.value='';
+        fillTable();
     }
 }
 /*Busqueda en tiempo real*/
@@ -214,6 +216,8 @@ const fillSubTable = async () => {
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
+        INPUTSEARCH.value='';
+        fillTable();
     }
 }
 /*Busqueda en tiempo real dentro del modal*/

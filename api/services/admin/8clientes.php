@@ -18,11 +18,10 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$cliente->setSearch($_POST['valor']) 
+                    !$cliente->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $cliente->getDataError();
-                } 
-                elseif ($result['dataset'] = $cliente->searchRows()) {
+                } elseif ($result['dataset'] = $cliente->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -38,7 +37,7 @@ if (isset($_GET['action'])) {
                     !$cliente->setDireccion($_POST['direccionCliente']) or
                     !$cliente->setAlias($_POST['aliasCliente']) or
                     !$cliente->setClave($_POST['claveCliente']) or
-                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
+                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0)
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
@@ -65,6 +64,13 @@ if (isset($_GET['action'])) {
                     $result['status'] = 2;
                 }
                 break;
+            case 'readExistMail':
+                if ($cliente->readExistMail($_POST['correo'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
             case 'readOne':
                 if (!$cliente->setId($_POST['idCliente'])) {
                     $result['error'] = 'Registro incorrecto';
@@ -81,7 +87,7 @@ if (isset($_GET['action'])) {
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
-                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0) 
+                    !$cliente->setEstado(isset($_POST['estadoCliente']) ? 1 : 0)
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->updateRow()) {

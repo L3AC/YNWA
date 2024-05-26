@@ -19,8 +19,9 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLAVE_CLIENTE = document.getElementById('claveCliente'),
     ESTADO_CLIENTE = document.getElementById('estadoCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
-    MENSAJE_DIV = document.getElementById('MENSAJE_DIV'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
     INPUTSEARCH = document.getElementById('inputsearch'),
+    MENSAJEMAIL = document.getElementById('mensajeMail'),
     IDGUARDAR = document.getElementById('idGuardar');
     //Variable para poner un tiempo de espera
     let timeout_id;
@@ -119,21 +120,46 @@ const openCreate = () => {
     ALIAS_CLIENTE.disabled = false;
     CLAVE_CLIENTE.disabled = false;
     CONFIRMAR_CLAVE.disabled = false;
-    ALIAS_CLIENTE.addEventListener('input', async function ()  {
+
+    async function checkExistence(inputElement, formDataKey, apiEndpoint, messageElement) {
+        const FORM = new FormData();
+        FORM.append(formDataKey, inputElement.value);
+        const DATA = await fetchData(CLIENTE_API, apiEndpoint, FORM);
+    
+        if (DATA.status === 1) {
+            messageElement.textContent = `Ya existe el ${formDataKey}`;
+            messageElement.style.display = 'block';
+            IDGUARDAR.disabled = true;
+        } else {
+            messageElement.textContent = '';
+            IDGUARDAR.disabled = false;
+        }
+        IDGUARDAR.disabled = MENSAJEMAIL.textContent !== '' || MENSAJEDIV.textContent !== '';
+    }
+    
+    ALIAS_CLIENTE.addEventListener('input', () => {
+        checkExistence(ALIAS_CLIENTE, 'usuario', 'readExist', MENSAJEDIV);
+    });
+    
+    CORREO_CLIENTE.addEventListener('input', () => {
+        checkExistence(CORREO_CLIENTE, 'correo', 'readExistMail', MENSAJEMAIL);
+    });
+    
+    /*ALIAS_CLIENTE.addEventListener('input', async function ()  {
         const FORM = new FormData();
         FORM.append('usuario', ALIAS_CLIENTE.value);
         // Petición para obtener los datos del registro solicitado.
         const DATA = await fetchData(CLIENTE_API, 'readExist', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status === 1) {
-            MENSAJE_DIV.textContent = 'Ya existe el usuario';
-            MENSAJE_DIV.style.display = 'block'; 
+            MENSAJEDIV.textContent = 'Ya existe el usuario';
+            MENSAJEDIV.style.display = 'block'; 
             IDGUARDAR.disabled = true;
         } else {
-            MENSAJE_DIV.textContent = "";
+            MENSAJEDIV.textContent = "";
             IDGUARDAR.disabled = false;
         }
-    });
+    });*/
 }
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
@@ -161,6 +187,29 @@ const openUpdate = async (id) => {
         CORREO_CLIENTE.value = ROW.email_cliente;
         ALIAS_CLIENTE.value = ROW.usuario_cliente;
         ESTADO_CLIENTE.checked=ROW.estado_cliente;
+
+        CORREO_CLIENTE.addEventListener('input', async function () {
+            const FORM = new FormData();
+            FORM.append('correo', CORREO_CLIENTE.value);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA = await fetchData(CLIENTE_API, 'readExistMail', FORM);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status === 1) {
+                if (CORREO_CLIENTE.value == ROW.email_cliente) {
+                    MENSAJEMAIL.textContent = "";
+                    IDGUARDAR.disabled = false;
+                }
+                else {
+                    MENSAJEMAIL.textContent = 'Este correo ya está usado';
+                    MENSAJEMAIL.style.display = 'block';
+                    IDGUARDAR.disabled = true;
+                }
+
+            } else {
+                MENSAJEMAIL.textContent = "";
+                IDGUARDAR.disabled = false;
+            }
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }

@@ -169,6 +169,20 @@ class ClienteHandler
             return true;
         }
     }
+    public function readExistMail($username)
+    {
+        $sql = 'SELECT email_cliente
+        FROM prc_clientes
+        WHERE email_cliente = ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['email_cliente'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
 

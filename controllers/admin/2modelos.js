@@ -43,7 +43,7 @@ const SAVE_TREFORM = document.getElementById('savetreForm'),
     SUB_INPUTSEARCH = document.getElementById('subInputSearch'),
     BTN_TREFORM = document.getElementById('btnTreForm');
 //Variable para poner un tiempo de espera
-    let TIMEOUT_ID;
+    let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -122,8 +122,8 @@ const fillTable = async () => {
 
 /*Busqueda en tiempo real*/
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(TIMEOUT_ID);
-    TIMEOUT_ID = setTimeout(async function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 50ms
 });
@@ -287,8 +287,8 @@ const fillSubTable = async () => {
 }
 //BUSCADOR EN TIEMPO REAL DE LA TABLA DENTRO DEL MODAL
 SUB_INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(TIMEOUT_ID);
-    TIMEOUT_ID = setTimeout(async function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
         fillSubTable();
     }, 50); // Delay de 50ms
 });

@@ -29,7 +29,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     USUARIO_OPC = document.getElementById('estadoUsuario'),
     ROL_OPC = document.getElementById('estadopRol');
 //Variable para poner un tiempo de espera
-let TIMEOUT_ID;
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -67,8 +67,8 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 });
 //METODO PARA BUSCAR EN TIEMPO REAL
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(TIMEOUT_ID);
-    TIMEOUT_ID = setTimeout(async function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 50ms
 });

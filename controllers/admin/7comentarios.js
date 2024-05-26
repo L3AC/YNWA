@@ -19,7 +19,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     MODELO_COMENTARIO = document.getElementById('modeloComentario'),
     ESTADO_COMENTARIO = document.getElementById('estadoComentario');
     //Variable para poner un tiempo de espera
-    let TIMEOUT_ID;
+    let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -57,8 +57,8 @@ SAVE_FORM.addEventListener('submit', async (event) => {
 });
 /*BUSQUEDA EN TIEMPO REAL*/
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(TIMEOUT_ID);
-    TIMEOUT_ID = setTimeout(async function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 50ms
 });
@@ -103,8 +103,8 @@ const fillTable = async () => {
 }
 /*Busqueda en tiempo real*/
 INPUTSEARCH.addEventListener('input', function () {
-    clearTimeout(TIMEOUT_ID);
-    TIMEOUT_ID = setTimeout(async function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
         fillTable();
     }, 50); // Delay de 50ms
 });

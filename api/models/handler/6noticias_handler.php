@@ -108,8 +108,8 @@ class NoticiaHandler
 
     public function deleteRow()
     {
-        $sql = 'DELETE FROM prc_modelos
-                WHERE id_modelo = ?';
+        $sql = 'DELETE FROM prc_noticias
+                WHERE id_noticia = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }

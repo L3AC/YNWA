@@ -21,10 +21,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLAVE_USUARIO = document.getElementById('claveUsuario'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
     ESTADO_USUARIO = document.getElementById('estadoUsuario'),
-    mensajeDiv = document.getElementById('mensajeDiv'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
+    MENSAJEMAIL = document.getElementById('mensajeMail'),
     IDGUARDAR = document.getElementById('idGuardar');
-    //Variable para poner un tiempo de espera
-    let timeout_id;
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,21 +121,32 @@ const openCreate = () => {
     CONFIRMAR_CLAVE.disabled = false;
 
     fillSelect(ROL_API, 'fillSelect', 'rolUsuario');
-    ALIAS_USUARIO.addEventListener('input', async function () {
+    async function checkExistence(inputElement, formDataKey, apiEndpoint, messageElement) {
         const FORM = new FormData();
-        FORM.append('usuario', ALIAS_USUARIO.value);
-        // Petición para obtener los datos del registro solicitado.
-        const DATA = await fetchData(USUARIO_API, 'readExist', FORM);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        FORM.append(formDataKey, inputElement.value);
+        const DATA = await fetchData(USUARIO_API, apiEndpoint, FORM);
+    
         if (DATA.status === 1) {
-            mensajeDiv.textContent = 'Ya existe el usuario';
-            mensajeDiv.style.display = 'block';
+            messageElement.textContent = `Ya existe el ${formDataKey}`;
+            messageElement.style.display = 'block';
             IDGUARDAR.disabled = true;
         } else {
-            mensajeDiv.textContent = "";
+            messageElement.textContent = '';
             IDGUARDAR.disabled = false;
         }
+        IDGUARDAR.disabled = MENSAJEMAIL.textContent !== '' || MENSAJEDIV.textContent !== '';
+    }
+    
+    ALIAS_USUARIO.addEventListener('input', () => {
+        checkExistence(ALIAS_USUARIO, 'usuario', 'readExist', MENSAJEDIV);
     });
+    
+    CORREO_USUARIO.addEventListener('input', () => {
+        checkExistence(CORREO_USUARIO, 'correo', 'readExistMail', MENSAJEMAIL);
+    });
+
+
+
 }
 
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -163,6 +175,29 @@ const openUpdate = async (id) => {
         ALIAS_USUARIO.value = ROW.usuario_usuario;
         ESTADO_USUARIO.checked = ROW.estado_usuario;
         fillSelect(ROL_API, 'fillSelect', 'rolUsuario', ROW.id_rol);
+
+        CORREO_USUARIO.addEventListener('input', async function () {
+            const FORM = new FormData();
+            FORM.append('correo', CORREO_USUARIO.value);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA = await fetchData(USUARIO_API, 'readExistMail', FORM);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status === 1) {
+                if (CORREO_USUARIO.value == ROW.email_usuario) {
+                    MENSAJEMAIL.textContent = "";
+                    IDGUARDAR.disabled = false;
+                }
+                else {
+                    MENSAJEMAIL.textContent = 'Este correo ya está usado';
+                    MENSAJEMAIL.style.display = 'block';
+                    IDGUARDAR.disabled = true;
+                }
+
+            } else {
+                MENSAJEMAIL.textContent = "";
+                IDGUARDAR.disabled = false;
+            }
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }

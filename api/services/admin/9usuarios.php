@@ -18,11 +18,10 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$usuario->setSearch($_POST['valor']) 
+                    !$usuario->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $usuario->getDataError();
-                } 
-                elseif ($result['dataset'] = $usuario->searchRows()) {
+                } elseif ($result['dataset'] = $usuario->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -45,8 +44,8 @@ if (isset($_GET['action'])) {
                     !$usuario->setApellido($_POST['apellidoUsuario']) or
                     !$usuario->setCorreo($_POST['correoUsuario']) or
                     !$usuario->setAlias($_POST['aliasUsuario']) or
-                    !$usuario->setClave($_POST['claveUsuario']) or 
-                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$usuario->setClave($_POST['claveUsuario']) or
+                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0)
                 ) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($_POST['claveUsuario'] != $_POST['confirmarClave']) {
@@ -74,6 +73,13 @@ if (isset($_GET['action'])) {
                     $result['status'] = 2;
                 }
                 break;
+            case 'readExistMail':
+                if ($usuario->readExistMail($_POST['correo'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
             case 'readOne':
                 if (!$usuario->setId($_POST['idUsuario'])) {
                     $result['error'] = 'usuario incorrecto';
@@ -87,11 +93,11 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$usuario->setId($_POST['idUsuario']) or
-                    !$usuario->setIdRol($_POST['rolUsuario'])or
+                    !$usuario->setIdRol($_POST['rolUsuario']) or
                     !$usuario->setNombre($_POST['nombreUsuario']) or
                     !$usuario->setApellido($_POST['apellidoUsuario']) or
                     !$usuario->setCorreo($_POST['correoUsuario']) or
-                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0) 
+                    !$usuario->setEstado(isset($_POST['estadoUsuario']) ? 1 : 0)
                 ) {
                     $result['error'] = $usuario->getDataError();
                 } elseif ($usuario->updateRow()) {

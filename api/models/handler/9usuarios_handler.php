@@ -190,6 +190,20 @@ class UsuarioHandler
             return true;
         }
     }
+    public function readExistMail($username)
+    {
+        $sql = 'SELECT email_usuario
+        FROM sec_usuarios
+        WHERE email_usuario= ?';
+        $params = array($username);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['email_usuario'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function updateRow()
     {

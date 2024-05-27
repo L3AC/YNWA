@@ -29,22 +29,25 @@
     <main>
         <!-- Título del contenido principal -->
         <h4 id="mainTitle" class="m-4"></h4>
-        <!-- Formulario para iniciar sesión -->
-        <form class="row g-4 " id="sessionForm">
-            <!-- Campo oculto para asignar el token del reCAPTCHA -->
-            <div class="col-12 d-flex justify-content-center">
-                <input type="text" placeholder="Usuario" id="usu" name="usu" class="input" required>
-            </div>
-            <div class="col-12 d-flex justify-content-center mt-5">
-                <input type="password" placeholder="Contraseña" id="clave" name="clave" class="input" required>
-            </div>
-            <div class="col-12 text-center mt-5 mb-4">
-                <button class="btnn" type="submit"><a>Ingresar</a>
-                </button>
-            </div>
+        <div class="col-12 back" style="background-color: #c0c0c0; ">
+            <!-- Formulario para iniciar sesión -->
+            <form class="row g-4 " id="sessionForm">
+                <!-- Campo oculto para asignar el token del reCAPTCHA -->
+                <div class="col-12 d-flex justify-content-center">
+                    <input type="text" style="width: 80%; margin-top: 30px;" placeholder="Usuario" id="usu" name="usu" class="input" required>
+                </div>
+                <div class="col-12 d-flex justify-content-center mt-5">
+                    <input type="password" style="width: 80%;" placeholder="Contraseña" id="clave" name="clave" class="input" required>
+                </div>
+                <div class="col-12 text-center mt-5 mb-4">
+                    <button class="btnn" type="submit"><a>Ingresar</a>
+                    </button>
+                </div>
 
 
-        </form>
+            </form>
+        </div>
+
         <div class="col-12 text-center">
             <!-- Enlace para crear una cuenta de usuario -->
             <a href="signup.html">

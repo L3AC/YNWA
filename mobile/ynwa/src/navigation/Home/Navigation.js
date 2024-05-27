@@ -15,4 +15,3 @@ const ExplorarStack = () => {
 };
 
 export default ExplorarStack;
-

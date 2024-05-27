@@ -16,11 +16,10 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$talla->setSearch($_POST['valor']) 
+                    !$talla->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $talla->getDataError();
-                } 
-                elseif ($result['dataset'] = $talla->searchRows()) {
+                } elseif ($result['dataset'] = $talla->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -31,7 +30,7 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$talla->setNombretalla($_POST['nombreTalla']) or
-                    !$talla->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$talla->setEstado(isset($_POST['estadoTalla']) ? 1 : 0)
                 ) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->createRow()) {
@@ -43,28 +42,35 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readAllByIdTalla':
-                    if (!$talla->setId($_POST['id'])
-                    or!$talla->setIdModelo($_POST['idsub'])
-                    ) {
-                        $result['error'] = $talla->getDataError();
-                    } elseif ($result['dataset'] = $talla->readAllByIdTalla()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = 'No se encontraron registros';
-                    }
-                    break;
+                if (
+                    !$talla->setId($_POST['id'])
+                    or !$talla->setIdModelo($_POST['idsub'])
+                ) {
+                    $result['error'] = $talla->getDataError();
+                } elseif ($result['dataset'] = $talla->readAllByIdTalla()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No se encontraron registros';
+                }
+                break;
             case 'readAllById':
-                    if (!$talla->setIdModelo($_POST['id'])) {
-                        $result['error'] = $talla->getDataError();
-                    } elseif ($result['dataset'] = $talla->readAllById()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = 'No se encontraron registros';
-                    }
-                    break;
-
+                if (!$talla->setIdModelo($_POST['id'])) {
+                    $result['error'] = $talla->getDataError();
+                } elseif ($result['dataset'] = $talla->readAllById()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No se encontraron registros';
+                }
+                break;
+            case 'readExist':
+                if ($talla->readExist($_POST['valor'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
             case 'readAll':
                 if ($result['dataset'] = $talla->readAll()) {
                     $result['status'] = 1;
@@ -88,7 +94,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$talla->setId($_POST['idTalla']) or
                     !$talla->setNombretalla($_POST['nombreTalla']) or
-                    !$talla->setEstado(isset($_POST['estadoTalla']) ? 1 : 0) 
+                    !$talla->setEstado(isset($_POST['estadoTalla']) ? 1 : 0)
                 ) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->updateRow()) {
@@ -101,7 +107,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$talla->setId($_POST['idTalla']) 
+                    !$talla->setId($_POST['idTalla'])
                 ) {
                     $result['error'] = $talla->getDataError();
                 } elseif ($talla->deleteRow()) {
@@ -113,7 +119,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al eliminar la talla';
                 }
                 break;
-            
+
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

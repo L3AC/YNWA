@@ -13,9 +13,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ID_MARCA = document.getElementById('idMarca'),
     NOMBRE_MARCA = document.getElementById('nombreMarca'),
-    ESTADO_MARCA = document.getElementById('estadoMarca');
+    ESTADO_MARCA = document.getElementById('estadoMarca'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
+    IDGUARDAR = document.getElementById('idGuardar');
 //Variable para poner un tiempo de espera
-    let timeout_id;
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -88,7 +90,7 @@ const fillTable = async () => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
-        INPUTSEARCH.value='';
+        INPUTSEARCH.value = '';
         fillTable();
     }
 }
@@ -108,6 +110,22 @@ const openCreate = () => {
     MODAL_TITLE.textContent = 'Agregar registro';
     // Se prepara el formulario.
     SAVE_FORM.reset();
+    NOMBRE_MARCA.addEventListener('input', async function () {
+        const FORM = new FormData();
+        FORM.append('valor', NOMBRE_MARCA.value);
+        // Petición para obtener los datos del registro solicitado.
+        const DATA = await fetchData(MARCA_API, 'readExist', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status === 1) {
+            MENSAJEDIV.textContent = 'Esta marca ya existe';
+            MENSAJEDIV.style.display = 'block';
+            IDGUARDAR.disabled = true;
+
+        } else {
+            MENSAJEDIV.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    });
 }
 
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -129,6 +147,29 @@ const openUpdate = async (id) => {
         ID_MARCA.value = ROW.id_marca;
         NOMBRE_MARCA.value = ROW.descripcion_marca;
         ESTADO_MARCA.checked = ROW.estado_marca;
+
+        NOMBRE_MARCA.addEventListener('input', async function () {
+            const FORM = new FormData();
+            FORM.append('valor', NOMBRE_MARCA.value);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA = await fetchData(MARCA_API, 'readExist', FORM);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status === 1) {
+                if (NOMBRE_MARCA.value == ROW.descripcion_marca) {
+                    MENSAJEDIV.textContent = "";
+                    IDGUARDAR.disabled = false;
+                }
+                else {
+                    MENSAJEDIV.textContent = 'Esta marca ya existe';
+                    MENSAJEDIV.style.display = 'block';
+                    IDGUARDAR.disabled = true;
+                }
+
+            } else {
+                MENSAJEDIV.textContent = "";
+                IDGUARDAR.disabled = false;
+            }
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -166,4 +207,3 @@ const openReport = () => {
 
 
 
-  

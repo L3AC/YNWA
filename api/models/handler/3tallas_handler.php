@@ -52,6 +52,18 @@ class TallaHandler
         $sql = 'SELECT * FROM ctg_tallas;';
         return Database::getRows($sql);
     }
+    public function readExist($valor)
+    {
+        $sql = 'select descripcion_talla from ctg_tallas where descripcion_talla=?';
+        $params = array($valor);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['descripcion_talla'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public function readAllById()
     {
         $sql = 'SELECT id_talla, descripcion_talla

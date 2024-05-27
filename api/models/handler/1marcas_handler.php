@@ -43,6 +43,18 @@ class MarcaHandler
         $params = array($this->nombre, $this->estado);
         return Database::executeRow($sql, $params);
     }
+    public function readExist($valor)
+    {
+        $sql = 'select descripcion_marca from ctg_marcas where descripcion_marca=?';
+        $params = array($valor);
+        $data = Database::getRow($sql, $params);
+
+        if (empty($data['descripcion_marca'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function readAll()
     {

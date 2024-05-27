@@ -16,11 +16,10 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'searchRows':
                 if (
-                    !$marca->setSearch($_POST['valor']) 
+                    !$marca->setSearch($_POST['valor'])
                 ) {
                     $result['error'] = $marca->getDataError();
-                } 
-                elseif ($result['dataset'] = $marca->searchRows()) {
+                } elseif ($result['dataset'] = $marca->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -28,18 +27,18 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'createRow':
-                
+
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$marca->setNombre($_POST['nombreMarca'])or
-                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0) 
+                    !$marca->setNombre($_POST['nombreMarca']) or
+                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)
                 ) {
                     $result['error'] = $marca->getDataError();
                 } elseif ($marca->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'registro creado correctamente';
                     // Se asigna el estado del archivo después de insertar.
-                    
+
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear la registro';
                 }
@@ -50,6 +49,13 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
                     $result['error'] = 'No existen registros registradas';
+                }
+                break;
+            case 'readExist':
+                if ($marca->readExist($_POST['valor'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
                 }
                 break;
             case 'readOne':
@@ -66,7 +72,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$marca->setId($_POST['idMarca']) or
                     !$marca->setNombre($_POST['nombreMarca']) or
-                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)  
+                    !$marca->setEstado(isset($_POST['estadoMarca']) ? 1 : 0)
                 ) {
                     $result['error'] = $marca->getDataError();
                 } elseif ($marca->updateRow()) {
@@ -78,7 +84,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$marca->setId($_POST['idMarca']) 
+                    !$marca->setId($_POST['idMarca'])
                 ) {
                     $result['error'] = $marca->getDataError();
                 } elseif ($marca->deleteRow()) {

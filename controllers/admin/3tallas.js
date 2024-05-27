@@ -17,9 +17,11 @@ const SAVE_FORM = document.getElementById('saveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ID_TALLA = document.getElementById('idTalla'),
     NOMBRE_TALLA = document.getElementById('nombreTalla'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
+    IDGUARDAR = document.getElementById('idGuardar'),
     ESTADO_TALLA = document.getElementById('estadoTalla');
-    //Variable para poner un tiempo de espera
-    let timeout_id;
+//Variable para poner un tiempo de espera
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -100,7 +102,7 @@ const fillTable = async () => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
-        INPUTSEARCH.value='';
+        INPUTSEARCH.value = '';
         fillTable();
     }
 }
@@ -110,9 +112,24 @@ const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
     MODAL_TITLE.textContent = 'Crear registro';
-
     // Se prepara el formulario.
     SAVE_FORM.reset();
+    NOMBRE_TALLA.addEventListener('input', async function () {
+        const FORM = new FormData();
+        FORM.append('valor', NOMBRE_TALLA.value);
+        // Petición para obtener los datos del registro solicitado.
+        const DATA = await fetchData(TALLA_API, 'readExist', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status === 1) {
+            MENSAJEDIV.textContent = 'Esta talla ya existe';
+            MENSAJEDIV.style.display = 'block';
+            IDGUARDAR.disabled = true;
+
+        } else {
+            MENSAJEDIV.textContent = "";
+            IDGUARDAR.disabled = false;
+        }
+    });
 }
 
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -134,7 +151,28 @@ const openUpdate = async (id) => {
         ID_TALLA.value = ROW.id_talla;
         NOMBRE_TALLA.value = ROW.descripcion_talla;
         ESTADO_TALLA.checked = ROW.estado_talla;
-        
+        NOMBRE_TALLA.addEventListener('input', async function () {
+            const FORM = new FormData();
+            FORM.append('valor', NOMBRE_TALLA.value);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA = await fetchData(TALLA_API, 'readExist', FORM);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status === 1) {
+                if (NOMBRE_TALLA.value == ROW.descripcion_talla) {
+                    MENSAJEDIV.textContent = "";
+                    IDGUARDAR.disabled = false;
+                }
+                else {
+                    MENSAJEDIV.textContent = 'Esta talla ya existe';
+                    MENSAJEDIV.style.display = 'block';
+                    IDGUARDAR.disabled = true;
+                }
+
+            } else {
+                MENSAJEDIV.textContent = "";
+                IDGUARDAR.disabled = false;
+            }
+        });
     } else {
         sweetAlert(2, DATA.error, false);
     }

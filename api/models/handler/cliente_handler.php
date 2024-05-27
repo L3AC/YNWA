@@ -21,6 +21,15 @@ class ClienteHandler
     protected $clave = null;
     protected $estado = null;
 
+    public function generarPin()
+    {
+        $pinLength = 6;
+        $pin = '';
+        for ($i = 0; $i < $pinLength; $i++) {
+            $pin .= mt_rand(0, 9);
+        }
+        return $pin;
+    }
     /*
     *   Métodos para gestionar la cuenta del cliente.
     */
@@ -116,9 +125,11 @@ class ClienteHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO cliente(nombre_cliente, apellido_cliente, correo_cliente, dui_cliente, telefono_cliente, nacimiento_cliente, direccion_cliente, clave_cliente)
-                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->clave);
+        $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
+        apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
+        values(?,?,?,?,?,?,true,?)';
+        $params = array($this->usuario, $this->clave, $this->nombre,
+         $this->apellido, $this->correo, $this->generarPin(),$this->direccion);
         return Database::executeRow($sql, $params);
     }
 

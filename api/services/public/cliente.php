@@ -79,9 +79,7 @@ if (isset($_GET['action'])) {
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
                     !$cliente->setDireccion($_POST['direccionCliente']) or
-                    !$cliente->setDUI($_POST['duiCliente']) or
-                    !$cliente->setNacimiento($_POST['nacimientoCliente']) or
-                    !$cliente->setTelefono($_POST['telefonoCliente']) or
+                    !$cliente->setUsuario($_POST['usuarioCliente']) or
                     !$cliente->setClave($_POST['claveCliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();

@@ -28,11 +28,9 @@ class ClienteHandler
     {
         $pinLength = 6;
         $pin = '';
-
         for ($i = 0; $i < $pinLength; $i++) {
             $pin .= mt_rand(0, 9);
         }
-
         return $pin;
     }
     public function checkUser($username, $password)

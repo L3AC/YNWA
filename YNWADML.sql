@@ -67,19 +67,32 @@ INSERT INTO ctg_marcas (descripcion_marca) VALUES
 ('Jimmy Choo'),('Dior');
 
 INSERT INTO prc_modelos (id_marca, descripcion_modelo, foto_modelo) VALUES
-(1, 'Nike Air Force 1', '3728asb23423.png'),(1, 'Nike Air Max 90', '66426d44021f6.jpg'),
-(1, 'Nike Roshe Run', '3728asb23423.png'),(2, 'Adidas Stan Smith', '66426d44021f6.jpg'),
-(2, 'Adidas Superstar', '3728asb23423.png'),(2, 'Adidas Gazelle', '66426d44021f6.jpg'),
-(3, 'Puma Suede Classic', '3728asb23423.png'),(3, 'Puma Basket Classic', '66426d44021f6.jpg'),
-(3, 'Puma Roma', '664790c7651d4.jpg'),(4, 'Vans Old Skool', '664790c7651d4.jpg'),
-(4, 'Vans Authentic', '664790c7651d4.jpg'),(4, 'Vans Era', '664790c7651d4.jpg'),
-(5, 'Converse Chuck Taylor All Star', '664790c7651d4.jpg'),(5, 'Converse One Star', '664790c7651d4.jpg'),
-(5, 'Converse Jack Purcell', '43jnd344ksnw.jpg'),(6, 'New Balance 574', '43jnd344ksnw.jpg'),
-(6, 'New Balance 990', 'r43jnd344ksnw.jpg'),(6, 'New Balance Fresh Foam', '43jnd344ksnw.jpg'),
-(7, 'Reebok Classic Leather', '43jnd344ksnw.jpg'),(7, 'Reebok Club C', '43jnd344ksnw.jpg'),
-(7, 'Reebok Workout Plus', '23dfb234nsd.jpg'),(8, 'Skechers Go Walk', '23dfb234nsd.jpg'),
-(8, 'Skechers D"Lites"', '23dfb234nsd.jpg'),(8, 'Skechers Energy', '23dfb234nsd.jpg'),
-(9, 'Fila Disruptor II', '23dfb234nsd.jpg');
+(1, 'Nike Air Force 1', 'air-jordan-1-high-og-washed-pink.jpg'),
+(1, 'Nike Air Max 90', 'air-jordan-1-mid-true-blue.jpg'),
+(1, 'Nike Roshe Run', 'air-jordan-1-retro-high-og-atmosphere.jpg'),
+(2, 'Adidas Stan Smith', 'jordan1-bluegrey.jpg'),
+(2, 'Adidas Superstar', 'jordan1-darkmocha.jpg'),
+(2, 'Adidas Gazelle', 'jordan1-diademuertos.jpg'),
+(3, 'Puma Suede Classic', 'air_Jordan_1_Mid_SE_Basketball_Blossom.jpg'),
+(3, 'Puma Basket Classic', 'air-jordan-1-high-chicago.jpg'),
+(3, 'Puma Roma', 'air-Jordan-1-High-Dior.jpg'),
+(4, 'Vans Old Skool', 'air-jordan-1-mid-se-grey-green.jpg'),
+(4, 'Vans Authentic', 'air-jordan-1-high-og-washed-pink.jpg'),
+(4, 'Vans Era', 'air-jordan-1-mid-true-blue.jpg'),
+(5, 'Converse Chuck Taylor All Star', 'air-jordan-1-retro-high-og-atmosphere.jpg'),
+(5, 'Converse One Star', 'jordan1-bluegrey.jpg'),
+(5, 'Converse Jack Purcell', 'jordan1-darkmocha.jpg'),
+(6, 'New Balance 574', 'jordan1-diademuertos.jpg'),
+(6, 'New Balance 990', 'air_Jordan_1_Mid_SE_Basketball_Blossom.jpg'),
+(6, 'New Balance Fresh Foam', 'air-jordan-1-high-chicago.jpg'),
+(7, 'Reebok Classic Leather', 'air-Jordan-1-High-Dior.jpg'),
+(7, 'Reebok Club C', 'air-jordan-1-mid-se-grey-green.jpg'),
+(7, 'Reebok Workout Plus', 'air-jordan-1-high-og-washed-pink.jpg'),
+(8, 'Skechers Go Walk', 'air-jordan-1-mid-true-blue.jpg'),
+(8, 'Skechers D"Lites', 'air-jordan-1-retro-high-og-atmosphere.jpg'),
+(8, 'Skechers Energy', 'jordan1-bluegrey.jpg'),
+(9, 'Fila Disruptor II', 'jordan1-darkmocha.jpg');
+
 
 INSERT INTO ctg_tallas (descripcion_talla) VALUES
 ('4'),('4.5'),('5'),('5.5'),('6'),('6.5'),('7'),('7.5'),('8'),('8.5'),('9'),('9.5'),('10'),

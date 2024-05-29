@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
-
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,
@@ -27,7 +26,7 @@ usuario_usuario VARCHAR(30) UNIQUE NOT NULL,
 clave_usuario VARCHAR(255) NOT NULL,
 nombre_usuario VARCHAR(255) NOT NULL,
 apellido_usuario VARCHAR(255) NOT NULL,
-email_usuario VARCHAR(100) NOT NULL,
+email_usuario VARCHAR(100) NOT NULL UNIQUE,
 pin_usuario VARCHAR(6) NOT NULL,
 estado_usuario BOOLEAN DEFAULT TRUE,
 PRIMARY KEY (id_usuario),
@@ -43,7 +42,7 @@ clave_cliente VARCHAR(100) NOT NULL,
 direccion_cliente VARCHAR(255) NOT NULL,
 nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
-email_cliente VARCHAR(100) NOT NULL,
+email_cliente VARCHAR(100) NOT NULL UNIQUE,
 pin_cliente VARCHAR(6) NOT NULL,
 estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY(id_cliente)
@@ -51,7 +50,7 @@ PRIMARY KEY(id_cliente)
 
 CREATE TABLE ctg_marcas(
 id_marca INT UNSIGNED AUTO_INCREMENT,
-descripcion_marca VARCHAR(255) NOT NULL,
+descripcion_marca VARCHAR(255) NOT NULL UNIQUE,
 estado_marca BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_marca)
 );
@@ -70,7 +69,7 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 CREATE TABLE ctg_tallas(
 id_talla INT UNSIGNED AUTO_INCREMENT,
-descripcion_talla VARCHAR(255) NOT NULL,
+descripcion_talla VARCHAR(255) NOT NULL UNIQUE,
 estado_talla BOOLEAN  DEFAULT TRUE NOT NULL,
 PRIMARY KEY (id_talla)
 );
@@ -109,7 +108,6 @@ CREATE TABLE prc_noticias (
     CONSTRAINT fk_noticia_tipo_noticia
     FOREIGN KEY (id_tipo_noticia) REFERENCES ctg_tipo_noticias(id_tipo_noticia)
 );
-
 
 CREATE TABLE prc_pedidos(
 id_pedido INT UNSIGNED AUTO_INCREMENT,

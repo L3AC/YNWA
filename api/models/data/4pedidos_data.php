@@ -32,6 +32,29 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+    public function setIdModeloTalla($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_modelo_talla = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador es incorrecto';
+            return false;
+        }
+    }
+
+
+    public function setIdDetalle($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_detalle = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del detalle pedido es incorrecto';
+            return false;
+        }
+    }
+
 
     public function setNombre($value, $min = 2, $max = 50)
     {
@@ -68,6 +91,26 @@ class PedidoData extends PedidoHandler
             return true;
         } else {
             $this->data_error = 'El precio debe ser un valor numérico';
+            return false;
+        }
+    }
+    public function setCliente($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->cliente = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del cliente es incorrecto';
+            return false;
+        }
+    }
+    public function setCantidad($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->cantidad = $value;
+            return true;
+        } else {
+            $this->data_error = 'La cantidad del producto debe ser mayor o igual a 1';
             return false;
         }
     }

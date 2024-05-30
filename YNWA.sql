@@ -2,6 +2,19 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+select * from prc_clientes
+SELECT id_detalle,id_pedido,descripcion_modelo,descripcion_marca,
+        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido
+        from prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING (id_pedido)
+        INNER JOIN prc_modelo_tallas USING (id_modelo_talla)
+        INNER JOIN prc_modelos USING (id_modelo)
+        INNER JOIN ctg_marcas USING (id_marca)
+        INNER JOIN ctg_tallas USING (id_talla)
+        WHERE estado_pedido ="Pendiente" AND id_cliente=26 AND (descripcion_modelo like '%%'
+        OR descripcion_marca like '%%' OR precio_modelo_talla like '%%')
+        ORDER BY descripcion_modelo
+
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,

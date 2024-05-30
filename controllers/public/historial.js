@@ -1,7 +1,8 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedido.php',
     MODELOTALLAS_API = 'services/public/modelotallas.php',
-    COMENTARIO_API = 'services/public/comentario.php';
+    COMENTARIO_API = 'services/public/comentario.php',
+    DETALLEPEDIDO_API = 'services/public/detallepedido.php';
 // Constante para establecer el cuerpo de la tabla.
 const TABLE_BODY = document.getElementById('tableBody');
 
@@ -10,10 +11,12 @@ const ID_DETALLE = document.getElementById('idDetalle'),
 
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal'),
     SAVE_FORM2 = document.getElementById('saveForm'),
+    INPUTSEARCH = document.getElementById('inputsearch'),
     MODAL_TITLE2 = document.getElementById('modalTitle'),
     COMENTARIO = document.getElementById('contenidoComentario'),
     FECHA_COMENTARIO = document.getElementById('fechaComentario'),
     DIVSTARS = document.getElementById('divstars');
+    let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,6 +57,12 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
     }
 });
 
+INPUTSEARCH.addEventListener('input', function () {
+    clearTimeout(timeout_id);
+    timeout_id = setTimeout(async function () {
+        readDetail();
+    }, 50); // Delay de 50ms
+});
 
 
 
@@ -65,9 +74,9 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
 async function readDetail() {
     // Petición para obtener los datos del pedido en proceso.
     const FORM = new FormData();
-    FORM.append('valor', '');
+    FORM.append('valor', INPUTSEARCH.value); //
 
-    const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchHistorial', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el cuerpo de la tabla.

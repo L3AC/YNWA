@@ -55,7 +55,12 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'searchRows':
-                if ($result['dataset'] = $pedido->searchRows($_POST['valor'])) {
+                if (
+                    !$pedido->setSearch($_POST['valor']) OR
+                    !$pedido->setEstado($_POST['estado']) 
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif($result['dataset'] = $pedido->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {

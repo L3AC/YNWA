@@ -46,6 +46,25 @@ class DetallePedidoHandler
         $params = array($this->idPedido,$this->search,$this->search,$this->search);
         return Database::getRows($sql, $params);
     }
+    public function searchHistorial()
+    {
+        $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
+
+        $sql = 'SELECT id_detalle,id_pedido,descripcion_modelo,descripcion_marca,
+        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,foto_modelo
+        from prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING (id_pedido)
+        INNER JOIN prc_modelo_tallas USING (id_modelo_talla)
+        INNER JOIN prc_modelos USING (id_modelo)
+        INNER JOIN ctg_marcas USING (id_marca)
+        INNER JOIN ctg_tallas USING (id_talla)
+        WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_modelo like ?
+        OR descripcion_marca like ? OR precio_modelo_talla like ?)
+        ORDER BY descripcion_modelo';
+
+        $params = array($_SESSION['idCliente'],$this->search,$this->search,$this->search);
+        return Database::getRows($sql, $params);
+    }
 
     public function createRow()
     {

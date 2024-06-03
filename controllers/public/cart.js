@@ -69,49 +69,48 @@ async function readDetail() {
             total += subtotal;
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-<div class="card mb-3" id="detalle" style="background-color: #F1EFEF;">
-    <div class="row g-0" style="background-color: #F1EFEF;">
-        <div class="col-lg-4 col-md-12 col-sm-12">
-            <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
-                class="img-fluid rounded" alt="${row.descripcion_modelo}">
+                <div class="card mb-3" id="detalle" style="background-color: #F1EFEF; padding-bottom: 10px;">
+                    <div class="row g-0" style="background-color: #F1EFEF;">
+                        <div class="col-lg-4 col-md-12 col-sm-12">
+                            <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
+                                class="img-fluid rounded" alt="${row.descripcion_modelo}">
 
 
-        </div>
-        <div class="col-lg-5 col-md-12 col-sm-12">
-            <div class="card-body">
-                <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
-                <h5 class="card-title" style="font-size: 40px;">${row.descripcion_modelo}</h5>
-                <p class="card-text" style="font-size: 20px;">
-                    <strong>Marca:</strong> ${row.descripcion_marca}<br>
-                    <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                    <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
-                    <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                    <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
-                </p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 ">
-            <div class="row">
-                <div class="col-1"></div>
-                <div class="col-5">
-                    <button class="btn1 "
-                        onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"
-                        style=" margin-right: 10px;">
-                        Edit
-                    </button>
+                        </div>
+                        <div class="col-lg-5 col-md-12 col-sm-12">
+                            <div class="card-body">
+                                <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
+                                <h5 class="card-title" style="font-size: 40px;">${row.descripcion_modelo}</h5>
+                                <p class="card-text" style="font-size: 20px;">
+                                    <strong>Marca:</strong> ${row.descripcion_marca}<br>
+                                    <strong>Talla:</strong> ${row.descripcion_talla}<br>
+                                    <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
+                                    <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
+                                    <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 ">
+                            <div class="row">
+                                <div class="col-5">
+                                    <button class="btn1 "
+                                        onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"
+                                        style=" margin-right: 10px;">
+                                        Edit
+                                    </button>
+                                </div>
+                                <div class="col-5">
+                                    <button class="btn1 " onclick="openDelete(${row.id_detalle})" style="text-align: center;">
+                                        Delete
+                                    </button>
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5">
-                    <button class="btn1 " onclick="openDelete(${row.id_detalle})" style="text-align: center;">
-                        Delete
-                    </button>
-                </div>
-                <div class="col-1"></div>
-            </div>
-
-
-        </div>
-    </div>
-</div>
 `;
         });
         // Se muestra el total a pagar con dos decimales.

@@ -12,6 +12,9 @@
     <!-- Llamada al icono de la página web -->
     <link rel="stylesheet" href="../../resources/css/cartita.css">
     <link type="image/png" rel="icon" href="../../resources/img/icon.png">
+    <link rel="stylesheet" href="../../resources/css/btn.css">
+    <link rel="stylesheet" href="../../resources/css/input.css">
+    <link rel="stylesheet" href="../../resources/css/detcar.css ">
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
@@ -29,48 +32,43 @@
         <!-- Título del contenido principal -->
         <h4 id="mainTitle" class="mt-4"></h4>
         <!-- Formulario para crear cuenta -->
-        <form class="row g-3" id="signupForm">
+        <div class="back" style="background-color: #c0c0c0;">
+        <form class="row g-3" id="signupForm" >
             <!-- Campo oculto para asignar el token del reCAPTCHA -->
             <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse">
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="nombreCliente" class="form-label">Nombre</label>
-                <input type="text" id="nombreCliente" name="nombreCliente" class="form-control" required>
+            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2" style="margin-top: 40px;">
+                <input placeholder="Nombre" type="text" id="nombreCliente" name="nombreCliente" class="input" required>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="apellidoCliente" class="form-label">Apellido</label>
-                <input type="text" id="apellidoCliente" name="apellidoCliente" class="form-control" required>
+            <div class="col-sm-12 col-md-6 col-lg-4" style="margin-top: 40px;">
+                <input placeholder="Apellido" type="text" id="apellidoCliente" name="apellidoCliente" class="input" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="correoCliente" class="form-label">Correo electrónico</label>
-                <input type="email" id="correoCliente" name="correoCliente" maxlength="100" class="form-control"
+                <input placeholder="Correo" type="email" id="correoCliente" name="correoCliente" maxlength="100" class="input"
                     required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="usuarioCliente" class="form-label">Usuario</label>
-                <input type="text" id="usuarioCliente" name="usuarioCliente" class="form-control" required>
+                <input placeholder="Usuario" type="text" id="usuarioCliente" name="usuarioCliente" class="input" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <label for="claveCliente" class="form-label">Contraseña</label>
-                <input type="password" id="claveCliente" name="claveCliente" class="form-control" required>
+                <input placeholder="Contraseña" type="password" id="claveCliente" name="claveCliente" class="input" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
-                <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
-                <input type="password" id="confirmarClave" name="confirmarClave" class="form-control" required>
+                <input placeholder="Confirmar contraseña" type="password" id="confirmarClave" name="confirmarClave" class="input" required>
             </div>
             <div class="col-sm-12 col-lg-8 offset-lg-2">
-                <label for="direccionCliente" class="form-label">Dirección</label>
-                <input type="text" id="direccionCliente" name="direccionCliente" maxlength="250" class="form-control"
+                <input placeholder="Direccion" type="text" id="direccionCliente" name="direccionCliente" maxlength="250" class="input"
                     required>
             </div>
             <div class="form-check d-flex justify-content-center">
                 <input type="checkbox" class="form-check-input" id="condicion" name="condicion" required>
                 <label class="form-check-label" for="condicion">Acepto términos y condiciones</label>
             </div>
-            <div class="text-center">
-                <button type="reset" class="btn btn-secondary"><i class="bi bi-x-square-fill"></i> Cancelar</button>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-person-fill"></i> Registrar</button>
+            <div class="text-center" style="margin-bottom: 30px;">
+                <button type="reset" class="btnn"><i class="bi bi-x-square-fill"></i> Cancelar</button>
+                <button type="submit" class="btnn"><i class="bi bi-person-fill"></i> Registrar</button>
             </div>
         </form>
+    </div>
         <!-- Inclusión de la librería de mascaras. Para más información https://github.com/text-mask/text-mask -->
         <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
         <!-- Inclusión de la librería del reCAPTCHA. Para más información https://developers.google.com/recaptcha/docs/v3 -->

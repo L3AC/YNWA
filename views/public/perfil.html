@@ -44,11 +44,13 @@
                     <!--Se muestra su correo-->
                     <label for="correoCliente" class="form-label">Correo</label>
                     <input type="text" id="correoCliente" name="correoCliente" class="input" required>
+                    <div id="mensajeMail" style="display: none;"></div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <!--Se muestra su usuario-->
                     <label for="aliasCliente" class="form-label">Usuario</label>
                     <input type="text" id="aliasCliente" name="aliasCliente" class="input" required>
+                    <div id="mensajeDiv" style="display: none;"></div>
                 </div>
                 <div class="col-sm-12 col-lg-8 offset-lg-2">
                     <label for="direccionCliente" class="form-label">Direccion</label>
@@ -62,7 +64,7 @@
 
                 <div id="mapa"></div>
                 <div class="text-center">
-                    <button class="btnn" type="submit"><a>Guardar</a>
+                    <button class="btnn" id="idGuardar" type="submit"><a>Guardar</a>
                     </button>
                 </div>
             </form>

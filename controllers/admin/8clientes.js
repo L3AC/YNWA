@@ -19,8 +19,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     CLAVE_CLIENTE = document.getElementById('claveCliente'),
     ESTADO_CLIENTE = document.getElementById('estadoCliente'),
     CONFIRMAR_CLAVE = document.getElementById('confirmarClave'),
-    MENSAJEDIV = document.getElementById('mensajeDiv'),
     INPUTSEARCH = document.getElementById('inputsearch'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
     MENSAJEMAIL = document.getElementById('mensajeMail'),
     IDGUARDAR = document.getElementById('idGuardar');
     //Variable para poner un tiempo de espera

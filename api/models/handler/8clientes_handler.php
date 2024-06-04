@@ -96,9 +96,9 @@ class ClienteHandler
     {
         $sql = 'UPDATE prc_clientes
                 SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,
-                 alias_cliente = ?,direccion_cliente=? 
+                 usuario_cliente = ?,direccion_cliente=? 
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $this->direccion, $_SESSION['idcliente']);
+        $params = array($this->nombre, $this->apellido, $this->email, $this->usuario, $this->direccion, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
 

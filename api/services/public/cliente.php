@@ -32,14 +32,13 @@ if (isset($_GET['action'])) {
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
                     !$cliente->setDireccion($_POST['direccionCliente']) or
-                    !$cliente->setUsuario($_POST['usuarioCliente']) or
-                    !$cliente->setClave($_POST['claveCliente'])
+                    !$cliente->setUsuario($_POST['aliasCliente']) 
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['usuarion'] = $_POST['usuarioCliente'];
+                    $_SESSION['usuarion'] = $_POST['aliasCliente'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
@@ -59,6 +58,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
                 }
                 break;
+                case 'readExist':
+                    if ($cliente->readExist($_POST['usuario'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['status'] = 2;
+                    }
+                    break;
+                case 'readExistMail':
+                    if ($cliente->readExistMail($_POST['correo'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['status'] = 2;
+                    }
+                    break; 
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

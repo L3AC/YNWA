@@ -1,10 +1,14 @@
 // Constantes para establecer los elementos del formulario de editar perfil.
+const CLIENTE_API = 'services/public/cliente.php';
 const PROFILE_FORM = document.getElementById('profileForm'),
     NOMBRE_CLIENTE = document.getElementById('nombreCliente'),
     APELLIDO_CLIENTE = document.getElementById('apellidoCliente'),
     CORREO_CLIENTE = document.getElementById('correoCliente'),
-    ALIAS_CLIENTE = document.getElementById('aliasCliente');
-    DIR_CLIENTE = document.getElementById('direccionCliente');
+    ALIAS_CLIENTE = document.getElementById('aliasCliente'),
+    DIR_CLIENTE = document.getElementById('direccionCliente'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
+    MENSAJEMAIL = document.getElementById('mensajeMail'),
+    IDGUARDAR = document.getElementById('idGuardar');
 // Constante para establecer la modal de cambiar contraseña.
 const PASSWORD_MODAL = new bootstrap.Modal('#passwordModal');
 // Constante para establecer el formulario de cambiar contraseña.
@@ -31,6 +35,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     } else {
         sweetAlert(2, DATA.error, null);
     }
+});
+async function checkExistence(inputElement, formDataKey, apiEndpoint, messageElement) {
+    const FORM = new FormData();
+    FORM.append(formDataKey, inputElement.value);
+    const DATA = await fetchData(CLIENTE_API, apiEndpoint, FORM);
+
+    if (DATA.status === 1) {
+        messageElement.textContent = `Ya existe el ${formDataKey}`;
+        messageElement.style.display = 'block';
+        IDGUARDAR.disabled = true;
+    } else {
+        messageElement.textContent = '';
+        IDGUARDAR.disabled = false;
+    }
+    IDGUARDAR.disabled = MENSAJEMAIL.textContent !== '' || MENSAJEDIV.textContent !== '';
+}
+
+ALIAS_CLIENTE.addEventListener('input', () => {
+    checkExistence(ALIAS_CLIENTE, 'usuario', 'readExist', MENSAJEDIV);
+});
+
+CORREO_CLIENTE.addEventListener('input', () => {
+    checkExistence(CORREO_CLIENTE, 'correo', 'readExistMail', MENSAJEMAIL);
 });
 
 // Método del evento para cuando se envía el formulario de editar perfil.

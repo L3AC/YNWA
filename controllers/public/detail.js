@@ -181,7 +181,7 @@ const openComentario = async (id) => {
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <textarea class="form-control" style="resize: none;">${row.contenido_comentario}</textarea>
+                            <textarea readonly class="form-control" style="resize: none;">${row.contenido_comentario}</textarea>
                         </div>
                     </div>
                     <p class="mt-2">${row.fecha_comentario}</p>

@@ -44,10 +44,10 @@ const loadTemplate = async () => {
                     <div class="col-md-4">
                         <div class="nav-link">
                             <div class="input-group">
-                                <div class="input-container">
-                                    <input id="searchMain" type="text" name="searchMain" class="input2 "
-                                        placeholder="Buscar...">
-                                </div>
+                            <div class="input-container">
+                            <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar...">
+                            <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
+                          </div>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,34 @@ const loadTemplate = async () => {
                 LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
 
+            const voiceButton = document.getElementById('voiceButton');
+    let recognition;
+
+    // Verificar compatibilidad con la API de reconocimiento de voz
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
+
+        // Evento de resultado del reconocimiento de voz
+        recognition.onresult = function(event) {
+            const transcript = event.results[event.results.length - 1][0].transcript.trim();
+            SEARCH_MAIN.value = transcript;
+            window.location.href = 'products.html?modelo=' +  SEARCH_MAIN.value;
+        };
+
+        // Evento de inicio/detención del reconocimiento de voz
+        voiceButton.addEventListener('click', function() {
+            if (recognition && recognition.isStarted) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+    } else {
+        voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
+    }
+
         } else {
             location.href = 'index.html';
         }
@@ -132,10 +160,10 @@ const loadTemplate = async () => {
             <div class="col-md-4">
                 <div class="nav-link">
                     <div class="input-group">
-                        <div class="input-container">
-                            <input id="searchMain" type="text" name="searchMain" class="input2 "
-                                placeholder="Buscar...">
-                        </div>
+                    <div class="input-container">
+                    <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar...">
+                    <button id="voiceButton" class="voiceButton"><i class="bi bi-mic"></i></button>
+                  </div>
                     </div>
                 </div>
             </div>
@@ -193,6 +221,34 @@ const loadTemplate = async () => {
             // Se presenta un mensaje de error cuando no existen datos para mostrar.
             LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
         }
+        const voiceButton = document.getElementById('voiceButton');
+    
+    let recognition;
+
+    // Verificar compatibilidad con la API de reconocimiento de voz
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
+
+        // Evento de resultado del reconocimiento de voz
+        recognition.onresult = function(event) {
+            const transcript = event.results[event.results.length - 1][0].transcript.trim();
+            SEARCH_MAIN.value = transcript;
+            window.location.href = 'products.html?modelo=' +  SEARCH_MAIN.value;
+        };
+
+        // Evento de inicio/detención del reconocimiento de voz
+        voiceButton.addEventListener('click', function() {
+            if (recognition && recognition.isStarted) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+    } else {
+        voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
+    }
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `

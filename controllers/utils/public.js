@@ -64,7 +64,7 @@ const loadTemplate = async () => {
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                                     href="index.html"><i class="bi bi-tags-fill h3" title="Ver marcas"></i>
                                 </a>
-                                <ul class="dropdown-menu" id="listmarca">
+                                <ul class="dropdown-menu" id="listmarca" data-bs-popper="static" style="max-height: 200px; overflow-y: scroll;">
     
                                 </ul>
                             </li>
@@ -152,7 +152,7 @@ const loadTemplate = async () => {
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                             href="index.html"><i class="bi bi-tags-fill"> Ver marcas</i>
                         </a>
-                        <ul class="dropdown-menu" id="listmarca">
+                        <ul class="dropdown-menu " id="listmarca" data-bs-popper="static" style="max-height: 200px; overflow-y: scroll;">
 
                         </ul>
                     </li>

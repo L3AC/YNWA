@@ -74,7 +74,6 @@
   
   .content .name{
     font-size: 40px;
-    text-transform: uppercase;
     font-weight: bold;
     opacity: 0;
     animation: animate 1s ease-in-out 1 forwards;

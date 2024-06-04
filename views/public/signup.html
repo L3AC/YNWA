@@ -24,6 +24,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #mapa {
+            width: 80%;
+            height: 300px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,47 +41,61 @@
         <h4 id="mainTitle" class="mt-4"></h4>
         <!-- Formulario para crear cuenta -->
         <div class="back" style="background-color: #c0c0c0;">
-        <form class="row g-3" id="signupForm" >
-            <!-- Campo oculto para asignar el token del reCAPTCHA -->
-            <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse">
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2" style="margin-top: 40px;">
-                <input placeholder="Nombre" type="text" id="nombreCliente" name="nombreCliente" class="input" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4" style="margin-top: 40px;">
-                <input placeholder="Apellido" type="text" id="apellidoCliente" name="apellidoCliente" class="input" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <input placeholder="Correo" type="email" id="correoCliente" name="correoCliente" maxlength="100" class="input"
-                    required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <input placeholder="Usuario" type="text" id="usuarioCliente" name="usuarioCliente" class="input" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
-                <input placeholder="Contraseña" type="password" id="claveCliente" name="claveCliente" class="input" required>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
-                <input placeholder="Confirmar contraseña" type="password" id="confirmarClave" name="confirmarClave" class="input" required>
-            </div>
-            <div class="col-sm-12 col-lg-8 offset-lg-2">
-                <input placeholder="Direccion" type="text" id="direccionCliente" name="direccionCliente" maxlength="250" class="input"
-                    required>
-            </div>
-            <div class="form-check d-flex justify-content-center">
-                <input type="checkbox" class="form-check-input" id="condicion" name="condicion" required>
-                <label class="form-check-label" for="condicion">Acepto términos y condiciones</label>
-            </div>
-            <div class="text-center" style="margin-bottom: 30px;">
-                <button type="reset" class="btnn"><i class="bi bi-x-square-fill"></i> Cancelar</button>
-                <button type="submit" class="btnn"><i class="bi bi-person-fill"></i> Registrar</button>
-            </div>
-        </form>
-    </div>
+            <form class="row g-3" id="signupForm">
+                <!-- Campo oculto para asignar el token del reCAPTCHA -->
+                <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse">
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2" style="margin-top: 40px;">
+                    <input placeholder="Nombre" type="text" id="nombreCliente" name="nombreCliente" class="input"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4" style="margin-top: 40px;">
+                    <input placeholder="Apellido" type="text" id="apellidoCliente" name="apellidoCliente" class="input"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <input placeholder="Correo" type="email" id="correoCliente" name="correoCliente" maxlength="100"
+                        class="input" required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <input placeholder="Usuario" type="text" id="usuarioCliente" name="usuarioCliente" class="input"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
+                    <input placeholder="Contraseña" type="password" id="claveCliente" name="claveCliente" class="input"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <input placeholder="Confirmar contraseña" type="password" id="confirmarClave" name="confirmarClave"
+                        class="input" required>
+                </div>
+                <div class="col-sm-12 col-lg-8 offset-lg-2">
+                    <input placeholder="Direccion" type="text" id="direccionCliente" name="direccionCliente"
+                        maxlength="250" class="input" required>
+                </div>
+                <div class="col-sm-12 col-lg-8 offset-lg-2" style="display: flex; justify-content: center;">
+                    <button class="btnn2" onclick="buscarDireccion()">Buscar</button>
+                    <button class="btnn2" onclick="limpiarInput()">Limpiar</button>
+                </div>
+
+                <div id="mapa"></div>
+
+                <div class="form-check d-flex justify-content-center">
+                    <input type="checkbox" class="form-check-input" id="condicion" name="condicion" required>
+                    <label class="form-check-label" for="condicion">Acepto términos y condiciones</label>
+                </div>
+                <div class="text-center" style="margin-bottom: 30px;">
+                    <button type="reset" class="btnn"><i class="bi bi-x-square-fill"></i> Cancelar</button>
+                    <button type="submit" class="btnn"><i class="bi bi-person-fill"></i> Registrar</button>
+                </div>
+            </form>
+        </div>
         <!-- Inclusión de la librería de mascaras. Para más información https://github.com/text-mask/text-mask -->
         <script type="text/javascript" src="../../resources/js/vanillaTextMask.js"></script>
         <!-- Inclusión de la librería del reCAPTCHA. Para más información https://developers.google.com/recaptcha/docs/v3 -->
         <script type="text/javascript"
             src="https://www.google.com/recaptcha/api.js?render=6LdBzLQUAAAAAJvH-aCUUJgliLOjLcmrHN06RFXT"></script>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script type="text/javascript" src="../../controllers/utils/mapa.js"></script>
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

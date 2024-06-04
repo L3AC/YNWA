@@ -50,5 +50,57 @@
     filter: brightness(.8);
    }
 
+   .btnn2 {
+    width: 100px;
+    text-align: center;
+    margin: 5px;
+    padding: 10px;
+    --color: #000000;
+    background-color: transparent;
+    border-radius: .3em;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .5s;
+    font-weight: 400;
+    font-size: 17px;
+    border: 1px solid #000000;
+    color: var(--color);
+    z-index: 1;
+}
+.btnn2::before, .btnn::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--color);
+    transition: 1s ease;
+   }
    
+   .btnn2::before {
+    top: -1em;
+    left: -1em;
+   }
+   
+   .btnn2::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+   }
+   
+   .btnn2:hover::before, .btnn:hover::after {
+    height: 410px;
+    width: 410px;
+   }
+   
+   .btnn2:hover {
+    color: rgb(255, 255, 255);
+   }
+   
+   .btnn2:active {
+    filter: brightness(.8);
+   }
    

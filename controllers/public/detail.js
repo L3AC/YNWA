@@ -21,7 +21,8 @@ const SAVE_FORM = document.getElementById('saveForm'),
     ID_MODELO_TALLA = document.getElementById('idModeloTalla'),
     CANTIDAD = document.getElementById('cantidadModelo'),
     STOCK_INFO = document.getElementById('stock'),
-    mensajeDiv = document.getElementById('mensajeDiv'),
+    MENSAJEDIV = document.getElementById('mensajeDiv'),
+    COMENTSEARCH = document.getElementById('comentSearch'),
     IDGUARDAR = document.getElementById('idGuardar');
 
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
@@ -100,17 +101,17 @@ CANTIDAD.addEventListener('input', async function () {
     if (DATA.status === 1) {
         const ROW = DATA.dataset;
         if (CANTIDAD.value > ROW.stock_modelo_talla) {
-            mensajeDiv.textContent = 'No puede escoger más del stock';
-            mensajeDiv.style.display = 'block';
+            MENSAJEDIV.textContent = 'No puede escoger más del stock';
+            MENSAJEDIV.style.display = 'block';
             IDGUARDAR.disabled = true;
         }
         else if (CANTIDAD.value <= 0 || CANTIDAD.value > 3) {
-            mensajeDiv.textContent = 'Solo puede escoger 3 existencias a la vez';
-            mensajeDiv.style.display = 'block';
+            MENSAJEDIV.textContent = 'Solo puede escoger 3 existencias a la vez';
+            MENSAJEDIV.style.display = 'block';
             IDGUARDAR.disabled = true;
         }
         else {
-            mensajeDiv.textContent = "";
+            MENSAJEDIV.textContent = "";
             IDGUARDAR.disabled = false;
         }
     }
@@ -204,6 +205,17 @@ const openComentario = async (id) => {
         
         document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
             element.disabled = true;
+        });
+
+        COMENTSEARCH.addEventListener('input', async function () {
+            const FORM = new FormData();
+            FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+            if (DATA.status) {
+                
+            }
         });
     } else {
         sweetAlert(4, DATA.error, false);

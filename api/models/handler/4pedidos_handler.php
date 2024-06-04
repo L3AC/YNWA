@@ -109,13 +109,14 @@ class PedidoHandler
     {
         $sql = 'SELECT id_detalle, id_modelo_talla, foto_modelo,
         descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido
+                precio_modelo_talla, cantidad_detalle_pedido,direccion_cliente
                 FROM prc_detalle_pedidos
                 INNER JOIN prc_pedidos USING(id_pedido)
                 INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
                 INNER JOIN ctg_tallas USING(id_talla)
                 INNER JOIN prc_modelos USING(id_modelo)
                 INNER JOIN ctg_marcas USING(id_marca)
+                INNER JOIN prc_clientes USING(id_cliente)
                 WHERE id_pedido = ?';
         $params = array($_SESSION['idPedido']);
         return Database::getRows($sql, $params);

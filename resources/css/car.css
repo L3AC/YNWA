@@ -6,3 +6,9 @@
     box-shadow: 20px 20px 60px #bebebe,
                   -20px -20px 60px #ffffff;
    }
+
+   .direcc{
+    font-family: 'QuickSanBold';
+    font-size: 15px;
+    font-weight: bold;
+   }

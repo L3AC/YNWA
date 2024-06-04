@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         CARDSLIDE.innerHTML += `
             <div class="carousel-item active">
-                <img src="../../resources/img/carousel/img1.jpg" class="d-block w-100" alt="Slide 1">
+                <img src="../../resources/img/carousel/default.png" class="d-block w-100" alt="Slide 1">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>¿Sabías que...?</h5>
                     <p>El café reduce el riesgo de padecer Alzheimer.</p>

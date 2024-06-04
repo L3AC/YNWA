@@ -52,7 +52,7 @@ CREATE TABLE prc_clientes(
 id_cliente INT UNSIGNED AUTO_INCREMENT,
 usuario_cliente VARCHAR(30) UNIQUE NOT NULL,
 clave_cliente VARCHAR(100) NOT NULL,
-direccion_cliente VARCHAR(255) NOT NULL,
+direccion_cliente LONGTEXT NOT NULL,
 nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
 email_cliente VARCHAR(100) NOT NULL UNIQUE,
@@ -60,6 +60,7 @@ pin_cliente VARCHAR(6) NOT NULL,
 estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY(id_cliente)
 );
+
 
 CREATE TABLE ctg_marcas(
 id_marca INT UNSIGNED AUTO_INCREMENT,

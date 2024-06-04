@@ -1,15 +1,10 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/cliente_data.php');
+require_once ('../../models/data/8clientes_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
-    if(isset($_GET['app'])){
-
-    }
-    else{
-        session_start();
-    }
+    session_start();
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     //session_start();
     // Se instancia la clase correspondiente.
@@ -29,6 +24,26 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Usuario indefinido';
                 }
                 break;
+            case 'editProfile':
+                $_POST = Validator::validateForm($_POST);
+
+                if (
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) or
+                    !$cliente->setDireccion($_POST['direccionCliente']) or
+                    !$cliente->setUsuario($_POST['usuarioCliente']) or
+                    !$cliente->setClave($_POST['claveCliente'])
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->editProfile()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Perfil modificado correctamente';
+                    $_SESSION['usuarion'] = $_POST['usuarioCliente'];
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el perfil';
+                }
+                break;
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -37,13 +52,13 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cerrar la sesión';
                 }
                 break;
-                case 'readProfile':
-                    if ($result['dataset'] = $cliente->readProfile()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al leer el perfil';
-                    }
-                    break;
+            case 'readProfile':
+                if ($result['dataset'] = $cliente->readProfile()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'Ocurrió un problema al leer el perfil';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -74,7 +89,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No eres humano';
                 } elseif(!isset($_POST['condicion'])) {
                     $result['error'] = 'Debe marcar la aceptación de términos y condiciones';
-                } else*/if (
+                } else*/
+                if (
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
@@ -93,36 +109,21 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'logIn':
-                    $_POST = Validator::validateForm($_POST);
-                    if (isset($_POST['usu']) && isset($_POST['clave'])) {
-                        if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
-                            $result['error'] = 'Datos incorrectos';
-                        } elseif ($cliente->checkStatus()) {
-                            $result['status'] = 1;
-                            $result['message'] = 'Autenticación correcta';
-                        } else {
-                            $result['error'] = 'La cuenta ha sido desactivada';
-                        }
+                $_POST = Validator::validateForm($_POST);
+                if (isset($_POST['usu']) && isset($_POST['clave'])) {
+                    if (!$cliente->checkUser($_POST['usu'], $_POST['clave'])) {
+                        $result['error'] = 'Datos incorrectos';
+                    } elseif ($cliente->checkStatus()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Autenticación correcta';
                     } else {
-                        $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                        $result['error'] = 'La cuenta ha sido desactivada';
                     }
+                } else {
+                    $result['error'] = 'Usuario y/o contraseña no proporcionados';
+                }
                 break;
-                case 'logInM':
-                    $_POST = Validator::validateForm($_POST);
-                    if (isset($_POST['usu']) && isset($_POST['clave'])) {
-                        $userResult = $cliente->checkUserM($_POST['usu'], $_POST['clave']);
-                        if (!$userResult['success']) {
-                            $result['error'] = 'Datos incorrectos';
-                        } else {
-                            $result['status'] = 1;
-                            $result['message'] = 'Autenticación correcta';
-                            $result['dataset'] = $userResult['idCliente']; // Agregar el ID del cliente al resultado
-                        }
-                    } else {
-                        $result['error'] = 'Usuario y/o contraseña no proporcionados';
-                    }
-                break;
-                
+
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
         }
@@ -132,7 +133,7 @@ if (isset($_GET['action'])) {
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('Content-type: application/json; charset=utf-8');
     // Se imprime el resultado en formato JSON y se retorna al controlador.
-    print(json_encode($result));
+    print (json_encode($result));
 } else {
-    print(json_encode('Recurso no disponible'));
+    print (json_encode('Recurso no disponible'));
 }

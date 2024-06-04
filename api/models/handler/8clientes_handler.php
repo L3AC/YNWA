@@ -33,44 +33,53 @@ class ClienteHandler
         }
         return $pin;
     }
-    public function checkUser($username, $password)
+    public function checkUser($usuario, $password)
     {
-        $sql = 'SELECT id_cliente , usuario_cliente, clave_cliente
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
                 FROM prc_clientes
-                WHERE  usuario_cliente = ?';
-        //echo($username);
-        $params = array($username);
+                WHERE usuario_cliente = ?';
+        $params = array($usuario);
         $data = Database::getRow($sql, $params);
-        //echo $data['clave'];
         if ($data && password_verify($password, $data['clave_cliente'])) {
-            //echo ($_SESSION['usuario']).' 1';
+            $this->id = $data['id_cliente'];
+            $this->usuario = $data['usuario_cliente'];
+            $this->estado = $data['estado_cliente'];
             return true;
         } else {
             return false;
         }
     }
 
-    public function checkPassword($password)
+    public function checkStatus()
     {
-        $sql = 'SELECT clave_cliente
-                FROM prc_clientes
-                WHERE id_cliente = ?';
-        $params = array($_SESSION['idCliente']);
-        $data = Database::getRow($sql, $params);
-        // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
-        if ($data && password_verify($password, $data['clave_cliente'])) {
+        if ($this->estado) {
+            $_SESSION['idCliente'] = $this->id;
+            $_SESSION['usuarioc'] = $this->usuario;
             return true;
         } else {
             return false;
+        }
+    }
+    public function checkUserM($usuario, $password)
+    {
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
+            FROM prc_clientes
+            WHERE usuario_cliente = ?';
+        $params = array($usuario);
+        $data = Database::getRow($sql, $params);
+        if ($data && password_verify($password, $data['clave_cliente'])) {
+            return array('success' => true, 'idCliente' => $data['id_cliente']);
+        } else {
+            return array('success' => false);
         }
     }
 
     public function changePassword()
     {
-        $sql = 'UPDATE prc_clientes
+        $sql = 'UPDATE cliente
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->clave, $_SESSION['idCliente']);
+        $params = array($this->clave, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -85,10 +94,11 @@ class ClienteHandler
 
     public function editProfile()
     {
-        $sql = 'UPDATE cliente
-                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?, alias_cliente = ?
+        $sql = 'UPDATE prc_clientes
+                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,
+                 alias_cliente = ?,direccion_cliente=? 
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->alias, $_SESSION['idcliente']);
+        $params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $this->direccion, $_SESSION['idcliente']);
         return Database::executeRow($sql, $params);
     }
 
@@ -132,14 +142,6 @@ class ClienteHandler
         $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
          nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
                 from prc_clientes 
-                ORDER BY apellido_cliente';
-        return Database::getRows($sql);
-    }
-    public function readAllActive()
-    {
-        $sql = 'SELECT id_cliente,usuario_cliente, clave_cliente, 
-         nombre_cliente, apellido_cliente ,email_cliente, estado_cliente,direccion_cliente
-                from prc_clientes where estado_cliente=true
                 ORDER BY apellido_cliente';
         return Database::getRows($sql);
     }

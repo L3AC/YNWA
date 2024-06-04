@@ -1,16 +1,16 @@
 <?php
 // Se incluye la clase para trabajar con la base de datos.
-require_once('../../helpers/database.php');
+require_once ('../../helpers/database.php');
 /*
-*	Clase para manejar el comportamiento de los datos de la tabla CLIENTE.
-*/
+ *	Clase para manejar el comportamiento de los datos de la tabla CLIENTE.
+ */
 class ClienteHandler
 {
     /*
-    *   Declaración de atributos para el manejo de datos.
-    */
+     *   Declaración de atributos para el manejo de datos.
+     */
     protected $id = null;
-    protected $nombre = null;    
+    protected $nombre = null;
     protected $usuario = null;
     protected $apellido = null;
     protected $correo = null;
@@ -31,8 +31,8 @@ class ClienteHandler
         return $pin;
     }
     /*
-    *   Métodos para gestionar la cuenta del cliente.
-    */
+     *   Métodos para gestionar la cuenta del cliente.
+     */
     public function checkUser($usuario, $password)
     {
         $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
@@ -61,18 +61,18 @@ class ClienteHandler
         }
     }
     public function checkUserM($usuario, $password)
-{
-    $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
+    {
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
             FROM prc_clientes
             WHERE usuario_cliente = ?';
-    $params = array($usuario);
-    $data = Database::getRow($sql, $params);
-    if ($data && password_verify($password, $data['clave_cliente'])) {
-        return array('success' => true, 'idCliente' =>  $data['id_cliente']);
-    } else {
-        return array('success' => false);
+        $params = array($usuario);
+        $data = Database::getRow($sql, $params);
+        if ($data && password_verify($password, $data['clave_cliente'])) {
+            return array('success' => true, 'idCliente' => $data['id_cliente']);
+        } else {
+            return array('success' => false);
+        }
     }
-}
 
     public function changePassword()
     {
@@ -93,10 +93,11 @@ class ClienteHandler
 
     public function editProfile()
     {
-        $sql = 'UPDATE cliente
-                SET nombre_cliente = ?, apellido_cliente = ?, correo_cliente = ?, dui_cliente = ?, telefono_cliente = ?, nacimiento_cliente = ?, direccion_cliente = ?
+        $sql = 'UPDATE prc_clientes
+                SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,
+                 alias_cliente = ?,direccion_cliente=? 
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->id);
+        $params = array($this->nombre, $this->apellido, $this->correo, $this->usuario, $this->direccion, $_SESSION['idcliente']);
         return Database::executeRow($sql, $params);
     }
 
@@ -110,8 +111,8 @@ class ClienteHandler
     }
 
     /*
-    *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
-    */
+     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
+     */
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
@@ -128,8 +129,15 @@ class ClienteHandler
         $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
         apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
         values(?,?,?,?,?,?,true,?)';
-        $params = array($this->usuario, $this->clave, $this->nombre,
-         $this->apellido, $this->correo, $this->generarPin(),$this->direccion);
+        $params = array(
+            $this->usuario,
+            $this->clave,
+            $this->nombre,
+            $this->apellido,
+            $this->correo,
+            $this->generarPin(),
+            $this->direccion
+        );
         return Database::executeRow($sql, $params);
     }
 

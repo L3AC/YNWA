@@ -77,8 +77,9 @@ class ComentarioHandler
         ORDER BY fecha_comentario DESC, estado_comentario DESC';
         return Database::getRows($sql);
     }
-    public function readAllActive()
+    public function readAllActive($value)
     {
+        $value= $value === '' ? '%%' : '%' . $value . '%';
         $sql = 'select id_modelo,id_comentario,id_detalle,CONCAT(nombre_cliente," ",apellido_cliente) as cliente,
         CONCAT(descripcion_marca," ",descripcion_modelo) as modelo,contenido_comentario,
         puntuacion_comentario,estado_comentario,
@@ -91,6 +92,7 @@ class ComentarioHandler
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN ctg_marcas ma USING (id_marca)
         WHERE id_modelo = ? AND estado_comentario=true
+        AND (descripcion_marca like ? OR descripcion_modelo like ? OR )
         ORDER BY puntuacion_comentario DESC';
         //echo $this->idModelo. ' que';
         $params = array($this->idModelo);

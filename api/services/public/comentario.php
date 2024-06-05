@@ -37,7 +37,7 @@ if (isset($_GET['action'])) {
                 !$pedido->setIdModelo($_POST['idModelo'])
             ) {
                 $result['error'] = $pedido->getDataError();
-            } elseif ($result['dataset'] = $pedido->readAllActive()) {
+            } elseif ($result['dataset'] = $pedido->readAllActive($_POST['valor'])) {
                 $result['status'] = 1;
                 $result['message'] = count($result['dataset']);
             } else {

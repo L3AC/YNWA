@@ -76,7 +76,7 @@ class ModeloHandler
         INNER JOIN ctg_marcas USING(id_marca)
         WHERE estado_marca=true AND estado_modelo=true
         ORDER BY id_modelo DESC
-        LIMIT 8';
+        LIMIT 12';
         return Database::getRows($sql);
     }
 

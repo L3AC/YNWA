@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const CATEGORIA_API = 'services/public/producto.php',
+const PRODUCTO_API = 'services/public/producto.php',
     NOTICIA_API = 'services/public/noticia.php';
 CATEGORIAS = document.getElementById('categorias'),
     BTNSLIDE = document.getElementById('btnSlide'),
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     // Petición para obtener las categorías disponibles.
-    const DATA = await fetchData(CATEGORIA_API, 'readDesc');
+    const DATA = await fetchData(PRODUCTO_API, 'readDesc');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el contenedor de categorías.

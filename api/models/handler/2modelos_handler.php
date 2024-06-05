@@ -71,7 +71,7 @@ class ModeloHandler
     }
     public function readDesc()
     {
-        $sql = 'SELECT DISTINCT id_modelo, descripcion_modelo, foto_modelo, estado_modelo
+        $sql = 'SELECT DISTINCT id_modelo, descripcion_modelo, foto_modelo, estado_modelo, descripcion_marca as marca
         FROM prc_modelos 
         INNER JOIN ctg_marcas USING(id_marca)
         INNER JOIN prc_modelo_tallas USING(id_modelo)

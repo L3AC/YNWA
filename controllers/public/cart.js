@@ -96,7 +96,7 @@ async function readDetail() {
                             <div class="row">
                                 <div class="col-5">
                                     <button class="btn1 "
-                                        onclick="openUpdate(${row.id_detalle}, ${row.cantidad_producto}, ${row.id_modelo_talla})"
+                                        onclick="openUpdate(${row.id_detalle}, ${row.cantidad_detalle_pedido}, ${row.id_modelo_talla})"
                                         style=" margin-right: 10px;">
                                         Edit
                                     </button>

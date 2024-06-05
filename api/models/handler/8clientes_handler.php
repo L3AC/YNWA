@@ -123,7 +123,7 @@ class ClienteHandler
         $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
         apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
         values(?,?,?,?,?,?,true,?)';
-        $params = array($this->alias, $this->clave, $this->nombre,
+        $params = array($this->usuario, $this->clave, $this->nombre,
          $this->apellido, $this->email, $this->generarPin(),$this->direccion);
          
         return Database::executeRow($sql, $params);

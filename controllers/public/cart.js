@@ -68,7 +68,7 @@ async function readDetail() {
         DATA.dataset.forEach(row => {
             subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
             total += subtotal;
-            IDDIREC.textContent=`Direccon de la entrega: ${row.direccion_cliente}`;
+            IDDIREC.textContent=`Dirección de la entrega: ${row.direccion_cliente}`;
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <div class="card mb-3" id="detalle" style="background-color: #F1EFEF; padding-bottom: 10px;">

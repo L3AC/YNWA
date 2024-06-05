@@ -1,5 +1,11 @@
 // Constante para establecer el formulario de registrar cliente.
-const SIGNUP_FORM = document.getElementById('signupForm');
+const CLIENTE_API = 'services/public/cliente.php';
+const SIGNUP_FORM = document.getElementById('signupForm'),
+CORREO_CLIENTE = document.getElementById('correoCliente'),
+ALIAS_CLIENTE = document.getElementById('usuarioCliente'),
+MENSAJEDIV = document.getElementById('mensajeDiv'),
+MENSAJEMAIL = document.getElementById('mensajeMail'),
+IDGUARDAR = document.getElementById('idGuardar');
 // Llamada a la función para establecer la mascara del campo teléfono.
 
 
@@ -31,6 +37,30 @@ SIGNUP_FORM.addEventListener('submit', async (event) => {
         // Se genera un nuevo token cuando ocurre un problema.
         reCAPTCHA();
     }
+});
+
+async function checkExistence(inputElement, formDataKey, apiEndpoint, messageElement) {
+    const FORM = new FormData();
+    FORM.append(formDataKey, inputElement.value);
+    const DATA = await fetchData(CLIENTE_API, apiEndpoint, FORM);
+
+    if (DATA.status === 1) {
+        messageElement.textContent = `Ya existe el ${formDataKey}`;
+        messageElement.style.display = 'block';
+        IDGUARDAR.disabled = true;
+    } else {
+        messageElement.textContent = '';
+        IDGUARDAR.disabled = false;
+    }
+    IDGUARDAR.disabled = MENSAJEMAIL.textContent !== '' || MENSAJEDIV.textContent !== '';
+}
+
+ALIAS_CLIENTE.addEventListener('input', () => {
+    checkExistence(ALIAS_CLIENTE, 'usuario', 'readExist', MENSAJEDIV);
+});
+
+CORREO_CLIENTE.addEventListener('input', () => {
+    checkExistence(CORREO_CLIENTE, 'correo', 'readExistMail', MENSAJEMAIL);
 });
 
 /*

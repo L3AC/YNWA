@@ -81,7 +81,7 @@ if (isset($_GET['action'])) {
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 // Se establece la clave secreta para el reCAPTCHA de acuerdo con la cuenta de Google.
-                /*$secretKey = '6LdBzLQUAAAAAL6oP4xpgMao-SmEkmRCpoLBLri-';
+                $secretKey = '6LdBzLQUAAAAAL6oP4xpgMao-SmEkmRCpoLBLri-';
                 // Se establece la dirección IP del servidor.
                 $ip = $_SERVER['REMOTE_ADDR'];
                 // Se establecen los datos del raCAPTCHA.
@@ -102,7 +102,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No eres humano';
                 } elseif(!isset($_POST['condicion'])) {
                     $result['error'] = 'Debe marcar la aceptación de términos y condiciones';
-                } else*/
+                } else
                 if (
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
@@ -136,6 +136,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Usuario y/o contraseña no proporcionados';
                 }
                 break;
+                case 'readExist':
+                    if ($cliente->readExist($_POST['usuario'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['status'] = 2;
+                    }
+                    break;
+                case 'readExistMail':
+                    if ($cliente->readExistMail($_POST['correo'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['status'] = 2;
+                    }
+                    break; 
 
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';

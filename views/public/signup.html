@@ -49,10 +49,12 @@
                 <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                     <input placeholder="Correo" type="email" id="correoCliente" name="correoCliente" maxlength="100"
                         class="input" required>
+                    <div id="mensajeMail" style="display: none;"></div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <input placeholder="Usuario" type="text" id="usuarioCliente" name="usuarioCliente" class="input"
                         required>
+                    <div id="mensajeDiv" style="display: none;"></div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                     <input placeholder="Contraseña" type="password" id="claveCliente" name="claveCliente" class="input"
@@ -71,7 +73,7 @@
                     <button class="btnn2" onclick="limpiarInput()">Limpiar</button>
                     <button class="btnn2" onclick="habilitarVerCalles()">Ver Calles</button>
                     <button class="btnn2" onclick="habilitarModoSatelite()">Modo Satélite</button>
-                    
+
                 </div>
 
                 <div id="mapa"></div>
@@ -82,7 +84,7 @@
                 </div>
                 <div class="text-center" style="margin-bottom: 30px;">
                     <button type="reset" class="btnn"><i class="bi bi-x-square-fill"></i> Cancelar</button>
-                    <button type="submit" class="btnn"><i class="bi bi-person-fill"></i> Registrar</button>
+                    <button id="idGuardar" type="submit" class="btnn"><i class="bi bi-person-fill"></i> Registrar</button>
                 </div>
             </form>
         </div>

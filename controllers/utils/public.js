@@ -45,7 +45,7 @@ const loadTemplate = async () => {
                         <div class="nav-link">
                             <div class="input-group">
                             <div class="input-container">
-                            <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar...">
+                            <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
                             <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
                           </div>
                             </div>
@@ -64,7 +64,7 @@ const loadTemplate = async () => {
                                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
                                     href="index.html"><i class="bi bi-tags-fill h3" title="Ver marcas"></i>
                                 </a>
-                                <ul class="dropdown-menu" id="listmarca" data-bs-popper="static" style="max-height: 200px; overflow-y: scroll;">
+                                <ul class="dropdown-menu" id="listmarca" data-bs-popper="static" style="max-height: 200px; overflow-y: scroll; width: 200px">
     
                                 </ul>
                             </li>
@@ -100,9 +100,10 @@ const loadTemplate = async () => {
                 DATA.dataset.forEach(row => {
                     // Se crean y concatenan las tarjetas con los datos de cada producto.
                     LISTA_MARCA.innerHTML += `
-                        <li><a class="dropdown-item" 
-                        href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
-                        ${row.descripcion_marca}</a></li>
+                        <li><a class="dropdown-item" href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
+                        ${row.descripcion_marca}
+                        <span class="cantidad-productos">${row.cantidad_productos}</span>
+                    </a></li>
                     `;
                 });
             } else {
@@ -111,32 +112,32 @@ const loadTemplate = async () => {
             }
 
             const voiceButton = document.getElementById('voiceButton');
-    let recognition;
+            let recognition;
 
-    // Verificar compatibilidad con la API de reconocimiento de voz
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
+            // Verificar compatibilidad con la API de reconocimiento de voz
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
 
-        // Evento de resultado del reconocimiento de voz
-        recognition.onresult = function(event) {
-            const transcript = event.results[event.results.length - 1][0].transcript.trim();
-            SEARCH_MAIN.value = transcript;
-            window.location.href = 'products.html?modelo=' +  SEARCH_MAIN.value;
-        };
+                // Evento de resultado del reconocimiento de voz
+                recognition.onresult = function (event) {
+                    const transcript = event.results[event.results.length - 1][0].transcript.trim();
+                    SEARCH_MAIN.value = transcript;
+                    window.location.href = 'products.html?modelo=' + SEARCH_MAIN.value;
+                };
 
-        // Evento de inicio/detención del reconocimiento de voz
-        voiceButton.addEventListener('click', function() {
-            if (recognition && recognition.isStarted) {
-                recognition.stop();
+                // Evento de inicio/detención del reconocimiento de voz
+                voiceButton.addEventListener('click', function () {
+                    if (recognition && recognition.isStarted) {
+                        recognition.stop();
+                    } else {
+                        recognition.start();
+                    }
+                });
             } else {
-                recognition.start();
+                voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
             }
-        });
-    } else {
-        voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-    }
 
         } else {
             location.href = 'index.html';
@@ -161,7 +162,7 @@ const loadTemplate = async () => {
                 <div class="nav-link">
                     <div class="input-group">
                     <div class="input-container">
-                    <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar...">
+                    <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
                     <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
                   </div>
                     </div>
@@ -210,45 +211,55 @@ const loadTemplate = async () => {
             LISTA_MARCA.innerHTML = '';
             // Se recorre el conjunto de registros fila por fila a través del objeto row.
             DATA.dataset.forEach(row => {
-                // Se crean y concatenan las tarjetas con los datos de cada producto.
-                LISTA_MARCA.innerHTML += `
-                    <li><a class="dropdown-item" 
-                    href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
-                    ${row.descripcion_marca}</a></li>
-                `;
+                // Verificar si hay productos asociados a la marca actual.
+                const tieneProductos = row.cantidad_productos > 0; // Suponiendo que 'cantidad_productos' contiene la cantidad de productos asociados a la marca.
+
+                // Se crea la tarjeta de la marca con el enlace y el ícono de X roja si no hay productos.
+                const marcaHTML = `
+            <li>
+                <a class="dropdown-item" href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
+                    ${row.descripcion_marca}
+                </a>
+                ${tieneProductos ? '' : '<span class="icono-x-roja">X</span>'}
+            </li>
+        `;
+
+                // Se agrega la marca al contenedor de marcas.
+                LISTA_MARCA.innerHTML += marcaHTML;
             });
         } else {
             // Se presenta un mensaje de error cuando no existen datos para mostrar.
             LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
         }
+
         const voiceButton = document.getElementById('voiceButton');
-    
-    let recognition;
 
-    // Verificar compatibilidad con la API de reconocimiento de voz
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
+        let recognition;
 
-        // Evento de resultado del reconocimiento de voz
-        recognition.onresult = function(event) {
-            const transcript = event.results[event.results.length - 1][0].transcript.trim();
-            SEARCH_MAIN.value = transcript;
-            window.location.href = 'products.html?modelo=' +  SEARCH_MAIN.value;
-        };
+        // Verificar compatibilidad con la API de reconocimiento de voz
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'es-ES,en-US'; // Configurar los idiomas a reconocer
 
-        // Evento de inicio/detención del reconocimiento de voz
-        voiceButton.addEventListener('click', function() {
-            if (recognition && recognition.isStarted) {
-                recognition.stop();
-            } else {
-                recognition.start();
-            }
-        });
-    } else {
-        voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-    }
+            // Evento de resultado del reconocimiento de voz
+            recognition.onresult = function (event) {
+                const transcript = event.results[event.results.length - 1][0].transcript.trim();
+                SEARCH_MAIN.value = transcript;
+                window.location.href = 'products.html?modelo=' + SEARCH_MAIN.value;
+            };
+
+            // Evento de inicio/detención del reconocimiento de voz
+            voiceButton.addEventListener('click', function () {
+                if (recognition && recognition.isStarted) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+        } else {
+            voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
+        }
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `

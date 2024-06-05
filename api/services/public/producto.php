@@ -20,10 +20,11 @@ if (isset($_GET['action'])) {
             }
             break;
         case 'searchModelos':
+
                 if ($result['dataset'] = $producto->searchModelos($_POST['modelo'])) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = ' no existen registros para mostrar';
+                    $result['error'] = ' no existen registros para mostrar '.($_POST['modelo']);
                 }
                 break;
         case 'readOne':

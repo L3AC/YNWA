@@ -17,6 +17,13 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'No existen categorías para mostrar';
             }
             break;
+            case 'productExist':
+                if ($result['dataset'] = $categoria->productExist()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No existen categorías para mostrar';
+                }
+                break;
         default:
             $result['error'] = 'Acción no disponible';
     }

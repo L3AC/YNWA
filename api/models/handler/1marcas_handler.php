@@ -64,8 +64,22 @@ class MarcaHandler
     }
     public function readAllActive()
     {
-        $sql = 'SELECT id_marca, descripcion_marca,estado_marca
-                FROM ctg_marcas where estado_marca=true' ;
+        /*$sql = 'SELECT id_marca, descripcion_marca,estado_marca
+                FROM ctg_marcas where estado_marca=true' ;*/
+                $sql = 'SELECT
+                id_marca,
+                descripcion_marca,
+                COUNT(id_modelo) AS cantidad_productos
+            FROM
+                ctg_marcas
+            LEFT JOIN
+                prc_modelos USING (id_marca)
+            WHERE
+                estado_marca = TRUE
+                AND estado_modelo = TRUE 
+            GROUP BY
+                id_marca,
+                descripcion_marca;' ;
         return Database::getRows($sql);
     }
 

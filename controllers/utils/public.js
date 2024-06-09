@@ -46,7 +46,7 @@ const loadTemplate = async () => {
                             <div class="input-group">
                             <div class="input-container">
                             <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                            <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
+                            <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
                           </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@ const loadTemplate = async () => {
                     <div class="input-group">
                     <div class="input-container">
                     <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                    <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
+                    <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
                   </div>
                     </div>
                 </div>

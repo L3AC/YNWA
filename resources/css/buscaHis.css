@@ -1,0 +1,49 @@
+.input-container {
+  position: relative;
+  display: inline-block;
+}
+  .input3 {
+    width: 400px;
+    height: 40px;
+    padding: 10px;
+    transition: .2s linear;
+    border: 2.5px solid black;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  
+  .input3:focus {
+    outline: none;
+    border: 0.5px solid black;
+    box-shadow: -5px -5px 0px black;
+  }
+
+  @media (max-width: 1250px) {
+    .input3 {
+      width: 400px; 
+    }
+  }
+
+
+  @media (max-width: 600px) {
+    .input3 {
+      width: 200px; 
+    }
+  } 
+  
+  @media (max-width: 250px) {
+    .input3{
+      width: 100px; 
+    }
+  }
+
+  .input-container {
+    position: relative;
+    display: inline-block;
+  }
+
+
+  .dropdown-item {
+    position: relative;
+}
+

@@ -92,10 +92,10 @@ class ComentarioHandler
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN ctg_marcas ma USING (id_marca)
         WHERE id_modelo = ? AND estado_comentario=true
-        AND (descripcion_marca like ? OR descripcion_modelo like ? OR )
+        AND (CONCAT(nombre_cliente," ",apellido_cliente) like ? OR contenido_comentario ? )
         ORDER BY puntuacion_comentario DESC';
         //echo $this->idModelo. ' que';
-        $params = array($this->idModelo);
+        $params = array($this->idModelo,$value,$value);
 
         return Database::getRows($sql, $params);
     }

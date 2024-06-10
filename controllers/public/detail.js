@@ -11,7 +11,6 @@ const TALLAS = document.getElementById('tallas'),
     IMAGEN_MODELO = document.getElementById('imagenModelo'),
     STOCK_MODELO = document.getElementById('stockModelo'),
     NOMBRE_MODELO = document.getElementById('nombreModelo');
-
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
@@ -24,13 +23,14 @@ const SAVE_FORM = document.getElementById('saveForm'),
     MENSAJEDIV = document.getElementById('mensajeDiv'),
     COMENTSEARCH = document.getElementById('comentSearch'),
     IDGUARDAR = document.getElementById('idGuardar');
-
 const SAVE_MODAL2 = new bootstrap.Modal('#saveModal2'),
     MODAL_TITLE2 = document.getElementById('modalTitle2');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM2 = document.getElementById('saveForm2'),
     ADDCOMENTARIO = document.getElementById('addComentario'),
     LISTCOMENTARIO = document.getElementById('listComentario');
+
+let idModelo;
 
 // Método del eventos para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -140,8 +140,10 @@ const openModal = async (id) => {
 }
 const openComentario = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
+    idModelo=id;
     const FORM = new FormData();
-    FORM.append('idModelo', id);
+    FORM.append('idModelo', idModelo);
+    FORM.append('valor', COMENTSEARCH.value);
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(COMENTARIOS_API, 'readAllActive', FORM);
     LISTCOMENTARIO.innerHTML = ``;
@@ -207,20 +209,83 @@ const openComentario = async (id) => {
             element.disabled = true;
         });
 
-        COMENTSEARCH.addEventListener('input', async function () {
-            const FORM = new FormData();
-            FORM.append('idModeloTalla', ID_MODELO_TALLA.value);
-            // Petición para obtener los datos del registro solicitado.
-            const DATA = await fetchData(MODELOTALLAS_API, 'readOne', FORM);
-            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-            if (DATA.status) {
-                
-            }
-        });
     } else {
         sweetAlert(4, DATA.error, false);
     }
 }
+COMENTSEARCH.addEventListener('input', async function () {
+    const FORM = new FormData();
+    FORM.append('idModelo', idModelo);
+    FORM.append('valor', COMENTSEARCH.value);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(COMENTARIOS_API, 'readAllActive', FORM);
+    LISTCOMENTARIO.innerHTML = ``;
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL2.show();
+        DATA.dataset.forEach(row => {
+            // Se crea y concatena la fila de la tabla con los datos de cada registro.
+            let comentario = `
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>${row.cliente}</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="rating rating-${row.id_comentario}">
+                                <input type="radio" id="star-1-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="1" data-rating="1">
+                                <label for="star-1-${row.id_comentario}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                                </label>
+                                <input type="radio" id="star-2-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="2" data-rating="2">
+                                <label for="star-2-${row.id_comentario}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                                </label>
+                                <input type="radio" id="star-3-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="3" data-rating="3">
+                                <label for="star-3-${row.id_comentario}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                                </label>
+                                <input type="radio" id="star-4-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="4" data-rating="4">
+                                <label for="star-4-${row.id_comentario}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                                </label>
+                                <input type="radio" id="star-5-${row.id_comentario}" name="star-radio-${row.id_comentario}" value="5" data-rating="5">
+                                <label for="star-5-${row.id_comentario}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path pathLength="360" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z"></path></svg>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea readonly class="form-control" style="resize: none;">${row.contenido_comentario}</textarea>
+                        </div>
+                    </div>
+                    <p class="mt-2">${row.fecha_comentario}</p>
+                </li>
+            `;
+            LISTCOMENTARIO.insertAdjacentHTML('beforeend', comentario);
+        
+            let ratingValue = parseInt(row.puntuacion_comentario);
+            let stars = document.querySelectorAll(`.rating-${row.id_comentario} input[type="radio"]`);
+        
+            stars.forEach((star, index) => {
+                if (index < 6-ratingValue) {
+                    star.checked = true;
+                } else {
+                    star.checked = false;
+                }
+            });
+        });
+              
+        
+        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
+            element.disabled = true;
+        });
+
+    } else {
+        
+    }
+});
 
 
 // Método del evento para cuando se envía el formulario de agregar un producto al carrito.

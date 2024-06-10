@@ -1,6 +1,5 @@
 // Constante para completar la ruta de la API.
 const PEDIDO_API = 'services/public/pedido.php',
-    MODELOTALLAS_API = 'services/public/modelotallas.php',
     COMENTARIO_API = 'services/public/comentario.php',
     DETALLEPEDIDO_API = 'services/public/detallepedido.php';
 // Constante para establecer el cuerpo de la tabla.

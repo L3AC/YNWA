@@ -52,7 +52,7 @@ function buscarDireccion() {
                 mapa.setView([latitud, longitud], 15);
                 mostrarUbicacion(latitud, longitud);
             } else {
-                alert('No se encontró la dirección.');
+                sweetAlert(4, 'No se encontró la dirección', true);
             }
         })
         .catch(function (error) {

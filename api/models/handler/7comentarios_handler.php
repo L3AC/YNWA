@@ -92,7 +92,7 @@ class ComentarioHandler
         INNER JOIN prc_modelos mo USING (id_modelo)
         INNER JOIN ctg_marcas ma USING (id_marca)
         WHERE id_modelo = ? AND estado_comentario=true
-        AND (CONCAT(nombre_cliente," ",apellido_cliente) like ? OR contenido_comentario ? )
+        AND (CONCAT(nombre_cliente," ",apellido_cliente) like ? OR contenido_comentario like ? )
         ORDER BY puntuacion_comentario DESC';
         //echo $this->idModelo. ' que';
         $params = array($this->idModelo,$value,$value);

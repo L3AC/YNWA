@@ -56,7 +56,7 @@ class ComentarioHandler
     {
         
         $sql = 'INSERT INTO prc_comentarios(id_detalle,contenido_comentario,puntuacion_comentario,
-        fecha_comentario,estado_comentario) VALUES(?,?,?,now(),true)';
+        fecha_comentario,estado_comentario) VALUES(?,?,?,now(),false)';
         $params = array($this->idDetalle,$this->mensaje ,$this->puntuacion);
         return Database::executeRow($sql, $params);
     }

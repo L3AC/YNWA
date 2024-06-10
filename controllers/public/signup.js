@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Método del evento para cuando se envía el formulario de registrar cliente.
-SIGNUP_FORM.addEventListener('submit', async (event) => {
+IDGUARDAR.addEventListener('click', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.

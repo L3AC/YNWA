@@ -61,7 +61,7 @@ CORREO_CLIENTE.addEventListener('input', () => {
 });
 
 // Método del evento para cuando se envía el formulario de editar perfil.
-PROFILE_FORM.addEventListener('submit', async (event) => {
+IDGUARDAR.addEventListener('click', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.

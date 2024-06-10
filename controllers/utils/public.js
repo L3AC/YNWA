@@ -111,7 +111,7 @@ const loadTemplate = async () => {
                 LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
 
-            const voiceButton = document.getElementById('voiceButton');
+            /*const voiceButton = document.getElementById('voiceButton');
             let recognition;
 
             // Verificar compatibilidad con la API de reconocimiento de voz
@@ -137,7 +137,7 @@ const loadTemplate = async () => {
                 });
             } else {
                 voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-            }
+            }*/
 
         } else {
             location.href = 'index.html';
@@ -232,10 +232,8 @@ const loadTemplate = async () => {
             LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
         }
 
-        const voiceButton = document.getElementById('voiceButton');
-
+        /*const voiceButton = document.getElementById('voiceButton');
         let recognition;
-
         // Verificar compatibilidad con la API de reconocimiento de voz
         if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -259,7 +257,7 @@ const loadTemplate = async () => {
             });
         } else {
             voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-        }
+        }*/
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `

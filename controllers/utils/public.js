@@ -158,7 +158,7 @@ const loadTemplate = async () => {
             <!-- Left elements -->
 
             <!-- Center elements -->
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="nav-link">
                     <div class="input-group">
                     <div class="input-container">
@@ -175,7 +175,7 @@ const loadTemplate = async () => {
                 data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+            <div class="col-md-4 collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"

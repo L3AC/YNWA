@@ -3,7 +3,7 @@
   display: inline-block;
 }
   .input {
-    width: 600px;
+    width: 200px;
     height: 40px;
     padding: 10px;
     transition: .2s linear;
@@ -20,21 +20,30 @@
 
   @media (max-width: 1250px) {
     .input {
-      width: 400px; /* Cambia el ancho a 100% de la pantalla */
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .input {
-      width: 200px; /* Cambia el ancho a 100% de la pantalla */
+      width: 300px; 
     }
   }
 
-  @media (max-width: 250px) {
+
+  @media (max-width: 767px) {
     .input {
-      width: 100px; /* Cambia el ancho a 100% de la pantalla */
+      width: 200px; 
     }
   }
+
+  @media (max-width: 425px) {
+    .input {
+      width: 100px;
+    }
+  }
+  
+  
+  @media (max-width: 250px) {
+    .input {
+      width: 10px; 
+    }
+  }
+
 
   
   
@@ -75,19 +84,25 @@
   
   @media (max-width: 1250px) {
     .input2 {
-      width: 400px;
+      width: 300px;
     }
   }
   
-  @media (max-width: 600px) {
+  @media (max-width: 767px) {
     .input2 {
       width: 200px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    .input2 {
+      width: 100px;
     }
   }
   
   @media (max-width: 250px) {
     .input2 {
-      width: 100px;
+      width: 10px;
     }
   }
 

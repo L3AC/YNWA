@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ALIAS_CLIENTE.value = ROW.usuario_cliente;
         DIR_CLIENTE.value = ROW.direccion_cliente;
     } else {
-        sweetAlert(2, DATA.error, null,'index.html');
+        sweetAlert(2, DATA.error, null,'login.html');
     }
 });
 async function checkExistence(inputElement, formDataKey, apiEndpoint, messageElement) {

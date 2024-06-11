@@ -15,7 +15,7 @@ const SAVE_MODAL2 = new bootstrap.Modal('#saveModal'),
     COMENTARIO = document.getElementById('contenidoComentario'),
     FECHA_COMENTARIO = document.getElementById('fechaComentario'),
     DIVSTARS = document.getElementById('divstars');
-    let timeout_id;
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,16 +37,16 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
 
     const FORM = new FormData(SAVE_FORM2);
     // Agregar el valor de las estrellas al FormData
-    FORM.append('starValue', 6-starValue);
+    FORM.append('starValue', 6 - starValue);
 
     const DATA = await fetchData(COMENTARIO_API, 'createRow', FORM);
-    
+
 
     if (DATA.status) {
         SAVE_MODAL2.hide();
         sweetAlert(1, DATA.message, false);
         readDetail();
-        
+
     } else if (DATA.session) {
         console.log(2);
         sweetAlert(2, DATA.error, false);
@@ -104,66 +104,51 @@ async function readDetail() {
             }
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
-
-                
-                    <div class="card mb-3 col-6" id="detalle" style="background-color: #F1EFEF;">
-                        <div class="row g-0" style="background-color: #F1EFEF;">
-                            <div class="col-lg-5 col-md-12 col-sm-12">
-                                <img height="80px" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
-                                    class="img-fluid rounded" alt="${row.descripcion_modelo}">
-                    
-                    
-                            </div>
-                            <div class="col-lg-7 col-md-12 col-sm-12">
-                                <div class="card-body">
-                                    <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
-                                    <h5 class="card-title" style="font-size: 30px;">${row.descripcion_modelo}</h5>
-
-                                        <div class="col-lg-6 col-md-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Marca:</strong> ${row.descripcion_marca}<br>
-                                            </p>
+                        <div class="card mb-3 col-lg-6 col-md-12 col-sm-12 card-custom" id="detalle" style="background-color: #F1EFEF;">
+                            <div class="row g-0" style="background-color: #F1EFEF;">
+                                <div class="col-12 text-center">
+                                    <img height="auto" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
+                                        class="img-fluid rounded-top" alt="${row.descripcion_modelo}">
+                                </div>
+                                <div class="col-12">
+                                    <div class="card-body">
+                                        <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
+                                        <h5 class="card-title text-center" style="font-size: 30px;">${row.descripcion_modelo}</h5>
+                                        <div class="row">
+                                            <div class="col-6 col-md-12">
+                                                <p class="card-text" style="font-size: 20px;">
+                                                    <strong>Marca:</strong> ${row.descripcion_marca}<br>
+                                                </p>
+                                            </div>
+                                            <div class="col-6 col-md-12">
+                                                <p class="card-text" style="font-size: 20px;">
+                                                    <strong>Talla:</strong> ${row.descripcion_talla}<br>
+                                                </p>
+                                            </div>
+                                            <div class="col-6 col-md-12">
+                                                <p class="card-text" style="font-size: 20px;">
+                                                    <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
+                                                </p>
+                                            </div>
+                                            <div class="col-6 col-md-12">
+                                                <p class="card-text" style="font-size: 20px;">
+                                                    <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
+                                                </p>
+                                            </div>
+                                            <div class="col-12 col-md-12">
+                                                <p class="card-text" style="font-size: 20px;">
+                                                    <strong>Fecha:</strong> ${row.fecha_pedido}<br>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 col-md-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                                            </p>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="card-text" style="font-size: 20px;">
-                                                <strong>Fecha:</strong> ${row.fecha_pedido}<br>
-                                            </p>
-                                        </div>
-                                        
-
-                                    <!--<p class="card-text" style="font-size: 20px;">
-                                        <strong>Marca:</strong> ${row.descripcion_marca}<br>
-                                        <strong>Talla:</strong> ${row.descripcion_talla}<br>
-                                        <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
-                                        <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
-                                        <strong>Fecha:</strong> ${row.fecha_pedido}<br>
-                                        <strong>Subtotal:</strong> $ ${subtotal.toFixed(2)}
-                                    </p>-->
-                                    <button type="button" class="btn3" onclick="${btnComentario}">
-                                        <i class="bi bi-chat-dots"></i>
-                                    </button>
+                                        <button type="button" class="btn btn-comment" onclick="${btnComentario}">
+                                            <i class="bi bi-chat-dots"></i> Agregar comentario
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-
-            
             `;
         });
         document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {

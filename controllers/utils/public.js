@@ -46,7 +46,7 @@ const loadTemplate = async () => {
                             <div class="input-group">
                             <div class="input-container">
                             <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                            <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
+                            <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
                           </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@ const loadTemplate = async () => {
                     <div class="input-group">
                     <div class="input-container">
                     <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                    <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
+                    <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
                   </div>
                     </div>
                 </div>
@@ -193,6 +193,7 @@ const loadTemplate = async () => {
     </nav>
         `);
 
+        /*BUSQUEDA EN TIEMPO REAL*/
         const SEARCH_MAIN = document.getElementById('searchMain');
         SEARCH_MAIN.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
@@ -203,34 +204,26 @@ const loadTemplate = async () => {
                 window.location.href = 'products.html?modelo=' + searchValue;
             }
         });
-
+        /*CARGAR LISTA*/
         const LISTA_MARCA = document.getElementById('listmarca');
-        const DATA = await fetchData(MARCA_API, 'readAllActive');
-        if (DATA.status) {
-            // Se inicializa el contenedor de productos.
-            LISTA_MARCA.innerHTML = '';
-            // Se recorre el conjunto de registros fila por fila a través del objeto row.
-            DATA.dataset.forEach(row => {
-                // Verificar si hay productos asociados a la marca actual.
-                const tieneProductos = row.cantidad_productos > 0; // Suponiendo que 'cantidad_productos' contiene la cantidad de productos asociados a la marca.
-
-                // Se crea la tarjeta de la marca con el enlace y el ícono de X roja si no hay productos.
-                const marcaHTML = `
-            <li>
-                <a class="dropdown-item" href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
-                    ${row.descripcion_marca}
-                </a>
-                ${tieneProductos ? '' : '<span class="icono-x-roja">X</span>'}
-            </li>
-        `;
-
-                // Se agrega la marca al contenedor de marcas.
-                LISTA_MARCA.innerHTML += marcaHTML;
-            });
-        } else {
-            // Se presenta un mensaje de error cuando no existen datos para mostrar.
-            LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
-        }
+            const DATA = await fetchData(MARCA_API, 'readAllActive');
+            if (DATA.status) {
+                // Se inicializa el contenedor de productos.
+                LISTA_MARCA.innerHTML = '';
+                // Se recorre el conjunto de registros fila por fila a través del objeto row.
+                DATA.dataset.forEach(row => {
+                    // Se crean y concatenan las tarjetas con los datos de cada producto.
+                    LISTA_MARCA.innerHTML += `
+                        <li><a class="dropdown-item" href="products.html?id=${row.id_marca}&nombre=${row.descripcion_marca}">
+                        ${row.descripcion_marca}
+                        <span class="cantidad-productos">${row.cantidad_productos}</span>
+                    </a></li>
+                    `;
+                });
+            } else {
+                // Se presenta un mensaje de error cuando no existen datos para mostrar.
+                LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
+            }
 
         const voiceButton = document.getElementById('voiceButton');
 

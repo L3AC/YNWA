@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once ('../../models/data/8clientes_data.php');
+require_once('../../models/data/8clientes_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
                     !$cliente->setDireccion($_POST['direccionCliente']) or
-                    !$cliente->setUsuario($_POST['aliasCliente']) 
+                    !$cliente->setUsuario($_POST['aliasCliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($cliente->editProfile()) {
@@ -58,20 +58,35 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al leer el perfil';
                 }
                 break;
-                case 'readExist':
-                    if ($cliente->readExist($_POST['usuario'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['status'] = 2;
-                    }
-                    break;
-                case 'readExistMail':
-                    if ($cliente->readExistMail($_POST['correo'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['status'] = 2;
-                    }
-                    break; 
+            case 'readExist':
+                if ($cliente->readExist($_POST['usuario'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
+            case 'readExistMail':
+                if ($cliente->readExistMail($_POST['correo'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
+            case 'changePassword':
+                $_POST = Validator::validateForm($_POST);
+                if (!$cliente->checkPassword($_POST['claveActual'])) {
+                    $result['error'] = 'Contraseña actual incorrecta';
+                } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
+                    $result['error'] = 'Confirmación de contraseña diferente';
+                } elseif (!$cliente->setClave($_POST['claveNueva'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->changePassword()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Contraseña cambiada correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
@@ -100,7 +115,7 @@ if (isset($_GET['action'])) {
                 if (!$captcha['success']) {
                     $result['recaptcha'] = 1;
                     $result['error'] = 'No eres humano';
-                } elseif(!isset($_POST['condicion'])) {
+                } elseif (!isset($_POST['condicion'])) {
                     $result['error'] = 'Debe marcar la aceptación de términos y condiciones';
                 } else
                 if (
@@ -136,20 +151,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Usuario y/o contraseña no proporcionados';
                 }
                 break;
-                case 'readExist':
-                    if ($cliente->readExist($_POST['usuario'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['status'] = 2;
-                    }
-                    break;
-                case 'readExistMail':
-                    if ($cliente->readExistMail($_POST['correo'])) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['status'] = 2;
-                    }
-                    break; 
+            case 'readExist':
+                if ($cliente->readExist($_POST['usuario'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
+            case 'readExistMail':
+                if ($cliente->readExistMail($_POST['correo'])) {
+                    $result['status'] = 1;
+                } else {
+                    $result['status'] = 2;
+                }
+                break;
 
             default:
                 $result['error'] = 'Acción no disponible fuera de la sesión';
@@ -160,7 +175,7 @@ if (isset($_GET['action'])) {
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('Content-type: application/json; charset=utf-8');
     // Se imprime el resultado en formato JSON y se retorna al controlador.
-    print (json_encode($result));
+    print(json_encode($result));
 } else {
-    print (json_encode('Recurso no disponible'));
+    print(json_encode('Recurso no disponible'));
 }

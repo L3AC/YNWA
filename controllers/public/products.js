@@ -46,12 +46,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="d-grid gap-2 mmm">
                 <a href="detail.html?id=${row.id_modelo}" class="btn90">
                     <span class="text">Comprar</span>
-                    <span>Adquirir!</span>
+                    <span>¡Adquirir!</span>
                 </a>
                 </div>
             </div>
             </div>
-        </div>     
+        </div>
             `;
         });
     } else {

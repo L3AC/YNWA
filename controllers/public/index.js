@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="carousel-item active">
                 <img src="../../resources/img/carousel/default.png" class="d-block w-100" alt="Slide 1">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>¿Sabías que...?</h5>
-                    <p>El café reduce el riesgo de padecer Alzheimer.</p>
+                    <h5>Estamos agregando nuevos zapatos</h5>
+                    <p>Esperalos, estamos configurando la pagina.</p>
                 </div>
             </div>`;
     }
@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="d-grid gap-2 mmm">
                         <a href="detail.html?id=${row.id_modelo}" class="btn90">
                             <span class="text">Comprar</span>
-                            <span>Adquirir!</span>
+                            <span>.¡Adquirir!</span>
                         </a>
                         </div>
                     </div>
                     </div>
-                </div>                 
+                </div>
             `;
         });
     } else {

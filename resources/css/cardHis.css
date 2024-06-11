@@ -1,0 +1,27 @@
+.card-custom {
+    background-color: #F1EFEF;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-title {
+    font-size: 30px;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 20px;
+}
+
+
+@media (max-width: 767.98px) {
+    .card img {
+        width: 100%;
+        height: auto;
+    }
+}

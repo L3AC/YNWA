@@ -46,7 +46,7 @@ const loadTemplate = async () => {
                             <div class="input-group">
                             <div class="input-container">
                             <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                            <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
+                            <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
                           </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@ const loadTemplate = async () => {
                 LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
             }
 
-            /*const voiceButton = document.getElementById('voiceButton');
+            const voiceButton = document.getElementById('voiceButton');
             let recognition;
 
             // Verificar compatibilidad con la API de reconocimiento de voz
@@ -137,7 +137,7 @@ const loadTemplate = async () => {
                 });
             } else {
                 voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-            }*/
+            }
 
         } else {
             location.href = 'index.html';
@@ -158,12 +158,12 @@ const loadTemplate = async () => {
             <!-- Left elements -->
 
             <!-- Center elements -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="nav-link">
                     <div class="input-group">
                     <div class="input-container">
                     <input id="searchMain" type="text" name="searchMain" class="input2" placeholder="Buscar por marca">
-                    <!--<button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>-->
+                    <button id="voiceButton" class="voice-button"><i class="bi bi-mic"></i></button>
                   </div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ const loadTemplate = async () => {
                 data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="col-md-4 collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
                 <div class="navbar-nav ms-auto">
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"
@@ -232,8 +232,10 @@ const loadTemplate = async () => {
             LISTA_MARCA.innerHTML = `<li><a class="dropdown-item" >No existen marcas</a></li>`;
         }
 
-        /*const voiceButton = document.getElementById('voiceButton');
+        const voiceButton = document.getElementById('voiceButton');
+
         let recognition;
+
         // Verificar compatibilidad con la API de reconocimiento de voz
         if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -257,7 +259,7 @@ const loadTemplate = async () => {
             });
         } else {
             voiceButton.style.display = 'none'; // Ocultar el botón si no es compatible con la API de reconocimiento de voz
-        }*/
+        }
     }
     // Se agrega el pie de la página web después del contenido principal.
     MAIN.insertAdjacentHTML('afterend', `

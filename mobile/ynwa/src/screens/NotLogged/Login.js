@@ -7,7 +7,7 @@ import { useFonts } from 'expo-font';
 
 const Login = ({ navigation }) => {
   const { setIsLoggedIn } = useAuth();
-  const { setUsuario } = useUser();
+  const { setIdUsuario } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,30 +23,41 @@ const Login = ({ navigation }) => {
       formData.append('usu', username);
       formData.append('clave', password);
 
-      const response = await fetch(`${SERVER}services/public/cliente.php?action=logInM&app=j`, {
+      const response = await fetch(`${SERVER}services/public/cliente.php?action=logIn`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
-      const text = await response.text();
-      const responseData = JSON.parse(text);
-      if (response.ok) {
-        if (responseData.status === 1) {
-          setIsLoggedIn(true);
-          setUsuario(responseData.dataset);
-          navigation.navigate('Home');
-        } else {
-          Alert.alert('Credenciales inválidas');
-        }
+      const data = await response.json();
+      if (data.status) {
+        Alert.alert('Correcto', data.message);
+        setIsLoggedIn(true);
+        setIdUsuario(response.dataset);
+        navigation.navigate('Main');
       } else {
-        Alert.alert('Login failed', 'Invalid username or password');
+        console.log(data);
+        // Alert the user about the error
+        Alert.alert('Error sesion', data.error);
       }
 
     } catch (error) {
       console.error('Error :', error);
       setError('Error');
+    }
+  };
+  const handleLogOut = async () => {
+    try {
+      const response = await fetch(`${SERVER}services/public/cliente.php?action=logOut`, {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (data.status) {
+        Alert.alert('Correcto', data.message);
+      } else {
+        console.log(data);
+        Alert.alert('Error sesion', data.error);
+      }
+    } catch (error) {
+      console.error(error, "Error desde Catch");
     }
   };
 
@@ -87,6 +98,9 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleLogOut}>
+            <Text style={styles.buttonText}>Cerrar Sesion</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Text style={styles.signUp}>¿No tienes una cuenta?</Text>

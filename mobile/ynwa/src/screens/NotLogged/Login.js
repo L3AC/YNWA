@@ -56,7 +56,7 @@ const Login = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../../../assets/background.png')}
+      source={require('../../img/bg.png')}
       style={styles.backgroundImage}
     >
       <KeyboardAvoidingView
@@ -65,23 +65,31 @@ const Login = ({ navigation }) => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : 0}
       >
         <View style={styles.content}>
-          <Text style={styles.title}>Inicio de Sesión</Text>
+          <Text style={styles.title}>Inicio de sesión</Text>
           <TextInput
             style={styles.input}
             placeholder="Usuario"
+            placeholderTextColor="#000"
             onChangeText={setUsername}
             value={username}
           />
           <TextInput
             style={styles.input}
             placeholder="Contraseña"
+            placeholderTextColor="#000"
             onChangeText={setPassword}
             value={password}
             secureTextEntry
           />
           {error ? <Text style={styles.error}>{error}</Text> : null}
+          <TouchableOpacity>
+            <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Iniciar Sesión</Text>
+            <Text style={styles.buttonText}>Confirmar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -101,13 +109,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
     width: '100%',
-    top: 0,
-    paddingTop: 195,
+    padding: 20,
   },
   title: {
     fontSize: 24,
@@ -116,19 +121,19 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'transparent',
-    borderBottomWidth: 2,
-    borderBottomColor: '#fff',
-    width: 190,
-    paddingVertical: 15,
-    fontSize: 18,
-    color: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    width: '80%',
+    paddingVertical: 10,
+    fontSize: 16,
+    color: '#000',
     marginBottom: 20,
     fontFamily: 'QuickSand',
   },
   button: {
-    width: 190,
-    height: 40,
-    backgroundColor: 'blue',
+    width: '80%',
+    paddingVertical: 10,
+    backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
@@ -137,6 +142,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    fontFamily: 'QuickSandBold',
+  },
+  forgotPassword: {
+    marginTop: 10,
+    marginBottom: 20,
+    color: '#000',
+    fontFamily: 'QuickSand',
+  },
+  signUp: {
+    marginTop: 20,
+    color: '#000',
+    fontFamily: 'QuickSand',
   },
   error: {
     color: 'red',

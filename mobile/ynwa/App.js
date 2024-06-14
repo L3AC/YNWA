@@ -16,9 +16,7 @@ const App = () => {
   /*const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  });
-  
-  */
+  });*/
 
   return (
     <NavigationContainer>

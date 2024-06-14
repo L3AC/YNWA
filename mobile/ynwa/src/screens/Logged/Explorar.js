@@ -1,8 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Card from '../../components/containers/Card';
+import SearchBar from '../../components/inputs/searchBar';
 import { SERVER } from '../../contexts/Network';
 
 const Explorar = () => {
@@ -60,33 +60,37 @@ const Explorar = () => {
     <Card item={item} onPress={(id) => navigation.navigate('Modelo', { idModelo: id })} />
   );
 
+  const ListHeaderComponent = () => (
+    <View style={styles.header}>
+      <Text style={styles.title}>Explorar</Text>
+      <SearchBar
+        placeholder="Buscar modelos..."
+        onChangeText={handleSearchChange}
+        value={search}
+        onSubmitEditing={() => fetchData(search)}
+      />
+      <Text style={styles.subtitle}>Modelos</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Pantalla de Explorar</Text>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Buscar modelos..."
-        value={search}
-        onChangeText={handleSearchChange}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id_modelo.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.column}
+        contentContainerStyle={styles.flatListContent}
+        ListHeaderComponent={ListHeaderComponent}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       />
-      {loading ? (
-        <Text>Cargando...</Text>
-      ) : (
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id_modelo.toString()}
-          numColumns={2}
-          columnWrapperStyle={styles.column}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          }
-          key={2}
-        />
-      )}
+      {loading && <Text style={styles.loading}>Cargando...</Text>}
     </View>
   );
 };
@@ -94,24 +98,34 @@ const Explorar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#EAE0C8',
+  },
+  header: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#EAE0C8',
   },
   title: {
     fontSize: 24,
-    marginBottom: 16,
+    marginBottom: 8,
     textAlign: 'center',
+    color: '#333',
   },
-  searchInput: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
-    borderRadius: 8,
+  subtitle: {
+    fontSize: 18,
+    marginBottom: 8,
+    textAlign: 'center',
+    color: '#333',
   },
   column: {
     justifyContent: 'space-between',
+  },
+  flatListContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  loading: {
+    textAlign: 'center',
+    marginTop: 16,
   },
 });
 

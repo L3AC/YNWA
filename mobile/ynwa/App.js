@@ -4,35 +4,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
-import Login from './src/screens/NotLogged/Login';
-import Home from './src/screens/Logged/Home';
-import Cuenta from './src/screens/Logged/Cuenta';
-//import Explorar from './src/screens/Logged/Explorar';
-import Carrito from './src/screens/Logged/Carrito';
-//import Modelo from './src/screens/Logged/Modelo';
-import ExplorarStack from './src/navigation/Home/Navigation';
+import StackMain from './src/navigation/StackMain';
+import StackAuth from './src/navigation/StackAuth';
+import { useFonts } from 'expo-font';
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const MainStack = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Tab.Screen name="ExplorarStack" component={ExplorarStack} options={{ headerShown: false }}/>
-      <Tab.Screen name="Carrito" component={Carrito} options={{ headerShown: false }}/>
-      <Tab.Screen name="Cuenta" component={Cuenta} options={{ headerShown: false }}/>
-    </Tab.Navigator>
-  );
-}; 
-
-const AuthStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-  </Stack.Navigator>
-);
 const App = () => {
   const { isLoggedIn } = useAuth();
+
+  /*const [fontsLoaded] = useFonts({
+    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
+    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
+  });
+  
+  */
 
   return (
     <NavigationContainer>
@@ -41,13 +27,13 @@ const App = () => {
           {isLoggedIn ? (
             <Stack.Screen
               name="Main"
-              component={MainStack}
+              component={StackMain}
               options={{ headerShown: false }}
             />
           ) : (
             <Stack.Screen
               name="Auth"
-              component={AuthStack}
+              component={StackAuth}
               options={{ headerShown: false }}
             />
 
@@ -67,3 +53,5 @@ const AppWrapper = () => {
 };
 
 export default AppWrapper;
+
+ 

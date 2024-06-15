@@ -30,13 +30,12 @@ const Explorar = () => {
         body: formData,
       });
 
-      const text = await response.text();
-      const responseData = JSON.parse(text);
+      const data = await response.json();
 
-      if (response.ok && responseData.status === 1) {
-        setData(responseData.dataset);
+      if (response.ok && data.status === 1) {
+        setData(data.dataset);
       } else {
-        console.error('Error fetching data:', responseData.message);
+        console.error('Error fetching data:', data.message);
       }
     } catch (error) {
       console.error('Error:', error);

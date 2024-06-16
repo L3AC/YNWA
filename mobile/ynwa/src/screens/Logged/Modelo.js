@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, StyleSheet, ActivityIndicator,
-  RefreshControl, ScrollView, FlatList, Modal, TextInput, Button, TouchableWithoutFeedback, TouchableOpacity
+  RefreshControl, ScrollView, TouchableOpacity, TextInput, Modal, TouchableWithoutFeedback, Button,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importa la librería de iconos
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 import ModalMensaje from '../../components/alerts/ModalMensaje';
@@ -148,10 +148,9 @@ const Modelo = () => {
         setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
         const formData = new FormData();
-        formData.append('idCliente', parseInt(usuario)); // Reemplaza con el valor correcto
-        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); // Reemplaza con el valor correcto
-        formData.append('cantidadModelo', parseInt(cantidad)); // Reemplaza con el valor correcto
-        console.log(formData);
+        formData.append('idCliente', parseInt(usuario)); 
+        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); 
+        formData.append('cantidadModelo', parseInt(cantidad)); 
 
         const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
           method: 'POST',
@@ -221,6 +220,8 @@ const Modelo = () => {
             onPress={() => handleTallaPress(item)}
           >
             <Text style={styles.tallaText}>{item.talla}</Text>
+            <Text style={styles.tallaText}>${item.precio_modelo_talla}</Text>
+            <Text style={styles.tallaText}>Stock {item.stock_modelo_talla}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -236,8 +237,9 @@ const Modelo = () => {
               <View style={styles.modalContent}>
                 {tallaDetalles ? (
                   <>
-                    <Text style={styles.modalTitle}>Talla: {tallaDetalles.talla}</Text>
-                    <Text>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                    <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
+                    <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                    <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
                     <TextInput
                       style={[styles.input, cantidadError && styles.inputError]}
                       placeholder="Ingrese la cantidad"
@@ -246,15 +248,12 @@ const Modelo = () => {
                       onChangeText={handleCantidadChange}
                     />
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    {tallaDetalles.stock_modelo_talla > 0 ? (
-                      <>
-                        <Button title="Añadir al pedido" onPress={createDetail} />
-                        <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-                      </>
-                    ) : (
-                      <Text style={styles.errorText}>No hay stock disponible.</Text>
-                    )}
-                    <Button title="Cerrar" onPress={handleCerrarModal} />
+                    <TouchableOpacity
+                      style={styles.finalizarButton}
+                      onPress={createDetail}
+                    >
+                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
+                    </TouchableOpacity>
                   </>
                 ) : (
                   <ActivityIndicator size="large" color="#0000ff" />
@@ -279,6 +278,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
+    marginTop: 50,
   },
   backButton: {
     marginRight: 16,
@@ -340,10 +340,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  modalTitle: {
+  modalHeader: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
+  },
+  modalRow: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  modalQuantityLabel: {
+    fontSize: 16,
+    marginTop: 8,
   },
   input: {
     width: '100%',
@@ -359,6 +367,18 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginTop: 5,
+  },
+  finalizarButton: {
+    backgroundColor: '#000',
+    padding: 10,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  finalizarButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

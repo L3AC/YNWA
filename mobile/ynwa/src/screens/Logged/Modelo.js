@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, StyleSheet, ActivityIndicator,
-  RefreshControl, ScrollView, FlatList, Modal, TextInput, Button, TouchableWithoutFeedback
+  RefreshControl, ScrollView, FlatList, Modal, TextInput, Button, TouchableWithoutFeedback, TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Importa la librería de iconos
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
-import TallaCard from '../../components/containers/TallaCard';
 import ModalMensaje from '../../components/alerts/ModalMensaje';
 import { useUser } from '../../contexts/UserContext';
 
@@ -140,7 +140,7 @@ const Modelo = () => {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
       const cantidadIngresada = parseInt(cantidad);
 
-      if (isNaN(cantidadIngresada) ||cantidadIngresada<1) {
+      if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
         setCantidadError('Ingrese un número válido.');
       } else if (cantidadIngresada > stockDisponible) {
         setCantidadError('La cantidad ingresada supera el stock disponible.');
@@ -168,7 +168,7 @@ const Modelo = () => {
           setDetalleCreado(true);
           setMensajeEmergente(responseData.message);
           setModalVisible(false);
-          
+
         } else if (responseData.status === 2) {
           setMensajeEmergente(responseData.message);
         } else {
@@ -203,24 +203,26 @@ const Modelo = () => {
         />
       }
     >
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Icon name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
+      </View>
       <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
-      <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
       <Text style={styles.subtitle}>{modelo.marca}</Text>
-      <Text>{modelo.detalles}</Text>
-      <Text style={styles.tallasTitle}>Tallas Disponibles:</Text>
+      <Text style={styles.tallasTitle}>Tallas</Text>
 
       <View style={styles.gridContainer}>
-        <View style={styles.centeredContainer}>
-          {tallas.map((item) => (
-            <View style={styles.tallaCard} key={item.id_talla}>
-              <TallaCard
-                talla={item.talla}
-                precio={item.precio_modelo_talla}
-                onPress={() => handleTallaPress(item)}
-              />
-            </View>
-          ))}
-        </View>
+        {tallas.map((item) => (
+          <TouchableOpacity
+            style={styles.tallaCard}
+            key={item.id_talla}
+            onPress={() => handleTallaPress(item)}
+          >
+            <Text style={styles.tallaText}>{item.talla}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
       <Modal
         visible={modalVisible}
@@ -244,10 +246,15 @@ const Modelo = () => {
                       onChangeText={handleCantidadChange}
                     />
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    {tallaDetalles.stock_modelo_talla !== null && (
-                      <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                    {tallaDetalles.stock_modelo_talla > 0 ? (
+                      <>
+                        <Button title="Añadir al pedido" onPress={createDetail} />
+                        <Text>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                      </>
+                    ) : (
+                      <Text style={styles.errorText}>No hay stock disponible.</Text>
                     )}
-                    <Button title="Crear Detalle" onPress={createDetail} />
+                    <Button title="Cerrar" onPress={handleCerrarModal} />
                   </>
                 ) : (
                   <ActivityIndicator size="large" color="#0000ff" />
@@ -257,14 +264,7 @@ const Modelo = () => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-      <ModalMensaje
-        visible={detalleCreado}
-        mensaje={mensajeEmergente}
-        onClose={() => {
-          setDetalleCreado(false);
-          navigation.navigate('Carrito');
-        }}
-      />
+      {detalleCreado && <ModalMensaje mensaje={mensajeEmergente} />}
     </ScrollView>
   );
 };
@@ -273,44 +273,59 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#e0dbc8',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  backButton: {
+    marginRight: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
   },
   image: {
     width: '100%',
     height: 200,
     resizeMode: 'contain',
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    marginVertical: 16,
   },
   subtitle: {
     fontSize: 18,
     color: '#666',
     marginBottom: 16,
+    textAlign: 'center',
   },
   tallasTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginVertical: 16,
+    marginBottom: 16,
+    textAlign: 'center',
   },
   gridContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredContainer: {
-    width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center', // Centrar verticalmente
+    justifyContent: 'space-around',
   },
   tallaCard: {
-    width: '48%', // Adjust the width as needed
+    width: '40%',
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  tallaText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   modalContainer: {
     flex: 1,
@@ -331,7 +346,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    // Estilos del TextInput
+    width: '100%',
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 4,
+    marginVertical: 8,
   },
   inputError: {
     borderColor: 'red',

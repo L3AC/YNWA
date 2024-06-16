@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ScrollView, RefreshControl, StyleSheet, Dimensions, Image } from 'react-native';
+import { View, Text, ScrollView, RefreshControl, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 
-const App = () => {
+const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [productsData, setProductsData] = useState([]);
@@ -91,11 +91,15 @@ const App = () => {
         <Text style={styles.sectionTitle}>Lo más reciente</Text>
         <View style={styles.productsGrid}>
           {productsData.map((product, index) => (
-            <View key={index} style={styles.product}>
+            <TouchableOpacity
+              key={index}
+              style={styles.product}
+              onPress={() => navigation.navigate('Modelo', { idModelo: product.id_modelo })}
+            >
               <Image source={{ uri:`${SERVER}images/modelos/${product.foto_modelo}`}} style={styles.productImage} />
               <Text style={styles.productName}>{product.descripcion_modelo}</Text>
               <Text style={styles.productPrice}>{product.marca}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </View>
@@ -177,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default HomeScreen;

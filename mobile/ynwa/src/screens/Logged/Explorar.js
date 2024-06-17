@@ -97,12 +97,12 @@ const Explorar = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d3ccb8',
+    backgroundColor: '#cdc4a3',
   },
   header: {
     padding: 16,
     paddingTop: 50,
-    backgroundColor: '#d3ccb8',
+    backgroundColor: '#cdc4a3',
   },
   title: {
     fontSize: 24,

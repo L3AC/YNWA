@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#d3ccb8', // Fondo similar al de la captura de pantalla
+    backgroundColor: '#cdc4a3', // Fondo similar al de la captura de pantalla
   },
   logo: {
     fontSize: 24,

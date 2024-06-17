@@ -102,12 +102,11 @@ const Modelo = () => {
         },
         body: formData,
       });
-      const text = await response.text();
-      const responseData = JSON.parse(text);
-      if (response.ok && responseData.status === 1) {
-        setTallaDetalles(responseData.dataset);
+      const data = await response.json();
+      if (response.ok && data.status === 1) {
+        setTallaDetalles(data.dataset);
       } else {
-        console.error('Error fetching data:', responseData.message);
+        console.error('Error fetching data:', data.message);
       }
     } catch (error) {
       console.error('Error:', error);

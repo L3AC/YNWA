@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal ,TouchableWithoutFeedback} from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal, TouchableWithoutFeedback } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
@@ -11,11 +11,13 @@ const CartScreen = () => {
   const [modalVisible, setModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
   const [cantidad, setCantidad] = useState(''); // Estado para almacenar la cantidad de productos del modal
   const [nota, setNota] = useState(''); // Estado para almacenar la nota del producto del modal
-  const [currentItemId, setCurrentItemId] = useState(null); // Estado para almacenar el ID del elemento actual del modal
+  const [idModeloT, setIdModeloT] = useState(null); // Estado para almacenar el ID del elemento actual del modal
+  const [itemDetalle, setItemDetalle] = useState(null);
   const [loadingModal, setLoadingModal] = useState(false); // Estado para indicar si se está cargando el modal
   const navigation = useNavigation(); // Hook de navegación para acceder a la navegación
   const [tallaDetalles, setTallaDetalles] = useState(null);
   const [cantidadError, setCantidadError] = useState('');
+  const [detalleCreado, setDetalleCreado] = useState(false);
 
   // Función para obtener los datos del carrito desde el servidor
   const fetchMenuData = async (query = '') => {
@@ -44,7 +46,7 @@ const CartScreen = () => {
   };
 
   // Función para obtener los detalles de un producto específico
-  const readOne = async (idModeloTalla, cantidad) => {
+  const readOne = async (idModeloTalla, cantidad, idDetalle) => {
     try {
       setLoadingModal(true); // Indica que se está cargando el modal
       const formData = new FormData();
@@ -57,8 +59,9 @@ const CartScreen = () => {
 
       if (response.ok && data.status === 1) {
         setCantidad(cantidad.toString() || '1'); // Actualiza la cantidad del producto
-        setCurrentItemId(idModeloTalla); // Actualiza el ID del producto actual
+        setIdModeloT(idModeloTalla); // Actualiza el ID del producto actual
         setTallaDetalles(data.dataset);
+        setItemDetalle(idDetalle);
         setModalVisible(true);
       } else {
         console.error('Error fetching data:', data.error); // Muestra un error si falla la obtención de datos
@@ -72,32 +75,44 @@ const CartScreen = () => {
   };
 
   // Función para actualizar los detalles de un producto
-  const updateDetalle = async (idDetallePedido) => {
+  const updateDetalle = async () => {
     try {
-      setLoading(true); // Indica que se está cargando
-      const formData = new FormData();
-      formData.append('idDetallePedido', idDetallePedido);
-      formData.append('cantidadPedido', cantidad);
-      formData.append('notaPedido', nota);
-      const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=updateRow`, {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
+      const stockDisponible = tallaDetalles.stock_modelo_talla;
+      const cantidadIngresada = parseInt(cantidad);
 
-      if (response.ok && data.status === 1) {
-        fetchMenuData(); // Actualiza los elementos del carrito después de la actualización
-        setModalVisible(false); // Oculta el modal
+      if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
+        setCantidadError('Ingrese un número válido.');
+      } else if (cantidadIngresada > stockDisponible) {
+        setCantidadError('La cantidad ingresada supera el stock disponible.');
+      } else if (cantidadIngresada > 3) {
+        setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
-        console.error('Error updating data:', data.error); // Muestra un error si falla la actualización
-        Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+        const formData = new FormData();
+        formData.append('idDetalle', itemDetalle);
+        formData.append('cantidadModelo', cantidad);
+        formData.append('idModeloTalla', idModeloT);
+        const response = await fetch(`${SERVER}services/public/pedido.php?action=updateDetail`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.status === 1) {
+          fetchMenuData(); // Actualiza los elementos del carrito después de la actualización
+          setModalVisible(false); // Oculta el modal
+          Alert.alert( data.message);
+        } else if (data.status === 2) {
+          Alert.alert(data.message);
+        } else {
+          Alert.alert(data.error);
+        }
       }
     } catch (error) {
-      console.error('Error:', error); // Muestra un error en la consola en caso de fallo
-    } finally {
-      setLoading(false); // Finaliza el estado de carga
-      setRefreshing(false); // Finaliza el estado de refresco
+      console.error('Error:', error);
+      Alert.alert('Error en la consulta');
     }
+
   };
 
   // Función para eliminar un detalle de pedido
@@ -180,9 +195,9 @@ const CartScreen = () => {
         setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
         const formData = new FormData();
-        formData.append('idCliente', parseInt(usuario)); 
-        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); 
-        formData.append('cantidadModelo', parseInt(cantidad)); 
+        formData.append('idCliente', parseInt(usuario));
+        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla);
+        formData.append('cantidadModelo', parseInt(cantidad));
 
         const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
           method: 'POST',
@@ -254,7 +269,7 @@ const CartScreen = () => {
               <Text style={styles.itemName}>{item.descripcion_modelo}</Text>
               <View style={styles.iconsContainer}>
                 {/* Botón para editar el producto */}
-                <TouchableOpacity onPress={() => readOne(item.id_modelo_talla, item.cantidad_detalle_pedido)}>
+                <TouchableOpacity onPress={() => readOne(item.id_modelo_talla, item.cantidad_detalle_pedido, item.id_detalle)}>
                   <Ionicons name="pencil" size={24} color="black" />
                 </TouchableOpacity>
                 {/* Botón para eliminar el producto */}
@@ -275,7 +290,7 @@ const CartScreen = () => {
         ))
       )}
       {/* Modal para editar detalles del producto */}
-      
+
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -288,7 +303,8 @@ const CartScreen = () => {
               <View style={styles.modalContent}>
                 {tallaDetalles ? (
                   <>
-                    <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
+                    <Text style={styles.modalHeader}>Editar detalle</Text>
+                    <Text style={styles.modalRow}>Talla: {tallaDetalles.talla}</Text>
                     <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
                     <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
                     <TextInput
@@ -301,7 +317,7 @@ const CartScreen = () => {
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
                     <TouchableOpacity
                       style={styles.finalizarButton}
-                      onPress={createDetail}
+                      onPress={() => updateDetalle()}
                     >
                       <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
                     </TouchableOpacity>

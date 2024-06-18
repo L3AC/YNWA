@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   productImage: {
     width: '100%',
-    height: 150,
+    height: 120,
     resizeMode: 'cover',
     borderRadius: 10,
   },

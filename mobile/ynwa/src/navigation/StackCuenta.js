@@ -4,6 +4,7 @@ import Cuenta from '../screens/Logged/Cuenta';
 import CambioClave from '../screens/Logged/CambioClave';
 import Nosotros from '../screens/Logged/Nosotros';
 import Login from '../screens/NotLogged/Login';
+import Perfil from '../screens/Logged/Perfil';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const StackCuenta = () => {
       <Stack.Screen name="CambioClave" component={CambioClave} options={{ headerShown: false }} />
       <Stack.Screen name="Nosotros" component={Nosotros} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="Perfil" component={Perfil} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

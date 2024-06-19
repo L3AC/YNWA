@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
 
 const wait = (timeout) => {
@@ -9,6 +10,7 @@ const wait = (timeout) => {
 
 export default function SignUp() {
   const [refreshing, setRefreshing] = useState(false);
+  const navigation = useNavigation();
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -53,7 +55,7 @@ export default function SignUp() {
       }
     >
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} >
+        <TouchableOpacity style={styles.backButton} onPress={()=>navigation.goBack()} >
           <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>Historial</Text>
@@ -94,8 +96,8 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 40,
-    marginTop: 45,
+    marginBottom: 30,
+    marginTop: 35,
     justifyContent: 'center',
     position: 'relative',
   },

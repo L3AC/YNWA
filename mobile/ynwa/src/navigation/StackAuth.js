@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/NotLogged/Login';
 import SignUp from '../screens/NotLogged/SignUp';
-import Registro from '../screens/NotLogged/Registro';
 import NuevaClave from '../screens/NotLogged/Recup/NuevaClave';
 import VerifCode from '../screens/NotLogged/Recup/VerifCode';
 import VerifUs from '../screens/NotLogged/Recup/VerifUs';
@@ -15,7 +14,6 @@ const StackAuth = () => (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-      <Stack.Screen name="Registro" component={Registro} options={{ headerShown: false }} />
       <Stack.Screen name="NuevaClave" component={NuevaClave} options={{ headerShown: false }} />
       <Stack.Screen name="VerifCode" component={VerifCode} options={{ headerShown: false }} />
       <Stack.Screen name="VerifUs" component={VerifUs} options={{ headerShown: false }} />

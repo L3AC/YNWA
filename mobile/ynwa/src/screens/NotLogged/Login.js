@@ -5,12 +5,14 @@ import { useUser } from '../../contexts/UserContext';
 import { SERVER } from '../../contexts/Network';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import { Icon } from 'react-native-elements';
 
 const Login = () => {
   const { setIsLoggedIn } = useAuth();
   const { setIdUsuario } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigation = useNavigation();
 
@@ -37,29 +39,12 @@ const Login = () => {
         navigation.navigate('Main');
       } else {
         console.log(data);
-        // Alert the user about the error
-        Alert.alert('Error sesion', data.error);
+        Alert.alert('Error sesión', data.error);
       }
 
     } catch (error) {
       console.error('Error :', error);
       setError('Error');
-    }
-  };
-  const handleLogOut = async () => {
-    try {
-      const response = await fetch(`${SERVER}services/public/cliente.php?action=logOut`, {
-        method: 'POST'
-      });
-      const data = await response.json();
-      if (data.status) {
-        Alert.alert('Correcto', data.message);
-      } else {
-        console.log(data);
-        Alert.alert('Error sesion', data.error);
-      }
-    } catch (error) {
-      console.error(error, "Error desde Catch");
     }
   };
 
@@ -86,14 +71,19 @@ const Login = () => {
             onChangeText={setUsername}
             value={username}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="#000"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.input, styles.passwordInput]}
+              placeholder="Contraseña"
+              placeholderTextColor="#000"
+              onChangeText={setPassword}
+              value={password}
+              secureTextEntry={!showPassword}
+            />
+            <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
+              <Icon name={showPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
+            </TouchableOpacity>
+          </View>
           {error ? <Text style={styles.error}>{error}</Text> : null}
           <TouchableOpacity>
             <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
@@ -101,10 +91,7 @@ const Login = () => {
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Confirmar</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleLogOut}>
-            <Text style={styles.buttonText}>Cerrar Sesion</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigation.navigate('SignUp')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
           </TouchableOpacity>
         </View>
@@ -145,6 +132,20 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 20,
     fontFamily: 'QuickSand',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  passwordInput: {
+    paddingRight: 40, // add space for the eye icon
+  },
+  eyeButton: {
+    position: 'absolute',
+    right: 10,
+    top: '30%',
+    transform: [{ translateY: -10 }],
   },
   button: {
     width: '80%',

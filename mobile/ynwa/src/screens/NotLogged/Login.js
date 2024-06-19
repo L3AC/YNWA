@@ -4,13 +4,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useUser } from '../../contexts/UserContext';
 import { SERVER } from '../../contexts/Network';
 import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const { setIsLoggedIn } = useAuth();
   const { setIdUsuario } = useUser();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigation = useNavigation();
 
   const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
@@ -102,7 +104,7 @@ const Login = ({ navigation }) => {
           <TouchableOpacity style={styles.button} onPress={handleLogOut}>
             <Text style={styles.buttonText}>Cerrar Sesion</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('SignUp')}>
             <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
           </TouchableOpacity>
         </View>

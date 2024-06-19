@@ -32,6 +32,35 @@ class PedidoHandler
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
+    public function searchByCliente()
+    {
+        $sql = 'SELECT id_pedido, CONCAT(nombre_cliente, " ", apellido_cliente) as cliente,
+        id_cliente, email_cliente,DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha, estado_pedido,forma_pago_pedido
+        FROM prc_pedidos INNER JOIN prc_clientes USING(id_cliente)
+        WHERE estado_pedido = ? AND id_cliente = ?';
+
+        $params = [$this->estado, $_SESSION['idCliente']];
+        switch ($this->search) {
+            case '3meses':
+                $interval = 90; // Aproximadamente 3 meses
+                break;
+            case '1mes':
+                $interval = 30; // Aproximadamente 1 mes
+                break;
+            case '7dias':
+                $interval = 7; // 7 días
+                break;
+            default:
+                $interval = null; // 'Todo' u otro valor no requiere filtro adicional
+        }
+        if ($interval) {
+            $sql .= ' AND fecha_pedido >= DATE_SUB(CURDATE(), INTERVAL ? DAY)';
+            $params[] = $interval;
+        }
+        $sql .= ' ORDER BY fecha_pedido DESC';
+        return Database::getRows($sql, $params);
+    }
+    
     public function getOrder()
     {
         $this->estado = 'Pendiente';

@@ -75,7 +75,7 @@ export default function App() {
           <FontAwesome5 name="lock" size={40} color="white" />
           <Text style={styles.buttonText}>Clave</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Historial')}>
           <FontAwesome5 name="history" size={40} color="white" />
           <Text style={styles.buttonText}>Historial de pedidos</Text>
         </TouchableOpacity>

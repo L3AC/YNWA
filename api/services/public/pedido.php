@@ -4,11 +4,8 @@ require_once('../../models/data/4pedidos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
-    if (isset($_GET['app'])) {
-    } else {
-        // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
-        session_start();
-    }
+    // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
+    session_start();
 
     // Se instancia la clase correspondiente.
     $pedido = new PedidoData;
@@ -43,7 +40,18 @@ if (isset($_GET['action'])) {
                     }
                 }
                 break;
-
+                case 'searchByCliente':
+                    if (
+                        !$pedido->setSearch($_POST['fecha']) or
+                        !$pedido->setEstado($_POST['estado'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->searchByCliente()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                    } else {
+                    }
+                    break;
                 // Acción para obtener los productos agregados en el carrito de compras.
             case 'readDetail':
                 if (!$pedido->getOrder()) {

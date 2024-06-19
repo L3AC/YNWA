@@ -1,102 +1,137 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { SERVER } from '../../contexts/Network';
 
-const SignUp = () => {
-  const navigation = useNavigation();
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
+export default function SignUp() {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+  }, []);
+
+  const signin = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('nombreCliente', );
+      formData.append('apellidoCliente', );
+      formData.append('correoCliente', );
+      formData.append('direccionCliente', );
+      formData.append('usuarioCliente', );
+      formData.append('claveCliente', );
+      formData.append('confirmarClave', );
+
+      const response = await fetch(`${SERVER}services/public/cliente.php?action=signUp`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.status) {
+        Alert.alert(data.message);
+        navigation.navigate('Login');
+      } else {
+        console.log(data);
+        // Alert the user about the error
+        Alert.alert('Error sesion', data.error);
+      }
+
+    } catch (error) {
+      console.error('Error :', error);
+      setError('Error');
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="black" />
-      </TouchableOpacity>
-      <Text style={styles.title}>Registro</Text>
-
-      <View style={styles.inputContainer}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} >
+          <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Historial</Text>
+      </View>
+      <View style={styles.form}>
         <Text style={styles.label}>Nombre</Text>
-        <TextInput style={styles.input} placeholder="Nombre" placeholderTextColor="#000" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Apellido</Text>
-        <TextInput style={styles.input} placeholder="Apellido" placeholderTextColor="#000" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Correo</Text>
-        <TextInput style={styles.input} placeholder="Correo" placeholderTextColor="#000" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Telefono</Text>
-        <TextInput style={styles.input} placeholder="Telefono" placeholderTextColor="#000" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Usuario</Text>
-        <TextInput style={styles.input} placeholder="Usuario" placeholderTextColor="#000" />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Contraseña</Text>
-        <TextInput style={styles.input} placeholder="Contraseña" placeholderTextColor="#000" secureTextEntry={true} />
-      </View>
+        <TextInput style={styles.input} />
 
+        <Text style={styles.label}>Apellido</Text>
+        <TextInput style={styles.input} />
+
+        <Text style={styles.label}>Correo</Text>
+        <TextInput style={styles.input} />
+
+        <Text style={styles.label}>Usuario</Text>
+        <TextInput style={styles.input} />
+        <Text style={styles.label} placeholderTextColor="#000">Clave</Text>
+        <TextInput style={styles.input} />
+        <Text style={styles.label} placeholderTextColor="#000">Confirmar clave</Text>
+        <TextInput style={styles.input} />
+        <Text style={styles.label}>Dirección</Text>
+        <TextInput style={styles.input} />
+      </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Confirmar</Text>
+        <Text style={styles.buttonText}>Guardar</Text>
       </TouchableOpacity>
-      
-    </View>
+
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 60,
-    padding: 30,
-    backgroundColor: '#d29c65', // Background color
+    flexGrow: 1,
+    backgroundColor: '#cdc4a3',
+    padding: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 40,
+    marginTop: 45,
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    left: 0,
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-    color: 'black', // Text color
+    marginLeft: 10,
   },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 16,
-    textAlign: 'center',
-    color: 'black', // Text color
-  },
-  inputContainer: {
-    marginBottom: 10,
+  form: {
+    marginBottom: 30,
   },
   label: {
     fontSize: 16,
-    color: 'black', // Text color
-    marginBottom: 4,
+    color: '#3e3e3e',
+    marginBottom: 5,
   },
   input: {
-    marginBottom: 6,
-    marginTop: 6,
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-    backgroundColor: '#F2E7CF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#3e3e3e',
+    paddingVertical: 5,
+    marginBottom: 20,
+    fontSize: 16,
+    color: '#3e3e3e',
   },
   button: {
-    height: 60,
-    width: 170,
-    backgroundColor: 'black',
-    justifyContent: 'center',
+    backgroundColor: '#3e3e3e',
+    borderRadius: 5,
+    paddingVertical: 10,
     alignItems: 'center',
-    borderRadius: 8,
-    marginTop: 16,
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
   },
 });
-
-export default SignUp;

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   product: {
     width: '48%',
-    backgroundColor: '#4a4a4a',
+    backgroundColor: '#333',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,

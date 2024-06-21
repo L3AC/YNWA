@@ -3,6 +3,7 @@ import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, Touchabl
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
+import { SERVER } from '../../contexts/Network';
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -44,8 +45,6 @@ export default function SignUp() {
       formData.append('usuarioCliente', usuarioCliente);
       formData.append('claveCliente', claveCliente);
       formData.append('confirmarClave', confirmarClave);
-      formData.append('latitud', location.latitude);
-      formData.append('longitud', location.longitude);
 
       const response = await fetch(`${SERVER}services/public/cliente.php?action=signUp`, {
         method: 'POST',
@@ -57,7 +56,7 @@ export default function SignUp() {
         navigation.navigate('Login');
       } else {
         console.log(data);
-        Alert.alert('Error sesión', data.error);
+        Alert.alert(data.error);
       }
     } catch (error) {
       console.error('Error :', error);

@@ -34,7 +34,8 @@ CONSTRAINT fk_usuario_rol
 FOREIGN KEY(id_rol) REFERENCES sec_roles(id_rol)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-        
+      
+
 CREATE TABLE prc_clientes(
 id_cliente INT UNSIGNED AUTO_INCREMENT,
 usuario_cliente VARCHAR(30) UNIQUE NOT NULL,
@@ -44,6 +45,8 @@ nombre_cliente VARCHAR(255),
 apellido_cliente VARCHAR(255),
 email_cliente VARCHAR(100) NOT NULL UNIQUE,
 pin_cliente VARCHAR(6) NOT NULL,
+lat FLOAT DEFAULT 13.69294,
+lon FLOAT DEFAULT -89.21819,
 estado_cliente BOOLEAN DEFAULT TRUE NOT NULL,
 PRIMARY KEY(id_cliente)
 );

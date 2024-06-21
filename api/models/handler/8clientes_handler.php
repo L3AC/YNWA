@@ -10,6 +10,8 @@ class ClienteHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $latitud = null;
+    protected $longitud = null;
     protected $search = null;
     protected $nombre = null;
     protected $apellido = null;
@@ -98,7 +100,7 @@ class ClienteHandler
 
     public function readProfile()
     {
-        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, email_cliente, usuario_cliente,direccion_cliente
+        $sql = 'SELECT id_cliente, nombre_cliente, apellido_cliente, email_cliente, usuario_cliente,direccion_cliente,lat,lon
                 FROM prc_clientes
                 WHERE id_cliente = ?';
         $params = array($_SESSION['idCliente']);
@@ -134,10 +136,10 @@ class ClienteHandler
     {
         //echo $this->clave.' ';
         $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
-        apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente) 
-        values(?,?,?,?,?,?,true,?)';
+        apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente,lat,lon) 
+        values(?,?,?,?,?,?,true,?,?,?)';
         $params = array($this->usuario, $this->clave, $this->nombre,
-         $this->apellido, $this->email, $this->generarPin(),$this->direccion);
+         $this->apellido, $this->email, $this->generarPin(),$this->direccion,$this->latitud,$this->longitud);
          
         return Database::executeRow($sql, $params);
     }
@@ -163,7 +165,7 @@ class ClienteHandler
     public function readOne()
     {
         $sql = 'SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
-                apellido_cliente,email_cliente,estado_cliente,direccion_cliente
+                apellido_cliente,email_cliente,estado_cliente,direccion_cliente,lat,lon
                 from prc_clientes
                 WHERE id_cliente = ?';
         $params = array($this->id);

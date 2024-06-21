@@ -24,7 +24,16 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
-
+    public function setLatitud($value)
+    {
+        $this->latitud = $value;
+        return true;
+    }
+    public function setLongitud($value)
+    {
+        $this->longitud = $value;
+        return true;
+    }
     public function setNombre($value, $min = 2, $max = 50)
     {
         if (!Validator::validateAlphabetic($value)) {
@@ -98,10 +107,10 @@ class ClienteData extends ClienteHandler
         if (!Validator::validateString($value)) {
             $this->data_error = 'La dirección contiene caracteres prohibidos';
             return false;
-        } else{
+        } else {
             $this->direccion = $value;
             return true;
-        } 
+        }
     }
 
     public function setClave($value)
@@ -116,6 +125,7 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+
     public function setEstado($value)
     {
         if (Validator::validateBoolean($value)) {

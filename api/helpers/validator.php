@@ -71,6 +71,15 @@ class Validator
             return false;
         }
     }
+    public static function validateFloat($value)
+{
+    // Se verifica que el valor sea un número flotante.
+    if (filter_var($value, FILTER_VALIDATE_FLOAT) !== false) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
     /*
     *   Método para validar un archivo de imagen.

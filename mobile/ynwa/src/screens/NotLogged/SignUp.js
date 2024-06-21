@@ -45,6 +45,8 @@ export default function SignUp() {
       formData.append('usuarioCliente', usuarioCliente);
       formData.append('claveCliente', claveCliente);
       formData.append('confirmarClave', confirmarClave);
+      formData.append('lat', location.latitude);
+      formData.append('lon', location.longitude);
 
       const response = await fetch(`${SERVER}services/public/cliente.php?action=signUp`, {
         method: 'POST',
@@ -82,6 +84,7 @@ export default function SignUp() {
       if (data && data.display_name) {
         const formattedAddress = data.display_name;
         setDireccionCliente(formattedAddress);
+        console.log(location.latitude.toString(), location.longitude.toString());
       } else {
         setDireccionCliente('Dirección no disponible');
       }

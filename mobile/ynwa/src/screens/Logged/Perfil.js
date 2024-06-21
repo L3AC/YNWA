@@ -11,11 +11,11 @@ const wait = (timeout) => {
 export default function PerfilScreen() {
     const [refreshing, setRefreshing] = useState(false);
     const [profileData, setProfileData] = useState({
-        nombre: '',
-        apellido: '',
-        correo: '',
-        usuario: '',
-        direccion: ''
+        nombre_cliente: '',
+        apellido_cliente: '',
+        email_cliente: '',
+        usuario_cliente: '',
+        direccion_cliente: ''
     });
     const [location, setLocation] = useState({
         latitude: 13.69294,  // Latitud de San Salvador, El Salvador
@@ -32,39 +32,24 @@ export default function PerfilScreen() {
             });
             const data = await response.json();
             if (data.status) {
+                console.log(data.dataset.direccion_cliente);
                 setProfileData(data.dataset); // Actualiza los datos del perfil
-                // Obtener coordenadas de la dirección
-                const address = data.dataset.direccion_cliente;
-                fetchCoordinates(address);
-            } else {
-                Alert.alert('Error', 'Failed to fetch profile data'); // Muestra un alerta en caso de error
-            }
-        } catch (error) {
-            console.error(error, "Error desde Catch");
-            Alert.alert('Error', 'Ocurrió un error al obtener los datos del perfil'); // Muestra un alerta en caso de error
-        }
-    };
-
-    const fetchCoordinates = async (address) => {
-        try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&addressdetails=1`);
-            const data = await response.json();
-            if (data && data.length > 0) {
-                const { lat, lon } = data[0];
+                
+                // Actualizar las coordenadas directamente desde el JSON recibido
                 const newRegion = {
-                    latitude: parseFloat(lat),
-                    longitude: parseFloat(lon),
+                    latitude: parseFloat(data.dataset.lat),
+                    longitude: parseFloat(data.dataset.lon),
                     latitudeDelta: 0.01,  // Reducir para acercar el mapa
                     longitudeDelta: 0.01, // Reducir para acercar el mapa
                 };
                 setLocation(newRegion);
                 mapRef.current.animateToRegion(newRegion, 500);  // Anima el mapa al nuevo lugar
             } else {
-                Alert.alert('Error', 'No se encontraron coordenadas para la dirección proporcionada');
+                Alert.alert('Error', 'Failed to fetch profile data'); // Muestra un alerta en caso de error
             }
         } catch (error) {
-            console.error('Error al obtener las coordenadas:', error);
-            Alert.alert('Error', 'Error al obtener las coordenadas de la dirección');
+            console.error(error, "Error desde Catch");
+            Alert.alert('Error', 'Ocurrió un error al obtener los datos del perfil'); // Muestra un alerta en caso de error
         }
     };
 
@@ -103,7 +88,7 @@ export default function PerfilScreen() {
 
                 <Text style={styles.label}>Dirección</Text>
                 <TextInput style={styles.input} value={profileData.direccion_cliente} />
-                
+
                 <MapView
                     ref={mapRef}
                     style={styles.map}

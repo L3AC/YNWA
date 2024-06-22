@@ -37,7 +37,7 @@ class ClienteHandler
     }
     public function checkUser($usuario, $password)
     {
-        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente
+        $sql = 'SELECT id_cliente, usuario_cliente, clave_cliente, estado_cliente,email_cliente
                 FROM prc_clientes
                 WHERE usuario_cliente = ?';
         $params = array($usuario);
@@ -46,6 +46,7 @@ class ClienteHandler
             $this->id = $data['id_cliente'];
             $this->usuario = $data['usuario_cliente'];
             $this->estado = $data['estado_cliente'];
+            $this->email = $data['email_cliente'];
             return true;
         } else {
             return false;
@@ -57,6 +58,7 @@ class ClienteHandler
         if ($this->estado) {
             $_SESSION['idCliente'] = $this->id;
             $_SESSION['usuarioc'] = $this->usuario;
+            $_SESSION['correo'] = $this->email;
             return true;
         } else {
             return false;
@@ -111,9 +113,10 @@ class ClienteHandler
     {
         $sql = 'UPDATE prc_clientes
                 SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,
-                 usuario_cliente = ?,direccion_cliente=? 
+                 usuario_cliente = ?,direccion_cliente=?,lat=? ,lon=? 
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->usuario, $this->direccion, $_SESSION['idCliente']);
+        $params = array($this->nombre, $this->apellido, $this->email, $this->usuario,
+         $this->direccion, $this->latitud,$this->longitud, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
 
@@ -199,8 +202,6 @@ class ClienteHandler
             return true;
         }
     }
-
-
 
     public function deleteRow()
     {

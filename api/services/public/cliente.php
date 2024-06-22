@@ -28,6 +28,8 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
 
                 if (
+                    !$cliente->setLatitud($_POST['lat']) or
+                    !$cliente->setLongitud($_POST['lon']) or
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or
@@ -35,10 +37,15 @@ if (isset($_GET['action'])) {
                     !$cliente->setUsuario($_POST['aliasCliente'])
                 ) {
                     $result['error'] = $cliente->getDataError();
+                } elseif ($_SESSION['usuarioc']!=$_POST['aliasCliente'] && $cliente->readExist($_POST['aliasCliente'])) {
+                    $result['error'] = 'El nombre de usuario ya está en uso';
+                } elseif ($_SESSION['correo']!=$_POST['correoCliente'] && $cliente->readExistMail($_POST['correoCliente'])) {
+                    $result['error'] = 'El correo electrónico ya está en uso';
                 } elseif ($cliente->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['usuarion'] = $_POST['aliasCliente'];
+                    $_SESSION['usuarioc'] = $_POST['aliasCliente'];
+                    $_SESSION['correo'] = $_POST['correoCliente'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
@@ -95,9 +102,9 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
-                
+
                 if (
-                    !$cliente->setLatitud($_POST['lat']) or 
+                    !$cliente->setLatitud($_POST['lat']) or
                     !$cliente->setLongitud($_POST['lon']) or
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
@@ -120,7 +127,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al registrar la cuenta';
                 }
                 break;
-            
+
             case 'logIn':
                 $_POST = Validator::validateForm($_POST);
                 if (isset($_POST['usu']) && isset($_POST['clave'])) {

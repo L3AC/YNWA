@@ -200,13 +200,15 @@ export default function SignUp() {
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
           </TouchableOpacity>
         </View>
+        
         <Text style={styles.label}>Dirección</Text>
         <View style={styles.addressContainer}>
           <TextInput 
-            style={styles.input} 
+            style={[styles.input, styles.multilineInput]} 
             value={direccionCliente}
             onChangeText={handleAddressChange}
             onSubmitEditing={() => handleSearchAddress(direccionCliente)}
+            multiline={true}
           />
           <TouchableOpacity style={styles.clearButton} onPress={handleClearAddress}>
             <Text style={styles.clearButtonText}>Limpiar</Text>
@@ -288,6 +290,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
+  },
+  multilineInput: {
+    height: 100, // Para hacer el input más grande y permitir múltiples líneas
+    textAlignVertical: 'top', // Asegura que el texto comience desde la parte superior del input
   },
   clearButton: {
     backgroundColor: '#0000',

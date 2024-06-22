@@ -23,8 +23,8 @@ export default function SignUp() {
   const [location, setLocation] = useState({
     latitude: 13.69294,  // Latitud de San Salvador, El Salvador
     longitude: -89.21819, // Longitud de San Salvador, El Salvador
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
   });
 
   const navigation = useNavigation();

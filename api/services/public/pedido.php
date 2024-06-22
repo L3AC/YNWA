@@ -58,6 +58,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No ha agregado productos al carrito';
                 } elseif ($result['dataset'] = $pedido->readDetail()) {
                     $result['status'] = 1;
+                    $result['message'] = $_SESSION['idPedido'];
                 } else {
                     $result['error'] = ' no existen registrosen el carrito';
                 }

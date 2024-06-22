@@ -29,8 +29,7 @@ const Historial = () => {
       if (response.ok && data.status === 1) {
         setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {
-        console.error('Error fetching data:', data.message);
-        Alert.alert('Error', data.message);
+        Alert.alert('No hay ningún pedido en el historial'); // Muestra una alerta si no hay productos
       }
     } catch (error) {
       console.error('Error:', error);

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshControl, Alert, TextInput, ActivityIndicator, Modal, TouchableWithoutFeedback } from 'react-native';
 import { SERVER } from '../../contexts/Network';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
@@ -101,7 +101,7 @@ const CartScreen = () => {
         if (data.status === 1) {
           fetchMenuData(); // Actualiza los elementos del carrito después de la actualización
           setModalVisible(false); // Oculta el modal
-          Alert.alert( data.message);
+          Alert.alert(data.message);
         } else if (data.status === 2) {
           Alert.alert(data.message);
         } else {
@@ -160,76 +160,54 @@ const CartScreen = () => {
 
   // Función para finalizar el pedido
   const finishOrder = async (idDetallePedido) => {
-    try {
-      setLoading(true); // Indica que se está cargando
-      const response = await fetch(`${SERVER}services/public/pedidos.php?action=finishOrder`, {
-        method: 'POST'
-      });
-      const data = await response.json();
+    Alert.alert(
+      "Confirmar",
+      "¿Estás seguro de que desea finalizar el pedido?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancelado"),
+          style: "cancel"
+        },
+        {
+          text: "Finalizar",
+          onPress: async () => {
+            try {
+              setLoading(true); // Indica que se está cargando
+              const response = await fetch(`${SERVER}services/public/pedido.php?action=finishOrder`, {
+                method: 'POST'
+              });
+              const data = await response.json();
 
-      if (response.ok && data.status === 1) {
-        Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
-        navigation.navigate('Home'); // Navega a la pantalla de inicio
-      } else {
-        console.error('Error:', data.error); // Muestra un error en la consola en caso de fallo
-        Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
-      }
-    } catch (error) {
-      console.error('Error:', error); // Muestra un error en la consola en caso de fallo
-    } finally {
-      setLoading(false); // Finaliza el estado de carga
-      setRefreshing(false); // Finaliza el estado de refresco
-    }
-  };
-
-  const createDetail = async () => {
-    try {
-      const stockDisponible = tallaDetalles.stock_modelo_talla;
-      const cantidadIngresada = parseInt(cantidad);
-
-      if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
-        setCantidadError('Ingrese un número válido.');
-      } else if (cantidadIngresada > stockDisponible) {
-        setCantidadError('La cantidad ingresada supera el stock disponible.');
-      } else if (cantidadIngresada > 3) {
-        setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
-      } else {
-        const formData = new FormData();
-        formData.append('idCliente', parseInt(usuario));
-        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla);
-        formData.append('cantidadModelo', parseInt(cantidad));
-
-        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
+              if (response.ok && data.status === 1) {
+                Alert.alert(data.message); // Muestra una alerta con el mensaje de error
+                navigation.navigate('Home'); // Navega a la pantalla de inicio
+              } else {
+                console.error('Error:', data.error); // Muestra un error en la consola en caso de fallo
+                Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+              }
+            } catch (error) {
+              console.error('Error:', error); // Muestra un error en la consola en caso de fallo
+            } finally {
+              setLoading(false); // Finaliza el estado de carga
+              setRefreshing(false); // Finaliza el estado de refresco
+            }
           },
-          body: formData,
-        });
-
-        const text = await response.text();
-        const responseData = JSON.parse(text);
-
-        if (responseData.status === 1) {
-          setDetalleCreado(true);
-          setMensajeEmergente(responseData.message);
-          setModalVisible(false);
-
-        } else if (responseData.status === 2) {
-          setMensajeEmergente(responseData.message);
-        } else {
-          setMensajeEmergente(responseData.error);
-        }
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setMensajeEmergente('Error en la consulta');
-    }
+        },
+      ],
+      { cancelable: false }
+    );
   };
+
 
   useEffect(() => {
     fetchMenuData(); // Carga inicial de los datos del carrito al montar el componente
   }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchMenuData();
+    }, [])
+  );
 
   // Función para manejar el evento de refresco
   const onRefresh = () => {
@@ -254,7 +232,7 @@ const CartScreen = () => {
     >
       <Text style={styles.header}>Carrito de compras</Text>
       <View style={styles.always}>
-        <TouchableOpacity style={styles.finalizeButton}>
+        <TouchableOpacity style={styles.finalizeButton} onPress={() => finishOrder()}>
           <Text style={styles.finalizeButtonText}>Finalizar</Text>
         </TouchableOpacity>
       </View>

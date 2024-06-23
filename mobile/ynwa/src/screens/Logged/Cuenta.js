@@ -71,7 +71,7 @@ export default function App() {
           <FontAwesome5 name="user-circle" size={40} color="white" />
           <Text style={styles.buttonText}>Perfil</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button } onPress={() => navigation.navigate('CambioClave')}>
           <FontAwesome5 name="lock" size={40} color="white" />
           <Text style={styles.buttonText}>Clave</Text>
         </TouchableOpacity>

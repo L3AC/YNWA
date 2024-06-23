@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, ScrollView, RefreshControl, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 
@@ -7,6 +7,9 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [productsData, setProductsData] = useState([]);
   const [newsData, setNewsData] = useState([]);
+  const scrollViewRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { width } = Dimensions.get('window');
 
   const fetchData = async () => {
     try {
@@ -61,7 +64,17 @@ const HomeScreen = ({ navigation }) => {
     fetchNews();
   }, []);
 
-  const { width } = Dimensions.get('window');
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex => {
+        const nextIndex = (prevIndex + 1) % newsData.length;
+        scrollViewRef.current.scrollTo({ x: nextIndex * width, animated: true });
+        return nextIndex;
+      });
+    }, 3000); // Cambia cada 3 segundos
+
+    return () => clearInterval(interval);
+  }, [newsData, width]);
 
   return (
     <ScrollView
@@ -76,12 +89,14 @@ const HomeScreen = ({ navigation }) => {
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
+          ref={scrollViewRef}
           style={styles.carousel}
         >
           {newsData.map((news, index) => (
             <View key={index} style={[styles.newsItem, { width: width - 40 }]}>
               <Image source={{ uri: `${SERVER}images/noticias/${news.foto_noticia}` }} style={styles.newsImage} />
               <Text style={styles.newsTitle}>{news.titulo_noticia}</Text>
+              <Text style={styles.contTitle}>{news.contenido_noticia}</Text>
             </View>
           ))}
         </ScrollView>
@@ -134,9 +149,10 @@ const styles = StyleSheet.create({
     marginHorizontal: -20,
   },
   newsItem: {
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     borderRadius: 10,
     overflow: 'hidden',
+
   },
   newsImage: {
     width: '100%',
@@ -144,9 +160,16 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   newsTitle: {
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  contTitle: {
+
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#5c5c5c',
   },
   productsContainer: {
     marginBottom: 20,

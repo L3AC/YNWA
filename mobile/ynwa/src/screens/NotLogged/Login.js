@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     marginBottom: 20,
     fontFamily: 'QuickSandBold',
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000',
     width: '80%',
     paddingVertical: 10,
-    fontSize: 16,
+    fontSize: 18,
     color: '#000',
     marginBottom: 20,
     fontFamily: 'QuickSand',
@@ -166,11 +166,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#000',
     fontFamily: 'QuickSand',
+    fontSize: 16
   },
   signUp: {
     marginTop: 20,
     color: '#000',
     fontFamily: 'QuickSand',
+    fontSize: 16
   },
   error: {
     color: 'red',

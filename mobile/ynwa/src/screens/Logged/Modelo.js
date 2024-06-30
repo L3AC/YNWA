@@ -25,12 +25,13 @@ const Modelo = () => {
   const [cantidadError, setCantidadError] = useState('');
   const [mensajeEmergente, setMensajeEmergente] = useState('');
   const [detalleCreado, setDetalleCreado] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+
 
   useEffect(() => {
     fetchModelo();
     fetchTallas();
   }, []);
-
   const fetchModelo = async () => {
     try {
       setLoading(true);
@@ -39,9 +40,6 @@ const Modelo = () => {
 
       const response = await fetch(`${SERVER}services/public/producto.php?action=readOne`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
 
@@ -60,7 +58,6 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   const fetchTallas = async () => {
     try {
       setLoading(true);
@@ -90,16 +87,12 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   const fetchTallaDetalles = async (idTalla) => {
     try {
       const formData = new FormData();
       formData.append('idModeloTalla', idTalla);
       const response = await fetch(`${SERVER}services/public/modelotallas.php?action=readOne`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
       const data = await response.json();
@@ -112,24 +105,20 @@ const Modelo = () => {
       console.error('Error:', error);
     }
   };
-
   const onRefresh = () => {
     setRefreshing(true);
     fetchModelo();
     fetchTallas();
   };
-
   const handleTallaPress = async (talla) => {
     setSelectedTalla(talla);
     setModalVisible(true);
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
-
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
-
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
@@ -147,15 +136,11 @@ const Modelo = () => {
         setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
         const formData = new FormData();
-        formData.append('idCliente', parseInt(usuario)); 
         formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); 
         formData.append('cantidadModelo', parseInt(cantidad)); 
 
-        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetailM&app=j`, {
+        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetail`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
           body: formData,
         });
 
@@ -165,17 +150,28 @@ const Modelo = () => {
         if (responseData.status === 1) {
           setDetalleCreado(true);
           setMensajeEmergente(responseData.message);
-          setModalVisible(false);
-
+          setAlertVisible(true);
+          setTimeout(() => {
+            setAlertVisible(false);
+            setDetalleCreado(false);
+            setModalVisible(false);
+            navigation.navigate('Cart');
+          }, 500); // 3 segundos
         } else if (responseData.status === 2) {
           setMensajeEmergente(responseData.message);
+          setAlertVisible(true);
+          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
         } else {
           setMensajeEmergente(responseData.error);
+          setAlertVisible(true);
+          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
         }
       }
     } catch (error) {
       console.error('Error:', error);
       setMensajeEmergente('Error en la consulta');
+      setAlertVisible(true);
+      setTimeout(() => setAlertVisible(false), 500); // 3 segundos
     }
   };
 
@@ -201,6 +197,7 @@ const Modelo = () => {
         />
       }
     >
+      {alertVisible && <ModalMensaje mensaje={mensajeEmergente} />}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Icon name="arrow-back" size={24} color="#000" />
@@ -382,3 +379,5 @@ const styles = StyleSheet.create({
 });
 
 export default Modelo;
+
+

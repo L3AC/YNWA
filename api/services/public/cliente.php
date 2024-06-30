@@ -16,6 +16,32 @@ if (isset($_GET['action'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
+            case 'updateRow':
+                $_POST = Validator::validateForm($_POST);
+                if (
+                    !$cliente->setId($_POST['idCliente']) or
+                    !$cliente->setNombre($_POST['nombreCliente']) or
+                    !$cliente->setApellido($_POST['apellidoCliente']) or
+                    !$cliente->setCorreo($_POST['correoCliente']) 
+                ) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->updateRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro modificado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al modificar el registro';
+                }
+                break;
+            case 'deleteRow':
+                if (!$cliente->setId($_POST['idCliente'])) {
+                    $result['error'] = $cliente->getDataError();
+                } elseif ($cliente->deleteRow()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Registro eliminado correctamente';
+                } else {
+                    $result['error'] = 'Ocurrió un problema al eliminar el administrador';
+                }
+                break;
             case 'getUser':
                 if (isset($_SESSION['usuarioc'])) {
                     $result['status'] = 1;

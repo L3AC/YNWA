@@ -6,6 +6,7 @@ import Nosotros from '../screens/Logged/Nosotros';
 import Login from '../screens/NotLogged/Login';
 import Perfil from '../screens/Logged/Perfil';
 import Historial from '../screens/Logged/Historial';
+import DetallePedido from '../screens/Logged/DetallePedido';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const StackCuenta = () => {
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="Perfil" component={Perfil} options={{ headerShown: false }} />
       <Stack.Screen name="Historial" component={Historial} options={{ headerShown: false }} />
+      <Stack.Screen name="DetallePedido" component={DetallePedido} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

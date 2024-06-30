@@ -139,62 +139,62 @@ export default function SignUp() {
     >
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
+          <Text style={styles.flecha}>←</Text>
         </TouchableOpacity>
         <Text style={styles.title}>Registro</Text>
       </View>
       <View style={styles.form}>
-        <Text style={styles.label}>Nombre</Text>
         <TextInput 
           style={styles.input} 
           value={nombreCliente}
           onChangeText={setNombreCliente}
+          placeholder='Nombre'
         />
 
-        <Text style={styles.label}>Apellido</Text>
         <TextInput 
           style={styles.input} 
           value={apellidoCliente}
           onChangeText={setApellidoCliente}
+          placeholder='Apellido'
         />
 
-        <Text style={styles.label}>Correo</Text>
         <TextInput 
           style={styles.input} 
           value={correoCliente}
           onChangeText={setCorreoCliente}
           keyboardType="email-address"
           autoCapitalize="none"
+          placeholder='Correo'
         />
 
-        <Text style={styles.label}>Usuario</Text>
         <TextInput 
           style={styles.input} 
           value={usuarioCliente}
           onChangeText={setUsuarioCliente}
           autoCapitalize="none"
+          placeholder='Usuario'
         />
 
-        <Text style={styles.label}>Clave</Text>
         <View style={styles.passwordContainer}>
           <TextInput 
             style={[styles.input, styles.passwordInput]} 
             value={claveCliente}
             onChangeText={setClaveCliente}
             secureTextEntry={!showPassword}
+            placeholder='Contraseña'
           />
           <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
             <Icon name={showPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.label}>Confirmar clave</Text>
         <View style={styles.passwordContainer}>
           <TextInput 
             style={[styles.input, styles.passwordInput]} 
             value={confirmarClave}
             onChangeText={setConfirmarClave}
             secureTextEntry={!showConfirmPassword}
+            placeholder='Confirmar contraseña'
           />
           <TouchableOpacity style={styles.eyeButton} onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
@@ -204,7 +204,7 @@ export default function SignUp() {
         <Text style={styles.label}>Dirección</Text>
         <View style={styles.addressContainer}>
           <TextInput 
-            style={[styles.input, styles.multilineInput]} 
+            style={[styles.input2, styles.multilineInput]} 
             value={direccionCliente}
             onChangeText={handleAddressChange}
             onSubmitEditing={() => handleSearchAddress(direccionCliente)}
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginLeft: 10,
+    fontFamily: 'QuickSand',
   },
   form: {
     marginBottom: 30,
@@ -261,15 +262,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#3e3e3e',
     marginBottom: 5,
+    fontFamily: 'QuickSand',
   },
   input: {
+    backgroundColor: 'transparent',
     borderBottomWidth: 1,
-    borderBottomColor: '#3e3e3e',
-    paddingVertical: 5,
+    borderBottomColor: '#000',
+    width: '95%',
+    paddingVertical: 10,
+    fontSize: 18,
+    color: '#000',
     marginBottom: 20,
-    fontSize: 16,
-    color: '#3e3e3e',
-    flex: 1,
+    fontFamily: 'QuickSand',
+  },
+  input2: {
+    backgroundColor: 'transparent',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    width: '60%',
+    paddingVertical: 10,
+    fontSize: 18,
+    color: '#000',
+    marginBottom: 20,
+    fontFamily: 'QuickSand',
   },
   passwordContainer: {
     flexDirection: 'row',
@@ -307,6 +322,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'QuickSand',
   },
   map: {
     width: '100%',
@@ -314,7 +330,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#3e3e3e',
+    backgroundColor: '#2F2C2C',
     borderRadius: 5,
     paddingVertical: 10,
     alignItems: 'center',
@@ -322,5 +338,9 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 18,
+    fontFamily: 'QuickSand',
   },
+  flecha:{
+    fontSize: 30
+  }
 });

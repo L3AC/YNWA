@@ -5,20 +5,15 @@ import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
 import StackMain from './src/navigation/StackMain';
 import StackAuth from './src/navigation/StackAuth';
-import { useFonts } from 'expo-font';
 import { SERVER } from './src/contexts/Network';
+import AnimatedSplashScreen from './src/navigation/AnimatedSplashScreen'; // Asegúrate de que la ruta sea correcta
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const [error, setError] = useState(null);
-
-  // Si decides usar las fuentes, descomenta esto y corrige las rutas
-  // const [fontsLoaded] = useFonts({
-  //   QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
-  //   QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
-  // });
+  const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   const getSession = async () => {
     try {
@@ -40,6 +35,14 @@ const App = () => {
   useEffect(() => {
     getSession();
   }, []);
+
+  const handleAnimationEnd = () => {
+    setIsSplashVisible(false);
+  };
+
+  if (isSplashVisible) {
+    return <AnimatedSplashScreen onAnimationEnd={handleAnimationEnd} />;
+  }
 
   return (
     <NavigationContainer>

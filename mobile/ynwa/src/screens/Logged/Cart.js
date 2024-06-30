@@ -133,12 +133,12 @@ const CartScreen = () => {
               setLoading(true); // Indica que se está cargando
               const formData = new FormData();
               formData.append('idDetallePedido', idDetallePedido);
-              const response = await fetch(`${SERVER}services/public/detallepedidos.php?action=deleteRow`, {
+              console.log(idDetallePedido);
+              const response = await fetch(`${SERVER}services/public/detallepedido.php?action=deleteRow`, {
                 method: 'POST',
                 body: formData,
               });
               const data = await response.json();
-
               if (response.ok && data.status === 1) {
                 fetchMenuData(); // Actualiza los elementos del carrito después de la eliminación
                 setModalVisible(false); // Oculta el modal
@@ -159,7 +159,7 @@ const CartScreen = () => {
   };
 
   // Función para finalizar el pedido
-  const finishOrder = async (idDetallePedido) => {
+  const finishOrder = async () => {
     Alert.alert(
       "Confirmar",
       "¿Estás seguro de que desea finalizar el pedido?",

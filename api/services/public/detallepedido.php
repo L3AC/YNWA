@@ -4,11 +4,8 @@ require_once('../../models/data/12detallepedidos_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
-    if (isset($_GET['app'])) {
-    } else {
-        // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
-        session_start();
-    }
+    // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
+    session_start();
 
     // Se instancia la clase correspondiente.
     $pedido = new DetallePedidoData;
@@ -19,7 +16,7 @@ if (isset($_GET['action'])) {
         $result['session'] = 1;
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
-            // Acción para agregar un producto al carrito de compras.
+                // Acción para agregar un producto al carrito de compras.
             case 'searchHistorial':
                 if (
                     !$pedido->setSearch($_POST['valor'])
@@ -32,6 +29,18 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
+                case 'deleteRow':
+                    if (
+                        !$pedido->setId($_POST['idDetallePedido'])
+                    ) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($pedido->deleteRow()) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Detalle del pedido eliminado correctamente';
+                    } else {
+                        $result['error'] = 'Ocurrió un problema al eliminar el detalle del pedido';
+                    }
+                    break;
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.
 
             default:

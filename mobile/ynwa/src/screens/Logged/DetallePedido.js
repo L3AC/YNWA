@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   backButtonText: {
-    fontSize: 24,
+    fontSize: 40,
     color: 'black',
   },
   container: {

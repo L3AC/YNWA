@@ -1,7 +1,5 @@
-
-
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { SERVER } from '../../contexts/Network';
 
 const DetalleCard = ({ item }) => {

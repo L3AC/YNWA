@@ -134,99 +134,71 @@ const Modelo = () => {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
       const cantidadIngresada = parseInt(cantidad);
 
-      if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
-        setCantidadError('Ingrese un número válido.');
-      } else if (cantidadIngresada > stockDisponible) {
-        setCantidadError('La cantidad ingresada supera el stock disponible.');
-      } else if (cantidadIngresada > 3) {
-        setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
+      if (isNaN(cantidadIngresada) || cantidadIngresada <= 0) {
+        setCantidadError('Por favor, ingrese una cantidad válida.');
+        return;
+      }
+
+      if (cantidadIngresada > stockDisponible) {
+        setCantidadError('La cantidad ingresada excede el stock disponible.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('idUsuario', usuario.id_usuario);
+      formData.append('idProducto', idModelo);
+      formData.append('idTalla', selectedTalla.id_modelo_talla);
+      formData.append('cantidad', cantidadIngresada);
+
+      const response = await fetch(`${SERVER}services/public/detallefactura.php?action=addDetail`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok && responseData.status === 1) {
+        setDetalleCreado(true);
+        setMensajeEmergente('Detalle creado exitosamente.');
+        setCantidad('');
+        setSelectedTalla(null);
       } else {
-        const formData = new FormData();
-        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla);
-        formData.append('cantidadModelo', parseInt(cantidad));
-
-        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetail`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        const text = await response.text();
-        const responseData = JSON.parse(text);
-
-        if (responseData.status === 1) {
-          setDetalleCreado(true);
-          setMensajeEmergente(responseData.message);
-          setAlertVisible(true);
-          setTimeout(() => {
-            setAlertVisible(false);
-            setDetalleCreado(false);
-            setModalVisible(false);
-            navigation.navigate('StackCart');
-          }, 500); // 0.5 segundos
-        } else if (responseData.status === 2) {
-          setMensajeEmergente(responseData.message);
-          setAlertVisible(true);
-          setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
-        } else {
-          setMensajeEmergente(responseData.error);
-          setAlertVisible(true);
-          setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
-        }
+        setMensajeEmergente('Error al crear el detalle.');
       }
     } catch (error) {
       console.error('Error:', error);
-      setMensajeEmergente('Error en la consulta');
+      setMensajeEmergente('Error al crear el detalle.');
+    } finally {
       setAlertVisible(true);
-      setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
     }
   };
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
-
-  if (!modelo) {
-    return (
-      <View style={styles.container}>
-        <Text>No se encontraron detalles para este modelo.</Text>
-      </View>
-    );
-  }
-
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-        />
-      }
-    >
-      {alertVisible && <ModalMensaje mensaje={mensajeEmergente} />}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
-      </View>
-      <View style={styles.contenedorImg}>
-        <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
-        <Text style={styles.subtitle}>{modelo.marca}</Text>
-      </View>
-      <Text style={styles.tallasTitle}>Tallas</Text>
-
-      <View style={styles.gridContainer}>
-        {tallas.map((item) => (
-          <TouchableOpacity
-            style={styles.tallaCard}
-            key={item.id_talla}
-            onPress={() => handleTallaPress(item)}
-          >
-            <Text style={styles.tallaText}>{item.talla}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+    <View style={styles.container}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
+          {modelo && (
+            <View>
+              <Image source={{ uri: modelo.imagen_producto }} style={styles.image} />
+              <Text style={styles.title}>{modelo.nombre_producto}</Text>
+              <Text style={styles.description}>{modelo.descripcion_producto}</Text>
+              <Text style={styles.price}>${modelo.precio_producto}</Text>
+            </View>
+          )}
+          <View style={styles.tallasContainer}>
+            {tallas.map((talla) => (
+              <TouchableOpacity key={talla.id_modelo_talla} onPress={() => handleTallaPress(talla)}>
+                <Text style={styles.talla}>{talla.nombre_talla}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
+      )}
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -234,26 +206,122 @@ const Modelo = () => {
         onRequestClose={handleCerrarModal}
       >
         <TouchableWithoutFeedback onPress={handleCerrarModal}>
-          <View style={styles.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                {tallaDetalles ? (
-                  <>
-                    <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
-                    <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
-                    <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-                    <Text style={styles.modalQuantityLabel}>Cantidad:</Text>
-                    <TextInput
-                      style={[styles.input, cantidadError && styles.inputError]}
-                      placeholder="Ingrese la cantidad"
-                      keyboardType="numeric"
-                      value={cantidad}
-                      onChangeText={handleCantidadChange}
-                    />
-                    {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    <TouchableOpacity style={styles.finalizarButton} onPress={createDetail} disabled={detalleCreado}>
-                      <Text style={styles.finalizarButtonText}>Agregar al Carrito</Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <Text>Cargando detalles de la
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalTitle}>Detalles de la Talla</Text>
+          {tallaDetalles && (
+            <View>
+              <Text style={styles.modalText}>Stock: {tallaDetalles.stock_modelo_talla}</Text>
+              <Text style={styles.modalText}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+            </View>
+          )}
+          <TextInput
+            style={[styles.input, cantidadError ? styles.inputError : null]}
+            placeholder="Cantidad"
+            keyboardType="numeric"
+            value={cantidad}
+            onChangeText={handleCantidadChange}
+          />
+          {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+          <Button title="Agregar Detalle" onPress={createDetail} />
+        </View>
+      </Modal>
+      <ModalMensaje
+        visible={alertVisible}
+        mensaje={mensajeEmergente}
+        onClose={() => setAlertVisible(false)}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    resizeMode: 'cover',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+  },
+  price: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 20,
+  },
+  tallasContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  talla: {
+    fontSize: 18,
+    color: '#000',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    margin: 5,
+    textAlign: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  inputError: {
+    borderColor: 'red',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
+});
+
+export default Modelo;

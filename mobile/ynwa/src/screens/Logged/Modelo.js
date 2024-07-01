@@ -136,8 +136,8 @@ const Modelo = () => {
         setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
         const formData = new FormData();
-        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla); 
-        formData.append('cantidadModelo', parseInt(cantidad)); 
+        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla);
+        formData.append('cantidadModelo', parseInt(cantidad));
 
         const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetail`, {
           method: 'POST',
@@ -204,8 +204,10 @@ const Modelo = () => {
         </TouchableOpacity>
         <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
       </View>
-      <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
-      <Text style={styles.subtitle}>{modelo.marca}</Text>
+      <View style={styles.contenedorImg}>
+        <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
+        <Text style={styles.subtitle}>{modelo.marca}</Text>
+      </View>
       <Text style={styles.tallasTitle}>Tallas</Text>
 
       <View style={styles.gridContainer}>
@@ -216,8 +218,6 @@ const Modelo = () => {
             onPress={() => handleTallaPress(item)}
           >
             <Text style={styles.tallaText}>{item.talla}</Text>
-            <Text style={styles.tallaText}>${item.precio_modelo_talla}</Text>
-            <Text style={styles.tallaText}>Stock {item.stock_modelo_talla}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -279,27 +279,38 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
   },
+  contenedorImg:{
+    backgroundColor: '#E8E8E8',
+    borderRadius: 20,
+    width: '95%',
+    height: 250,
+    marginBottom: 20,
+    borderColor: '#000',
+    borderWidth: 1,
+    alignSelf: 'center'
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'QuickSand',
     flex: 1,
   },
   image: {
     width: '100%',
     height: 200,
     resizeMode: 'contain',
-    marginVertical: 16,
   },
   subtitle: {
     fontSize: 18,
-    color: '#666',
-    marginBottom: 16,
+    color: '#011',
+    fontFamily: 'QuickSand',
     textAlign: 'center',
   },
   tallasTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily:'QuickSand',
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -309,12 +320,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   tallaCard: {
-    width: '40%',
+    width: '20%',
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
     marginBottom: 16,
     borderWidth: 1,
     borderColor: '#ddd',
@@ -322,6 +334,7 @@ const styles = StyleSheet.create({
   tallaText: {
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'QuickSand'
   },
   modalContainer: {
     flex: 1,

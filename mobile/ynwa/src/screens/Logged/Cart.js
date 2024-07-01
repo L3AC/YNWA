@@ -246,9 +246,9 @@ const CartScreen = () => {
             <View style={styles.itemContent}>
               <Image source={{ uri: `${SERVER}images/modelos/${item.foto_modelo}` }} style={styles.itemImage} />
               <View style={styles.itemDetails}>
-                <Text>Precio: ${item.precio_modelo_talla}</Text>
-                <Text>Cantidad: {item.cantidad_detalle_pedido}</Text>
-                <Text>Subtotal: ${(item.precio_modelo_talla * item.cantidad_detalle_pedido).toFixed(2)}</Text>
+                <Text style={styles.texto}>Precio: ${item.precio_modelo_talla}</Text>
+                <Text style={styles.texto}>Cantidad: {item.cantidad_detalle_pedido}</Text>
+                <Text style={styles.texto}>Subtotal: ${(item.precio_modelo_talla * item.cantidad_detalle_pedido).toFixed(2)}</Text>
               </View>
             </View>
           </View>
@@ -260,7 +260,7 @@ const CartScreen = () => {
           <Text style={styles.totalText2}> ${totalToPay.toFixed(2)}</Text>
         </View>
         <View style={styles.orderSummary2}>
-          <Text style={styles.addressLabel}>Dirección:</Text>
+          <Text style={styles.addressLabel}>Dirección: </Text>
           <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
             <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
             <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
@@ -272,31 +272,44 @@ const CartScreen = () => {
         <Text style={styles.finalizeButtonText}>Finalizar Pedido</Text>
       </TouchableOpacity>
 
-      <Modal visible={modalVisible} animationType="slide">
+      {/* Modal para editar detalles del producto */}
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={handleCerrarModal}
+      >
         <TouchableWithoutFeedback onPress={handleCerrarModal}>
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContainer}>
-              {loadingModal ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-              ) : (
-                <>
-                  <Text style={styles.modalTitle}>Editar Cantidad</Text>
-                  <TextInput
-                    style={styles.modalInput}
-                    keyboardType="numeric"
-                    value={cantidad}
-                    onChangeText={handleCantidadChange}
-                  />
-                  {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                  <TouchableOpacity style={styles.modalButton} onPress={updateDetalle}>
-                    <Text style={styles.modalButtonText}>Guardar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.modalButton} onPress={handleCerrarModal}>
-                    <Text style={styles.modalButtonText}>Cancelar</Text>
-                  </TouchableOpacity>
-                </>
-              )}
-            </View>
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                {tallaDetalles ? (
+                  <>
+                    <Text style={styles.modalHeader}>Editar detalle</Text>
+                    <Text style={styles.modalRow}>Talla: {tallaDetalles.talla}</Text>
+                    <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                    <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                    <TextInput
+                      style={[styles.input, cantidadError && styles.inputError]}
+                      placeholder="Ingrese la cantidad"
+                      keyboardType="numeric"
+                      value={cantidad}
+                      onChangeText={handleCantidadChange}
+                    />
+                    {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+                    <TouchableOpacity
+                      style={styles.finalizarButton}
+                      onPress={() => updateDetalle()}
+                    >
+                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <ActivityIndicator size="large" color="#0000ff" />
+                )}
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -318,16 +331,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 40,
+    fontFamily: 'QuickSand',
     marginBottom: 20,
     color: '#000',
   },
   finalizeButton: {
     backgroundColor: '#000000',
     padding: 15,
-    width: 150,
+    width: 250,
     borderRadius: 10,
+    alignSelf: 'center',
     alignItems: 'center',
     marginBottom: 20,
+  },
+  texto:{
+    fontFamily: 'QuickSand',
   },
   footer: {
     backgroundColor: '#2F2C2C',
@@ -339,12 +357,12 @@ const styles = StyleSheet.create({
   },
   orderSummary: {
     flexDirection: 'row',
-    alignSelf: 'center'
+    alignSelf: 'flex-start'
   },
   orderSummary2: {
     flexDirection: 'row',
-    alignSelf: 'center',
-    width: '50%'
+    alignSelf: 'flex-start',
+    width: '70%'
   },
   addressLabel: {
     fontSize: 18,
@@ -356,14 +374,13 @@ const styles = StyleSheet.create({
   },
   addressText: {
     fontSize: 18,
-    textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 2,
     color: '#fff',
     fontFamily: 'QuickSand'
   },
   showMoreText: {
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: 'right',
     marginBottom: 20,
     color: '#fff',
     fontFamily: 'QuickSand'
@@ -372,6 +389,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
+    fontFamily: 'QuickSand',
+    textAlign: 'center'
   },
   totalText: {
     fontSize: 18,
@@ -389,7 +408,7 @@ const styles = StyleSheet.create({
     fontFamily: 'QuickSand'
   },
   cartItem: {
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     padding: 16,
     borderRadius: 10,
     marginBottom: 20,
@@ -408,6 +427,7 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'QuickSand',
   },
   iconsContainer: {
     flexDirection: 'row',
@@ -418,15 +438,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemImage: {
-    width: 100,
+    width: 130,
     height: 100,
-    marginRight: 10,
+    marginRight: 25,
     borderRadius: 10,
   },
   itemDetails: {
     flex: 1,
   },
-  /*modalOverlay: {
+modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -463,7 +483,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 8,
     backgroundColor: '#F5D7A4',
-  },*/
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -481,10 +501,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
+    fontFamily: 'QuickSand',
   },
   modalRow: {
     fontSize: 16,
     marginBottom: 8,
+    fontFamily: 'QuickSand',
   },
   modalQuantityLabel: {
     fontSize: 16,
@@ -496,6 +518,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 16,
+    fontFamily: 'QuickSand',
   },
   confirmButtonText: {
     color: '#FFF',
@@ -508,10 +531,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     marginVertical: 8,
+    fontFamily: 'QuickSand',
   },
   inputError: {
     borderColor: 'red',
     borderWidth: 1,
+    fontFamily: 'QuickSand',
   },
   errorText: {
     color: 'red',
@@ -528,6 +553,7 @@ const styles = StyleSheet.create({
   finalizarButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'QuickSand',
   },
 });
 

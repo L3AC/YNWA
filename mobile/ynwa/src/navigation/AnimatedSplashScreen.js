@@ -5,24 +5,26 @@ import * as SplashScreen from 'expo-splash-screen';
 
 const { width, height } = Dimensions.get('window');
 
-SplashScreen.preventAutoHideAsync(); // Previene que la pantalla de inicio se oculte automáticamente
-
 const AnimatedSplashScreen = ({ onAnimationEnd }) => {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    const hideSplashScreen = async () => {
+    const showAnimatedSplash = async () => {
+      // Ocultar la pantalla de carga predeterminada
       await SplashScreen.hideAsync();
+
+      // Reproducir el video de la pantalla de carga animada
+      videoRef.current?.playAsync();
+
+      // Esperar la duración del video para finalizar la animación
+      const timer = setTimeout(() => {
+        onAnimationEnd();
+      }, 4000); // Ajusta el tiempo según la duración del video
+
+      return () => clearTimeout(timer);
     };
 
-    videoRef.current?.playAsync();
-
-    const timer = setTimeout(() => {
-      hideSplashScreen();
-      onAnimationEnd();
-    }, 5000); // Ajusta el tiempo según la duración del video
-
-    return () => clearTimeout(timer);
+    showAnimatedSplash();
   }, [onAnimationEnd]);
 
   return (

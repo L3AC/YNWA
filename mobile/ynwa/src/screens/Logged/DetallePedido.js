@@ -8,6 +8,7 @@ import DetalleCard from '../../components/containers/DetalleCard';
 const OrderDetailScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [detalleItems, setDetalleItems] = useState([]);
+  const [total, setTotal] = useState(0);
   const navigation = useNavigation();
   const route = useRoute();
   const { orderId } = route.params;
@@ -28,8 +29,12 @@ const OrderDetailScreen = () => {
       });
 
       const data = await response.json();
+
+      console.log(data); // Verifica la estructura de los datos
+
       if (response.ok && data.status === 1) {
         setDetalleItems(data.dataset || []);
+        calculateTotal(data.dataset || []);
       } else {
         Alert.alert('No hay detalles');
       }
@@ -38,6 +43,14 @@ const OrderDetailScreen = () => {
     } finally {
       setRefreshing(false);
     }
+  };
+
+  const calculateTotal = (items) => {
+    let totalAmount = 0;
+    items.forEach(item => {
+      totalAmount += parseFloat(item.subtotal);
+    });
+    setTotal(totalAmount);
   };
 
   useEffect(() => {
@@ -49,13 +62,14 @@ const OrderDetailScreen = () => {
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
         <Text style={styles.backButtonText}>←</Text>
       </TouchableOpacity>
+      <Text style={styles.header}>Detalle del pedido</Text>
+      <Text style={styles.totalText}>Total: ${total}</Text>
       <ScrollView
         contentContainerStyle={styles.container}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <Text style={styles.header}>Detalle del pedido</Text>
         {detalleItems.length > 0 ? (
           detalleItems.map((item) => (
             <DetalleCard
@@ -75,21 +89,28 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#d4d2b6',
+    padding: 16,
   },
   backButton: {
     padding: 16,
   },
   backButtonText: {
-    fontSize: 18,
+    fontSize: 24,
     color: 'black',
   },
   container: {
-    padding: 16,
+    paddingTop: 16,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    textAlign: 'center',
+  },
+  totalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    marginVertical: 8,
   },
 });
 

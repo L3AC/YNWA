@@ -27,11 +27,11 @@ const Modelo = () => {
   const [detalleCreado, setDetalleCreado] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
 
-
   useEffect(() => {
     fetchModelo();
     fetchTallas();
   }, []);
+
   const fetchModelo = async () => {
     try {
       setLoading(true);
@@ -58,6 +58,7 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
+
   const fetchTallas = async () => {
     try {
       setLoading(true);
@@ -87,6 +88,7 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
+
   const fetchTallaDetalles = async (idTalla) => {
     try {
       const formData = new FormData();
@@ -105,20 +107,24 @@ const Modelo = () => {
       console.error('Error:', error);
     }
   };
+
   const onRefresh = () => {
     setRefreshing(true);
     fetchModelo();
     fetchTallas();
   };
+
   const handleTallaPress = async (talla) => {
     setSelectedTalla(talla);
     setModalVisible(true);
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
+
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
+
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
@@ -155,23 +161,23 @@ const Modelo = () => {
             setAlertVisible(false);
             setDetalleCreado(false);
             setModalVisible(false);
-            navigation.navigate('Cart');
-          }, 500); // 3 segundos
+            navigation.navigate('StackCart');
+          }, 500); // 0.5 segundos
         } else if (responseData.status === 2) {
           setMensajeEmergente(responseData.message);
           setAlertVisible(true);
-          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
+          setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
         } else {
           setMensajeEmergente(responseData.error);
           setAlertVisible(true);
-          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
+          setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
         }
       }
     } catch (error) {
       console.error('Error:', error);
       setMensajeEmergente('Error en la consulta');
       setAlertVisible(true);
-      setTimeout(() => setAlertVisible(false), 500); // 3 segundos
+      setTimeout(() => setAlertVisible(false), 500); // 0.5 segundos
     }
   };
 
@@ -236,6 +242,7 @@ const Modelo = () => {
                     <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
                     <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
                     <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                    <Text style={styles.modalQuantityLabel}>Cantidad:</Text>
                     <TextInput
                       style={[styles.input, cantidadError && styles.inputError]}
                       placeholder="Ingrese la cantidad"
@@ -244,153 +251,9 @@ const Modelo = () => {
                       onChangeText={handleCantidadChange}
                     />
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    <TouchableOpacity
-                      style={styles.finalizarButton}
-                      onPress={createDetail}
-                    >
-                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
+                    <TouchableOpacity style={styles.finalizarButton} onPress={createDetail} disabled={detalleCreado}>
+                      <Text style={styles.finalizarButtonText}>Agregar al Carrito</Text>
                     </TouchableOpacity>
                   </>
                 ) : (
-                  <ActivityIndicator size="large" color="#0000ff" />
-                )}
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-      {detalleCreado && <ModalMensaje mensaje={mensajeEmergente} />}
-    </ScrollView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#cdc4a3',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    marginTop: 50,
-  },
-  backButton: {
-    marginRight: 16,
-  },
-  contenedorImg:{
-    backgroundColor: '#E8E8E8',
-    borderRadius: 20,
-    width: '95%',
-    height: 250,
-    marginBottom: 20,
-    borderColor: '#000',
-    borderWidth: 1,
-    alignSelf: 'center'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontFamily: 'QuickSand',
-    flex: 1,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'contain',
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#011',
-    fontFamily: 'QuickSand',
-    textAlign: 'center',
-  },
-  tallasTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily:'QuickSand',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  tallaCard: {
-    width: '20%',
-    padding: 10,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  tallaText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'QuickSand'
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  modalHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  modalRow: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  modalQuantityLabel: {
-    fontSize: 16,
-    marginTop: 8,
-  },
-  input: {
-    width: '100%',
-    padding: 8,
-    borderWidth: 1,
-    borderRadius: 4,
-    marginVertical: 8,
-  },
-  inputError: {
-    borderColor: 'red',
-    borderWidth: 1,
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 5,
-  },
-  finalizarButton: {
-    backgroundColor: '#000',
-    padding: 10,
-    borderRadius: 5,
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  finalizarButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});
-
-export default Modelo;
-
-
+                  <Text>Cargando detalles de la

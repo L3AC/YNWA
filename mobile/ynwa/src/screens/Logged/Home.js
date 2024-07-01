@@ -11,6 +11,7 @@ const HomeScreen = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { width } = Dimensions.get('window');
 
+
   const fetchData = async () => {
     try {
       setLoading(true);

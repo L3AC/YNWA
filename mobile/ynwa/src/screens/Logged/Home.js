@@ -95,8 +95,10 @@ const HomeScreen = ({ navigation }) => {
           {newsData.map((news, index) => (
             <View key={index} style={[styles.newsItem, { width: width - 40 }]}>
               <Image source={{ uri: `${SERVER}images/noticias/${news.foto_noticia}` }} style={styles.newsImage} />
-              <Text style={styles.newsTitle}>{news.titulo_noticia}</Text>
-              <Text style={styles.contTitle}>{news.contenido_noticia}</Text>
+              <View style={styles.contenedor2}>
+                <Text style={styles.newsTitle}>{news.titulo_noticia}</Text>
+                <Text style={styles.contTitle}>{news.contenido_noticia}</Text>
+              </View>
             </View>
           ))}
         </ScrollView>
@@ -111,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
               style={styles.product}
               onPress={() => navigation.navigate('Modelo', { idModelo: product.id_modelo })}
             >
-              <Image source={{ uri:`${SERVER}images/modelos/${product.foto_modelo}`}} style={styles.productImage} />
+              <Image source={{ uri: `${SERVER}images/modelos/${product.foto_modelo}` }} style={styles.productImage} />
               <Text style={styles.productName}>{product.descripcion_modelo}</Text>
               <Text style={styles.productPrice}>{product.marca}</Text>
             </TouchableOpacity>
@@ -128,19 +130,27 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#cdc4a3', // Fondo similar al de la captura de pantalla
   },
+  contenedor2: {
+    backgroundColor: '#2F2C2C',
+    width: '100%',
+    height: '200'
+  },
   logo: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: 20,
+    fontFamily: 'QuickSand',
     color: '#000',
+
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
     color: '#5c5c5c',
+    fontFamily: 'QuickSand'
   },
   newsContainer: {
     marginBottom: 20,
@@ -164,12 +174,14 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     textAlign: 'center',
     fontWeight: 'bold',
+    fontFamily: 'QuickSand',
+    color: '#fff'
   },
   contTitle: {
-
     textAlign: 'center',
-    fontWeight: 'bold',
-    color: '#5c5c5c',
+    color: '#fff',
+    fontFamily: 'QuickSand', 
+    marginBottom: 10
   },
   productsContainer: {
     marginBottom: 20,

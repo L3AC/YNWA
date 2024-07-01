@@ -259,12 +259,13 @@ const CartScreen = () => {
           <Text style={styles.totalText}>Total a pagar:</Text>
           <Text style={styles.totalText2}> ${totalToPay.toFixed(2)}</Text>
         </View>
-        
-        <Text style={styles.addressLabel}>Dirección:</Text>
-        <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
-          <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
-          <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
-        </TouchableOpacity>
+        <View style={styles.orderSummary2}>
+          <Text style={styles.addressLabel}>Dirección:</Text>
+          <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
+            <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
+            <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <TouchableOpacity style={styles.finalizeButton} onPress={finishOrder}>
@@ -328,7 +329,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  footer:{
+  footer: {
     backgroundColor: '#2F2C2C',
     padding: 10,
     marginBottom: 10,
@@ -336,11 +337,16 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderWidth: 2,
   },
-  orderSummary:{
+  orderSummary: {
     flexDirection: 'row',
     alignSelf: 'center'
   },
-  addressLabel:{
+  orderSummary2: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+    width: '50%'
+  },
+  addressLabel: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -348,14 +354,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'QuickSand'
   },
-  addressText:{
+  addressText: {
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,
     color: '#fff',
     fontFamily: 'QuickSand'
   },
-  showMoreText:{
+  showMoreText: {
     fontSize: 18,
     textAlign: 'center',
     marginBottom: 20,

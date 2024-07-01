@@ -26,6 +26,8 @@ const Historial = () => {
 
       const data = await response.json();
 
+      console.log(data); // Verifica la estructura de los datos
+
       if (response.ok && data.status === 1) {
         setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {
@@ -98,7 +100,11 @@ const Historial = () => {
         </TouchableOpacity>
       </View>
       {orders.map(order => (
-        <TouchableOpacity key={order.id_pedido.toString()} style={styles.card} onPress={() => handleOrderPress(order.id_pedido)}>
+        <TouchableOpacity
+          key={order.id_pedido ? order.id_pedido.toString() : Math.random().toString()}
+          style={styles.card}
+          onPress={() => handleOrderPress(order.id_pedido)}
+        >
           <Text style={styles.cardText}>Pago: {order.forma_pago_pedido}</Text>
           <Text style={styles.cardText}>Fecha: {order.fecha}</Text>
         </TouchableOpacity>

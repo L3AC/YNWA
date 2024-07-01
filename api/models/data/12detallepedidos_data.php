@@ -30,7 +30,7 @@ class DetallePedidoData extends DetallePedidoHandler
     public function setIdPedido($value)
     {
         if (Validator::validateNaturalNumber($value)) {
-            $this->idPedido = $value;
+            $this->id_pedido = $value;
             return true;
         } else {
             $this->data_error = 'El identificador del modelo es incorrecto';

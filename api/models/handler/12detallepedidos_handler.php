@@ -11,7 +11,7 @@ class DetallePedidoHandler
     */
     protected $id = null;
     protected $search = null;
-    protected $idPedido = null;
+    protected $id_pedido = null;
     protected $idTalla = null;
     protected $nombre = null;
     protected $descripcion = null;
@@ -43,7 +43,7 @@ class DetallePedidoHandler
         OR descripcion_marca like ? OR precio_modelo_talla like ?)
         ORDER BY descripcion_modelo';
 
-        $params = array($this->idPedido,$this->search,$this->search,$this->search);
+        $params = array($this->id_pedido,$this->search,$this->search,$this->search);
         return Database::getRows($sql, $params);
     }
     public function searchHistorial()
@@ -51,18 +51,18 @@ class DetallePedidoHandler
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
 
         $sql = 'SELECT id_detalle,id_pedido,descripcion_modelo,descripcion_marca,
-        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,foto_modelo
+        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,
+        foto_modelo,ROUND(precio_modelo_talla * cantidad_detalle_pedido, 2) AS subtotal
         from prc_detalle_pedidos
         INNER JOIN prc_pedidos USING (id_pedido)
         INNER JOIN prc_modelo_tallas USING (id_modelo_talla)
         INNER JOIN prc_modelos USING (id_modelo)
         INNER JOIN ctg_marcas USING (id_marca)
         INNER JOIN ctg_tallas USING (id_talla)
-        WHERE estado_pedido ="Finalizado" AND id_cliente=? AND (descripcion_modelo like ?
-        OR descripcion_marca like ? OR precio_modelo_talla like ?)
+        WHERE id_pedido=?
         ORDER BY descripcion_modelo';
 
-        $params = array($_SESSION['idCliente'],$this->search,$this->search,$this->search);
+        $params = array($this->id_pedido);
         return Database::getRows($sql, $params);
     }
 
@@ -70,7 +70,7 @@ class DetallePedidoHandler
     {
         $sql = 'INSERT INTO prc_modelo_tallas(id_talla, id_modelo, stock_modelo_talla, precio_modelo_talla)
                 VALUES(?, ?, ?, ?)';
-        $params = array($this->idTalla, $this->idPedido, $this->existencias, $this->precio);
+        $params = array($this->idTalla, $this->id_pedido, $this->existencias, $this->precio);
         return Database::executeRow($sql, $params);
     }
 
@@ -84,7 +84,7 @@ class DetallePedidoHandler
         WHERE mt.id_modelo = ?
         ORDER BY t.descripcion_talla';
         //echo $this->idModelo. ' que';
-        $params = array($this->idPedido);
+        $params = array($this->id_pedido);
         
         return Database::getRows($sql, $params);
     }

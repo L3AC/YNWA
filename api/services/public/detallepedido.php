@@ -19,7 +19,7 @@ if (isset($_GET['action'])) {
                 // Acción para agregar un producto al carrito de compras.
             case 'searchHistorial':
                 if (
-                    !$pedido->setSearch($_POST['valor'])
+                    !$pedido->setIdPedido($_POST['idPedido'])
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($result['dataset'] = $pedido->searchHistorial()) {
@@ -29,6 +29,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay coincidencias';
                 }
                 break;
+
                 case 'deleteRow':
                     if (
                         !$pedido->setId($_POST['idDetallePedido'])

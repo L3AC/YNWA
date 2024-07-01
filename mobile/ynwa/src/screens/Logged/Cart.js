@@ -44,6 +44,7 @@ const CartScreen = () => {
       setRefreshing(false); // Finaliza el estado de refresco
     }
   };
+  
 
   // Función para obtener los detalles de un producto específico
   const readOne = async (idModeloTalla, cantidad, idDetalle) => {

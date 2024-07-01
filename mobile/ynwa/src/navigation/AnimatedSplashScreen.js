@@ -31,7 +31,7 @@ const AnimatedSplashScreen = ({ onAnimationEnd }) => {
     <View style={styles.container}>
       <Video
         ref={videoRef}
-        source={require('./../../assets/vid.mp4')} // Asegúrate de que esta ruta sea correcta
+        source={require('./../../assets/vid.mp4')} 
         style={styles.video}
         resizeMode="cover"
         shouldPlay

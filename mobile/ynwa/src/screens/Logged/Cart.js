@@ -5,24 +5,24 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const CartScreen = () => {
-  const [refreshing, setRefreshing] = useState(false); // Estado para indicar si se está refrescando la pantalla
-  const [loading, setLoading] = useState(false); // Estado para indicar si se está cargando la lista de elementos del carrito
-  const [cartItems, setCartItems] = useState([]); // Estado para almacenar los elementos del carrito
-  const [modalVisible, setModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
-  const [cantidad, setCantidad] = useState(''); // Estado para almacenar la cantidad de productos del modal
-  const [nota, setNota] = useState(''); // Estado para almacenar la nota del producto del modal
-  const [idModeloT, setIdModeloT] = useState(null); // Estado para almacenar el ID del elemento actual del modal
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [cantidad, setCantidad] = useState('');
+  const [nota, setNota] = useState('');
+  const [idModeloT, setIdModeloT] = useState(null);
   const [itemDetalle, setItemDetalle] = useState(null);
-  const [loadingModal, setLoadingModal] = useState(false); // Estado para indicar si se está cargando el modal
-  const navigation = useNavigation(); // Hook de navegación para acceder a la navegación
+  const [loadingModal, setLoadingModal] = useState(false);
+  const navigation = useNavigation();
   const [tallaDetalles, setTallaDetalles] = useState(null);
   const [cantidadError, setCantidadError] = useState('');
   const [detalleCreado, setDetalleCreado] = useState(false);
+  const [showFullAddress, setShowFullAddress] = useState(false); // Estado para controlar si la dirección está truncada
 
-  // Función para obtener los datos del carrito desde el servidor
   const fetchMenuData = async (query = '') => {
     try {
-      setLoading(true); // Indica que se está cargando
+      setLoading(true);
       const formData = new FormData();
       formData.append('producto', query);
       const response = await fetch(`${SERVER}services/public/pedido.php?action=readDetail`, {
@@ -32,24 +32,22 @@ const CartScreen = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setCartItems(data.dataset || []); // Actualiza los elementos del carrito
+        setCartItems(data.dataset || []);
       } else {
-        Alert.alert('No hay ningún producto agregado'); // Muestra una alerta si no hay productos
-        navigation.navigate('StackHome'); // Navega a la pantalla principal (home)
+        Alert.alert('No hay ningún producto agregado');
+        navigation.navigate('StackHome');
       }
     } catch (error) {
-      console.error('Error:', error); // Muestra un error en la consola en caso de fallo
+      console.error('Error:', error);
     } finally {
-      setLoading(false); // Finaliza el estado de carga
-      setRefreshing(false); // Finaliza el estado de refresco
+      setLoading(false);
+      setRefreshing(false);
     }
   };
-  
 
-  // Función para obtener los detalles de un producto específico
   const readOne = async (idModeloTalla, cantidad, idDetalle) => {
     try {
-      setLoadingModal(true); // Indica que se está cargando el modal
+      setLoadingModal(true);
       const formData = new FormData();
       formData.append('idModeloTalla', idModeloTalla);
       const response = await fetch(`${SERVER}services/public/modelotallas.php?action=readOne`, {
@@ -59,23 +57,22 @@ const CartScreen = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setCantidad(cantidad.toString() || '1'); // Actualiza la cantidad del producto
-        setIdModeloT(idModeloTalla); // Actualiza el ID del producto actual
+        setCantidad(cantidad.toString() || '1');
+        setIdModeloT(idModeloTalla);
         setTallaDetalles(data.dataset);
         setItemDetalle(idDetalle);
         setModalVisible(true);
       } else {
-        console.error('Error fetching data:', data.error); // Muestra un error si falla la obtención de datos
-        Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+        console.error('Error fetching data:', data.error);
+        Alert.alert('Error', data.error);
       }
     } catch (error) {
-      console.error('Error:', error); // Muestra un error en la consola en caso de fallo
+      console.error('Error:', error);
     } finally {
-      setLoadingModal(false); // Finaliza el estado de carga del modal
+      setLoadingModal(false);
     }
   };
 
-  // Función para actualizar los detalles de un producto
   const updateDetalle = async () => {
     try {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
@@ -100,8 +97,8 @@ const CartScreen = () => {
         const data = await response.json();
 
         if (data.status === 1) {
-          fetchMenuData(); // Actualiza los elementos del carrito después de la actualización
-          setModalVisible(false); // Oculta el modal
+          fetchMenuData();
+          setModalVisible(false);
           Alert.alert(data.message);
         } else if (data.status === 2) {
           Alert.alert(data.message);
@@ -113,10 +110,8 @@ const CartScreen = () => {
       console.error('Error:', error);
       Alert.alert('Error en la consulta');
     }
-
   };
 
-  // Función para eliminar un detalle de pedido
   const deleteDetalle = async (idDetallePedido) => {
     Alert.alert(
       "Confirmar eliminación",
@@ -131,7 +126,7 @@ const CartScreen = () => {
           text: "Eliminar",
           onPress: async () => {
             try {
-              setLoading(true); // Indica que se está cargando
+              setLoading(true);
               const formData = new FormData();
               formData.append('idDetallePedido', idDetallePedido);
               console.log(idDetallePedido);
@@ -141,16 +136,16 @@ const CartScreen = () => {
               });
               const data = await response.json();
               if (response.ok && data.status === 1) {
-                fetchMenuData(); // Actualiza los elementos del carrito después de la eliminación
-                setModalVisible(false); // Oculta el modal
+                fetchMenuData();
+                setModalVisible(false);
               } else {
-                Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+                Alert.alert('Error', data.error);
               }
             } catch (error) {
-              console.error('Error:', error); // Muestra un error en la consola en caso de fallo
+              console.error('Error:', error);
             } finally {
-              setLoading(false); // Finaliza el estado de carga
-              setRefreshing(false); // Finaliza el estado de refresco
+              setLoading(false);
+              setRefreshing(false);
             }
           },
         },
@@ -159,7 +154,6 @@ const CartScreen = () => {
     );
   };
 
-  // Función para finalizar el pedido
   const finishOrder = async () => {
     Alert.alert(
       "Confirmar",
@@ -174,24 +168,24 @@ const CartScreen = () => {
           text: "Finalizar",
           onPress: async () => {
             try {
-              setLoading(true); // Indica que se está cargando
+              setLoading(true);
               const response = await fetch(`${SERVER}services/public/pedido.php?action=finishOrder`, {
                 method: 'POST'
               });
               const data = await response.json();
 
               if (response.ok && data.status === 1) {
-                Alert.alert(data.message); // Muestra una alerta con el mensaje de error
-                navigation.navigate('Home'); // Navega a la pantalla de inicio
+                Alert.alert(data.message);
+                navigation.navigate('Home');
               } else {
-                console.error('Error:', data.error); // Muestra un error en la consola en caso de fallo
-                Alert.alert('Error', data.error); // Muestra una alerta con el mensaje de error
+                console.error('Error:', data.error);
+                Alert.alert('Error', data.error);
               }
             } catch (error) {
-              console.error('Error:', error); // Muestra un error en la consola en caso de fallo
+              console.error('Error:', error);
             } finally {
-              setLoading(false); // Finaliza el estado de carga
-              setRefreshing(false); // Finaliza el estado de refresco
+              setLoading(false);
+              setRefreshing(false);
             }
           },
         },
@@ -200,9 +194,8 @@ const CartScreen = () => {
     );
   };
 
-
   useEffect(() => {
-    fetchMenuData(); // Carga inicial de los datos del carrito al montar el componente
+    fetchMenuData();
   }, []);
   useFocusEffect(
     useCallback(() => {
@@ -210,48 +203,41 @@ const CartScreen = () => {
     }, [])
   );
 
-  // Función para manejar el evento de refresco
   const onRefresh = () => {
-    setRefreshing(true); // Activa el estado de refresco
-    fetchMenuData(); // Refresca los datos del carrito
+    setRefreshing(true);
+    fetchMenuData();
   };
+
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
+
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
 
-  // Calcula el total a pagar sumando el precio por cantidad de cada producto en el carrito
   const totalToPay = cartItems.reduce((total, item) => total + (item.precio_modelo_talla * item.cantidad_detalle_pedido), 0);
+  const direc = cartItems.map((item) => item.direccion_cliente).join(', ');
 
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} // Componente RefreshControl para actualizar la lista
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <Text style={styles.header}>Carrito de compras</Text>
-      <View style={styles.always}>
-        <TouchableOpacity style={styles.finalizeButton} onPress={() => finishOrder()}>
-          <Text style={styles.finalizeButtonText}>Finalizar</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
+
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        // Mapea los elementos del carrito y renderiza la información de cada producto
         cartItems.map((item) => (
           <View key={item.id_modelo_talla.toString()} style={styles.cartItem}>
             <View style={styles.itemHeader}>
               <Text style={styles.itemName}>{item.descripcion_modelo}</Text>
               <View style={styles.iconsContainer}>
-                {/* Botón para editar el producto */}
                 <TouchableOpacity onPress={() => readOne(item.id_modelo_talla, item.cantidad_detalle_pedido, item.id_detalle)}>
                   <Ionicons name="pencil" size={24} color="black" />
                 </TouchableOpacity>
-                {/* Botón para eliminar el producto */}
                 <TouchableOpacity onPress={() => deleteDetalle(item.id_detalle)}>
                   <Ionicons name="trash" size={24} color="black" />
                 </TouchableOpacity>
@@ -268,44 +254,48 @@ const CartScreen = () => {
           </View>
         ))
       )}
-      {/* Modal para editar detalles del producto */}
 
-      <Modal
-        visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={handleCerrarModal}
-      >
+      <View style={styles.orderSummary}>
+        <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.addressLabel}>Dirección:</Text>
+        <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
+          <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
+          <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.finalizeButton} onPress={finishOrder}>
+        <Text style={styles.finalizeButtonText}>Finalizar Pedido</Text>
+      </TouchableOpacity>
+
+      <Modal visible={modalVisible} animationType="slide">
         <TouchableWithoutFeedback onPress={handleCerrarModal}>
-          <View style={styles.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                {tallaDetalles ? (
-                  <>
-                    <Text style={styles.modalHeader}>Editar detalle</Text>
-                    <Text style={styles.modalRow}>Talla: {tallaDetalles.talla}</Text>
-                    <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
-                    <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-                    <TextInput
-                      style={[styles.input, cantidadError && styles.inputError]}
-                      placeholder="Ingrese la cantidad"
-                      keyboardType="numeric"
-                      value={cantidad}
-                      onChangeText={handleCantidadChange}
-                    />
-                    {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    <TouchableOpacity
-                      style={styles.finalizarButton}
-                      onPress={() => updateDetalle()}
-                    >
-                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <ActivityIndicator size="large" color="#0000ff" />
-                )}
-              </View>
-            </TouchableWithoutFeedback>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              {loadingModal ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : (
+                <>
+                  <Text style={styles.modalTitle}>Editar Cantidad</Text>
+                  <TextInput
+                    style={styles.modalInput}
+                    keyboardType="numeric"
+                    value={cantidad}
+                    onChangeText={handleCantidadChange}
+                  />
+                  {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+                  <TouchableOpacity style={styles.modalButton} onPress={updateDetalle}>
+                    <Text style={styles.modalButtonText}>Guardar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.modalButton} onPress={handleCerrarModal}>
+                    <Text style={styles.modalButtonText}>Cancelar</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -313,7 +303,6 @@ const CartScreen = () => {
   );
 };
 
-// Estilos para el componente CartScreen
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,

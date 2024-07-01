@@ -109,12 +109,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textAlign: 'center',
     color: '#333',
+    fontFamily: 'QuickSandBold'
   },
   subtitle: {
     fontSize: 18,
     marginBottom: 8,
     textAlign: 'center',
     color: '#333',
+    fontFamily: 'QuickSand'
   },
   column: {
     justifyContent: 'space-between',

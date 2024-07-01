@@ -23,16 +23,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#333',
-    borderRadius: 20,
+    borderRadius: 15,
     paddingHorizontal: 10,
     marginVertical: 10,
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
+    height: 40
   },
   input: {
     flex: 1,
     color: '#fff',
     paddingVertical: 8,
+    fontFamily: 'QuickSand'
   },
   icon: {
     marginLeft: 10,

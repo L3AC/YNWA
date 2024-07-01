@@ -27,11 +27,11 @@ const Modelo = () => {
   const [detalleCreado, setDetalleCreado] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
 
+
   useEffect(() => {
     fetchModelo();
     fetchTallas();
   }, []);
-
   const fetchModelo = async () => {
     try {
       setLoading(true);
@@ -58,7 +58,6 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   const fetchTallas = async () => {
     try {
       setLoading(true);
@@ -67,9 +66,6 @@ const Modelo = () => {
 
       const response = await fetch(`${SERVER}services/public/modelotallas.php?action=readAllActive`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
         body: formData,
       });
 
@@ -88,7 +84,6 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   const fetchTallaDetalles = async (idTalla) => {
     try {
       const formData = new FormData();
@@ -107,24 +102,20 @@ const Modelo = () => {
       console.error('Error:', error);
     }
   };
-
   const onRefresh = () => {
     setRefreshing(true);
     fetchModelo();
     fetchTallas();
   };
-
   const handleTallaPress = async (talla) => {
     setSelectedTalla(talla);
     setModalVisible(true);
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
-
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
-
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
@@ -134,71 +125,99 @@ const Modelo = () => {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
       const cantidadIngresada = parseInt(cantidad);
 
-      if (isNaN(cantidadIngresada) || cantidadIngresada <= 0) {
-        setCantidadError('Por favor, ingrese una cantidad válida.');
-        return;
-      }
-
-      if (cantidadIngresada > stockDisponible) {
-        setCantidadError('La cantidad ingresada excede el stock disponible.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('idUsuario', usuario.id_usuario);
-      formData.append('idProducto', idModelo);
-      formData.append('idTalla', selectedTalla.id_modelo_talla);
-      formData.append('cantidad', cantidadIngresada);
-
-      const response = await fetch(`${SERVER}services/public/detallefactura.php?action=addDetail`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok && responseData.status === 1) {
-        setDetalleCreado(true);
-        setMensajeEmergente('Detalle creado exitosamente.');
-        setCantidad('');
-        setSelectedTalla(null);
+      if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
+        setCantidadError('Ingrese un número válido.');
+      } else if (cantidadIngresada > stockDisponible) {
+        setCantidadError('La cantidad ingresada supera el stock disponible.');
+      } else if (cantidadIngresada > 3) {
+        setCantidadError('La cantidad ingresada no puede ser mayor a 3.');
       } else {
-        setMensajeEmergente('Error al crear el detalle.');
+        const formData = new FormData();
+        formData.append('idModeloTalla', tallaDetalles.id_modelo_talla);
+        formData.append('cantidadModelo', parseInt(cantidad));
+
+        const response = await fetch(`${SERVER}services/public/pedido.php?action=createDetail`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const text = await response.text();
+        const responseData = JSON.parse(text);
+
+        if (responseData.status === 1) {
+          setDetalleCreado(true);
+          setMensajeEmergente(responseData.message);
+          setAlertVisible(true);
+          setTimeout(() => {
+            setAlertVisible(false);
+            setDetalleCreado(false);
+            setModalVisible(false);
+            navigation.navigate('StackCart');
+          }, 500);// 3 segundos
+        } else if (responseData.status === 2) {
+          setMensajeEmergente(responseData.message);
+          setAlertVisible(true);
+          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
+        } else {
+          setMensajeEmergente(responseData.error);
+          setAlertVisible(true);
+          setTimeout(() => setAlertVisible(false), 500); // 3 segundos
+        }
       }
     } catch (error) {
       console.error('Error:', error);
-      setMensajeEmergente('Error al crear el detalle.');
-    } finally {
+      setMensajeEmergente('Error en la consulta');
       setAlertVisible(true);
+      setTimeout(() => setAlertVisible(false), 500); // 3 segundos
     }
   };
 
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
+  if (!modelo) {
+    return (
+      <View style={styles.container}>
+        <Text>No se encontraron detalles para este modelo.</Text>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <ScrollView
-          contentContainerStyle={styles.scrollView}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-        >
-          {modelo && (
-            <View>
-              <Image source={{ uri: modelo.imagen_producto }} style={styles.image} />
-              <Text style={styles.title}>{modelo.nombre_producto}</Text>
-              <Text style={styles.description}>{modelo.descripcion_producto}</Text>
-              <Text style={styles.price}>${modelo.precio_producto}</Text>
-            </View>
-          )}
-          <View style={styles.tallasContainer}>
-            {tallas.map((talla) => (
-              <TouchableOpacity key={talla.id_modelo_talla} onPress={() => handleTallaPress(talla)}>
-                <Text style={styles.talla}>{talla.nombre_talla}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
-      )}
+    <ScrollView
+      contentContainerStyle={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      {alertVisible && <ModalMensaje mensaje={mensajeEmergente} />}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Icon name="arrow-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
+      </View>
+      <View style={styles.contenedorImg}>
+        <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
+        <Text style={styles.subtitle}>{modelo.marca}</Text>
+      </View>
+      <Text style={styles.tallasTitle}>Tallas</Text>
+
+      <View style={styles.gridContainer}>
+        {tallas.map((item) => (
+          <TouchableOpacity
+            style={styles.tallaCard}
+            key={item.id_talla}
+            onPress={() => handleTallaPress(item)}
+          >
+            <Text style={styles.tallaText}>{item.talla}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -206,122 +225,169 @@ const Modelo = () => {
         onRequestClose={handleCerrarModal}
       >
         <TouchableWithoutFeedback onPress={handleCerrarModal}>
-          <View style={styles.modalOverlay} />
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                {tallaDetalles ? (
+                  <>
+                    <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
+                    <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
+                    <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
+                    <TextInput
+                      style={[styles.input, cantidadError && styles.inputError]}
+                      placeholder="Ingrese la cantidad"
+                      keyboardType="numeric"
+                      value={cantidad}
+                      onChangeText={handleCantidadChange}
+                    />
+                    {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
+                    <TouchableOpacity
+                      style={styles.finalizarButton}
+                      onPress={createDetail}
+                    >
+                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <ActivityIndicator size="large" color="#0000ff" />
+                )}
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
         </TouchableWithoutFeedback>
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Detalles de la Talla</Text>
-          {tallaDetalles && (
-            <View>
-              <Text style={styles.modalText}>Stock: {tallaDetalles.stock_modelo_talla}</Text>
-              <Text style={styles.modalText}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
-            </View>
-          )}
-          <TextInput
-            style={[styles.input, cantidadError ? styles.inputError : null]}
-            placeholder="Cantidad"
-            keyboardType="numeric"
-            value={cantidad}
-            onChangeText={handleCantidadChange}
-          />
-          {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-          <Button title="Agregar Detalle" onPress={createDetail} />
-        </View>
       </Modal>
-      <ModalMensaje
-        visible={alertVisible}
-        mensaje={mensajeEmergente}
-        onClose={() => setAlertVisible(false)}
-      />
-    </View>
+      {detalleCreado && <ModalMensaje mensaje={mensajeEmergente} />}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
+    padding: 16,
+    backgroundColor: '#cdc4a3',
   },
-  scrollView: {
-    flexGrow: 1,
-    justifyContent: 'center',
+  header: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 16,
+    marginTop: 50,
   },
-  image: {
-    width: '100%',
-    height: 300,
-    resizeMode: 'cover',
+  backButton: {
+    marginRight: 16,
+  },
+  contenedorImg:{
+    backgroundColor: '#E8E8E8',
+    borderRadius: 20,
+    width: '95%',
+    height: 250,
     marginBottom: 20,
+    borderColor: '#000',
+    borderWidth: 1,
+    alignSelf: 'center'
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    textAlign: 'center',
+    fontFamily: 'QuickSand',
+    flex: 1,
   },
-  description: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
+  image: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'contain',
   },
-  price: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 20,
-  },
-  tallasContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  talla: {
+  subtitle: {
     fontSize: 18,
-    color: '#000',
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    margin: 5,
+    color: '#011',
+    fontFamily: 'QuickSand',
     textAlign: 'center',
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  tallasTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily:'QuickSand',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  gridContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  tallaCard: {
+    width: '20%',
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  tallaText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'QuickSand'
   },
   modalContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
-  modalTitle: {
+  modalContent: {
+    width: '80%',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalHeader: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 16,
   },
-  modalText: {
+  modalRow: {
     fontSize: 16,
-    marginBottom: 10,
+    marginBottom: 8,
+  },
+  modalQuantityLabel: {
+    fontSize: 16,
+    marginTop: 8,
   },
   input: {
-    height: 40,
-    borderColor: '#ccc',
+    width: '100%',
+    padding: 8,
     borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    borderRadius: 4,
+    marginVertical: 8,
   },
   inputError: {
     borderColor: 'red',
+    borderWidth: 1,
   },
   errorText: {
     color: 'red',
-    marginBottom: 10,
+    marginTop: 5,
+  },
+  finalizarButton: {
+    backgroundColor: '#000',
+    padding: 10,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  finalizarButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 
 export default Modelo;
+
+

@@ -26,8 +26,6 @@ const Historial = () => {
 
       const data = await response.json();
 
-      console.log(data); // Verifica la estructura de los datos
-
       if (response.ok && data.status === 1) {
         setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {

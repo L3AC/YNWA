@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
 import DetalleCard from '../../components/containers/DetalleCard'; 
+import { Icon } from 'react-native-elements';
 
 const OrderDetailScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -27,11 +28,7 @@ const OrderDetailScreen = () => {
         method: 'POST',
         body: formData,
       });
-
       const data = await response.json();
-
-      console.log(data); // Verifica la estructura de los datos
-
       if (response.ok && data.status === 1) {
         setDetalleItems(data.dataset || []);
         calculateTotal(data.dataset || []);
@@ -56,13 +53,18 @@ const OrderDetailScreen = () => {
   useEffect(() => {
     fetchDetalle();
   }, []);
+  const handleBackPress = () => {
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backButtonText}>←</Text>
-      </TouchableOpacity>
-      <Text style={styles.header}>Detalle del pedido</Text>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
+          <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Detalle del pedido</Text>
+      </View>
       <Text style={styles.totalText}>Total: ${total}</Text>
       <ScrollView
         contentContainerStyle={styles.container}
@@ -102,9 +104,20 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 40,
+    marginTop: 45,
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    left: 0,
+  },
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   totalText: {
     fontSize: 20,

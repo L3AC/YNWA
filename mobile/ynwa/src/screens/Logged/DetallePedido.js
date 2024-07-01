@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, ScrollView, RefreshControl, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, ScrollView, RefreshControl, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
-import { DetalleCard } from '../../components/containers/DetalleCard'; 
+import DetalleCard from '../../components/containers/DetalleCard'; 
 
 const OrderDetailScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -28,9 +28,6 @@ const OrderDetailScreen = () => {
       });
 
       const data = await response.json();
-
-      console.log(data); // Verifica la estructura de los datos
-
       if (response.ok && data.status === 1) {
         setDetalleItems(data.dataset || []);
       } else {
@@ -61,9 +58,10 @@ const OrderDetailScreen = () => {
         <Text style={styles.header}>Detalle del pedido</Text>
         {detalleItems.length > 0 ? (
           detalleItems.map((item) => (
-        <DetalleCard
-          item={item}
-        />
+            <DetalleCard
+              key={item.id_detalle ? item.id_detalle.toString() : Math.random().toString()}
+              item={item}
+            />
           ))
         ) : (
           <Text>No hay detalles para este pedido.</Text>
@@ -92,31 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
-  },
-  orderItem: {
-    flexDirection: 'row',
-    backgroundColor: '#333333',
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  image: {
-    width: 90,
-    height: 90,
-    marginRight: 16,
-  },
-  details: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  itemName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4,
-    color: '#fff',
-  },
-  text: {
-    color: '#fff',
   },
 });
 

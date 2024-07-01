@@ -254,12 +254,12 @@ const CartScreen = () => {
           </View>
         ))
       )}
-
-      <View style={styles.orderSummary}>
-        <Text style={styles.totalText}>Total a pagar: ${totalToPay.toFixed(2)}</Text>
-      </View>
-
       <View style={styles.footer}>
+        <View style={styles.orderSummary}>
+          <Text style={styles.totalText}>Total a pagar:</Text>
+          <Text style={styles.totalText2}> ${totalToPay.toFixed(2)}</Text>
+        </View>
+        
         <Text style={styles.addressLabel}>Dirección:</Text>
         <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
           <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
@@ -328,6 +328,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
+  footer:{
+    backgroundColor: '#2F2C2C',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 15,
+    borderColor: '#fff',
+    borderWidth: 2,
+  },
+  orderSummary:{
+    flexDirection: 'row',
+    alignSelf: 'center'
+  },
+  addressLabel:{
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#fff',
+    fontFamily: 'QuickSand'
+  },
+  addressText:{
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#fff',
+    fontFamily: 'QuickSand'
+  },
+  showMoreText:{
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#fff',
+    fontFamily: 'QuickSand'
+  },
   finalizeButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -338,7 +372,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#000',
+    color: '#fff',
+    fontFamily: 'QuickSand'
+  },
+  totalText2: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#fff',
+    fontFamily: 'QuickSand'
   },
   cartItem: {
     backgroundColor: '#fff',

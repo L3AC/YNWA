@@ -65,6 +65,24 @@ class DetallePedidoHandler
         $params = array($this->id_pedido);
         return Database::getRows($sql, $params);
     }
+    public function searchHistorial2()
+    {
+
+        $sql = 'SELECT id_detalle,id_pedido,descripcion_modelo,descripcion_marca,
+        precio_modelo_talla,descripcion_talla,cantidad_detalle_pedido,fecha_pedido,
+        foto_modelo,ROUND(precio_modelo_talla * cantidad_detalle_pedido, 2) AS subtotal
+        from prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING (id_pedido)
+        INNER JOIN prc_modelo_tallas USING (id_modelo_talla)
+        INNER JOIN prc_modelos USING (id_modelo)
+        INNER JOIN ctg_marcas USING (id_marca)
+        INNER JOIN ctg_tallas USING (id_talla)
+        WHERE estado_pedido="Finalizado"
+        ORDER BY descripcion_modelo';
+
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
 
     public function createRow()
     {

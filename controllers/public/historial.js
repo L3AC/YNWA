@@ -75,7 +75,7 @@ async function readDetail() {
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value); //
 
-    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchHistorial', FORM);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchHistorial2', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se inicializa el cuerpo de la tabla.

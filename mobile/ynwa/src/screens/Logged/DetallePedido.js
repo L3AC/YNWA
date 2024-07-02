@@ -42,13 +42,17 @@ const OrderDetailScreen = () => {
     }
   };
 
+
+
   const calculateTotal = (items) => {
     let totalAmount = 0;
     items.forEach(item => {
-      totalAmount += parseFloat(item.subtotal);
+      totalAmount += Math.round(parseFloat(item.subtotal) * 100) / 100;
+      console.log(totalAmount);
     });
-    setTotal(totalAmount);
+    setTotal(totalAmount.toFixed(2)); // Asegura que el total tenga dos decimales
   };
+  
 
   useEffect(() => {
     fetchDetalle();

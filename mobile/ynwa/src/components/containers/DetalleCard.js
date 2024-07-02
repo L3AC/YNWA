@@ -1,21 +1,55 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SERVER } from '../../contexts/Network';
 
 const DetalleCard = ({ item }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+    const [isCommentEditable, setIsCommentEditable] = useState(true);
+    const [isCommentAvailable, setIsCommentAvailable] = useState(false);
 
     const handleRatingPress = (value) => {
         setRating(value);
+    };
+
+    const verfiComent = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('idDetalle', item.id_detalle);
+            console.log(item.id_detalle);
+            const response = await fetch(`${SERVER}services/public/comentario.php?action=readByIdComentario`, {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+
+            if (response.ok && data.status === 1 ) {
+                
+                setRating(data.dataset.puntuacion_comentario);
+                setComment(data.dataset.contenido_comentario);
+                setIsCommentEditable(false);
+                setIsCommentAvailable(true);
+            } else {
+                setRating(0);
+                setComment('');
+                setIsCommentEditable(true);
+                setIsCommentAvailable(false);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
         <View key={item.id_detalle ? item.id_detalle.toString() : Math.random().toString()} style={styles.orderItem}>
             <View style={styles.header}>
                 <Text style={styles.itemName}>{item.descripcion_modelo}</Text>
-                <Ionicons name="chatbubble-outline" size={24} color="white" onPress={() => setModalVisible(true)} />
+                <Ionicons name="chatbubble-outline" size={24} color="white" onPress={() => {
+                    verfiComent();
+                    setModalVisible(true);
+                }} />
             </View>
             <View style={styles.content}>
                 <Image
@@ -26,9 +60,9 @@ const DetalleCard = ({ item }) => {
                     <Text style={styles.text}>Marca: {item.descripcion_marca}</Text>
                     <Text style={styles.text}>Talla: {item.descripcion_talla}</Text>
                     <Text style={styles.text}>Cantidad: {item.cantidad_detalle_pedido}</Text>
-                    <Text style={styles.text}>Subtotal: ${item.subtotal}</Text>
+                    <Text style={styles.text}>Precio: ${item.precio_modelo_talla}</Text>
                 </View>
-                <Text style={styles.price}>${item.precio_modelo_talla}</Text>
+                <Text style={styles.price}>${item.subtotal}</Text>
             </View>
 
             {/* Modal Component */}
@@ -40,10 +74,10 @@ const DetalleCard = ({ item }) => {
             >
                 <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={() => setModalVisible(false)}>
                     <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
-                        <Text style={styles.modalTitle}>Agregar comentario</Text>
+                        <Text style={styles.modalTitle}>{isCommentAvailable ? 'Comentario' : 'Agregar comentario'}</Text>
                         <View style={styles.stars}>
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <TouchableOpacity key={star} onPress={() => handleRatingPress(star)}>
+                                <TouchableOpacity key={star} onPress={() => isCommentEditable && handleRatingPress(star)}>
                                     <Ionicons
                                         name={star <= rating ? "star" : "star-outline"}
                                         size={30}
@@ -53,10 +87,20 @@ const DetalleCard = ({ item }) => {
                             ))}
                         </View>
                         <Text style={styles.commentLabel}>Comentario</Text>
-                        <TextInput style={styles.textArea} multiline={true} numberOfLines={4} placeholder="Escribe tu comentario aquí..." />
-                        <TouchableOpacity style={styles.confirmButton} onPress={() => setModalVisible(false)}>
-                            <Text style={styles.confirmButtonText}>Confirmar</Text>
-                        </TouchableOpacity>
+                        <TextInput
+                            style={styles.textArea}
+                            multiline={true}
+                            numberOfLines={4}
+                            placeholder="Escribe tu comentario aquí..."
+                            value={comment}
+                            onChangeText={setComment}
+                            editable={isCommentEditable}
+                        />
+                        {isCommentEditable && (
+                            <TouchableOpacity style={styles.confirmButton} onPress={() => setModalVisible(false)}>
+                                <Text style={styles.confirmButtonText}>Confirmar</Text>
+                            </TouchableOpacity>
+                        )}
                     </TouchableOpacity>
                 </TouchableOpacity>
             </Modal>

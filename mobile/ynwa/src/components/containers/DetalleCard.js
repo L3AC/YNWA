@@ -18,27 +18,47 @@ const DetalleCard = ({ item }) => {
         try {
             const formData = new FormData();
             formData.append('idDetalle', item.id_detalle);
-            console.log(item.id_detalle);
-            const response = await fetch(`${SERVER}services/public/comentario.php?action=readByIdComentario`, {
+            const response = await fetch(`${SERVER}services/public/comentario.php?action=readByIdDetalle`, {
                 method: 'POST',
                 body: formData,
             });
             const data = await response.json();
-
-            if (response.ok && data.status === 1 ) {
-                
-                setRating(data.dataset.puntuacion_comentario);
-                setComment(data.dataset.contenido_comentario);
+            if (response.ok && data.status === 1 && data.dataset) {
+                setRating(parseInt(data.dataset[0].puntuacion_comentario));
+                setComment(data.dataset[0].contenido_comentario);
                 setIsCommentEditable(false);
                 setIsCommentAvailable(true);
             } else {
-                setRating(0);
+                console.log(2);
+                setRating(1);
                 setComment('');
                 setIsCommentEditable(true);
                 setIsCommentAvailable(false);
             }
         } catch (error) {
             console.error('Error:', error);
+        }
+    };
+    const insertComent = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('idDetalle', item.id_detalle);
+            formData.append('contenidoComentario', comment);
+            formData.append('starValue', rating);
+            const response = await fetch(`${SERVER}services/public/comentario.php?action=createRow`, {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await response.json();
+            if (response.ok && data.status === 1 ) {
+                Alert.alert('Éxito', 'Comentario agregado correctamente');
+                setModalVisible(false);
+            } else {
+                Alert.alert('Error', 'No se pudo agregar el comentario');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Alert.alert('Error', 'Ocurrió un error al agregar el comentario');
         }
     };
 
@@ -88,7 +108,10 @@ const DetalleCard = ({ item }) => {
                         </View>
                         <Text style={styles.commentLabel}>Comentario</Text>
                         <TextInput
-                            style={styles.textArea}
+                            style={[
+                                styles.textArea,
+                                !isCommentEditable && styles.textAreaDisabled,
+                            ]}
                             multiline={true}
                             numberOfLines={4}
                             placeholder="Escribe tu comentario aquí..."
@@ -97,7 +120,7 @@ const DetalleCard = ({ item }) => {
                             editable={isCommentEditable}
                         />
                         {isCommentEditable && (
-                            <TouchableOpacity style={styles.confirmButton} onPress={() => setModalVisible(false)}>
+                            <TouchableOpacity style={styles.confirmButton} onPress={() => insertComent()}>
                                 <Text style={styles.confirmButtonText}>Confirmar</Text>
                             </TouchableOpacity>
                         )}
@@ -174,6 +197,7 @@ const styles = StyleSheet.create({
     commentLabel: {
         fontSize: 16,
         marginBottom: 10,
+        color: 'black',
     },
     textArea: {
         width: '100%',
@@ -182,6 +206,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         marginBottom: 20,
+        color: 'black',
+    },
+    textAreaDisabled: {
+        backgroundColor: '#d3d3d3',
     },
     confirmButton: {
         backgroundColor: 'black',

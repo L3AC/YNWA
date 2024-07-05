@@ -8,6 +8,7 @@ const ComentariosScreen = ({ }) => {
   const [comentarios, setComentarios] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState('');
+  const navigation = useNavigation();
   const route = useRoute();
   const { idModelo } = route.params;
 
@@ -65,7 +66,7 @@ const ComentariosScreen = ({ }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
+      <TouchableOpacity style={styles.backButton} onPress={()=> navigation.goBack()}>
         <Icon name="arrow-back" size={34} />
       </TouchableOpacity>
       <Text style={styles.title}>Comentarios</Text>

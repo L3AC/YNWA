@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, StyleSheet, ActivityIndicator,
-  RefreshControl, ScrollView, TouchableOpacity, TextInput, Modal, TouchableWithoutFeedback, Button,
+  RefreshControl, ScrollView, TouchableOpacity, TextInput, Modal, TouchableWithoutFeedback, Button,Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -229,6 +229,15 @@ const Modelo = () => {
         <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
         <Text style={styles.subtitle}>{modelo.marca}</Text>
       </View>
+      <View style={styles.commentsButtonContainer}>
+        <Button
+          title="Comentarios"
+          onPress={() => verifComent()}
+        />
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => verifComent()}>
+      <Icon name="chatbubble-outline" size={24} color="#000" />
+    </TouchableOpacity>
       <Text style={styles.tallasTitle}>Tallas</Text>
 
       <View style={styles.gridContainer}>
@@ -242,12 +251,7 @@ const Modelo = () => {
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.commentsButtonContainer}>
-        <Button
-          title="Comentarios"
-          onPress={() => verifComent()}
-        />
-      </View>
+      
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -292,6 +296,19 @@ const Modelo = () => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#FFD700', // Color amarillo
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 3,
+    marginBottom:26,
+  },
   container: {
     flex: 1,
     padding: 16,

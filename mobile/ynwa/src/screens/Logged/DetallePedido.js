@@ -42,8 +42,7 @@ const OrderDetailScreen = () => {
     }
   };
 
-
-
+  
   const calculateTotal = (items) => {
     let totalAmount = 0;
     items.forEach(item => {

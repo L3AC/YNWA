@@ -172,6 +172,30 @@ const Modelo = () => {
     }
   };
 
+  const verifComent = async () => {
+    try {
+      setRefreshing(true);
+      const formData = new FormData();
+      formData.append('idModelo', idModelo);
+      formData.append('valor', '');
+
+      const response = await fetch(`${SERVER}services/public/comentario.php?action=readAllActive`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (response.ok && data.status === 1) {
+        navigation.navigate('Comentarios', { idModelo })
+      } else {
+        Alert.alert('No hay comentarios');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
@@ -217,6 +241,12 @@ const Modelo = () => {
             <Text style={styles.tallaText}>{item.talla}</Text>
           </TouchableOpacity>
         ))}
+      </View>
+      <View style={styles.commentsButtonContainer}>
+        <Button
+          title="Comentarios"
+          onPress={() => verifComent()}
+        />
       </View>
       <Modal
         visible={modalVisible}

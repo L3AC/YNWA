@@ -1,10 +1,12 @@
+// ComentariosScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, RefreshControl, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
+import HeadBack from '../../components/containers/HeadBack'; // Use default import without braces
 
-const ComentariosScreen = ({ }) => {
+const ComentariosScreen = () => {
   const [comentarios, setComentarios] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState('');
@@ -66,10 +68,10 @@ const ComentariosScreen = ({ }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={()=> navigation.goBack()}>
-        <Icon name="arrow-back" size={34} />
-      </TouchableOpacity>
-      <Text style={styles.title}>Comentarios</Text>
+      <HeadBack
+        titulo="Comentarios"
+        onPress={() => navigation.goBack()}
+      />
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}

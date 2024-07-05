@@ -229,17 +229,12 @@ const Modelo = () => {
         <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
         <Text style={styles.subtitle}>{modelo.marca}</Text>
       </View>
-      <View style={styles.commentsButtonContainer}>
-        <Button
-          title="Comentarios"
-          onPress={() => verifComent()}
-        />
-      </View>
+      
       <TouchableOpacity style={styles.button} onPress={() => verifComent()}>
-      <Icon name="chatbubble-outline" size={24} color="#000" />
+      <Icon name="chatbubble-outline" size={24} color="#000" style={styles.icon} />
+      <Text style={styles.text}>Comentarios</Text>
     </TouchableOpacity>
-      <Text style={styles.tallasTitle}>Tallas</Text>
-
+    <Text style={styles.subtitle2}>Tallas</Text>
       <View style={styles.gridContainer}>
         {tallas.map((item) => (
           <TouchableOpacity
@@ -297,17 +292,24 @@ const Modelo = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#FFD700', // Color amarillo
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E6AA20', // Color amarillo
     borderRadius: 10,
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 3,
-    marginBottom:26,
+    textAlign: 'center',
+  },
+  icon: {
+    marginRight: 8,
+  },
+  text: {
+    fontSize: 16,
+    color: '#000',
   },
   container: {
     flex: 1,
@@ -350,6 +352,14 @@ const styles = StyleSheet.create({
     color: '#011',
     fontFamily: 'QuickSand',
     textAlign: 'center',
+  },
+  subtitle2: {
+    fontSize: 18,
+    color: '#011',
+    fontFamily: 'QuickSand',
+    textAlign: 'center',
+    marginBottom:16,
+    marginTop:16,
   },
   tallasTitle: {
     fontSize: 18,

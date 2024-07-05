@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, ScrollView, RefreshControl, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, ScrollView, RefreshControl, StyleSheet, TouchableOpacity, Alert, Linking } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAuth } from '../../contexts/AuthContext';
 import { useUser } from '../../contexts/UserContext';
@@ -23,9 +23,7 @@ export default function App() {
     fetchUser()
     setRefreshing(true);
     wait(500).then(() => setRefreshing(false), fetchUser());
-    
   }, []);
-
 
   useEffect(() => {
     fetchUser()
@@ -60,40 +58,87 @@ export default function App() {
   const logOut = async () => {
     Alert.alert(
       "Confirmar",
-      "¿Estás seguro de cerrar las sesión?",
+      "¿Estás seguro de cerrar la sesión?",
       [
         {
           text: "Cancelar",
-          //onPress: () => console.log("Eliminación cancelada"),
           style: "cancel"
         },
         {
           text: "Eliminar",
           onPress: async () => {
             try {
-              //utilizar la direccion IP del servidor y no localhost
               const response = await fetch(`${SERVER}services/public/cliente.php?action=logOut`, {
                 method: 'POST'
               });
 
               const data = await response.json();
               if (data.status) {
-                Alert.alert(data.message); // Muestra una alerta con el mensaje de éxito
-                setIsLoggedIn(false); // Actualiza el estado de autenticación
-                navigation.navigate('Login'); // Redirige a la pantalla de inicio de sesión
+                Alert.alert(data.message);
+                setIsLoggedIn(false);
+                navigation.navigate('Login');
               } else {
                 console.log(data);
-                Alert.alert('Error sesion', data.error); // Muestra una alerta con el mensaje de error
+                Alert.alert('Error sesión', data.error);
               }
             } catch (error) {
-              console.error(error, "Error en el catch"); // Registra el error en la consola
-              Alert.alert('Error', 'Ocurrió un error al cerrar sesión'); // Muestra una alerta en caso de error
+              console.error(error, "Error en el catch");
+              Alert.alert('Error', 'Ocurrió un error al cerrar sesión');
             }
           },
         },
       ],
       { cancelable: false }
     );
+  };
+  const openNosotros = () => {
+    const webUrl = 'https://instagram.com/rodrigoalvaa';
+    Linking.canOpenURL(webUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(webUrl);
+      } else {
+        Alert.alert('Facebook no está instalado');
+      }
+    });
+  };
+
+  const openInstagram = () => {
+    const appUrl = 'instagram://user?username=rodrigoalvaa';
+    const webUrl = 'https://instagram.com/rodrigoalvaa';
+    Linking.canOpenURL(appUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(appUrl);
+      } else {
+        Linking.openURL(webUrl);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  };
+
+  const openFacebook = () => {
+    const appUrl = 'fb://profile/100044249625817'; // Reemplaza con tu ID de perfil de Facebook
+    const webUrl = 'https://facebook.com/100044249625817'; // Reemplaza con tu URL de perfil de Facebook
+  
+    Linking.canOpenURL(appUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(appUrl);
+      } else {
+        // Si no es compatible, abrir en el navegador web
+        Linking.openURL(webUrl);
+      }
+    }).catch(err => console.error('An error occurred', err));
+  };
+  
+
+  const openTwitter = () => {
+    const appUrl = 'twitter://user?screen_name=Rodrigo39722933';
+    const webUrl = 'https://twitter.com/Rodrigo39722933';
+    Linking.canOpenURL(appUrl).then(supported => {
+      if (supported) {
+        Linking.openURL(appUrl);
+      } else {
+        Linking.openURL(webUrl);
+      }
+    }).catch(err => console.error('An error occurred', err));
   };
 
   return (
@@ -103,43 +148,49 @@ export default function App() {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-
       <View style={styles.contenedor2}>
-        <Ionicons name="person-circle-outline" size={80} color="#000" style={styles.icon} />
+        <Ionicons name="person-outline" size={80} color="#fff" style={styles.icon} />
         <Text style={styles.title}>{Usu}</Text>
       </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Perfil')}>
           <View style={styles.row}>
-            <FontAwesome5 style={styles.icono2} name="user-circle" size={30} color="black" />
+            <FontAwesome5 style={styles.icono2} name="user-tie" size={30} color="white" />
             <Text style={styles.buttonText}>Perfil</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CambioClave')}>
           <View style={styles.row}>
-            <FontAwesome5 style={styles.icono2} name="lock" size={30} color="black" />
+            <FontAwesome5 style={styles.icono2} name="user-shield" size={30} color="white" />
             <Text style={styles.buttonText}>Clave</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Historial')}>
           <View style={styles.row}>
-            <FontAwesome5 style={styles.icono2} name="history" size={30} color="black" />
+            <FontAwesome5 style={styles.icono2} name="calendar-check" size={30} color="white" />
             <Text style={styles.buttonText}>Historial de pedidos</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => logOut()}>
           <View style={styles.row}>
-            <FontAwesome5 style={styles.icono2} name="sign-out-alt" size={30} color="black" />
+            <FontAwesome5 style={styles.icono2} name="sign-out-alt" size={30} color="white" />
             <Text style={styles.buttonText}>Cerrar sesión</Text>
           </View>
         </TouchableOpacity>
       </View>
       <View style={styles.contenedor3}>
+        <Text style={styles.cont3}>Contáctanos</Text>
         <View style={styles.row2}>
-          <Ionicons name="people-circle-outline" size={40} color="#000" style={styles.icon3} />
-          <Ionicons name="logo-instagram" size={40} color="#000" style={styles.icon3} />
-          <Ionicons name="logo-facebook" size={40} color="#000" style={styles.icon3} />
-          <Ionicons name="logo-twitter" size={40} color="#000" style={styles.icon3} />
+          <Ionicons name="people-circle-outline" size={40} color="#fff" style={styles.icon3} />
+          <TouchableOpacity onPress={openInstagram}>
+            <Ionicons name="logo-instagram" size={40} color="#fff" style={styles.icon3} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openFacebook}>
+            <Ionicons name="logo-facebook" size={40} color="#fff" style={styles.icon3} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openTwitter}>
+            <Ionicons name="logo-twitter" size={40} color="#fff" style={styles.icon3} />
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -157,42 +208,45 @@ const styles = StyleSheet.create({
   contenedor3: {
     height: 100,
     width: '100%',
-    backgroundColor: '#cdc4a3',
+    backgroundColor: '#2F2C2C',
     marginTop: 15,
     borderRadius: 20,
-    // Sombras para iOS
-    shadowColor: '#000',
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.55,
     shadowRadius: 3.84,
-    // Elevación para Android
     elevation: 5,
   },
   icon: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 5
   },
   icono2: {
     marginLeft: 10,
-    marginRight: 10
+  },
+  cont3: {
+    color: '#fff',
+    fontFamily: 'QuickSand',
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 5
   },
   contenedor2: {
     height: 150,
     width: '100%',
     marginTop: 20,
     borderRadius: 20,
-    backgroundColor: "#cdc4a3",
-    // Sombras para iOS
-    shadowColor: '#000',
+    backgroundColor: "#2F2C2C",
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.55,
     shadowRadius: 3.84,
-    // Elevación para Android
     elevation: 5,
   },
   title: {
@@ -200,7 +254,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#000',
+    color: '#fff',
     fontFamily: 'QuickSand'
   },
   row: {
@@ -210,43 +264,49 @@ const styles = StyleSheet.create({
   row2: {
     flexDirection: 'row',
     alignSelf: 'center',
-    paddingTop: 21
+    paddingTop: 9
   },
-  icon3:{
-    margin:7
+  icon3: {
+    marginLeft: 7,
+    marginRight: 7,
+    marginBottom: 7
   },
   buttonsContainer: {
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#cdc4a3',
+    backgroundColor: '#2F2C2C',
     marginTop: 10,
     borderRadius: 20,
-    shadowColor: '#000',
+    shadowColor: '#fff',
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.55,
     shadowRadius: 3.84,
-    // Elevación para Android
     elevation: 5,
-
+    paddingVertical: 10
   },
   button: {
-    borderRadius: 15,
-    borderBottomColor: '#000',
-    borderBottomWidth: 2,
-    width: '98%',
-    height: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 0,
-    marginBottom: 0
+    backgroundColor: '#cdc4a3',
+    borderRadius: 20,
+    padding: 10,
+    marginVertical: 5,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   buttonText: {
-    color: '#000',
+    color: 'white',
+    fontSize: 20,
+    marginLeft: 20,
     fontFamily: 'QuickSand',
-    marginTop: 5,
-    fontSize: 18,
+    fontWeight: 'bold'
   },
 });

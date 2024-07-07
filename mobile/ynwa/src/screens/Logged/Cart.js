@@ -23,14 +23,19 @@ const CartScreen = () => {
   const fetchMenuData = async (query = '') => {
     try {
       setLoading(true);
+      // Crear el objeto FormData y agregar el parámetro de consulta
       const formData = new FormData();
       formData.append('producto', query);
+
+      // Realizar la solicitud POST para obtener los detalles del pedido
       const response = await fetch(`${SERVER}services/public/pedido.php?action=readDetail`, {
         method: 'POST',
         body: formData,
       });
+
       const data = await response.json();
 
+      // Si la solicitud fue exitosa y el estado de la respuesta es 1
       if (response.ok && data.status === 1) {
         setCartItems(data.dataset || []);
       } else {
@@ -50,12 +55,16 @@ const CartScreen = () => {
       setLoadingModal(true);
       const formData = new FormData();
       formData.append('idModeloTalla', idModeloTalla);
+
+      // Realizar la solicitud POST para obtener detalles de un solo modelo
       const response = await fetch(`${SERVER}services/public/modelotallas.php?action=readOne`, {
         method: 'POST',
         body: formData,
       });
+
       const data = await response.json();
 
+      // Si la solicitud fue exitosa y el estado de la respuesta es 1
       if (response.ok && data.status === 1) {
         setCantidad(cantidad.toString() || '1');
         setIdModeloT(idModeloTalla);
@@ -78,6 +87,7 @@ const CartScreen = () => {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
       const cantidadIngresada = parseInt(cantidad);
 
+      // Validaciones para la cantidad ingresada
       if (isNaN(cantidadIngresada) || cantidadIngresada < 1) {
         setCantidadError('Ingrese un número válido.');
       } else if (cantidadIngresada > stockDisponible) {
@@ -89,6 +99,8 @@ const CartScreen = () => {
         formData.append('idDetalle', itemDetalle);
         formData.append('cantidadModelo', cantidad);
         formData.append('idModeloTalla', idModeloT);
+
+        // Realizar la solicitud POST para actualizar los detalles del pedido
         const response = await fetch(`${SERVER}services/public/pedido.php?action=updateDetail`, {
           method: 'POST',
           body: formData,
@@ -130,11 +142,15 @@ const CartScreen = () => {
               const formData = new FormData();
               formData.append('idDetallePedido', idDetallePedido);
               console.log(idDetallePedido);
+
+              // Realizar la solicitud POST para eliminar un detalle del pedido
               const response = await fetch(`${SERVER}services/public/detallepedido.php?action=deleteRow`, {
                 method: 'POST',
                 body: formData,
               });
+
               const data = await response.json();
+
               if (response.ok && data.status === 1) {
                 fetchMenuData();
                 setModalVisible(false);
@@ -169,9 +185,12 @@ const CartScreen = () => {
           onPress: async () => {
             try {
               setLoading(true);
+
+              // Realizar la solicitud POST para finalizar el pedido
               const response = await fetch(`${SERVER}services/public/pedido.php?action=finishOrder`, {
                 method: 'POST'
               });
+
               const data = await response.json();
 
               if (response.ok && data.status === 1) {
@@ -194,9 +213,12 @@ const CartScreen = () => {
     );
   };
 
+  // useEffect para obtener los datos del menú cuando se monta el componente
   useEffect(() => {
     fetchMenuData();
   }, []);
+
+  // useFocusEffect para obtener los datos del menú cuando la pantalla está enfocada
   useFocusEffect(
     useCallback(() => {
       fetchMenuData();
@@ -217,6 +239,7 @@ const CartScreen = () => {
     setCantidadError('');
   };
 
+  // Calcular el total a pagar y la dirección del cliente
   const totalToPay = cartItems.reduce((total, item) => total + (item.precio_modelo_talla * item.cantidad_detalle_pedido), 0);
   const direc = cartItems.map((item) => item.direccion_cliente).join(', ');
 
@@ -273,7 +296,6 @@ const CartScreen = () => {
       </TouchableOpacity>
 
       {/* Modal para editar detalles del producto */}
-
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -317,6 +339,7 @@ const CartScreen = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -344,7 +367,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  texto:{
+  texto: {
     fontFamily: 'QuickSand',
   },
   footer: {
@@ -446,7 +469,7 @@ const styles = StyleSheet.create({
   itemDetails: {
     flex: 1,
   },
-modalOverlay: {
+  modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

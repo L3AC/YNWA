@@ -6,16 +6,18 @@ import SearchBar from '../../components/inputs/searchBar';
 import { SERVER } from '../../contexts/Network';
 
 const Explorar = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
-  const navigation = useNavigation();
+  const [data, setData] = useState([]); // Estado para almacenar los datos de los productos
+  const [loading, setLoading] = useState(true); // Estado para controlar el indicador de carga
+  const [search, setSearch] = useState(''); // Estado para el texto de búsqueda
+  const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
+  const navigation = useNavigation(); // Hook de navegación
 
+  // useEffect que se ejecuta cuando el componente se monta
   useEffect(() => {
     fetchData();
   }, []);
 
+  // Función para obtener los datos de los productos desde el servidor
   const fetchData = async (query = '') => {
     try {
       setLoading(true);
@@ -45,20 +47,24 @@ const Explorar = () => {
     }
   };
 
+  // Función para manejar el cambio en el texto de búsqueda
   const handleSearchChange = (text) => {
     setSearch(text);
     fetchData(text);
   };
 
+  // Función para manejar la acción de "tirar para actualizar"
   const onRefresh = () => {
     setRefreshing(true);
     fetchData(search);
   };
 
+  // Función para renderizar cada item de la lista
   const renderItem = ({ item }) => (
     <Card item={item} onPress={(id) => navigation.navigate('Modelo', { idModelo: id })} />
   );
 
+  // Componente de encabezado de la lista
   const ListHeaderComponent = () => (
     <View style={styles.header}>
       <Text style={styles.title}>Explorar</Text>

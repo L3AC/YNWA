@@ -3,21 +3,23 @@ import { View, Text, ScrollView, RefreshControl, StyleSheet, TouchableOpacity, A
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
-import DetalleCard from '../../components/containers/DetalleCard'; 
+import DetalleCard from '../../components/containers/DetalleCard';
 import { Icon } from 'react-native-elements';
 
 const OrderDetailScreen = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const [detalleItems, setDetalleItems] = useState([]);
-  const [total, setTotal] = useState(0);
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { orderId } = route.params;
+  const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
+  const [detalleItems, setDetalleItems] = useState([]); // Estado para almacenar los detalles del pedido
+  const [total, setTotal] = useState(0); // Estado para almacenar el total del pedido
+  const navigation = useNavigation(); // Hook de navegación
+  const route = useRoute(); // Hook para obtener los parámetros de la ruta
+  const { orderId } = route.params; // Obtiene el id del pedido de los parámetros de la ruta
 
+  // Función para actualizar los detalles del pedido
   const onRefresh = useCallback(() => {
     fetchDetalle();
   }, []);
 
+  // Función para obtener los detalles del pedido desde el servidor
   const fetchDetalle = async () => {
     try {
       setRefreshing(true);
@@ -42,7 +44,7 @@ const OrderDetailScreen = () => {
     }
   };
 
-  
+  // Función para calcular el total del pedido
   const calculateTotal = (items) => {
     let totalAmount = 0;
     items.forEach(item => {
@@ -51,11 +53,13 @@ const OrderDetailScreen = () => {
     });
     setTotal(totalAmount.toFixed(2)); // Asegura que el total tenga dos decimales
   };
-  
 
+  // useEffect que se ejecuta cuando el componente se monta
   useEffect(() => {
     fetchDetalle();
   }, []);
+
+  // Función para manejar la acción de volver a la pantalla anterior
   const handleBackPress = () => {
     navigation.goBack();
   };

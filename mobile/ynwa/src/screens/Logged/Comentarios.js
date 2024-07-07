@@ -14,85 +14,94 @@ const ComentariosScreen = () => {
   const route = useRoute();
   const { idModelo } = route.params;
 
-  const fetchComentarios = async () => {
-    try {
-      setRefreshing(true);
-      const formData = new FormData();
-      formData.append('idModelo', idModelo);
-      formData.append('valor', search);
+ // Función asíncrona para obtener comentarios desde el servidor
+const fetchComentarios = async () => {
+  try {
+    setRefreshing(true); // Indica que se está realizando una operación de actualización
+    const formData = new FormData();
+    formData.append('idModelo', idModelo); // Agrega el id del modelo al formulario
+    formData.append('valor', search); // Agrega el valor de búsqueda al formulario
 
-      const response = await fetch(`${SERVER}services/public/comentario.php?action=readAllActive`, {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
-      if (response.ok && data.status === 1) {
-        setComentarios(data.dataset || []);
-      } else {
-        //Alert.alert('No hay comentarios');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setRefreshing(false);
+    // Realiza la solicitud POST para obtener comentarios activos
+    const response = await fetch(`${SERVER}services/public/comentario.php?action=readAllActive`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json(); // Convierte la respuesta en formato JSON
+
+    if (response.ok && data.status === 1) {
+      setComentarios(data.dataset || []); // Actualiza el estado con los comentarios recibidos
+    } else {
+      // Alert.alert('No hay comentarios');
     }
-  };
-
-  useEffect(() => {
-    fetchComentarios();
-  }, [search]);
-
-  const handleSearch = (text) => {
-    setSearch(text);
-  };
-
-  const renderItem = ({ item }) => (
-    <View style={styles.commentContainer}>
-      <Text style={styles.commentDate}>{item.fecha_comentario}</Text>
-      <View style={styles.commentHeader}>
-        <Text style={styles.commentAuthor}>{item.cliente}</Text>
-        <View style={styles.stars}>
-          {[...Array(5)].map((_, i) => (
-            <Icon
-              key={i}
-              name={i < item.puntuacion_comentario ? "star" : "star-outline"}
-              size={20}
-              color="#FFA500"
-            />
-          ))}
-        </View>
-      </View>
-      <Text style={styles.commentText}>{item.contenido_comentario}</Text>
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <HeadBack
-        titulo="Comentarios"
-        onPress={() => navigation.goBack()}
-      />
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Buscar..."
-          value={search}
-          onChangeText={handleSearch}
-        />
-        <Icon name="search" size={24} style={styles.searchIcon} />
-      </View>
-      <FlatList
-        data={comentarios}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id_comentario.toString()}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={fetchComentarios} />
-        }
-        contentContainerStyle={{ flexGrow: 1 }}
-      />
-    </View>
-  );
+  } catch (error) {
+    console.error('Error:', error); // Manejo de errores
+  } finally {
+    setRefreshing(false); // Indica que la operación de actualización ha terminado
+  }
 };
+
+// useEffect que se ejecuta cada vez que cambia el valor de búsqueda (search)
+useEffect(() => {
+  fetchComentarios();
+}, [search]);
+
+// Función para manejar cambios en el campo de búsqueda
+const handleSearch = (text) => {
+  setSearch(text);
+};
+
+// Función para renderizar cada comentario
+const renderItem = ({ item }) => (
+  <View style={styles.commentContainer}>
+    <Text style={styles.commentDate}>{item.fecha_comentario}</Text>
+    <View style={styles.commentHeader}>
+      <Text style={styles.commentAuthor}>{item.cliente}</Text>
+      <View style={styles.stars}>
+        {[...Array(5)].map((_, i) => (
+          <Icon
+            key={i}
+            name={i < item.puntuacion_comentario ? "star" : "star-outline"}
+            size={20}
+            color="#FFA500"
+          />
+        ))}
+      </View>
+    </View>
+    <Text style={styles.commentText}>{item.contenido_comentario}</Text>
+  </View>
+);
+
+// Renderizado del componente
+return (
+  <View style={styles.container}>
+    <HeadBack
+      titulo="Comentarios"
+      onPress={() => navigation.goBack()}
+    />
+    <View style={styles.searchContainer}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Buscar..."
+        value={search}
+        onChangeText={handleSearch}
+      />
+      <Icon name="search" size={24} style={styles.searchIcon} />
+    </View>
+    <FlatList
+      data={comentarios}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id_comentario.toString()}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={fetchComentarios} />
+      }
+      contentContainerStyle={{ flexGrow: 1 }}
+    />
+  </View>
+);
+};
+
 
 const styles = StyleSheet.create({
   container: {

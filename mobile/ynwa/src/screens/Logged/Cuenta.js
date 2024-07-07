@@ -12,28 +12,33 @@ const wait = (timeout) => {
 }
 
 export default function App() {
-  const [refreshing, setRefreshing] = useState(false);
-  const navigation = useNavigation();
-  const { setIsLoggedIn } = useAuth();
-  const { setUser } = useUser();
-  const [Usu, setUsu] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
+  const navigation = useNavigation(); // Hook de navegación
+  const { setIsLoggedIn } = useAuth(); // Hook para manejar la autenticación
+  const { setUser } = useUser(); // Hook para manejar la información del usuario
+  const [Usu, setUsu] = useState(''); // Estado para almacenar el nombre de usuario
+  const [loading, setLoading] = useState(true); // Estado para controlar la carga de datos
 
+  // Función para actualizar la información del usuario
   const onRefresh = useCallback(() => {
-    fetchUser()
+    fetchUser();
     setRefreshing(true);
     wait(500).then(() => setRefreshing(false), fetchUser());
   }, []);
 
+  // useEffect que se ejecuta cuando el componente se monta
   useEffect(() => {
-    fetchUser()
+    fetchUser();
   }, []);
+
+  // useFocusEffect que se ejecuta cuando la pantalla gana el enfoque
   useFocusEffect(
     useCallback(() => {
       fetchUser();
     }, [])
   );
 
+  // Función para obtener la información del usuario desde el servidor
   const fetchUser = async () => {
     try {
       setLoading(true);
@@ -43,7 +48,7 @@ export default function App() {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setUsu(data.username)
+        setUsu(data.username); // Actualiza el estado con el nombre de usuario
       } else {
         console.error('Error fetching data:', data.message);
       }
@@ -55,6 +60,7 @@ export default function App() {
     }
   };
 
+  // Función para cerrar sesión
   const logOut = async () => {
     Alert.alert(
       "Confirmar",
@@ -75,8 +81,8 @@ export default function App() {
               const data = await response.json();
               if (data.status) {
                 Alert.alert(data.message);
-                setIsLoggedIn(false);
-                navigation.navigate('Login');
+                setIsLoggedIn(false); // Actualiza el estado de autenticación
+                navigation.navigate('Login'); // Navega a la pantalla de inicio de sesión
               } else {
                 console.log(data);
                 Alert.alert('Error sesión', data.error);
@@ -91,13 +97,15 @@ export default function App() {
       { cancelable: false }
     );
   };
+
+  // Funciones para abrir enlaces en el navegador o aplicaciones específicas
   const openNosotros = () => {
     const webUrl = 'https://instagram.com/rodrigoalvaa';
     Linking.canOpenURL(webUrl).then(supported => {
       if (supported) {
         Linking.openURL(webUrl);
       } else {
-        Alert.alert('Facebook no está instalado');
+        Alert.alert('Instagram no está instalado');
       }
     });
   };
@@ -117,7 +125,7 @@ export default function App() {
   const openFacebook = () => {
     const appUrl = 'fb://profile/100044249625817'; // Reemplaza con tu ID de perfil de Facebook
     const webUrl = 'https://facebook.com/100044249625817'; // Reemplaza con tu URL de perfil de Facebook
-  
+
     Linking.canOpenURL(appUrl).then(supported => {
       if (supported) {
         Linking.openURL(appUrl);
@@ -127,7 +135,6 @@ export default function App() {
       }
     }).catch(err => console.error('An error occurred', err));
   };
-  
 
   const openTwitter = () => {
     const appUrl = 'twitter://user?screen_name=Rodrigo39722933';
@@ -196,6 +203,7 @@ export default function App() {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

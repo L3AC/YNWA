@@ -11,16 +11,24 @@ import AnimatedSplashScreen from './src/navigation/AnimatedSplashScreen'; // Ase
 const Stack = createStackNavigator();
 
 const App = () => {
+  // Uso del hook useAuth para obtener el estado de autenticación y la función para actualizarlo
   const { isLoggedIn, setIsLoggedIn } = useAuth();
+
+  // Definición de un estado local para manejar posibles errores
   const [error, setError] = useState(null);
+
+  // Definición de un estado local para controlar la visibilidad de la pantalla de splash
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
+  // Función para obtener la sesión del usuario desde el servidor
   const getSession = async () => {
     try {
       const response = await fetch(`${SERVER}services/public/cliente.php?action=getUser`, {
         method: 'POST',
       });
       const data = await response.json();
+
+      // Si la respuesta es exitosa, se actualiza el estado de autenticación
       if (data.status) {
         setIsLoggedIn(true);
       } else {
@@ -32,29 +40,35 @@ const App = () => {
     }
   };
 
+  // useEffect para llamar a getSession cuando el componente se monta
   useEffect(() => {
     getSession();
   }, []);
 
+  // Función que se llama cuando termina la animación de splash
   const handleAnimationEnd = () => {
     setIsSplashVisible(false);
   };
 
+  // Si la pantalla de splash está visible, se muestra el componente AnimatedSplashScreen
   if (isSplashVisible) {
     return <AnimatedSplashScreen onAnimationEnd={handleAnimationEnd} />;
   }
 
+  // Si la pantalla de splash no está visible, se muestra la navegación principal
   return (
     <NavigationContainer>
       <UserProvider>
         <Stack.Navigator>
           {isLoggedIn ? (
+            // Si el usuario está autenticado, se muestra la pantalla principal
             <Stack.Screen
               name="Main"
               component={StackMain}
               options={{ headerShown: false }}
             />
           ) : (
+            // Si el usuario no está autenticado, se muestra la pantalla de autenticación
             <Stack.Screen
               name="Auth"
               component={StackAuth}
@@ -67,6 +81,7 @@ const App = () => {
   );
 };
 
+// Componente envoltorio que provee el contexto de autenticación a la aplicación
 const AppWrapper = () => {
   return (
     <AuthProvider>
@@ -74,5 +89,6 @@ const AppWrapper = () => {
     </AuthProvider>
   );
 };
+
 
 export default AppWrapper;

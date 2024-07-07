@@ -7,38 +7,53 @@ import { SERVER } from '../../contexts/Network';
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-
 const ChangePasswordScreen = () => {
+  // Estados para almacenar las contraseñas actual, nueva y de confirmación
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Estados para manejar la visibilidad de las contraseñas
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Estado para manejar la actualización de la pantalla (pull-to-refresh)
   const [refreshing, setRefreshing] = useState(false);
+
+  // Hook para la navegación
   const navigation = useNavigation();
 
+  // Función para manejar la actualización de la pantalla
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    // Simula una espera de 2 segundos antes de finalizar la actualización
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  // Función para cambiar la contraseña
   const changeP = async () => {
     try {
+      // Se crea un objeto FormData con las contraseñas
       const formData = new FormData();
       formData.append('claveActual', currentPassword);
       formData.append('claveNueva', newPassword);
       formData.append('confirmarClave', confirmPassword);
 
+      // Se realiza una solicitud POST al servidor para cambiar la contraseña
       const response = await fetch(`${SERVER}services/public/cliente.php?action=changePassword`, {
         method: 'POST',
         body: formData,
       });
+
       const data = await response.json();
+
+      // Si la respuesta es exitosa, se muestra un mensaje y se navega a la pantalla de cuenta
       if (data.status) {
         Alert.alert(data.message);
         navigation.navigate('Cuenta');
       } else {
+        // Si hay un error, se muestra el mensaje de error
         console.log(data);
         Alert.alert(data.error);
       }
@@ -51,18 +66,24 @@ const ChangePasswordScreen = () => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
+      // Control de actualización de la pantalla (pull-to-refresh)
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
+      {/* Encabezado de la pantalla con un botón para volver y el título */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>Cambio de contraseña</Text>
       </View>
+
       <View style={styles.content}>
+        {/* Icono para la pantalla de cambio de contraseña */}
         <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/61/61457.png' }} style={styles.icon} />
+
+        {/* Campo para la contraseña actual */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Ingrese su actual contraseña</Text>
           <View style={styles.inputWrapper}>
@@ -77,6 +98,8 @@ const ChangePasswordScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+
+        {/* Campo para la nueva contraseña */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Ingrese su nueva contraseña</Text>
           <View style={styles.inputWrapper}>
@@ -91,6 +114,8 @@ const ChangePasswordScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+
+        {/* Campo para confirmar la nueva contraseña */}
         <View style={styles.inputContainer}>
           <Text style={styles.label}>Confirmar contraseña</Text>
           <View style={styles.inputWrapper}>
@@ -105,13 +130,16 @@ const ChangePasswordScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity style={styles.button} onPress={()=> changeP()}>
+
+        {/* Botón para confirmar el cambio de contraseña */}
+        <TouchableOpacity style={styles.button} onPress={changeP}>
           <Text style={styles.buttonText}>Confirmar</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

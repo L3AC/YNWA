@@ -10,23 +10,24 @@ const wait = (timeout) => {
 }
 
 export default function PerfilScreen() {
-    const navigation = useNavigation();
-    const [refreshing, setRefreshing] = useState(false);
-    const [profileData, setProfileData] = useState({
+    const navigation = useNavigation(); // Hook para manejar la navegación
+    const [refreshing, setRefreshing] = useState(false); // Estado para manejar la acción de refrescar
+    const [profileData, setProfileData] = useState({ // Estado para almacenar los datos del perfil
         nombre_cliente: '',
         apellido_cliente: '',
         email_cliente: '',
         usuario_cliente: '',
         direccion_cliente: ''
     });
-    const [location, setLocation] = useState({
+    const [location, setLocation] = useState({ // Estado para manejar la ubicación del usuario
         latitude: 13.69294,  // Latitud de San Salvador, El Salvador
         longitude: -89.21819, // Longitud de San Salvador, El Salvador
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
-    const mapRef = useRef(null);
+    const mapRef = useRef(null); // Referencia al mapa para animaciones y actualizaciones
 
+    // Función para obtener los datos del perfil del usuario desde el servidor
     const fetchProfileData = async () => {
         try {
             const response = await fetch(`${SERVER}services/public/cliente.php?action=readProfile`, {
@@ -54,6 +55,7 @@ export default function PerfilScreen() {
         }
     };
 
+    // Maneja el evento de presionar en el mapa, actualiza la ubicación y obtiene la dirección correspondiente
     const handleMapPress = async (event) => {
         const { latitude, longitude } = event.nativeEvent.coordinate;
         const newRegion = {
@@ -90,6 +92,7 @@ export default function PerfilScreen() {
         }
     };
 
+    // Limpia la dirección del perfil y restablece la ubicación por defecto
     const handleClearAddress = () => {
         setProfileData((prevData) => ({
             ...prevData,
@@ -104,6 +107,8 @@ export default function PerfilScreen() {
         setLocation(newRegion);
         mapRef.current.animateToRegion(newRegion, 500);  // Anima el mapa al lugar por defecto
     };
+
+    // Función para editar el perfil del usuario y enviar los datos al servidor
     const editP = async () => {
         try {
             const formData = new FormData();
@@ -135,10 +140,12 @@ export default function PerfilScreen() {
         }
     };
 
+    // Efecto para cargar los datos del perfil cuando el componente se monta
     useEffect(() => {
         fetchProfileData();
     }, []);
 
+    // Función para refrescar los datos del perfil
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchProfileData().then(() => setRefreshing(false));

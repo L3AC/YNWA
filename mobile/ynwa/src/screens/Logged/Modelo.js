@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   View, Text, Image, StyleSheet, ActivityIndicator,
-  RefreshControl, ScrollView, TouchableOpacity, TextInput, Modal, TouchableWithoutFeedback, Button,Alert
+  RefreshControl, ScrollView, TouchableOpacity, TextInput, Modal, TouchableWithoutFeedback, Button, Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -10,31 +10,36 @@ import ModalMensaje from '../../components/alerts/ModalMensaje';
 import { useUser } from '../../contexts/UserContext';
 
 const Modelo = () => {
+  // Hooks para obtener la ruta actual y la navegación
   const route = useRoute();
   const { usuario } = useUser();
   const navigation = useNavigation();
-  const { idModelo } = route.params;
-  const [modelo, setModelo] = useState(null);
-  const [tallas, setTallas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [selectedTalla, setSelectedTalla] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [tallaDetalles, setTallaDetalles] = useState(null);
-  const [cantidad, setCantidad] = useState('');
-  const [cantidadError, setCantidadError] = useState('');
-  const [mensajeEmergente, setMensajeEmergente] = useState('');
-  const [detalleCreado, setDetalleCreado] = useState(false);
-  const [alertVisible, setAlertVisible] = useState(false);
+  const { idModelo } = route.params; // Obtiene el ID del modelo de los parámetros de la ruta
 
+  // Definición de estados
+  const [modelo, setModelo] = useState(null); // Estado para almacenar los detalles del modelo
+  const [tallas, setTallas] = useState([]); // Estado para almacenar las tallas disponibles del modelo
+  const [loading, setLoading] = useState(true); // Estado para indicar si los datos están cargando
+  const [refreshing, setRefreshing] = useState(false); // Estado para indicar si la página se está refrescando
+  const [selectedTalla, setSelectedTalla] = useState(null); // Estado para almacenar la talla seleccionada
+  const [modalVisible, setModalVisible] = useState(false); // Estado para controlar la visibilidad del modal
+  const [tallaDetalles, setTallaDetalles] = useState(null); // Estado para almacenar los detalles de una talla específica
+  const [cantidad, setCantidad] = useState(''); // Estado para almacenar la cantidad seleccionada
+  const [cantidadError, setCantidadError] = useState(''); // Estado para almacenar errores en la cantidad
+  const [mensajeEmergente, setMensajeEmergente] = useState(''); // Estado para almacenar mensajes emergentes
+  const [detalleCreado, setDetalleCreado] = useState(false); // Estado para indicar si el detalle fue creado
+  const [alertVisible, setAlertVisible] = useState(false); // Estado para controlar la visibilidad de la alerta
 
+  // Efecto para cargar los datos del modelo y las tallas al montar el componente
   useEffect(() => {
     fetchModelo();
     fetchTallas();
   }, []);
+
+  // Función para obtener los detalles del modelo desde el servidor
   const fetchModelo = async () => {
     try {
-      setLoading(true);
+      setLoading(true); // Indica que los datos están cargando
       const formData = new FormData();
       formData.append('idProducto', idModelo);
 
@@ -47,17 +52,19 @@ const Modelo = () => {
       const responseData = JSON.parse(text);
 
       if (response.ok && responseData.status === 1) {
-        setModelo(responseData.dataset);
+        setModelo(responseData.dataset); // Almacena los datos del modelo en el estado
       } else {
         console.error('Error fetching data:', responseData.message);
       }
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setLoading(false);
-      setRefreshing(false);
+      setLoading(false); // Indica que los datos han terminado de cargar
+      setRefreshing(false); // Termina el refresco de la página
     }
   };
+
+  // Función para obtener las tallas disponibles del modelo desde el servidor
   const fetchTallas = async () => {
     try {
       setLoading(true);
@@ -73,7 +80,7 @@ const Modelo = () => {
       const responseData = JSON.parse(text);
 
       if (response.ok && responseData.status === 1) {
-        setTallas(responseData.dataset);
+        setTallas(responseData.dataset); // Almacena las tallas en el estado
       } else {
         console.error('Error fetching data:', responseData.message);
       }
@@ -84,6 +91,8 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
+
+  // Función para obtener los detalles de una talla específica desde el servidor
   const fetchTallaDetalles = async (idTalla) => {
     try {
       const formData = new FormData();
@@ -94,7 +103,7 @@ const Modelo = () => {
       });
       const data = await response.json();
       if (response.ok && data.status === 1) {
-        setTallaDetalles(data.dataset);
+        setTallaDetalles(data.dataset); // Almacena los detalles de la talla en el estado
       } else {
         console.error('Error fetching data:', data.message);
       }
@@ -102,24 +111,33 @@ const Modelo = () => {
       console.error('Error:', error);
     }
   };
+
+  // Función para refrescar la página
   const onRefresh = () => {
     setRefreshing(true);
     fetchModelo();
     fetchTallas();
   };
+
+  // Maneja la selección de una talla y abre el modal con los detalles de la talla seleccionada
   const handleTallaPress = async (talla) => {
     setSelectedTalla(talla);
     setModalVisible(true);
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
+
+  // Maneja el cambio de la cantidad seleccionada
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
+
+  // Cierra el modal
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
 
+  // Crea un detalle del pedido con la cantidad y talla seleccionadas
   const createDetail = async () => {
     try {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
@@ -153,7 +171,7 @@ const Modelo = () => {
             setDetalleCreado(false);
             setModalVisible(false);
             navigation.navigate('StackCart');
-          }, 500);// 3 segundos
+          }, 500); // 3 segundos
         } else if (responseData.status === 2) {
           setMensajeEmergente(responseData.message);
           setAlertVisible(true);
@@ -172,6 +190,7 @@ const Modelo = () => {
     }
   };
 
+  // Verifica si hay comentarios disponibles para el modelo y navega a la pantalla de comentarios
   const verifComent = async () => {
     try {
       setRefreshing(true);
@@ -185,7 +204,7 @@ const Modelo = () => {
       });
       const data = await response.json();
       if (response.ok && data.status === 1) {
-        navigation.navigate('Comentarios', { idModelo })
+        navigation.navigate('Comentarios', { idModelo });
       } else {
         Alert.alert('No hay comentarios');
       }
@@ -196,10 +215,12 @@ const Modelo = () => {
     }
   };
 
+  // Muestra un indicador de carga mientras los datos están siendo cargados
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
+  // Muestra un mensaje si no se encontraron detalles para el modelo
   if (!modelo) {
     return (
       <View style={styles.container}>
@@ -229,12 +250,12 @@ const Modelo = () => {
         <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
         <Text style={styles.subtitle}>{modelo.marca}</Text>
       </View>
-      
+
       <TouchableOpacity style={styles.button} onPress={() => verifComent()}>
-      <Icon name="chatbubble-outline" size={24} color="#000" style={styles.icon} />
-      <Text style={styles.text}>Comentarios</Text>
-    </TouchableOpacity>
-    <Text style={styles.subtitle2}>Tallas</Text>
+        <Icon name="chatbubble-outline" size={24} color="#000" style={styles.icon} />
+        <Text style={styles.text}>Comentarios</Text>
+      </TouchableOpacity>
+      <Text style={styles.subtitle2}>Tallas</Text>
       <View style={styles.gridContainer}>
         {tallas.map((item) => (
           <TouchableOpacity
@@ -246,7 +267,7 @@ const Modelo = () => {
           </TouchableOpacity>
         ))}
       </View>
-      
+
       <Modal
         visible={modalVisible}
         transparent={true}
@@ -325,7 +346,7 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
   },
-  contenedorImg:{
+  contenedorImg: {
     backgroundColor: '#E8E8E8',
     borderRadius: 20,
     width: '95%',
@@ -358,13 +379,13 @@ const styles = StyleSheet.create({
     color: '#011',
     fontFamily: 'QuickSand',
     textAlign: 'center',
-    marginBottom:16,
-    marginTop:16,
+    marginBottom: 16,
+    marginTop: 16,
   },
   tallasTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    fontFamily:'QuickSand',
+    fontFamily: 'QuickSand',
     marginBottom: 16,
     textAlign: 'center',
   },

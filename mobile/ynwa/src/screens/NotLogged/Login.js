@@ -8,19 +8,21 @@ import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
 
 const Login = () => {
-  const { setIsLoggedIn } = useAuth();
-  const { setIdUsuario } = useUser();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  const navigation = useNavigation();
+  const { setIsLoggedIn } = useAuth(); // Hook para manejar el estado de autenticación
+  const { setIdUsuario } = useUser(); // Hook para manejar el ID del usuario
+  const [username, setUsername] = useState(''); // Estado para almacenar el nombre de usuario
+  const [password, setPassword] = useState(''); // Estado para almacenar la contraseña
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar la visibilidad de la contraseña
+  const [error, setError] = useState(''); // Estado para almacenar errores
+  const navigation = useNavigation(); // Hook para manejar la navegación
 
+  // Hook para cargar las fuentes personalizadas
   const [fontsLoaded] = useFonts({
     QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
     QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
   });
 
+  // Función para manejar el evento de inicio de sesión
   const handleLogin = async () => {
     try {
       const formData = new FormData();
@@ -32,22 +34,23 @@ const Login = () => {
         body: formData,
       });
       const data = await response.json();
+
       if (data.status) {
-        Alert.alert('Correcto', data.message);
-        setIsLoggedIn(true);
-        setIdUsuario(response.dataset);
-        navigation.navigate('Main');
+        Alert.alert('Correcto', data.message); // Muestra un mensaje de éxito
+        setIsLoggedIn(true); // Actualiza el estado de autenticación
+        setIdUsuario(response.dataset); // Guarda el ID del usuario
+        navigation.navigate('Main'); // Navega a la pantalla principal
       } else {
         console.log(data);
-        Alert.alert('Error sesión', data.error);
+        Alert.alert('Error sesión', data.error); // Muestra un mensaje de error
       }
-
     } catch (error) {
       console.error('Error :', error);
-      setError('Error');
+      setError('Error'); // Actualiza el estado de error
     }
   };
 
+  // Si las fuentes no están cargadas, retorna null para no renderizar nada
   if (!fontsLoaded) {
     return null;
   }

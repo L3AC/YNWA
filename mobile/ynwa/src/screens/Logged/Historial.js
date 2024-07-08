@@ -7,11 +7,12 @@ import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu s
 
 const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const [fecha, setFecha] = useState('Todo');
-  const [estado, setEstado] = useState('Finalizado');
-  const [orders, setOrders] = useState([]);
-  const navigation = useNavigation();
+  const [fecha, setFecha] = useState('Todo'); // Estado para el filtro de fecha
+  const [estado, setEstado] = useState('Finalizado'); // Estado para el filtro de estado
+  const [orders, setOrders] = useState([]); // Estado para almacenar los pedidos
+  const navigation = useNavigation(); // Hook de navegación
 
+  // Función para obtener los datos de los pedidos desde el servidor
   const fetchData = async (fecha = 'Todo', estado = 'Finalizado') => {
     try {
       setRefreshing(true);
@@ -27,9 +28,9 @@ const Historial = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setOrders(data.dataset);  // Asegúrate de que `data.dataset` contiene la lista de pedidos
+        setOrders(data.dataset); // Asegúrate de que `data.dataset` contiene la lista de pedidos
       } else {
-        Alert.alert('No hay ningún pedido en el historial'); // Muestra una alerta si no hay productos
+        Alert.alert('No hay ningún pedido en el historial'); // Muestra una alerta si no hay pedidos
       }
     } catch (error) {
       console.error('Error:', error);
@@ -38,28 +39,34 @@ const Historial = () => {
     }
   };
 
+  // useEffect que se ejecuta cuando el componente se monta y cuando cambian los filtros de fecha o estado
   useEffect(() => {
     fetchData(fecha, estado);
   }, [fecha, estado]);
 
+  // Función para manejar la acción de "tirar para actualizar"
   const onRefresh = useCallback(() => {
     fetchData(fecha, estado);
   }, [fecha, estado]);
 
+  // Función para manejar el cambio en el filtro de fecha
   const handleFechaChange = (value) => {
     setFecha(value);
     fetchData(value, estado);
   };
 
+  // Función para manejar el cambio en el filtro de estado
   const handleEstadoChange = (nuevoEstado) => {
     setEstado(nuevoEstado);
     fetchData(fecha, nuevoEstado);
   };
 
+  // Función para manejar la selección de un pedido
   const handleOrderPress = (orderId) => {
-    navigation.navigate('DetallePedido', { orderId });  // Asegúrate de que tienes una pantalla 'OrderDetails' configurada en tu navegador
+    navigation.navigate('DetallePedido', { orderId }); // Asegúrate de que tienes una pantalla 'DetallePedido' configurada en tu navegador
   };
 
+  // Función para manejar la acción de volver atrás
   const handleBackPress = () => {
     navigation.goBack();
   };
@@ -110,6 +117,7 @@ const Historial = () => {
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

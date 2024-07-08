@@ -10,7 +10,10 @@ const wait = (timeout) => {
 }
 
 export default function SignUp() {
+  // Estado para controlar la actualización de la interfaz
   const [refreshing, setRefreshing] = useState(false);
+
+  // Estados para almacenar los datos del formulario de registro
   const [nombreCliente, setNombreCliente] = useState('');
   const [apellidoCliente, setApellidoCliente] = useState('');
   const [correoCliente, setCorreoCliente] = useState('');
@@ -18,8 +21,12 @@ export default function SignUp() {
   const [claveCliente, setClaveCliente] = useState('');
   const [confirmarClave, setConfirmarClave] = useState('');
   const [direccionCliente, setDireccionCliente] = useState('');
+
+  // Estados para controlar la visibilidad de las contraseñas
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Estado para almacenar la ubicación actual del usuario
   const [location, setLocation] = useState({
     latitude: 13.69294,  // Latitud de San Salvador, El Salvador
     longitude: -89.21819, // Longitud de San Salvador, El Salvador
@@ -27,14 +34,16 @@ export default function SignUp() {
     longitudeDelta: 0.01,
   });
 
-  const navigation = useNavigation();
-  const mapRef = React.useRef(null);
+  const navigation = useNavigation(); // Hook para manejar la navegación
+  const mapRef = React.useRef(null); // Referencia al mapa
 
+  // Función para refrescar la interfaz
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  // Función para manejar el registro del usuario
   const signin = async () => {
     try {
       const formData = new FormData();
@@ -54,18 +63,19 @@ export default function SignUp() {
       });
       const data = await response.json();
       if (data.status) {
-        Alert.alert(data.message);
-        navigation.navigate('Login');
+        Alert.alert(data.message); // Muestra un mensaje de éxito
+        navigation.navigate('Login'); // Navega a la pantalla de inicio de sesión
       } else {
         console.log(data);
-        Alert.alert(data.error);
+        Alert.alert(data.error); // Muestra un mensaje de error
       }
     } catch (error) {
       console.error('Error :', error);
-      Alert.alert('Error', 'Error al registrar');
+      Alert.alert('Error', 'Error al registrar'); // Muestra un mensaje de error
     }
   };
 
+  // Función para manejar el evento de presionar el mapa
   const handleMapPress = async (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     const newRegion = {
@@ -94,6 +104,7 @@ export default function SignUp() {
     }
   };
 
+  // Función para manejar la búsqueda de direcciones
   const handleSearchAddress = async (text) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(text)}&format=json&addressdetails=1`);
@@ -114,10 +125,12 @@ export default function SignUp() {
     }
   };
 
+  // Función para manejar el cambio en el campo de dirección
   const handleAddressChange = (text) => {
     setDireccionCliente(text);
   };
 
+  // Función para limpiar la dirección
   const handleClearAddress = () => {
     setDireccionCliente('');
     const newRegion = {
@@ -144,22 +157,22 @@ export default function SignUp() {
         <Text style={styles.title}>Registro</Text>
       </View>
       <View style={styles.form}>
-        <TextInput 
-          style={styles.input} 
+        <TextInput
+          style={styles.input}
           value={nombreCliente}
           onChangeText={setNombreCliente}
           placeholder='Nombre'
         />
 
-        <TextInput 
-          style={styles.input} 
+        <TextInput
+          style={styles.input}
           value={apellidoCliente}
           onChangeText={setApellidoCliente}
           placeholder='Apellido'
         />
 
-        <TextInput 
-          style={styles.input} 
+        <TextInput
+          style={styles.input}
           value={correoCliente}
           onChangeText={setCorreoCliente}
           keyboardType="email-address"
@@ -167,8 +180,8 @@ export default function SignUp() {
           placeholder='Correo'
         />
 
-        <TextInput 
-          style={styles.input} 
+        <TextInput
+          style={styles.input}
           value={usuarioCliente}
           onChangeText={setUsuarioCliente}
           autoCapitalize="none"
@@ -176,8 +189,8 @@ export default function SignUp() {
         />
 
         <View style={styles.passwordContainer}>
-          <TextInput 
-            style={[styles.input, styles.passwordInput]} 
+          <TextInput
+            style={[styles.input, styles.passwordInput]}
             value={claveCliente}
             onChangeText={setClaveCliente}
             secureTextEntry={!showPassword}
@@ -189,8 +202,8 @@ export default function SignUp() {
         </View>
 
         <View style={styles.passwordContainer}>
-          <TextInput 
-            style={[styles.input, styles.passwordInput]} 
+          <TextInput
+            style={[styles.input, styles.passwordInput]}
             value={confirmarClave}
             onChangeText={setConfirmarClave}
             secureTextEntry={!showConfirmPassword}
@@ -200,11 +213,11 @@ export default function SignUp() {
             <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
           </TouchableOpacity>
         </View>
-        
+
         <Text style={styles.label}>Dirección</Text>
         <View style={styles.addressContainer}>
-          <TextInput 
-            style={[styles.input2, styles.multilineInput]} 
+          <TextInput
+            style={[styles.input2, styles.multilineInput]}
             value={direccionCliente}
             onChangeText={handleAddressChange}
             onSubmitEditing={() => handleSearchAddress(direccionCliente)}

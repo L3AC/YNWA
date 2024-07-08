@@ -11,7 +11,6 @@ const HomeScreen = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { width } = Dimensions.get('window');
 
-
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
   contTitle: {
     textAlign: 'center',
     color: '#fff',
-    fontFamily: 'QuickSand', 
+    fontFamily: 'QuickSand',
     marginBottom: 10
   },
   productsContainer: {

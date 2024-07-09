@@ -196,4 +196,18 @@ class DetallePedidoHandler
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
+    public function gaingsPrediccion()
+    {
+        $sql = 'SELECT DATE_FORMAT(fecha_pedido, "%Y-%m") AS mes, 
+        ROUND(SUM(cantidad_detalle_pedido * precio_modelo_talla), 2) AS ventas_mensuales
+        FROM prc_pedidos 
+        JOIN prc_detalle_pedidos USING(id_pedido)
+        JOIN prc_modelo_tallas USING(id_modelo_talla)
+        WHERE estado_pedido = "Finalizado"
+        GROUP BY DATE_FORMAT(fecha_pedido, "%Y-%m")
+        ORDER BY mes DESC
+        LIMIT 5';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
 }

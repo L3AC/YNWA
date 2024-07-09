@@ -390,4 +390,5 @@ class PedidoHandler
         $params = array($this->id_cliente);
         return Database::getRows($sql, $params);
     }
+    
 }

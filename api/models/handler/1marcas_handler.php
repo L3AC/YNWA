@@ -163,4 +163,13 @@ class MarcaHandler
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
+    public function modelosByMarca()
+    {
+        $sql = 'SELECT * FROM  prc_modelos 
+        INNER JOIN ctg_marcas USING(id_marca)
+		WHERE id_marca=?
+        GROUP BY descripcion_modelo';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
 }

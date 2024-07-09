@@ -93,6 +93,9 @@ const fillTable = async () => {
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_cliente})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        <button type="button" class="btn btn-warning" onclick="openReport(${row.id_cliente})">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -145,22 +148,7 @@ const openCreate = () => {
     CORREO_CLIENTE.addEventListener('input', () => {
         checkExistence(CORREO_CLIENTE, 'correo', 'readExistMail', MENSAJEMAIL);
     });
-    
-    /*ALIAS_CLIENTE.addEventListener('input', async function ()  {
-        const FORM = new FormData();
-        FORM.append('usuario', ALIAS_CLIENTE.value);
-        // Petición para obtener los datos del registro solicitado.
-        const DATA = await fetchData(CLIENTE_API, 'readExist', FORM);
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-        if (DATA.status === 1) {
-            MENSAJEDIV.textContent = 'Ya existe el usuario';
-            MENSAJEDIV.style.display = 'block'; 
-            IDGUARDAR.disabled = true;
-        } else {
-            MENSAJEDIV.textContent = "";
-            IDGUARDAR.disabled = false;
-        }
-    });*/
+
 }
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openUpdate = async (id) => {
@@ -237,4 +225,12 @@ const openDelete = async (id) => {
             sweetAlert(2, DATA.error, false);
         }
     }
+}
+const openReport = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/pedidos_cliente.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('idCliente', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
 }

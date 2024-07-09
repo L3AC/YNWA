@@ -167,7 +167,7 @@ class ClienteHandler
 
     public function readOne()
     {
-        $sql = 'SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,
+        $sql = 'SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,CONCAT(nombre_cliente," ",apellido_cliente) as nombre,
                 apellido_cliente,email_cliente,estado_cliente,direccion_cliente,lat,lon
                 from prc_clientes
                 WHERE id_cliente = ?';

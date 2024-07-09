@@ -32,6 +32,16 @@ class PedidoData extends PedidoHandler
             return false;
         }
     }
+    public function setIdCliente($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->id_cliente = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del cliente';
+            return false;
+        }
+    }
     public function setIdModeloTalla($value)
     {
         if (Validator::validateNaturalNumber($value)) {

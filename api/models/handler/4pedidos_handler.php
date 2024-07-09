@@ -11,6 +11,7 @@ class PedidoHandler
     */
     protected $search = null;
     protected $id = null;
+    protected $id_cliente = null;
     protected $nombre = null;
     protected $descripcion = null;
     protected $precio = null;
@@ -224,7 +225,6 @@ class PedidoHandler
         return $mensaje;
     }
 
-
     // Método para finalizar un pedido por parte del cliente.
     public function finishOrder()
     {
@@ -246,7 +246,6 @@ class PedidoHandler
         $params = array($this->cantidad, $this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);
     }
-
     // Método para eliminar un producto que se encuentra en el carrito de compras.
     public function deleteDetail()
     {
@@ -255,7 +254,6 @@ class PedidoHandler
         $params = array($this->id_detalle, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);
     }
-
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
@@ -270,7 +268,6 @@ class PedidoHandler
         $params = array($this->estado,$this->search);
         return Database::getRows($sql, $params);
     }
-
     public function createRow()
     {
         $sql = 'INSERT INTO prc_modelos(descripcion_modelo, id_marca, foto_modelo, estado_modelo)
@@ -383,14 +380,14 @@ class PedidoHandler
     /*
     *   Métodos para generar reportes.
     */
-    public function productosCategoria()
+    public function searchByClienteR()
     {
-        $sql = 'SELECT nombre_producto, precio_producto, estado_producto
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                WHERE id_categoria = ?
-                ORDER BY nombre_producto';
-        $params = array($this->categoria);
+        $sql = 'SELECT id_pedido, CONCAT(nombre_cliente, " ", apellido_cliente) as cliente,
+        id_cliente, email_cliente,DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha, estado_pedido,forma_pago_pedido
+        FROM prc_pedidos INNER JOIN prc_clientes USING(id_cliente)
+        WHERE id_cliente = ?  
+        ORDER BY estado_pedido';
+        $params = array($this->id_cliente);
         return Database::getRows($sql, $params);
     }
 }

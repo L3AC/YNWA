@@ -18,22 +18,26 @@ if (isset($_GET['idMarca'])) {
             $pdf->startReport('Modelos que hay con ' . $rowOne['descripcion_marca']);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataP = $marca->modelosByMarca()) {
+                $count=0;
                 // Se establece un color de relleno para los encabezados.
                 $pdf->setFillColor(225);
                 // Se establece la fuente para los encabezados.
                 $pdf->setFont('Arial', 'B', 11);
                 // Se imprimen las celdas con los encabezados.
                 $pdf->cell(126, 10, 'Modelo', 1, 0, 'C', 1);
-                $pdf->cell(30, 10, 'Estado', 1, 1, 'C', 1);
+                $pdf->cell(60, 10, 'Estado', 1, 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 11);
                 // Se recorren los registros fila por fila.
                 foreach ($dataP as $rowP) {
+                    $count+=1;
                     ($rowP['estado_modelo']) ? $estado = 'Activo' : $estado = 'Inactivo';
                     // Se imprimen las celdas con los datos de los productos.
-                    $pdf->cell(126, 10, $pdf->encodeString($rowP['descripcion_modelo']), 1, 0);
-                    $pdf->cell(30, 10, $estado, 1, 1);
+                    $pdf->cell(126, 10, $pdf->encodeString($rowP['descripcion_modelo']), 1, 0,'C');
+                    $pdf->cell(60, 10, $estado, 1, 1,'C');
                 }
+                $pdf->cell(186, 10, '', 1, 0, 'C', 1);
+                $pdf->cell(0, 10, $pdf->encodeString('Total : '.$count.'  '), 1, 1,'R');
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No hay modelos en esta marca'), 1, 1);
             }

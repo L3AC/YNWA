@@ -210,4 +210,5 @@ class DetallePedidoHandler
         $params = array();
         return Database::getRows($sql, $params);
     }
+
 }

@@ -85,7 +85,7 @@ class ClienteHandler
         $params = array($_SESSION['idCliente']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
-        if ($data &&password_verify($password, $data['clave_cliente'])) {
+        if ($data && password_verify($password, $data['clave_cliente'])) {
             return true;
         } else {
             return false;
@@ -96,7 +96,7 @@ class ClienteHandler
         $sql = 'UPDATE prc_clientes
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->clave,$_SESSION['idCliente']);
+        $params = array($this->clave, $_SESSION['idCliente']);
         return Database::executeRow($sql, $params);
     }
 
@@ -115,8 +115,10 @@ class ClienteHandler
                 SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,
                  usuario_cliente = ?,direccion_cliente=?,lat=? ,lon=? 
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email, $this->usuario,
-         $this->direccion, $this->latitud,$this->longitud, $_SESSION['idCliente']);
+        $params = array(
+            $this->nombre, $this->apellido, $this->email, $this->usuario,
+            $this->direccion, $this->latitud, $this->longitud, $_SESSION['idCliente']
+        );
         return Database::executeRow($sql, $params);
     }
 
@@ -131,7 +133,7 @@ class ClienteHandler
                from prc_clientes
                 WHERE apellido_cliente LIKE ? OR nombre_cliente LIKE ? OR usuario_cliente LIKE ?
                 ORDER BY apellido_cliente';
-        $params = array($this->search,$this->search,$this->search);
+        $params = array($this->search, $this->search, $this->search);
         return Database::getRows($sql, $params);
     }
 
@@ -141,18 +143,20 @@ class ClienteHandler
         $sql = 'insert into prc_clientes(usuario_cliente,clave_cliente,nombre_cliente,
         apellido_cliente,email_cliente,pin_cliente,estado_cliente,direccion_cliente,lat,lon) 
         values(?,?,?,?,?,?,true,?,?,?)';
-        $params = array($this->usuario, $this->clave, $this->nombre,
-         $this->apellido, $this->email, $this->generarPin(),$this->direccion,$this->latitud,$this->longitud);
-         
+        $params = array(
+            $this->usuario, $this->clave, $this->nombre,
+            $this->apellido, $this->email, $this->generarPin(), $this->direccion, $this->latitud, $this->longitud
+        );
+
         return Database::executeRow($sql, $params);
     }
-    
+
     public function updateRow()
     {
         $sql = 'UPDATE prc_clientes 
                 SET nombre_cliente = ?, apellido_cliente = ?, email_cliente = ?,estado_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->nombre, $this->apellido, $this->email,$this->estado, $this->id);
+        $params = array($this->nombre, $this->apellido, $this->email, $this->estado, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -209,5 +213,19 @@ class ClienteHandler
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
+    }
+    public function topClientesR()
+    {
+        $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, email_cliente, 
+        SUM(cantidad_detalle_pedido) AS total_productos_comprados
+        FROM prc_clientes 
+        JOIN prc_pedidos USING(id_cliente)
+        JOIN prc_detalle_pedidos USING(id_pedido)
+        WHERE estado_pedido = "Finalizado"
+        GROUP BY id_cliente, nombre_cliente, apellido_cliente, email_cliente
+        ORDER BY total_productos_comprados DESC
+        LIMIT 20;';
+        $params = array();
+        return Database::getRows($sql, $params);
     }
 }

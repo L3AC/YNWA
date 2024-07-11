@@ -187,6 +187,7 @@ class ModeloHandler
         FROM prc_modelo_tallas
         JOIN prc_modelos USING(id_modelo)
         JOIN ctg_tallas USING(id_talla)
+        JOIN ctg_marcas USING(id_marca)
         WHERE id_modelo=?
         ORDER BY id_modelo, id_talla;';
         $params = array($this->id);

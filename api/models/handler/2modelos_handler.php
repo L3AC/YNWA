@@ -165,6 +165,33 @@ class ModeloHandler
         GROUP BY descripcion_marca ORDER BY porcentaje DESC';
         return Database::getRows($sql);
     }
+    public function topModelosR()
+    {
+        $sql = 'SELECT id_modelo, descripcion_modelo,descripcion_marca ,
+        SUM(cantidad_detalle_pedido) AS total_cantidad_pedida
+        FROM prc_pedidos
+        JOIN  prc_detalle_pedidos USING(id_pedido)
+        JOIN prc_modelo_tallas USING(id_modelo_talla)
+        JOIN prc_modelos USING(id_modelo)
+        JOIN ctg_marcas USING(id_marca)
+        WHERE  estado_pedido = "Finalizado"
+        GROUP BY id_modelo, descripcion_marca
+        ORDER BY  total_cantidad_pedida DESC
+        LIMIT 10;';
+        return Database::getRows($sql);
+    }
+
+    public function tallasByModelo()
+    {
+        $sql = 'SELECT id_modelo,descripcion_modelo,id_talla,descripcion_talla,precio_modelo_talla,estado_marca
+        FROM prc_modelo_tallas
+        JOIN prc_modelos USING(id_modelo)
+        JOIN ctg_tallas USING(id_talla)
+        WHERE id_modelo=?
+        ORDER BY id_modelo, id_talla;';
+        $params = array($this->id);
+        return Database::getRows($sql, $params);
+    }
 
     /*
     *   Métodos para generar reportes.

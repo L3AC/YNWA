@@ -25,7 +25,7 @@ const SAVE_FORM = document.getElementById('saveForm'),
     PRECIO_MODELO = document.getElementById('precioProducto'),
     EXISTENCIAS_MODELO = document.getElementById('existenciasProducto'),
     ESTADO_MODELO = document.getElementById('estadoModelo');
-    IMAGEN_MODELO = document.getElementById('imagenModelo'),
+IMAGEN_MODELO = document.getElementById('imagenModelo'),
     IMAGEN_PRE = document.getElementById('imgPre'),
     INPUTSEARCH = document.getElementById('inputsearch'),
     ADD_MODELOTALLA = document.getElementById('addModeloTalla');
@@ -36,14 +36,14 @@ const SAVE_TREMODAL = new bootstrap.Modal('#savetreModal'),
 const SAVE_TREFORM = document.getElementById('savetreForm'),
     SELECTALLA = document.getElementById('selectTalla'),
     ID_MODELOTALLA = document.getElementById('idModeloTalla'),
-    SUB_IDMODELO= document.getElementById('subidModelo'),
+    SUB_IDMODELO = document.getElementById('subidModelo'),
     PRECIO_MODELOTALLA = document.getElementById('precioModeloTalla'),
     TALLA_MODELOTALLA = document.getElementById('tallaModeloTalla'),
     STOCK_MODELOTALLA = document.getElementById('stockModeloTalla'),
     SUB_INPUTSEARCH = document.getElementById('subInputSearch'),
     BTN_TREFORM = document.getElementById('btnTreForm');
 //Variable para poner un tiempo de espera
-    let timeout_id;
+let timeout_id;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -109,6 +109,9 @@ const fillTable = async () => {
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_modelo})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        <button type="button" class="btn btn-warning" onclick="openReport(${row.id_modelo})">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -117,7 +120,7 @@ const fillTable = async () => {
         ROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
-        
+
     }
 }
 
@@ -180,7 +183,7 @@ const openUpdate = async (id) => {
         ID_MODELO.value = ROW.id_modelo;
         NOMBRE_MODELO.value = ROW.descripcion_modelo;
         ESTADO_MODELO.checked = ROW.estado_modelo;
-        ADD_MODELOTALLA.innerHTML=`
+        ADD_MODELOTALLA.innerHTML = `
         <button type="button" class="btn btn-primary" onclick="opensubCreate(${ROW.id_modelo})">
             <i class="bi bi-plus-square-fill"></i>
         </button>`;
@@ -276,6 +279,7 @@ const fillSubTable = async () => {
                         <button type="button" class="btn btn-danger" onclick="opensubDelete(${row.id_modelo_talla})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        
                     </td>
                 </tr>
             `;
@@ -284,7 +288,7 @@ const fillSubTable = async () => {
         SUBROWS_FOUND.textContent = DATA.message;
     } else {
         sweetAlert(4, DATA.error, true);
-        
+
     }
 }
 //BUSCADOR EN TIEMPO REAL DE LA TABLA DENTRO DEL MODAL
@@ -304,14 +308,14 @@ const opensubCreate = (id) => {
     SAVE_MODAL.hide();
     SAVE_TREMODAL.show();
     //SELECTALLA.hidden = false;
-    SUB_IDMODELO.value=id;
+    SUB_IDMODELO.value = id;
     //SAVE_MODAL.hidden = false;
     TREMODAL_TITLE.textContent = 'Agregar talla';
     // Se prepara el formulario.
-    console.log('SUB '+SUB_IDMODELO.value);
+    console.log('SUB ' + SUB_IDMODELO.value);
     SAVE_TREFORM.reset();
     //EXISTENCIAS_MODELO.disabled = false;
-    fillSelect(TALLA_API, 'readAllById','tallaModeloTalla',null,id,null,BTN_TREFORM);
+    fillSelect(TALLA_API, 'readAllById', 'tallaModeloTalla', null, id, null, BTN_TREFORM);
 }
 
 //Función asíncrona para preparar el formulario al momento de actualizar un registro dentro del modal.
@@ -333,11 +337,11 @@ const opensubUpdate = async (id) => {
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
         ID_MODELOTALLA.value = ROW.id_modelo_talla;
-        SUB_IDMODELO.value=ROW.id_modelo;
+        SUB_IDMODELO.value = ROW.id_modelo;
         STOCK_MODELOTALLA.value = ROW.stock_modelo_talla;
         PRECIO_MODELOTALLA.value = ROW.precio_modelo_talla;
 
-        fillSelect(TALLA_API, 'readAllByIdTalla','tallaModeloTalla',ROW.id_talla,ROW.id_modelo,ROW.id_talla,BTN_TREFORM);
+        fillSelect(TALLA_API, 'readAllByIdTalla', 'tallaModeloTalla', ROW.id_talla, ROW.id_modelo, ROW.id_talla, BTN_TREFORM);
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -367,9 +371,18 @@ const opensubDelete = async (id) => {
 }
 
 //Función para abrir un reporte automático de un registro.
-const openReport = () => {
+const openReport = (id) => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
-    const PATH = new URL(`${SERVER_URL}reports/admin/modelos.php`);
+    const PATH = new URL(`${SERVER_URL}reports/admin/tallas_modelo.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('idModelo', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+
+const openTopReport = () => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/modelos_top.php`);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }

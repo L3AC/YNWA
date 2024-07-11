@@ -86,10 +86,10 @@ const sweetAlert = async (type, text, timer, url = null) => {
 const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null,btnId=null) => {
     // Petición para obtener los datos.
     const FORM = new FormData();
-    
+
     id && FORM.append('id', id);
     idsub && FORM.append('idsub', idsub);
-    
+
     const DATA = await fetchData(filename, action,FORM);
     let content = '';
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
@@ -145,10 +145,14 @@ const barGraph = (canvas, xAxis, yAxis, legend, title) => {
             plugins: {
                 title: {
                     display: true,
-                    text: title
+                    text: title,
+                    color: 'white' // Cambiar color del título a blanco
                 },
                 legend: {
-                    display: false
+                    display: false,
+                    labels: {
+                        color: 'white' // Cambiar color de las etiquetas de la leyenda a blanco
+                    }
                 }
             }
         }

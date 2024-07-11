@@ -191,6 +191,111 @@ const pieGraph = (canvas, legends, values, title) => {
         }
     });
 }
+const lineGraph = (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                borderColor: colors[0],
+                fill: false
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+const radarGraph = (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'radar',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors[0]
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        }
+    });
+}
+const polarGraph = (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'polarArea',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        }
+    });
+}
+const bubbleGraph = (canvas, data, title) => {
+    let colors = [];
+    data.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'bubble',
+        data: {
+            datasets: data.map((item, index) => ({
+                label: item.label,
+                data: item.data,
+                backgroundColor: colors[index]
+            }))
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        }
+    });
+}
+
+
+
 
 /*
 *   Función asíncrona para cerrar la sesión del usuario.

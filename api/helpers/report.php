@@ -63,8 +63,8 @@ class Report extends FPDF
         // Se establece el logo.
         $this->image('../../images/logo.png', 15, 15, 20);
         // Se ubica la fecha y hora del servidor.
-        $this->setFont('Arial', '', 10);
-        $this->cell(0, 10, 'Fecha/Hora: ' . date('d-m-Y H:i:s'), 0, 1, 'C');
+        $this->setFont('Arial', 'I', 10);
+        $this->cell(0, 10, 'Fecha: ' . date('d-m-Y') .'     '. 'Hora: ' . date('H:i:s'), 0, 1, 'C');
         // Se ubica el título.
         $this->setFont('Arial', 'B', 15);
         $this->cell(0, 10, $this->encodeString($this->title), 0, 1, 'C');

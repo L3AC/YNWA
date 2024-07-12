@@ -27,7 +27,7 @@ const loadTemplate = async () => {
     if (DATA.session) {
         // Se comprueba si existe un alias definido para el usuario, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
-            MAIN.style.paddingTop = '80px';
+            MAIN.style.paddingTop = '90px';
             // Se agrega el encabezado de la página web antes del contenido principal.
             MAIN.insertAdjacentHTML('beforebegin', `
             <header>

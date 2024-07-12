@@ -12,13 +12,15 @@ class Report extends FPDF
     const CLIENT_URL = 'http://localhost/YNWA/views/admin/';
     // Propiedad para guardar el título del reporte.
     private $title = null;
+    // Propiedad para guardar el subtítulo del reporte.
+    private $subtitle = null;
 
     /*
     *   Método para iniciar el reporte con el encabezado del documento.
     *   Parámetros: $title (título del reporte).
     *   Retorno: ninguno.
     */
-    public function startReport($title)
+    public function startReport($title, $subtitle = '')
     {
         // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en los reportes.
         session_start();
@@ -26,6 +28,7 @@ class Report extends FPDF
         if (isset($_SESSION['idUsuario'])) {
             // Se asigna el título del documento a la propiedad de la clase.
             $this->title = $title;
+            $this->subtitle = $subtitle;
             // Se establece el título del documento (true = utf-8).
             $this->setTitle('YNWA - Reporte', true);
             // Se establecen los margenes del documento (izquierdo, superior y derecho).
@@ -55,16 +58,21 @@ class Report extends FPDF
     */
     public function header()
     {
+        // Se establece la imagen de fondo (el tamaño puede necesitar ajustes según tu imagen y formato de página).
+        $this->image('../../images/bg.png', 0, 0, 216, 279);
         // Se establece el logo.
         $this->image('../../images/logo.png', 15, 15, 20);
-        // Se ubica el título.
-        $this->cell(20);
-        $this->setFont('Arial', 'B', 15);
-        $this->cell(166, 10, $this->encodeString($this->title), 0, 1, 'C');
         // Se ubica la fecha y hora del servidor.
-        $this->cell(20);
         $this->setFont('Arial', '', 10);
-        $this->cell(166, 10, 'Fecha/Hora: ' . date('d-m-Y H:i:s'), 0, 1, 'C');
+        $this->cell(0, 10, 'Fecha/Hora: ' . date('d-m-Y H:i:s'), 0, 1, 'C');
+        // Se ubica el título.
+        $this->setFont('Arial', 'B', 15);
+        $this->cell(0, 10, $this->encodeString($this->title), 0, 1, 'C');
+        // Subtítulo
+        if ($this->subtitle) {
+            $this->setFont('Arial', '', 12);
+            $this->cell(0, 10, $this->encodeString($this->subtitle), 0, 1, 'C');
+        }
         // Se agrega un salto de línea para mostrar el contenido principal del documento.
         $this->ln(10);
     }
@@ -83,3 +91,4 @@ class Report extends FPDF
         $this->cell(0, 10, $this->encodeString('Página ') . $this->pageNo() . '/{nb}', 0, 0, 'C');
     }
 }
+?>

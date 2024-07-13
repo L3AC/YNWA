@@ -18,25 +18,27 @@ if (isset($_GET['idCliente'])) {
         if ($rowOne = $cliente->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
             $pdf->startReport('Pedidos realizados de ' . $rowOne['nombre']);
+            // Ajustar los márgenes a 1.5 cm
+            $pdf->setMargins(15, 0, 15);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataP = $pedido->searchByClienteR()) {
                 // Se establece un color de relleno para los encabezados.
-                $pdf->setFillColor(225);
+                $pdf->setFillColor(204, 200, 170);
                 // Se establece la fuente para los encabezados.
                 $pdf->setFont('Arial', 'B', 11);
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(126, 10, 'Fecha', 1, 0, 'C', 1);
-                $pdf->cell(30, 10, 'Forma pago', 1, 0, 'C', 1);
-                $pdf->cell(30, 10, 'Estado', 1, 1, 'C', 1);
+                $pdf->cell(66, 10, 'Fecha', 'B', 0, 'C', 1);
+                $pdf->cell(66, 10, 'Forma pago', 'B', 0, 'C', 1);
+                $pdf->cell(66, 10, 'Estado', 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 11);
                 // Se recorren los registros fila por fila.
                 foreach ($dataP as $rowP) {
                     //($rowP['estado_producto']) ? $estado = 'Activo' : $estado = 'Inactivo';
                     // Se imprimen las celdas con los datos de los productos.
-                    $pdf->cell(126, 10, $pdf->encodeString($rowP['fecha']), 1, 0);
-                    $pdf->cell(30, 10, $pdf->encodeString($rowP['forma_pago_pedido']), 1, 0);
-                    $pdf->cell(30, 10, $pdf->encodeString($rowP['estado_pedido']), 1, 1);
+                    $pdf->cell(66, 10, $pdf->encodeString($rowP['fecha']), 'TB', 0, 'C');
+                    $pdf->cell(66, 10, $pdf->encodeString($rowP['forma_pago_pedido']), 'TB', 0, 'C');
+                    $pdf->cell(66, 10, $pdf->encodeString($rowP['estado_pedido']), 'TB', 1, 'C');
                 }
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No ha realizado pedidos'), 1, 1);

@@ -269,13 +269,15 @@ const polarGraph = (canvas, legends, values, title) => {
         }
     });
 }
-const bubbleGraph = (canvas, data, title) => {
+
+
+const scatterGraph = (canvas, data, title) => {
     let colors = [];
     data.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
     new Chart(document.getElementById(canvas), {
-        type: 'bubble',
+        type: 'scatter',
         data: {
             datasets: data.map((item, index) => ({
                 label: item.label,
@@ -289,11 +291,171 @@ const bubbleGraph = (canvas, data, title) => {
                     display: true,
                     text: title
                 }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+const lineBoundaries= (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors[0],
+                fill: true
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
     });
 }
 
+const areaGraph = (canvas, legends, values, title) => {
+    let color = '#' + (Math.random().toString(16).substring(2, 8));
+    
+    new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                label: title,
+                data: values,
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: 2,
+                fill: false,
+                tension: 0.1,
+                pointBackgroundColor: color
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+};
+
+
+
+const doughnutGraph = (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'doughnut',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        }
+    });
+}
+const horizontalBarGraph = (canvas, legends, values, title) => {
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    new Chart(document.getElementById(canvas), {
+        type: 'bar',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+const mixedGraph = (canvas, legends, valuesBar, valuesLine, title) => {
+    new Chart(document.getElementById(canvas), {
+        data: {
+            labels: legends,
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'Bar Dataset',
+                    data: valuesBar,
+                    backgroundColor: '#42A5F5'
+                },
+                {
+                    type: 'line',
+                    label: 'Line Dataset',
+                    data: valuesLine,
+                    borderColor: '#FFA726'
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
 
 

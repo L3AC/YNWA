@@ -162,6 +162,17 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Ocurrió un problema al cambiar la contraseña';
                 }
                 break;
+                case 'topClientesR':
+                    /*if (
+                        !$cliente->setId($_POST['limit']) 
+                    ) {
+                        $result['error'] = $cliente->getDataError();
+                    } else*/if ($result['dataset'] = $cliente->topClientesR($_POST['limit'])) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'No hay datos disponibles';
+                    }
+                    break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

@@ -9,7 +9,7 @@
     background-color: #CCC8AA;
     border-radius: 8px;
     padding: 20px;
-    flex: 1 1 calc(33.333% - 40px);
+    flex: 1 1 calc(50% - 40px); /* Cambia el ancho para que sea dos columnas */
     color: white;
     min-width: 250px;
 }

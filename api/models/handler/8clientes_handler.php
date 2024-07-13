@@ -214,8 +214,9 @@ class ClienteHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
-    public function topClientesR()
+    public function topClientesR($num=20)
     {
+
         $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, email_cliente, 
         SUM(cantidad_detalle_pedido) AS total_productos_comprados
         FROM prc_clientes 
@@ -224,7 +225,7 @@ class ClienteHandler
         WHERE estado_pedido = "Finalizado"
         GROUP BY id_cliente, nombre_cliente, apellido_cliente, email_cliente
         ORDER BY total_productos_comprados DESC
-        LIMIT 20;';
+        LIMIT  ' . $num. ';';
         $params = array();
         return Database::getRows($sql, $params);
     }

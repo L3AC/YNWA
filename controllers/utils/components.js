@@ -83,14 +83,14 @@ const sweetAlert = async (type, text, timer, url = null) => {
 *   Parámetros: filename (nombre del archivo), action (acción a realizar), select (identificador del select en el formulario) y selected (dato opcional con el valor seleccionado).
 *   Retorno: ninguno.
 */
-const fillSelect = async (filename, action, select, selected = null,id=null,idsub=null,btnId=null) => {
+const fillSelect = async (filename, action, select, selected = null, id = null, idsub = null, btnId = null) => {
     // Petición para obtener los datos.
     const FORM = new FormData();
 
     id && FORM.append('id', id);
     idsub && FORM.append('idsub', idsub);
 
-    const DATA = await fetchData(filename, action,FORM);
+    const DATA = await fetchData(filename, action, FORM);
     let content = '';
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
     if (DATA.status) {
@@ -246,10 +246,29 @@ const radarGraph = (canvas, legends, values, title) => {
     });
 }
 const polarGraph = (canvas, legends, values, title) => {
+    // Función para mezclar dos arreglos de la misma manera
+    const shuffle = (array1, array2) => {
+        let counter = array1.length;
+        while (counter > 0) {
+            let index = Math.floor(Math.random() * counter);
+            counter--;
+            // Mezclar el primer array
+            let temp1 = array1[counter];
+            array1[counter] = array1[index];
+            array1[index] = temp1;
+            // Mezclar el segundo array de la misma manera
+            let temp2 = array2[counter];
+            array2[counter] = array2[index];
+            array2[index] = temp2;
+        }
+    };
     let colors = [];
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
+    // Mezclar los labels y los values de la misma manera
+    shuffle(legends, values);
+
     new Chart(document.getElementById(canvas), {
         type: 'polarArea',
         data: {
@@ -260,15 +279,20 @@ const polarGraph = (canvas, legends, values, title) => {
             }]
         },
         options: {
+            responsive: true,
             plugins: {
+                legend: {
+                    position: 'top',
+                },
                 title: {
                     display: true,
                     text: title
                 }
             }
-        }
+        },
     });
-}
+};
+
 
 
 const scatterGraph = (canvas, data, title) => {
@@ -301,7 +325,7 @@ const scatterGraph = (canvas, data, title) => {
         }
     });
 }
-const lineBoundaries= (canvas, legends, values, title) => {
+const lineBoundaries = (canvas, legends, values, title) => {
     let colors = [];
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
@@ -334,7 +358,7 @@ const lineBoundaries= (canvas, legends, values, title) => {
 
 const areaGraph = (canvas, legends, values, title) => {
     let color = '#' + (Math.random().toString(16).substring(2, 8));
-    
+
     new Chart(document.getElementById(canvas), {
         type: 'line',
         data: {
@@ -352,10 +376,6 @@ const areaGraph = (canvas, legends, values, title) => {
         },
         options: {
             plugins: {
-                title: {
-                    display: true,
-                    text: title
-                }
             },
             scales: {
                 y: {

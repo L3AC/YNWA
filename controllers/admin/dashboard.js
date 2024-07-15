@@ -1,6 +1,7 @@
 // Constante para completar la ruta de la API.
 const MODELO_API = 'services/admin/2modelos.php',
  CLIENTE_API = 'services/admin/8clientes.php',
+ COMENTARIO_API = 'services/admin/7comentarios.php',
  PEDIDO_API = 'services/admin/4pedidos.php';
 
 
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     graficoPastelCategorias();
     graficaTopClientes();
     graficaGanancias();
+    graficaTopTallas();
 });
 
 /*
@@ -83,6 +85,7 @@ const graficaGanancias = async () => {
             console.log(DATA.error);
         }
 }
+
 const graficaTopClientes = async () => {
     const FORM = new FormData();
     let num=5;
@@ -101,7 +104,28 @@ const graficaTopClientes = async () => {
             cantidades.push(row.total_productos_comprados);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        barGraph('chart4', nombre, cantidades, 'Productos', 'Clientes');
+        barGraph('chart3', nombre, cantidades, 'Productos', 'Clientes');
+    } else {
+        document.getElementById('chart3').remove();
+        console.log(DATA.error);
+    }
+}
+const graficaTopTallas = async () => {
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(PEDIDO_API, 'topTallas');
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let talla = [];
+        let cantidad = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            talla.push('Talla '+row.descripcion_talla);
+            cantidad.push(row.total_cantidad_pedida);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        polarGraph('chart4', talla, cantidad, 'Tallas', 'Talla');
     } else {
         document.getElementById('chart4').remove();
         console.log(DATA.error);

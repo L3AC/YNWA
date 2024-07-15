@@ -466,5 +466,17 @@ class PedidoHandler
         $params = array($this->id_cliente);
         return Database::getRows($sql, $params);
     }
+
+    public function topTallas(){
+        $sql='SELECT t.id_talla, t.descripcion_talla, SUM(d.cantidad_detalle_pedido) AS total_cantidad_pedida
+        FROM prc_detalle_pedidos d
+        JOIN prc_modelo_tallas mt USING(id_modelo_talla)
+        JOIN ctg_tallas t USING(id_talla)
+        GROUP BY t.id_talla, t.descripcion_talla
+        ORDER BY total_cantidad_pedida DESC
+        LIMIT 5;';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
     
 }

@@ -20,8 +20,7 @@ if (isset($_GET['action'])) {
                     !$pedido->setEstado($_POST['estado'])
                 ) {
                     $result['error'] = $pedido->getDataError();
-                } 
-                elseif ($result['dataset'] = $pedido->searchRows()) {
+                } elseif ($result['dataset'] = $pedido->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -33,7 +32,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$pedido->setNombre($_POST['nombreModelo']) or
                     !$pedido->setCategoria($_POST['marcaModelo']) or
-                    !$pedido->setEstado(isset($_POST['estadoModelo'])? 1 : 0) or
+                    !$pedido->setEstado(isset($_POST['estadoModelo']) ? 1 : 0) or
                     !$pedido->setImagen($_FILES['imagenModelo'])
                 ) {
                     $result['error'] = $pedido->getDataError();
@@ -55,15 +54,15 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readsubAll':
-                    if (!$pedido->setId($_SESSION['idmod'])) {
-                        $result['error'] = $pedido->getDataError();
-                    } elseif ($result['dataset'] = $pedido->readsubAll()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
-                    } else {
-                        $result['error'] = 'Pedidos no registrados';
-                    }
-                    break;
+                if (!$pedido->setId($_SESSION['idmod'])) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->readsubAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'Pedidos no registrados';
+                }
+                break;
             case 'readOne':
                 if (!$pedido->setId($_POST['idPedido'])) {
                     $result['error'] = $pedido->getDataError();
@@ -73,12 +72,12 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Pedido inexistente';
                 }
                 break;
-                
+
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$pedido->setId($_POST['idPedido']) or
-                    !$pedido->setEstado($_POST['estadoPedido']) 
+                    !$pedido->setEstado($_POST['estadoPedido'])
                 ) {
                     $result['error'] = $pedido->getDataError();
                 } elseif ($pedido->updateRow()) {
@@ -117,13 +116,20 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-                case 'prediccionGanancia':
-                    if ($result['dataset'] = $pedido->prediccionGanancia()) {
-                        $result['status'] = 1;
-                    } else {
-                        $result['error'] = 'No hay datos disponibles';
-                    }
-                    break;
+            case 'prediccionGanancia':
+                if ($result['dataset'] = $pedido->prediccionGanancia()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
+            case 'topTallas':
+                if ($result['dataset'] = $pedido->topTallas()) {
+                    $result['status'] = 1;
+                } else {
+                    $result['error'] = 'No hay datos disponibles';
+                }
+                break;
             default:
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }

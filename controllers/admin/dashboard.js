@@ -37,20 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
 */
 const graficoPastelCategorias = async () => {
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(MODELO_API, 'porcentajeProductosCategoria');
+    const DATA = await fetchData(MODELO_API, 'porcentajeTop');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a gráficar.
-        let categorias = [];
+        let modelos = [];
         let porcentajes = [];
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            categorias.push(row.descripcion_producto);
-            porcentajes.push(row.porcentaje);
+            modelos.push(row.descripcion_modelo);
+            porcentajes.push(row.porcentaje_comprado);
         });
         // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
-        pieGraph('chart1', categorias, porcentajes, '5 Productos más pedidos');
+        pieGraph('chart1', modelos, porcentajes, '');
     } else {
         document.getElementById('chart1').remove();
         console.log(DATA.error);
@@ -107,6 +107,27 @@ const graficaTopClientes = async () => {
         barGraph('chart3', nombre, cantidades, 'Productos', 'Clientes');
     } else {
         document.getElementById('chart3').remove();
+        console.log(DATA.error);
+    }
+}
+const graficaTopTallas = async () => {
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(PEDIDO_API, 'topTallas');
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let talla = [];
+        let cantidad = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            talla.push('Talla '+row.descripcion_talla);
+            cantidad.push(row.total_cantidad_pedida);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        polarGraph('chart4', talla, cantidad, 'Tallas', 'Talla');
+    } else {
+        document.getElementById('chart4').remove();
         console.log(DATA.error);
     }
 }

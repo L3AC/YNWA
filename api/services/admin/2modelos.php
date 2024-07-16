@@ -117,8 +117,8 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
-            case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $modelo->porcentajeProductosCategoria()) {
+            case 'porcentajeTop':
+                if ($result['dataset'] = $modelo->porcentajeTop()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';

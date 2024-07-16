@@ -156,13 +156,19 @@ class ModeloHandler
         return Database::getRows($sql);
     }
 
-    public function porcentajeProductosCategoria()
+    public function porcentajeTop()
     {
-        $sql = 'SELECT descripcion_marca, ROUND((COUNT(id_modelo) * 100.0 / (SELECT COUNT(id_modelo) FROM prc_modelos)), 2)
-        porcentaje
-        FROM prc_modelos mo
-        INNER JOIN ctg_marcas ma USING(id_marca)
-        GROUP BY descripcion_marca ORDER BY porcentaje DESC';
+        $sql = 'SELECT m.id_modelo, m.descripcion_modelo, ROUND(SUM(d.cantidad_detalle_pedido) * 100.0 / total_comprados.total_cantidad, 1) 
+        AS porcentaje_comprado
+        FROM prc_pedidos p
+        JOIN prc_detalle_pedidos d USING(id_pedido)
+        JOIN prc_modelo_tallas mt USING(id_modelo_talla)
+        JOIN prc_modelos m USING(id_modelo)
+        JOIN (SELECT SUM(d.cantidad_detalle_pedido) AS total_cantidad FROM prc_pedidos p JOIN prc_detalle_pedidos d USING(id_pedido)
+        WHERE p.estado_pedido = "Finalizado") AS total_comprados
+        WHERE p.estado_pedido = "Finalizado"
+        GROUP BY m.id_modelo, m.descripcion_modelo, total_comprados.total_cantidad
+        ORDER BY porcentaje_comprado DESC LIMIT 10;';
         return Database::getRows($sql);
     }
     public function topModelosR()

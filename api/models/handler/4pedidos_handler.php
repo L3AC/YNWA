@@ -263,8 +263,7 @@ class PedidoHandler
         FROM prc_pedidos p
         INNER JOIN prc_clientes c USING(id_cliente)
         WHERE estado_pedido=? AND CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ?
-        ORDER BY p.fecha_pedido DESC, p.estado_pedido DESC';
-
+        ORDER BY p.fecha_pedido ASC, p.estado_pedido ASC';
         $params = array($this->estado,$this->search);
         return Database::getRows($sql, $params);
     }

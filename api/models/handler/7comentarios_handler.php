@@ -237,4 +237,17 @@ class ComentarioHandler
         $params = array($this->categoria);
         return Database::getRows($sql, $params);
     }
+    public function topPuntuacion()
+    {
+        $sql = 'SELECT m.id_modelo, m.descripcion_modelo, ROUND(AVG(c.puntuacion_comentario), 1) AS promedio_puntuacion
+        FROM prc_comentarios c
+        JOIN prc_detalle_pedidos d USING(id_detalle)
+        JOIN prc_modelo_tallas mt USING(id_modelo_talla)
+        JOIN prc_modelos m USING(id_modelo)
+        GROUP BY m.id_modelo, m.descripcion_modelo
+        ORDER BY promedio_puntuacion DESC
+        LIMIT 5;';
+        $params = array();
+        return Database::getRows($sql, $params);
+    }
 }

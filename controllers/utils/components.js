@@ -124,12 +124,16 @@ const fillSelect = async (filename, action, select, selected = null, id = null, 
 *   Retorno: ninguno.
 */
 const barGraph = (canvas, xAxis, yAxis, legend, title) => {
-    // Se declara un arreglo para guardar códigos de colores en formato hexadecimal.
+    // Se declara un arreglo para guardar códigos de colores en formato rgba.
     let colors = [];
-    // Se generan códigos hexadecimales de 6 cifras de acuerdo con el número de datos a mostrar y se agregan al arreglo.
+    // Se generan colores rgba con transparencia de acuerdo con el número de datos a mostrar y se agregan al arreglo.
     xAxis.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+        let color = 'rgba(' + Math.floor(Math.random() * 256) + ','
+            + Math.floor(Math.random() * 256) + ','
+            + Math.floor(Math.random() * 256) + ', 0.6)'; // 0.5 es el nivel de transparencia
+        colors.push(color);
     });
+
     // Se crea una instancia para generar el gráfico con los datos recibidos.
     new Chart(document.getElementById(canvas), {
         type: 'bar',
@@ -158,6 +162,7 @@ const barGraph = (canvas, xAxis, yAxis, legend, title) => {
         }
     });
 }
+
 
 /*
 *   Función para generar un gráfico de pastel. Requiere la librería chart.js para funcionar.
@@ -262,10 +267,16 @@ const polarGraph = (canvas, legends, values, title) => {
             array2[index] = temp2;
         }
     };
+
     let colors = [];
     values.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+        // Generar un color aleatorio en formato rgba con transparencia
+        let color = 'rgba(' + Math.floor(Math.random() * 256) + ','
+            + Math.floor(Math.random() * 256) + ','
+            + Math.floor(Math.random() * 256) + ', 0.3)'; // 0.5 es el nivel de transparencia
+        colors.push(color);
     });
+
     // Mezclar los labels y los values de la misma manera
     shuffle(legends, values);
 
@@ -295,34 +306,42 @@ const polarGraph = (canvas, legends, values, title) => {
 
 
 
-const scatterGraph = (canvas, data, title) => {
+
+const horBarGraph = (canvas, legends, values, title) => {
     let colors = [];
-    data.forEach(() => {
+    values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
     new Chart(document.getElementById(canvas), {
-        type: 'scatter',
+        type: 'bar',
         data: {
-            datasets: data.map((item, index) => ({
-                label: item.label,
-                data: item.data,
-                backgroundColor: colors[index]
-            }))
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors[0],
+                fill: true
+            }]
         },
         options: {
+            indexAxis: 'y',
+            // Elements options apply to all of the options unless overridden in a dataset
+            // In this case, we are setting the border of each horizontal bar to be 2px wide
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                }
+            },
+            responsive: true,
             plugins: {
+                legend: {
+                    position: 'right',
+                },
                 title: {
                     display: true,
                     text: title
                 }
-            },
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom'
-                }
             }
-        }
+        },
     });
 }
 const lineBoundaries = (canvas, legends, values, title) => {

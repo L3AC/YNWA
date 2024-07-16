@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     graficaTopClientes();
     graficaGanancias();
     graficaTopTallas();
+    graficaTopPuntuacion();
 });
 
 /*
@@ -131,24 +132,24 @@ const graficaTopTallas = async () => {
         console.log(DATA.error);
     }
 }
-const graficaTopTallas = async () => {
+const graficaTopPuntuacion = async () => {
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PEDIDO_API, 'topTallas');
+    const DATA = await fetchData(COMENTARIO_API, 'topPuntuacion');
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
-        let talla = [];
-        let cantidad = [];
+        let modelo = [];
+        let puntuacion = [];
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            talla.push('Talla '+row.descripcion_talla);
-            cantidad.push(row.total_cantidad_pedida);
+            modelo.push(row.descripcion_modelo);
+            puntuacion.push(row.promedio_puntuacion);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        polarGraph('chart4', talla, cantidad, 'Tallas', 'Talla');
+        horizontalBarGraph('chart5', modelo, puntuacion, 'Modelos', 'Modelo');
     } else {
-        document.getElementById('chart4').remove();
+        document.getElementById('chart5').remove();
         console.log(DATA.error);
     }
 }

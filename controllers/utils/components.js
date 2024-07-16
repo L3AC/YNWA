@@ -434,15 +434,20 @@ const doughnutGraph = (canvas, legends, values, title) => {
 const horizontalBarGraph = (canvas, legends, values, title) => {
     let colors = [];
     values.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+        let color = 'rgba(' + Math.floor(Math.random() * 256) + ',' 
+                          + Math.floor(Math.random() * 256) + ',' 
+                          + Math.floor(Math.random() * 256) + ', 0.8)'; // 0.5 es el nivel de transparencia
+        colors.push(color);
     });
+
     new Chart(document.getElementById(canvas), {
         type: 'bar',
         data: {
             labels: legends,
             datasets: [{
                 data: values,
-                backgroundColor: colors
+                backgroundColor: colors,
+                label: 'Promedio' // Añadir un label para evitar "undefined"
             }]
         },
         options: {
@@ -450,7 +455,6 @@ const horizontalBarGraph = (canvas, legends, values, title) => {
             plugins: {
                 title: {
                     display: true,
-                    text: title
                 }
             },
             scales: {
@@ -461,6 +465,7 @@ const horizontalBarGraph = (canvas, legends, values, title) => {
         }
     });
 }
+
 const mixedGraph = (canvas, legends, valuesBar, valuesLine, title) => {
     new Chart(document.getElementById(canvas), {
         data: {

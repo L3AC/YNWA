@@ -31,6 +31,7 @@ class Report extends FPDF
             $this->subtitle = $subtitle;
             // Se establece el título del documento (true = utf-8).
             $this->setTitle('YNWA - Reporte', true);
+            $this->setTitle('YNWA - Reporte', true);
             // Se establecen los margenes del documento (izquierdo, superior y derecho).
             $this->setMargins(15, 15, 15);
             // Se añade una nueva página al documento con orientación vertical y formato carta, llamando implícitamente al método header()
@@ -73,6 +74,8 @@ class Report extends FPDF
             $this->setFont('Arial', '', 12);
             $this->cell(0, 10, $this->encodeString($this->subtitle), 0, 1, 'C');
         }
+        $this->setFont('Arial', 'I', 10);
+        $this->cell(0, 10, 'Solicitado por ' . $_SESSION['usuarion'],0, 1, 'C');
         // Se agrega un salto de línea para mostrar el contenido principal del documento.
         $this->ln(10);
     }

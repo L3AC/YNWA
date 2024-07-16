@@ -20,7 +20,6 @@ if (isset($_GET['idCliente'])) {
             $pdf->startReport('Pedidos realizados de ' . $rowOne['nombre']);
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataP = $pedido->searchByClienteR()) {
-                $pdf->cell(0, 10, $pdf->encodeString('Usuario'), 1, 1);
                 // Se establece un color de relleno para los encabezados.
                 $pdf->setFillColor(225);
                 // Se establece la fuente para los encabezados.

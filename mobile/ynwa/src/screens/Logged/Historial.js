@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, RefreshControl, StyleSheet, Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
+import { MaterialIcons } from 'react-native-vector-icons';
 
 const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -85,23 +86,27 @@ const Historial = () => {
         <Text style={styles.title}>Historial</Text>
       </View>
       <View style={styles.filterContainer}>
-        <Picker
-          selectedValue={fecha}
-          style={styles.picker}
+        <RNPickerSelect
           onValueChange={handleFechaChange}
-        >
-          <Picker.Item label="Todo el tiempo" value="Todo" />
-          <Picker.Item label="Últimos 3 meses" value="3meses" />
-          <Picker.Item label="Último mes" value="1mes" />
-          <Picker.Item label="Últimos 7 días" value="7dias" />
-        </Picker>
+          items={[
+            { label: 'Todo el tiempo', value: 'Todo' },
+            { label: 'Últimos 3 meses', value: '3meses' },
+            { label: 'Último mes', value: '1mes' },
+            { label: 'Últimos 7 días', value: '7dias' },
+          ]}
+          style={pickerSelectStyles}
+          value={fecha}
+          Icon={() => {
+            return <MaterialIcons style={styles.icono} name="arrow-drop-down" size={40} color="white" />;
+          }}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, estado === 'Finalizado' && styles.activeButton]} onPress={() => handleEstadoChange('Finalizado')}>
-          <Text>Finalizado</Text>
+          <Text style={styles.textoBoton}>Finalizado</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, estado === 'Anulado' && styles.activeButton]} onPress={() => handleEstadoChange('Anulado')}>
-          <Text>Anulado</Text>
+          <Text style={styles.textoBoton}>Anulado</Text>
         </TouchableOpacity>
       </View>
       {orders.map(order => (
@@ -117,7 +122,6 @@ const Historial = () => {
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -151,28 +155,68 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginBottom: 10,
   },
+  icono:{
+    marginTop: 5,
+    marginRight: 5
+  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 16,
   },
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2F2C2C',
     padding: 10,
     borderRadius: 25,
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: 5,
+    borderColor: '#fff',
+    borderWidth: 1
+  },
+  textoBoton:{
+    color: 'white',
+    fontFamily: 'QuickSand',
   },
   activeButton: {
-    backgroundColor: '#CECDCD',
+    backgroundColor: '#4f4949',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#2F2C2C',
     padding: 16,
     borderRadius: 10,
     marginBottom: 16,
+    borderColor: '#fff',
+    borderWidth: 1
   },
   cardText: {
     fontSize: 16,
     marginBottom: 8,
+    color: '#fff',
+    fontFamily: 'QuickSand'
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    height: 50,
+    backgroundColor: '#2F2C2C',
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    paddingRight: 30, // Ajusta el padding para hacer espacio para el icono
+    marginBottom: 10,
+    color: 'white',
+    fontFamily: 'QuickSand',
+    borderColor: '#fff',
+    borderWidth: 1
+  },
+  inputAndroid: {
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    paddingRight: 30, // Ajusta el padding para hacer espacio para el icono
+    marginBottom: 10,
   },
 });
 

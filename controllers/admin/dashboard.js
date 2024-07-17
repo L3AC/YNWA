@@ -51,7 +51,7 @@ const graficoPastelCategorias = async () => {
             porcentajes.push(row.porcentaje_comprado);
         });
         // Llamada a la función para generar y mostrar un gráfico de pastel. Se encuentra en el archivo components.js
-        pieGraph('chart1', modelos, porcentajes, '');
+        doughnutGraph('chart1', modelos, porcentajes, '');
     } else {
         document.getElementById('chart1').remove();
         console.log(DATA.error);

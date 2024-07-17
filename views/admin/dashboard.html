@@ -27,27 +27,70 @@
         <!-- Contenedor de gráficos -->
         <div class="row"></div>
         <div class="dashboard-container text-center">
-            <div class="dashboard-item ">
+            <div class="dashboard-item text-center d-flex flex-column align-items-center">
                 <h4>Modelos más comprados</h4>
+                <div class="col-5 mb-3">
+                    <label for="estadoPedido" class="form-label">Filtrar</label>
+                    <select id="listMC" name="listMC" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 modelos</option>
+                        <option class="fs-5 py-2" value="8">8 modelos</option>
+                        <option class="fs-5 py-2" value="9">10 modelos</option>
+                    </select>
+                </div>
                 <!-- Se muestra un gráfico con la cantidad de productos por categoría -->
                 <canvas id="chart1"></canvas>
             </div>
-            <div class="dashboard-item text-center">
-                <h4 class="">Ganancias de los últimos meses</h4>
-                <!-- Se muestra un gráfico con el porcentaje de productos por categoría -->
-                <canvas id="chart2"></canvas>
+
+            <div class="dashboard-item text-center d-flex flex-column align-items-center">
+                <h4>Top 5 modelos mejor puntuados</h4>
+                <div class="col-5 mb-3">
+                    <label for="estadoPedido" class="form-label">Filtrar</label>
+                    <select id="listMC" name="listMC" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 modelos</option>
+                        <option class="fs-5 py-2" value="8">8 modelos</option>
+                        <option class="fs-5 py-2" value="9">10 modelos</option>
+                    </select>
+                </div>
+                <canvas id="chart5"></canvas>
             </div>
-            <div class="dashboard-item text-center">
+            <div class="dashboard-item text-center d-flex flex-column align-items-center">
                 <h4>Top 5 clientes con más compras</h4>
+                <div class="col-5 mb-3">
+                    <label for="estadoPedido" class="form-label">Filtrar</label>
+                    <select id="estadoPedido" name="estadoPedido" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 clientes</option>
+                        <option class="fs-5 py-2" value="3">3 clientes</option>
+                        <option class="fs-5 py-2" value="7">7 clientes</option>
+                    </select>
+                </div>
                 <canvas id="chart3"></canvas>
             </div>
-            <div class="dashboard-item text-center">
+            <div class="dashboard-item text-center d-flex flex-column align-items-center">
                 <h4>Top 5 tallas más compradas</h4>
+                <div class="col-5 mb-3">
+                    <label for="estadoPedido" class="form-label">Filtrar</label>
+                    <select id="estadoPedido" name="estadoPedido" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 tallas</option>
+                        <option class="fs-5 py-2" value="8">3 tallas</option>
+                        <option class="fs-5 py-2" value="8">8 tallas</option>
+                        <option class="fs-5 py-2" value="9">10 tallas</option>
+                    </select>
+                </div>
                 <canvas id="chart4"></canvas>
             </div>
-            <div class="dashboard-item text-center">
-                <h4>Top 5 modelos mejor puntuados</h4>
-                <canvas id="chart5"></canvas>
+            
+            <div class="dashboard-item text-center d-flex flex-column align-items-center">
+                <h4 class="">Ganancias de los últimos meses</h4>
+                <div class="col-5 mb-3">
+                    <label for="estadoPedido" class="form-label">Filtrar</label>
+                    <select id="estadoPedido" name="estadoPedido" class="form-select text-center" required>
+                        <option class="fs-5 py-2" value="5">5 meses</option>
+                        <option class="fs-5 py-2" value="3">3 mes</option>
+                        <option class="fs-5 py-2" value="12">1 año</option>
+                    </select>
+                </div>
+                <!-- Se muestra un gráfico con el porcentaje de productos por categoría -->
+                <canvas id="chart2"></canvas>
             </div>
         </div>
         </div>

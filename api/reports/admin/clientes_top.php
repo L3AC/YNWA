@@ -13,12 +13,12 @@ $cliente = new ClienteData;
 // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
 if ($dataP = $cliente->topClientesR()) {
     // Se establece un color de relleno para los encabezados.
-    $pdf->setFillColor(200);
+    $pdf->setFillColor(204, 200, 170);
     // Se establece la fuente para los encabezados.
     $pdf->setFont('Arial', 'B', 11);
     // Se imprimen las celdas con los encabezados.
-    $pdf->cell(150, 10, 'Cliente', 1, 0, 'C', 1);
-    $pdf->cell(30, 10, 'Productos', 1, 1, 'C', 1);
+    $pdf->cell(150, 10, 'Cliente', 'B', 0, 'C', 1);
+    $pdf->cell(30, 10, 'Productos', 'B', 1, 'C', 1);
 
     // Se establece un color de relleno para mostrar el nombre de la categoría.
     $pdf->setFillColor(240);
@@ -28,8 +28,8 @@ if ($dataP = $cliente->topClientesR()) {
     // Se recorren los registros fila por fila.
     foreach ($dataP as $rowP) {
         // Se imprime una celda con el nombre de la categoría.
-        $pdf->cell(150, 10, $pdf->encodeString($rowP['cliente']), 1, 0,'C');
-        $pdf->cell(30, 10, $pdf->encodeString($rowP['total_productos_comprados']), 1, 1,'C');
+        $pdf->cell(150, 10, $pdf->encodeString($rowP['cliente']), 'TB', 0,'C');
+        $pdf->cell(30, 10, $pdf->encodeString($rowP['total_productos_comprados']),'TB', 1,'C');
         // Se instancia el módelo Producto para procesar los datos.
     }
 } else {

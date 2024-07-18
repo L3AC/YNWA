@@ -130,8 +130,8 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
 
                 if (
-                    !$cliente->setLatitud($_POST['lat']) or
-                    !$cliente->setLongitud($_POST['lon']) or
+                    !$cliente->setLatitud('13.68935')or
+                    !$cliente->setLongitud('-89.18718')or
                     !$cliente->setNombre($_POST['nombreCliente']) or
                     !$cliente->setApellido($_POST['apellidoCliente']) or
                     !$cliente->setCorreo($_POST['correoCliente']) or

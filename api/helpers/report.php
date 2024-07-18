@@ -38,7 +38,21 @@ class Report extends FPDF
             $this->addPage('p', 'letter');
             // Se define un alias para el número total de páginas que se muestra en el pie del documento.
             $this->aliasNbPages();
-        } else {
+        } elseif(isset($_SESSION['idCliente'])) {
+            // Se asigna el título del documento a la propiedad de la clase.
+            $this->title = $title;
+            $this->subtitle = $subtitle;
+            // Se establece el título del documento (true = utf-8).
+            $this->setTitle('YNWA - Reporte', true);
+            $this->setTitle('YNWA - Reporte', true);
+            // Se establecen los margenes del documento (izquierdo, superior y derecho).
+            $this->setMargins(15, 15, 15);
+            // Se añade una nueva página al documento con orientación vertical y formato carta, llamando implícitamente al método header()
+            $this->addPage('p', 'letter');
+            // Se define un alias para el número total de páginas que se muestra en el pie del documento.
+            $this->aliasNbPages();
+        }
+        else{
             header('location:' . self::CLIENT_URL);
         }
     }
@@ -74,8 +88,19 @@ class Report extends FPDF
             $this->setFont('Arial', '', 12);
             $this->cell(0, 10, $this->encodeString($this->subtitle), 0, 1, 'C');
         }
+
+        $solicitud='';
+        if (isset($_SESSION['idUsuario'])) {
+            // Si la variable de sesión está establecida, asigna su valor a $solicitud
+            $solicitud = $_SESSION['usuarion'];
+        } elseif (isset($_SESSION['idCliente'])){
+            $solicitud = $_SESSION['usuarioc'];
+        }
+        else {
+            $solicitud = '';
+        }
         $this->setFont('Arial', 'I', 10);
-        $this->cell(0, 10, 'Solicitado por ' . $_SESSION['usuarion'],0, 1, 'C');
+        $this->cell(0, 10, 'Solicitado por ' . $solicitud,0, 1, 'C');
         // Se agrega un salto de línea para mostrar el contenido principal del documento.
         $this->ln(10);
     }

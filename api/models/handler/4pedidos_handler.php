@@ -139,16 +139,34 @@ class PedidoHandler
     {
         $sql = 'SELECT id_detalle, id_modelo_talla, foto_modelo,
         descripcion_marca,descripcion_modelo,descripcion_talla,
-                precio_modelo_talla, cantidad_detalle_pedido,direccion_cliente
-                FROM prc_detalle_pedidos
-                INNER JOIN prc_pedidos USING(id_pedido)
-                INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
-                INNER JOIN ctg_tallas USING(id_talla)
-                INNER JOIN prc_modelos USING(id_modelo)
-                INNER JOIN ctg_marcas USING(id_marca)
-                INNER JOIN prc_clientes USING(id_cliente)
-                WHERE id_pedido = ?';
+        precio_modelo_talla, cantidad_detalle_pedido,DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,
+        CONCAT(nombre_cliente," ",apellido_cliente),direccion_cliente
+        FROM prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING(id_pedido)
+        INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        INNER JOIN ctg_marcas USING(id_marca)
+        INNER JOIN prc_clientes USING(id_cliente)
+        WHERE id_pedido = ?';
         $params = array($_SESSION['idPedido']);
+        return Database::getRows($sql, $params);
+    }
+    public function readFactura()
+    {
+        $sql = 'SELECT id_detalle, id_modelo_talla, foto_modelo,
+        descripcion_marca,descripcion_modelo,descripcion_talla,
+        precio_modelo_talla, cantidad_detalle_pedido,DATE_FORMAT(fecha_pedido, "%h:%i %p - %e %b %Y") AS fecha,
+        CONCAT(nombre_cliente," ",apellido_cliente),direccion_cliente
+        FROM prc_detalle_pedidos
+        INNER JOIN prc_pedidos USING(id_pedido)
+        INNER JOIN prc_modelo_tallas USING(id_modelo_talla)
+        INNER JOIN ctg_tallas USING(id_talla)
+        INNER JOIN prc_modelos USING(id_modelo)
+        INNER JOIN ctg_marcas USING(id_marca)
+        INNER JOIN prc_clientes USING(id_cliente)
+        WHERE id_pedido = ?';
+        $params = array($this->id);
         return Database::getRows($sql, $params);
     }
 
@@ -230,7 +248,8 @@ class PedidoHandler
     {
         $this->estado = 'Finalizado';
         $sql = 'UPDATE prc_pedidos
-                SET estado_pedido = ?
+                SET estado_pedido = ?,
+                fecha_pedido = now()
                 WHERE id_pedido = ?';
         $params = array($this->estado, $_SESSION['idPedido']);
         return Database::executeRow($sql, $params);

@@ -195,6 +195,7 @@ async function finishOrder() {
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             sweetAlert(1, DATA.message, true, 'index.html');
+            openReport(DATA.dataset);
         } else {
             sweetAlert(2, DATA.error, false);
         }
@@ -225,4 +226,12 @@ async function openDelete(id) {
             sweetAlert(2, DATA.error, false);
         }
     }
+}
+//Función para abrir un reporte automático de un registro.
+const openReport = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/public/reporte.php`);    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('idPedido', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
 }

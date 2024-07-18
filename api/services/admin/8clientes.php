@@ -194,7 +194,9 @@ if (isset($_GET['action'])) {
                     !$cliente->setApellido($_POST['apellido']) or
                     !$cliente->setCorreo($_POST['correo']) or
                     !$cliente->setAlias($_POST['usuario']) or
-                    !$cliente->setClave($_POST['clave'])
+                    !$cliente->setClave($_POST['clave']) or
+                    !$cliente->setLatitud('13.68935')or
+                    !$cliente->setLongitud('-89.18718')
                 ) {
                     $result['error'] = $cliente->getDataError();
                 } elseif ($_POST['clave'] != $_POST['confirmarClave']) {

@@ -27,6 +27,16 @@ class ModeloData extends ModeloHandler
             return false;
         }
     }
+    public function setLimit($value)
+    {
+        if (Validator::validateNaturalNumber($value)) {
+            $this->limit = $value;
+            return true;
+        } else {
+            $this->data_error = 'El identificador del limite es incorrecto';
+            return false;
+        }
+    }
 
     /*
  * Establece el nombre del modelo.

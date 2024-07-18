@@ -246,7 +246,7 @@ class ComentarioHandler
         JOIN prc_modelos m USING(id_modelo)
         GROUP BY m.id_modelo, m.descripcion_modelo
         ORDER BY promedio_puntuacion DESC
-        LIMIT 5;';
+        LIMIT .'.$this->id.';';
         $params = array();
         return Database::getRows($sql, $params);
     }

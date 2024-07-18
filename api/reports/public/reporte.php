@@ -15,11 +15,11 @@ if ($pedido->setId($_GET['idPedido'])) {
         // Se inicia el reporte con el encabezado del documento.
         $pdf->startReport('Reporte de compra');
         $pdf->setFont('Arial', 'I', 10);
-        $pdf->cell(0, 10, 'A nombre de ' . $rowOne['cliente'], 0, 1, 'C');
+        $pdf->cell(0, 10, 'A nombre de: ' . $rowOne['cliente'], 0, 1, 'C');
         $pdf->setFont('Arial', 'I', 10);
-        $pdf->cell(0, 10, 'Fecha en que se realizó ' . $rowOne['fecha'], 0, 1, 'C');
+        $pdf->cell(0, 10, 'Fecha en que se hizo: ' . $rowOne['fecha'], 0, 1, 'C');
         $pdf->setFont('Arial', 'I', 10);
-        $pdf->cell(0, 10, 'Forma de pago ' . $rowOne['forma_pago_pedido'], 0, 1, 'C');
+        $pdf->cell(0, 10, 'Forma de pago: ' . $rowOne['forma_pago_pedido'], 0, 1, 'C');
         // Ajustar los márgenes a 1.5 cm
         $pdf->setMargins(15, 0, 15);
         // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
@@ -29,21 +29,35 @@ if ($pedido->setId($_GET['idPedido'])) {
             // Se establece la fuente para los encabezados.
             $pdf->setFont('Arial', 'B', 11);
             // Se imprimen las celdas con los encabezados.
-            $pdf->cell(66, 10, 'Modelo', 'B', 0, 'C', 1);
-            $pdf->cell(30, 10, 'Talla', 'B', 0, 'C', 1);
-            $pdf->cell(26, 10, 'Cantidad', 'B', 0, 'C', 1);
-            $$pdf->cell(26, 10, 'Precio', 'B', 0, 'C', 1);
+
+            $pdf->cell(80, 10, 'Modelo', 'B', 0, 'C', 1);
+            $pdf->cell(40, 10, 'Talla', 'B', 0, 'C', 1);
+            $pdf->cell(30, 10, 'Cantidad', 'B', 0, 'C', 1);
+            $pdf->cell(40, 10, 'Precio', 'B', 1, 'C', 1);
             // Se establece la fuente para los datos de los productos.
             $pdf->setFont('Arial', '', 11);
+            $total = 0;
+
             // Se recorren los registros fila por fila.
             foreach ($dataP as $rowP) {
-                //($rowP['estado_producto']) ? $estado = 'Activo' : $estado = 'Inactivo';
+                // Calcula el subtotal para cada producto
+                $subtotal = $rowP['cantidad_detalle_pedido'] * $rowP['precio_modelo_talla'];
+
+                // Suma el subtotal al total
+                $total += $subtotal;
+
                 // Se imprimen las celdas con los datos de los productos.
-                $pdf->cell(66, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'TB', 0, 'C');
-                $pdf->cell(30, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
-                $pdf->cell(26, 10, $pdf->encodeString($rowP['cantidad_detalle_pedido']), 'TB', 1, 'C');
-                $pdf->cell(26, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 1, 'C');
+                $pdf->cell(80, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'TB', 0, 'C');
+                $pdf->cell(40, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
+                $pdf->cell(30, 10, $pdf->encodeString($rowP['cantidad_detalle_pedido']), 'TB', 0, 'C');
+                $pdf->cell(40, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 1, 'C');
             }
+
+            // Se imprime una línea separadora
+            $pdf->cell(160, 10, '', 'T', 0, 'C', 1);
+
+            // Se imprime el total
+            $pdf->cell(0, 10, $pdf->encodeString('Total : ' . number_format($total, 2)), 'T', 1, 'R');
         } else {
             $pdf->cell(0, 10, $pdf->encodeString('No ha realizado pedidos'), 1, 1);
         }

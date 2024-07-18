@@ -163,11 +163,11 @@ if (isset($_GET['action'])) {
                 }
                 break;
                 case 'topClientesR':
-                    /*if (
+                    if (
                         !$cliente->setId($_POST['limit']) 
                     ) {
                         $result['error'] = $cliente->getDataError();
-                    } else*/if ($result['dataset'] = $cliente->topClientesR($_POST['limit'])) {
+                    } elseif ($result['dataset'] = $cliente->topClientesR()) {
                         $result['status'] = 1;
                     } else {
                         $result['error'] = 'No hay datos disponibles';

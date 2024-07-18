@@ -1,9 +1,15 @@
 // Constante para completar la ruta de la API.
 const MODELO_API = 'services/admin/2modelos.php',
- CLIENTE_API = 'services/admin/8clientes.php',
- COMENTARIO_API = 'services/admin/7comentarios.php',
- PEDIDO_API = 'services/admin/4pedidos.php';
+    CLIENTE_API = 'services/admin/8clientes.php',
+    COMENTARIO_API = 'services/admin/7comentarios.php',
+    PEDIDO_API = 'services/admin/4pedidos.php';
 
+//Constantes de variables
+const LIST_1 = document.getElementById('list1'),
+    LIST_2 = document.getElementById('list2'),
+    LIST_3 = document.getElementById('list3'),
+    LIST_4 = document.getElementById('list4'),
+    LIST_5 = document.getElementById('list5');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,8 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
 *   Retorno: ninguno.
 */
 const graficoPastelCategorias = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_1.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(MODELO_API, 'porcentajeTop');
+    const DATA = await fetchData(MODELO_API, 'porcentajeTop',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a gráficar.
@@ -57,42 +65,36 @@ const graficoPastelCategorias = async () => {
         console.log(DATA.error);
     }
 }
-
-/*
-*   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
-const graficaGanancias = async () => {
-        // Petición para obtener los datos del gráfico.
-        const DATA = await fetchData(PEDIDO_API, 'prediccionGanancia');
-        // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
-        if (DATA.status) {
-            // Se declaran los arreglos para guardar los datos a graficar.
-            let mes = [];
-            let ganancia = [];
-            // Se recorre el conjunto de registros fila por fila a través del objeto row.
-            DATA.dataset.forEach(row => {
-                // Se agregan los datos a los arreglos.
-                mes.push(row.nombre_mes);
-                ganancia.push(row.ventas_mensuales);
-            });
-            mes.push(DATA.dataset[0].nombre_siguiente_mes);
-            ganancia.push(DATA.dataset[0].prediccion_siguiente_mes);
-            // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-            areaGraph('chart2', mes, ganancia, 'Ganancias $', 'Mes');
-        } else {
-            document.getElementById('chart2').remove();
-            console.log(DATA.error);
-        }
+const graficaTopPuntuacion = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_2.value);
+    // Petición para obtener los datos del gráfico.
+    const DATA = await fetchData(COMENTARIO_API, 'topPuntuacion',FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
+    if (DATA.status) {
+        // Se declaran los arreglos para guardar los datos a graficar.
+        let modelo = [];
+        let puntuacion = [];
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se agregan los datos a los arreglos.
+            modelo.push(row.descripcion_modelo);
+            puntuacion.push(row.promedio_puntuacion);
+        });
+        // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
+        horizontalBarGraph('chart2', modelo, puntuacion, 'Modelos', 'Modelo');
+    } else {
+        document.getElementById('chart2').remove();
+        console.log(DATA.error);
+    }
 }
 
 const graficaTopClientes = async () => {
+    //let num = LIST_1.value;
     const FORM = new FormData();
-    let num=5;
-    FORM.append('limit',num);
+    FORM.append('limit', LIST_3.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(CLIENTE_API, 'topClientesR',FORM);
+    const DATA = await fetchData(CLIENTE_API, 'topClientesR', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -112,8 +114,10 @@ const graficaTopClientes = async () => {
     }
 }
 const graficaTopTallas = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_4.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(PEDIDO_API, 'topTallas');
+    const DATA = await fetchData(PEDIDO_API, 'topTallas',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
@@ -122,7 +126,7 @@ const graficaTopTallas = async () => {
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            talla.push('Talla '+row.descripcion_talla);
+            talla.push('Talla ' + row.descripcion_talla);
             cantidad.push(row.total_cantidad_pedida);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
@@ -132,22 +136,31 @@ const graficaTopTallas = async () => {
         console.log(DATA.error);
     }
 }
-const graficaTopPuntuacion = async () => {
+/*
+*   Función asíncrona para mostrar un gráfico de pastel con el porcentaje de productos por categoría.
+*   Parámetros: ninguno.
+*   Retorno: ninguno.
+*/
+const graficaGanancias = async () => {
+    const FORM = new FormData();
+    FORM.append('limit', LIST_5.value);
     // Petición para obtener los datos del gráfico.
-    const DATA = await fetchData(COMENTARIO_API, 'topPuntuacion');
+    const DATA = await fetchData(PEDIDO_API, 'prediccionGanancia',FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se remueve la etiqueta canvas.
     if (DATA.status) {
         // Se declaran los arreglos para guardar los datos a graficar.
-        let modelo = [];
-        let puntuacion = [];
+        let mes = [];
+        let ganancia = [];
         // Se recorre el conjunto de registros fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
             // Se agregan los datos a los arreglos.
-            modelo.push(row.descripcion_modelo);
-            puntuacion.push(row.promedio_puntuacion);
+            mes.push(row.nombre_mes);
+            ganancia.push(row.ventas_mensuales);
         });
+        mes.push(DATA.dataset[0].nombre_siguiente_mes);
+        ganancia.push(DATA.dataset[0].prediccion_siguiente_mes);
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        horizontalBarGraph('chart5', modelo, puntuacion, 'Modelos', 'Modelo');
+        areaGraph('chart5', mes, ganancia, 'Ganancias $', 'Mes');
     } else {
         document.getElementById('chart5').remove();
         console.log(DATA.error);

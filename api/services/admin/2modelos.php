@@ -118,7 +118,12 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'porcentajeTop':
-                if ($result['dataset'] = $modelo->porcentajeTop()) {
+                if (
+                    !$modelo->setId($_POST['limit']) 
+                ) {
+                    $result['error'] = $modelo->getDataError();
+                } 
+                elseif ($result['dataset'] = $modelo->porcentajeTop()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';

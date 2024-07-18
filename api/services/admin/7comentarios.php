@@ -93,7 +93,12 @@ if (isset($_GET['action'])) {
                 }
                 break;
                 case 'topPuntuacion':
-                    if ($result['dataset'] = $comentario->topPuntuacion()) {
+                    if (
+                        !$comentario->setId($_POST['limit']) 
+                    ) {
+                        $result['error'] = $comentario->getDataError();
+                    } 
+                    elseif ($result['dataset'] = $comentario->topPuntuacion()) {
                         $result['status'] = 1;
                     } else {
                         $result['error'] = 'No hay datos disponibles';

@@ -169,7 +169,7 @@ class ModeloHandler
         WHERE p.estado_pedido = "Finalizado") AS total_comprados
         WHERE p.estado_pedido = "Finalizado"
         GROUP BY m.id_modelo, m.descripcion_modelo, total_comprados.total_cantidad
-        ORDER BY porcentaje_comprado DESC LIMIT .'.$this->id.';';
+        ORDER BY porcentaje_comprado DESC LIMIT '.$this->id.';';
         return Database::getRows($sql);
     }
     public function topModelosR()

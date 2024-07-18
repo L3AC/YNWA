@@ -421,7 +421,7 @@ class PedidoHandler
             WHERE p.estado_pedido = 'Finalizado'
             GROUP BY DATE_FORMAT(p.fecha_pedido, '%Y-%m')
             ORDER BY DATE_FORMAT(p.fecha_pedido, '%Y-%m') DESC
-            LIMIT 5
+            LIMIT ".$this->id."
         ),
         coeficientes AS (
             SELECT 
@@ -492,7 +492,7 @@ class PedidoHandler
         JOIN ctg_tallas t USING(id_talla)
         GROUP BY t.id_talla, t.descripcion_talla
         ORDER BY total_cantidad_pedida DESC
-        LIMIT 5;';
+        LIMIT '.$this->id.';';
         $params = array();
         return Database::getRows($sql, $params);
     }

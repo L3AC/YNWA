@@ -117,14 +117,22 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'prediccionGanancia':
-                if ($result['dataset'] = $pedido->prediccionGanancia()) {
+                if (
+                    !$pedido->setId($_POST['limit']) 
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->prediccionGanancia()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';
                 }
                 break;
             case 'topTallas':
-                if ($result['dataset'] = $pedido->topTallas()) {
+                if (
+                    !$pedido->setId($_POST['limit']) 
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->topTallas()) {
                     $result['status'] = 1;
                 } else {
                     $result['error'] = 'No hay datos disponibles';

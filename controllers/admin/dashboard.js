@@ -35,6 +35,13 @@ document.addEventListener('DOMContentLoaded', () => {
     graficaGanancias();
     graficaTopTallas();
     graficaTopPuntuacion();
+
+    // Añadir eventos de cambio a los selectores para actualizar los gráficos.
+    LIST_1.addEventListener('change', graficoPastelCategorias);
+    LIST_2.addEventListener('change', graficaTopPuntuacion);
+    LIST_3.addEventListener('change', graficaTopClientes);
+    LIST_4.addEventListener('change', graficaTopTallas);
+    LIST_5.addEventListener('change', graficaGanancias);
 });
 
 /*
@@ -82,7 +89,7 @@ const graficaTopPuntuacion = async () => {
             puntuacion.push(row.promedio_puntuacion);
         });
         // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-        horizontalBarGraph('chart2', modelo, puntuacion, 'Modelos', 'Modelo');
+        horBarGraph('chart2', modelo, puntuacion, 'Modelos', 'Modelo');
     } else {
         document.getElementById('chart2').remove();
         console.log(DATA.error);

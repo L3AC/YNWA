@@ -31,7 +31,6 @@ const confirmAction = (message) => {
     });
 }
 
-
 /*
 *   Función asíncrona para manejar los mensajes de notificación al usuario. Requiere la librería sweetalert para funcionar.
 *   Parámetros: type (tipo de mensaje), text (texto a mostrar), timer (uso de temporizador) y url (valor opcional con la ubicación de destino).
@@ -67,8 +66,6 @@ const sweetAlert = async (type, text, timer, url = null) => {
             text: 'Aceptar'
         }
     };
-
-
 
     // Se verifica el uso del temporizador.
     (timer) ? options.timer = 3000 : options.timer = null;
@@ -118,12 +115,19 @@ const fillSelect = async (filename, action, select, selected = null, id = null, 
     document.getElementById(select).innerHTML = content;
     btnId && (btnId.disabled = !DATA.status);
 }
+
 /*
 *   Función para generar un gráfico de barras verticales. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), xAxis (datos para el eje X), yAxis (datos para el eje Y), legend (etiqueta para los datos) y title (título del gráfico).
 *   Retorno: ninguno.
 */
+let existingBarChart;
 const barGraph = (canvas, xAxis, yAxis, legend, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingBarChart) {
+        existingBarChart.destroy();
+    }
+
     // Se declara un arreglo para guardar códigos de colores en formato rgba.
     let colors = [];
     // Se generan colores rgba con transparencia de acuerdo con el número de datos a mostrar y se agregan al arreglo.
@@ -135,7 +139,7 @@ const barGraph = (canvas, xAxis, yAxis, legend, title) => {
     });
 
     // Se crea una instancia para generar el gráfico con los datos recibidos.
-    new Chart(document.getElementById(canvas), {
+    existingBarChart = new Chart(document.getElementById(canvas), {
         type: 'bar',
         data: {
             labels: xAxis,
@@ -163,21 +167,27 @@ const barGraph = (canvas, xAxis, yAxis, legend, title) => {
     });
 }
 
-
 /*
 *   Función para generar un gráfico de pastel. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
 *   Retorno: ninguno.
 */
+let existingPieChart;
 const pieGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingPieChart) {
+        existingPieChart.destroy();
+    }
+
     // Se declara un arreglo para guardar códigos de colores en formato hexadecimal.
     let colors = [];
     // Se generan códigos hexadecimales de 6 cifras de acuerdo con el número de datos a mostrar y se agregan al arreglo.
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
+
     // Se crea una instancia para generar el gráfico con los datos recibidos.
-    new Chart(document.getElementById(canvas), {
+    existingPieChart = new Chart(document.getElementById(canvas), {
         type: 'pie',
         data: {
             labels: legends,
@@ -196,12 +206,57 @@ const pieGraph = (canvas, legends, values, title) => {
         }
     });
 }
-const lineGraph = (canvas, legends, values, title) => {
+
+let existingDoughnutChart = null;
+
+const doughnutGraph = (canvas, legends, values, title) => {
+    // Destruir el gráfico existente si existe
+    if (existingDoughnutChart) {
+        existingDoughnutChart.destroy();
+    }
+
     let colors = [];
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
-    new Chart(document.getElementById(canvas), {
+
+    // Crear el nuevo gráfico y guardar la referencia
+    existingDoughnutChart = new Chart(document.getElementById(canvas), {
+        type: 'doughnut',
+        data: {
+            labels: legends,
+            datasets: [{
+                data: values,
+                backgroundColor: colors
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            }
+        }
+    });
+}
+/*
+*   Función para generar un gráfico de líneas. Requiere la librería chart.js para funcionar.
+*   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
+*   Retorno: ninguno.
+*/
+let existingLineChart;
+const lineGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingLineChart) {
+        existingLineChart.destroy();
+    }
+
+    let colors = [];
+    values.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    existingLineChart = new Chart(document.getElementById(canvas), {
         type: 'line',
         data: {
             labels: legends,
@@ -226,12 +281,24 @@ const lineGraph = (canvas, legends, values, title) => {
         }
     });
 }
+
+/*
+*   Función para generar un gráfico de radar. Requiere la librería chart.js para funcionar.
+*   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
+*   Retorno: ninguno.
+*/
+let existingRadarChart;
 const radarGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingRadarChart) {
+        existingRadarChart.destroy();
+    }
+
     let colors = [];
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
-    new Chart(document.getElementById(canvas), {
+    existingRadarChart = new Chart(document.getElementById(canvas), {
         type: 'radar',
         data: {
             labels: legends,
@@ -250,37 +317,24 @@ const radarGraph = (canvas, legends, values, title) => {
         }
     });
 }
+
+/*
+*   Función para generar un gráfico polar. Requiere la librería chart.js para funcionar.
+*   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
+*   Retorno: ninguno.
+*/
+let existingPolarChart;
 const polarGraph = (canvas, legends, values, title) => {
-    // Función para mezclar dos arreglos de la misma manera
-    const shuffle = (array1, array2) => {
-        let counter = array1.length;
-        while (counter > 0) {
-            let index = Math.floor(Math.random() * counter);
-            counter--;
-            // Mezclar el primer array
-            let temp1 = array1[counter];
-            array1[counter] = array1[index];
-            array1[index] = temp1;
-            // Mezclar el segundo array de la misma manera
-            let temp2 = array2[counter];
-            array2[counter] = array2[index];
-            array2[index] = temp2;
-        }
-    };
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingPolarChart) {
+        existingPolarChart.destroy();
+    }
 
     let colors = [];
     values.forEach(() => {
-        // Generar un color aleatorio en formato rgba con transparencia
-        let color = 'rgba(' + Math.floor(Math.random() * 256) + ','
-            + Math.floor(Math.random() * 256) + ','
-            + Math.floor(Math.random() * 256) + ', 0.3)'; // 0.5 es el nivel de transparencia
-        colors.push(color);
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
-
-    // Mezclar los labels y los values de la misma manera
-    shuffle(legends, values);
-
-    new Chart(document.getElementById(canvas), {
+    existingPolarChart = new Chart(document.getElementById(canvas), {
         type: 'polarArea',
         data: {
             labels: legends,
@@ -290,35 +344,90 @@ const polarGraph = (canvas, legends, values, title) => {
             }]
         },
         options: {
-            responsive: true,
             plugins: {
-                legend: {
-                    position: 'top',
-                },
                 title: {
                     display: true,
                     text: title
                 }
             }
-        },
+        }
     });
-};
+}
+/*
+*   Función para generar un gráfico de área. Requiere la librería chart.js para funcionar.
+*   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
+*   Retorno: ninguno.
+*/
+let existingAreaChart;
+const areaGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingAreaChart) {
+        existingAreaChart.destroy();
+    }
 
+    // Generar un color aleatorio.
+    let color = '#' + (Math.random().toString(16).substring(2, 8));
 
+    // Crear una nueva instancia del gráfico.
+    existingAreaChart = new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: legends,
+            datasets: [{
+                label: '',
+                data: values,
+                backgroundColor: color,
+                borderColor: color,
+                borderWidth: 2,
+                tension: 0.1,
+                pointBackgroundColor: color
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
-
+/*
+*   Función para generar un gráfico de barras horizontales. Requiere la librería chart.js para funcionar.
+*   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).
+*   Retorno: ninguno.
+*/
+let existingHorBarChart;
 const horBarGraph = (canvas, legends, values, title) => {
+    // Destruir gráfico existente si lo hay para evitar superposiciones.
+    if (existingHorBarChart) {
+        existingHorBarChart.destroy();
+    }
+
+    // Se declara un arreglo para guardar códigos de colores en formato hexadecimal.
     let colors = [];
+    // Se generan colores hexadecimales con transparencia de acuerdo con el número de datos a mostrar y se agregan al arreglo.
     values.forEach(() => {
         colors.push('#' + (Math.random().toString(16)).substring(2, 8));
     });
-    new Chart(document.getElementById(canvas), {
+
+    // Crear una nueva instancia del gráfico.
+    existingHorBarChart = new Chart(document.getElementById(canvas), {
         type: 'bar',
         data: {
             labels: legends,
             datasets: [{
                 data: values,
-                backgroundColor: colors[0],
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 2,
                 fill: true
             }]
         },
@@ -342,162 +451,6 @@ const horBarGraph = (canvas, legends, values, title) => {
                 }
             }
         },
-    });
-}
-const lineBoundaries = (canvas, legends, values, title) => {
-    let colors = [];
-    values.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
-    });
-    new Chart(document.getElementById(canvas), {
-        type: 'line',
-        data: {
-            labels: legends,
-            datasets: [{
-                data: values,
-                backgroundColor: colors[0],
-                fill: true
-            }]
-        },
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: title
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-const areaGraph = (canvas, legends, values, title) => {
-    let color = '#' + (Math.random().toString(16).substring(2, 8));
-
-    new Chart(document.getElementById(canvas), {
-        type: 'line',
-        data: {
-            labels: legends,
-            datasets: [{
-                label: title,
-                data: values,
-                backgroundColor: color,
-                borderColor: color,
-                borderWidth: 2,
-                fill: false,
-                tension: 0.1,
-                pointBackgroundColor: color
-            }]
-        },
-        options: {
-            plugins: {
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-};
-
-
-
-const doughnutGraph = (canvas, legends, values, title) => {
-    let colors = [];
-    values.forEach(() => {
-        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
-    });
-    new Chart(document.getElementById(canvas), {
-        type: 'doughnut',
-        data: {
-            labels: legends,
-            datasets: [{
-                data: values,
-                backgroundColor: colors
-            }]
-        },
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: title
-                }
-            }
-        }
-    });
-}
-const horizontalBarGraph = (canvas, legends, values, title) => {
-    let colors = [];
-    values.forEach(() => {
-        let color = 'rgba(' + Math.floor(Math.random() * 256) + ',' 
-                          + Math.floor(Math.random() * 256) + ',' 
-                          + Math.floor(Math.random() * 256) + ', 0.8)'; // 0.5 es el nivel de transparencia
-        colors.push(color);
-    });
-
-    new Chart(document.getElementById(canvas), {
-        type: 'bar',
-        data: {
-            labels: legends,
-            datasets: [{
-                data: values,
-                backgroundColor: colors,
-                label: 'Promedio' // Añadir un label para evitar "undefined"
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            plugins: {
-                title: {
-                    display: true,
-                }
-            },
-            scales: {
-                x: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-const mixedGraph = (canvas, legends, valuesBar, valuesLine, title) => {
-    new Chart(document.getElementById(canvas), {
-        data: {
-            labels: legends,
-            datasets: [
-                {
-                    type: 'bar',
-                    label: 'Bar Dataset',
-                    data: valuesBar,
-                    backgroundColor: '#42A5F5'
-                },
-                {
-                    type: 'line',
-                    label: 'Line Dataset',
-                    data: valuesLine,
-                    borderColor: '#FFA726'
-                }
-            ]
-        },
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: title
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
     });
 }
 
@@ -555,27 +508,3 @@ const fetchData = async (filename, action, form = null) => {
         console.log(error);
     }
 }
-/*const fetchData = async (filename, action, form = null) => {
-    // Se define una constante tipo objeto para establecer las opciones de la petición.
-    const OPTIONS = {};
-    // Se determina el tipo de petición a realizar.
-    if (form) {
-        OPTIONS.method = 'post';
-        OPTIONS.body = form;
-    } else {
-        OPTIONS.method = 'get';
-    }
-    try {
-        // Se declara una constante tipo objeto con la ruta específica del servidor.
-        const PATH = new URL(SERVER_URL + filename);
-        // Se agrega un parámetro a la ruta con el valor de la acción solicitada.
-        PATH.searchParams.append('action', action);
-        // Se define una constante tipo objeto con la respuesta de la petición.
-        const RESPONSE = await fetch(PATH.href, OPTIONS);
-        // Se retorna el resultado en formato JSON.
-        return await RESPONSE.json();
-    } catch (error) {
-        // Se muestra un mensaje en la consola del navegador web cuando ocurre un problema.
-        console.log(error);
-    }
-}*/

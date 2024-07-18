@@ -226,7 +226,7 @@ class ClienteHandler
         WHERE estado_pedido = "Finalizado"
         GROUP BY id_cliente, nombre_cliente, apellido_cliente, email_cliente
         ORDER BY total_productos_comprados DESC
-        LIMIT  .'.$this->id.';';
+        LIMIT  '.$this->id.';';
         $params = array();
         return Database::getRows($sql, $params);
     }

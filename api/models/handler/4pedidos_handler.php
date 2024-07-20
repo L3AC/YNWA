@@ -276,15 +276,18 @@ class PedidoHandler
     public function searchRows()
     {
         $this->search = $this->search === '' ? '%%' : '%' . $this->search . '%';
-        $this->id_cliente = $_SESSION['idCliente']=== '' ? '1=1 ' : ' c.id_cliente=' . $_SESSION['idCliente'];
-        $sql = 'SELECT p.id_pedido,CONCAT(c.nombre_cliente," ",c.apellido_cliente) as cliente,
-        p.forma_pago_pedido,DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha,p.estado_pedido
-        FROM prc_pedidos p
-        INNER JOIN prc_clientes c USING(id_cliente)
-        WHERE estado_pedido=? AND CONCAT(c.nombre_cliente,c.apellido_cliente) LIKE ? AND .'.$this->id_cliente.'  
-        ORDER BY p.fecha_pedido ASC, p.estado_pedido ASC';
-        $params = array($this->estado,$this->search);
+        $this->id_cliente = isset($_SESSION['idCliente']) ? 'AND c.id_cliente=' . $_SESSION['idCliente'] : ' ';
+        
+        $sql = 'SELECT p.id_pedido, CONCAT(c.nombre_cliente, " ", c.apellido_cliente) as cliente,
+                p.forma_pago_pedido, DATE_FORMAT(p.fecha_pedido, "%d-%m-%Y") AS fecha, p.estado_pedido
+                FROM prc_pedidos p
+                INNER JOIN prc_clientes c USING(id_cliente)
+                WHERE estado_pedido=? AND CONCAT(c.nombre_cliente, c.apellido_cliente) LIKE ? ' . $this->id_cliente . '  
+                ORDER BY p.fecha_pedido ASC, p.estado_pedido ASC';
+        
+        $params = array($this->estado, $this->search);
         return Database::getRows($sql, $params);
+        
     }
     public function createRow()
     {

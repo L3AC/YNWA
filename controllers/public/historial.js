@@ -5,8 +5,7 @@ const PEDIDO_API = 'services/public/pedido.php',
 // Constante para establecer el cuerpo de la tabla.
 const ID_DETALLE = document.getElementById('idDetalle'),
     IDGUARDAR = document.getElementById('idGuardar');
-    const SEARCH_FORM = document.getElementById('searchForm'),
-    SEARCHSUB_FORM = document.getElementById('searchsubForm');
+const SEARCH_FORM = document.getElementById('searchForm');
 const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     SUBTABLE = document.getElementById('subtable'),
     SUBTABLE_BODY = document.getElementById('subtableBody'),
@@ -15,23 +14,23 @@ const SUBTABLE_HEAD = document.getElementById('subheaderT'),
     SUBROWS_FOUND = document.getElementById('subrowsFound');
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    SAVE_FORM = document.getElementById('saveForm'),
     MODAL_TITLE = document.getElementById('modalTitle'),
-    SUBMODAL_TITLE = document.getElementById('submodalTitle');
+    SUBMODAL_TITLE = document.getElementById('submodalTitle2');
 
 const SAVE_MODAL2 = new bootstrap.Modal('#subSaveModal'),
-    SUBINPUTSEARCH = document.getElementById('subinputsearch'),
     ID_PEDIDO = document.getElementById('idPedido'),
     CLIENTE_PEDIDO = document.getElementById('clientePedido'),
     FECHA_PEDIDO = document.getElementById('fechaPedido'),
     FORMA_PAGO = document.getElementById('formaPago'),
     ESTADO_PEDIDO = document.getElementById('estadoPedido'),
-    SAVE_FORM2 = document.getElementById('saveForm'),
+    SAVE_FORM2 = document.getElementById('subsaveForm'),
     INPUTSEARCH = document.getElementById('inputsearch'),
-    MODAL_TITLE2 = document.getElementById('modalTitle'),
+    MODAL_TITLE2 = document.getElementById('submodalTitle'),
     COMENTARIO = document.getElementById('contenidoComentario'),
     FECHA_COMENTARIO = document.getElementById('fechaComentario'),
     DIVSTARS = document.getElementById('divstars');
-let timeout_id,estado_busqueda="Finalizado";
+let timeout_id, estado_busqueda = "Finalizado";
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -80,15 +79,15 @@ INPUTSEARCH.addEventListener('input', function () {
 });
 
 //Función asíncrona para llenar la tabla con los registros disponibles.
-const readDetail = async (estado=null) => {
+const readDetail = async (estado = null) => {
     // Se inicializa el contenido de la tabla.
     TABLE_BODY.innerHTML = '';
     // Se verifica la acción a realizar.
-    estado_busqueda=estado;
+    estado_busqueda = estado;
     // Se verifica la acción a realizar.
     const FORM = new FormData();
     FORM.append('valor', INPUTSEARCH.value);
-    FORM.append('estado',estado); 
+    FORM.append('estado', estado);
     // Petición para obtener los registros disponibles.
     const DATA = await fetchData(PEDIDO_API, 'searchRows', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -115,21 +114,97 @@ const readDetail = async (estado=null) => {
         });
     } else {
         sweetAlert(4, DATA.error, true);
-        
+
     }
 }
 const fillSubTable = async () => {
     SUBROWS_FOUND.textContent = '';
     SUBTABLE_BODY.innerHTML = '';
     const FORM = new FormData();
-    FORM.append('valor', SUBINPUTSEARCH.value);
     FORM.append('idPedido', ID_PEDIDO.value);
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchRows', FORM);
+    const DATA = await fetchData(DETALLEPEDIDO_API, 'searchHistorial', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
+        // Se declara e inicializa una variable para calcular el importe por cada producto.
+        let subtotal = 0;
+        // Se declara e inicializa una variable para sumar cada subtotal y obtener el monto final a pagar.
+        let total = 0;
+        // Se recorre el conjunto de registros fila por fila a través del objeto row.
+        DATA.dataset.forEach(async row => {
+            subtotal = row.precio_modelo_talla * row.cantidad_detalle_pedido;
+            total += subtotal;
+            //PARA VERIFICAR SI YA HAY UN COMENTARIO
+            btnComentario = '';
+            const FORM3 = new FormData();
+            FORM3.append('idDetalle', row.id_detalle);
+            // Petición para obtener los datos del registro solicitado.
+            const DATA3 = await fetchData(COMENTARIO_API, 'readByIdDetalle', FORM3);
+            if(estado_busqueda=='Anulado'){
+                btnComentario = `openAnulado()`;
+            }
+            else{
+                if (DATA3.dataset.length > 0) {
+                    btnComentario = `openRead(${DATA3.dataset[0].id_comentario})`;
+                } else {
+                    btnComentario = `openCreate(${row.id_detalle})`;
+                }
+            }
+            
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            SUBTABLE_BODY.innerHTML += `
+            <div class="card mb-3 col-12 card-custom" id="detalle" style="background-color: #F1EFEF;">
+                <div class="row g-0" style="background-color: #F1EFEF;">
+                    <div class="col-12 text-center">
+                        <img height="auto" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
+                            class="img-fluid rounded-top" alt="${row.descripcion_modelo}">
+                    </div>
+                    <div class="col-12">
+                        <div class="card-body">
+                            <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
+                            <h5 class="card-title text-center" style="font-size: 30px;">${row.descripcion_modelo}</h5>
+                            <div class="row">
+                                <div class="col-6 col-md-12">
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Marca:</strong> ${row.descripcion_marca}<br>
+                                    </p>
+                                </div>
+                                <div class="col-6 col-md-12">
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Talla:</strong> ${row.descripcion_talla}<br>
+                                    </p>
+                                </div>
+                                <div class="col-6 col-md-12">
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Precio:</strong> $${row.precio_modelo_talla}<br>
+                                    </p>
+                                </div>
+                                <div class="col-6 col-md-12">
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Cantidad:</strong> ${row.cantidad_detalle_pedido}<br>
+                                    </p>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    <p class="card-text" style="font-size: 20px;">
+                                        <strong>Fecha:</strong> ${row.fecha_pedido}<br>
+                                    </p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-comment" onclick="${btnComentario}">
+                                <i class="bi bi-chat-dots"></i> Comentario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `});
+        document.querySelectorAll('.rating input[type="radio"], .rating label').forEach(function (element) {
+            element.disabled = false;
+        });
+
+
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
-        DATA.dataset.forEach(row => {
+        /*DATA.dataset.forEach(row => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
                 <tr>
@@ -142,10 +217,10 @@ const fillSubTable = async () => {
             `;
         });
         // Se muestra un mensaje de acuerdo con el resultado.
-        SUBROWS_FOUND.textContent = DATA.message;
+        SUBROWS_FOUND.textContent = DATA.message;*/
     } else {
         sweetAlert(4, DATA.error, true);
-        
+
     }
 }
 /*
@@ -244,6 +319,9 @@ const fillSubTable = async () => {
 *   Parámetros: id (identificador del producto) y quantity (cantidad actual del producto).
 *   Retorno: ninguno.
 */
+const openAnulado = () => {
+    sweetAlert(4, 'No se puede agregar un comentario a un pedido anulado', true);
+}
 //Función asíncrona para preparar el formulario al momento de actualizar un registro.
 const openDetail = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
@@ -257,7 +335,7 @@ const openDetail = async (id) => {
         SAVE_MODAL.show();
         SUBTABLE.hidden = false;
         MODAL_TITLE.textContent = 'Información del pedido';
-        MODAL_TITLE.textContent = 'Detalle del pedido';
+        MODAL_TITLE2.textContent = 'Detalle del pedido';
         // Se prepara el formulario.
         SAVE_FORM.reset();
         CLIENTE_PEDIDO.disabled = true;
@@ -275,11 +353,13 @@ const openDetail = async (id) => {
         sweetAlert(2, DATA.error, false);
     }
 }
+const subClose = () => {
+    SAVE_MODAL.show();
+}
 const openRead = async (id) => {
-
+    SAVE_MODAL.hide();
     const FORM = new FormData();
     FORM.append('idComentario', id);
-
     // Petición para obtener los datos del registro solicitado.
     const DATA = await fetchData(COMENTARIO_API, 'readByIdComentario', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
@@ -288,7 +368,7 @@ const openRead = async (id) => {
         // Se prepara el formulario.
         SAVE_MODAL2.show();
         SAVE_FORM2.reset();
-        MODAL_TITLE2.textContent = 'Comentario enviado';
+        SUBMODAL_TITLE.textContent = 'Comentario enviado';
         IDGUARDAR.hidden = true;
         COMENTARIO.disabled = true;
         FECHA_COMENTARIO.hidden = false;
@@ -341,11 +421,12 @@ const openRead = async (id) => {
 
 }
 const openCreate = async (id) => {
+    SAVE_MODAL.hide();
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL2.show();
     // Se prepara el formulario.
     SAVE_FORM2.reset();
-    MODAL_TITLE2.textContent = 'Enviar Comentario';
+    SUBMODAL_TITLE.textContent = 'Enviar Comentario';
     ID_DETALLE.value = id;
     IDGUARDAR.hidden = false;
     COMENTARIO.disabled = false;

@@ -37,6 +37,7 @@ if (isset($_GET['action'])) {
                         $result['error'] = 'No hay coincidencias';
                     }
                     break;
+                
 
                 case 'deleteRow':
                     if (

@@ -36,9 +36,9 @@
             <h4 id="mainTitle" style="font-size: 40px;" class="mt-4"></h4>
             <div class="row m-3 mb-5">
                 <!-- Formulario de búsqueda -->
-                <form class="col-sm-12 col-md-12" id="searchForm">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-5 col-sm-6 mx-auto">
+                <form class="col-sm-12 col-md-12 d-flex justify-content-center" id="searchForm">
+                    <div class="row ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
                             <!-- Campo de búsqueda -->
                             <div class="input-container">
                                 <input id="inputsearch" type="text" name="search" class="input3"
@@ -48,25 +48,141 @@
 
                     </div>
                 </form>
-
             </div>
-
-
-            <div id="tableBody" class="row"></div>
-
+            <div class="row m-4">
+                <div class="col-6 d-flex justify-content-center">
+                    <button onclick="readDetail('Finalizado')" id="btnFinalizado" type="button" class="btn"
+                        style="background-color: #CCC8AA;">
+                        Finalizado
+                    </button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <button onclick="readDetail('Anulado')" id="btnAnulado" type="button" class="btn"
+                        style="background-color: #CCC8AA;">
+                        Anulado
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Tabla con registros -->
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <!-- Tabla para mostrar los registros existentes -->
+                <table class="table table-hover">
+                    <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                    <thead>
+                        <tr>
+                            <td colspan="6" id="rowsFound"></td>
+                        </tr>
+                        <tr>
+                            <th>PAGO</th>
+                            <th>FECHA</th>
+                            <th>ESTADO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+            <!--<div id="tableBody" class="row"></div>-->
             <!-- Componente Modal  -->
-            <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+
+            <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- Título del modal -->
+                    <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                    <!-- Botón de cierre del modal -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Formulario para crear o actualizar un registro -->
+                <form id="saveForm">
+                    <div class="modal-body row g-4">
+                        <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                        <input type="hidden" id="idPedido" name="idPedido">
+
+                        <!-- Campos del formulario -->
+                        <div class="col-sm-12 col-md-6">
+                            <label for="clientePedido" class="form-label">Cliente</label>
+                            <input id="clientePedido" type="text" name="clientePedido" class="form-control"
+                                required>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="fechaPedido" class="form-label">Fecha</label>
+                            <input id="fechaPedido" type="text" name="fechaPedido" class="form-control" required>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="formaPago" class="form-label">Forma de pago</label>
+                            <input id="formaPago" type="text" name="formaPago" class="form-control" required>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="estadoPedido" class="form-label">Estado</label>
+                            <input id="estadoPedido" type="text" name="estadoPedido" class="form-control" required>
+                        </div>
+                        <!-- Pie del modal sin botones de acción -->
+                        <div class="modal-footer border-0">
+                            <button type="submit" class="btn" style="background-color: #CCC8AA;">Guardar</button>
+                        </div>
+                        <!-- Subtabla para mostrar los detalles del pedido -->
+                        <div id="subtable" class="mt-0">
+                            <!-- TABLA DE MODELO TALLAS -->
+                            <div class="modal-header border-0">
+                                <h1 class="modal-title fs-5" id="submodalTitle"></h1>
+                            </div>
+
+                            <!-- Formulario de búsqueda para la subtabla -->
+                            <form class="col-sm-12 col-md-6" id="searchsubForm">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input id="subinputsearch" type="search" class="form-control" name="search"
+                                            placeholder="Nombre del modelo">
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- Subtabla para mostrar los detalles del pedido -->
+                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                <table id="subheaderT" class="table table-hover ">
+                                    <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+                                    <thead>
+                                        <tr>
+                                            <td colspan="5" id="subrowsFound"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>MODELO</th>
+                                            <th>MARCA</th>
+                                            <th>TALLA</th>
+                                            <th>PRECIO</th>
+                                            <th>CANTIDAD</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+                                    <tbody id="subtableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+            <div class="modal fade" id="subSaveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="modalTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content ">
                         <div class="modal-header">
                             <!-- Título del modal -->
-                            <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                            <h1 class="modal-title fs-5" id="submodalTitle"></h1>
                             <!-- Botón de cierre del modal -->
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <!-- Formulario para crear o actualizar un registro -->
-                        <form id="saveForm">
+                        <form id="subsaveForm">
                             <div class="modal-body row gx-5">
                                 <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                                 <input type="hidden" id="idDetalle" name="idDetalle">

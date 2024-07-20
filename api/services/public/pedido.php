@@ -40,18 +40,18 @@ if (isset($_GET['action'])) {
                     }
                 }
                 break;
-                case 'searchByCliente':
-                    if (
-                        !$pedido->setSearch($_POST['fecha']) or
-                        !$pedido->setEstado($_POST['estado'])
-                    ) {
-                        $result['error'] = $pedido->getDataError();
-                    } elseif ($result['dataset'] = $pedido->searchByCliente()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
-                    } else {
-                    }
-                    break;
+            case 'searchByCliente':
+                if (
+                    !$pedido->setSearch($_POST['fecha']) or
+                    !$pedido->setEstado($_POST['estado'])
+                ) {
+                    $result['error'] = $pedido->getDataError();
+                } elseif ($result['dataset'] = $pedido->searchByCliente()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
+                } else {
+                }
+                break;
                 // Acción para obtener los productos agregados en el carrito de compras.
             case 'readDetail':
                 if (!$pedido->getOrder()) {
@@ -63,16 +63,26 @@ if (isset($_GET['action'])) {
                     $result['error'] = ' no existen registrosen el carrito';
                 }
                 break;
+                case 'readOne':
+                    if (!$pedido->setId($_POST['idPedido'])) {
+                        $result['error'] = $pedido->getDataError();
+                    } elseif ($result['dataset'] = $pedido->readOne()) {
+                        $result['status'] = 1;
+                    } else {
+                        $result['error'] = 'Pedido inexistente';
+                    }
+                    break;
             case 'searchRows':
                 if (
-                    !$pedido->setSearch($_POST['valor']) OR
-                    !$pedido->setEstado($_POST['estado']) 
+                    !$pedido->setSearch($_POST['valor']) or
+                    !$pedido->setEstado($_POST['estado'])
                 ) {
                     $result['error'] = $pedido->getDataError();
-                } elseif($result['dataset'] = $pedido->searchRows()) {
+                } elseif ($result['dataset'] = $pedido->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
+                    $result['error'] = 'No hay coincidencias';
                 }
                 break;
                 // Acción para actualizar la cantidad de un producto en el carrito de compras.

@@ -13,13 +13,13 @@ $modelo = new ModeloData;
 // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
 if ($dataP = $modelo->topModelosR()) {
     // Se establece un color de relleno para los encabezados.
-    $pdf->setFillColor(200);
+    $pdf->setFillColor(204, 200, 170);
     // Se establece la fuente para los encabezados.
     $pdf->setFont('Arial', 'B', 11);
     // Se imprimen las celdas con los encabezados.
-    $pdf->cell(120, 10, 'Modelo', 1, 0, 'C', 1);
-    $pdf->cell(40, 10, 'Marca', 1, 0, 'C', 1);
-    $pdf->cell(20, 10, 'Cantidad', 1, 1, 'C', 1);
+    $pdf->cell(66, 10, 'Modelo', 'B', 0, 'C', 1);
+    $pdf->cell(66, 10, 'Marca', 'B', 0, 'C', 1);
+    $pdf->cell(66, 10, 'Cantidad', 'B', 1, 'C', 1);
 
     // Se establece un color de relleno para mostrar el nombre de la categoría.
     $pdf->setFillColor(240);
@@ -29,9 +29,9 @@ if ($dataP = $modelo->topModelosR()) {
     // Se recorren los registros fila por fila.
     foreach ($dataP as $rowP) {
         // Se imprime una celda con el nombre de la categoría.
-        $pdf->cell(120, 10, $pdf->encodeString($rowP['descripcion_modelo']), 1, 0,'C');
-        $pdf->cell(40, 10, $pdf->encodeString($rowP['descripcion_marca']), 1, 0,'C');
-        $pdf->cell(20, 10, $pdf->encodeString($rowP['total_cantidad_pedida']), 1, 1,'C');
+        $pdf->cell(66, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'TB', 0,'C');
+        $pdf->cell(66, 10, $pdf->encodeString($rowP['descripcion_marca']), 'TB', 0,'C');
+        $pdf->cell(66, 10, $pdf->encodeString($rowP['total_cantidad_pedida']), 'TB', 1,'C');
         // Se instancia el módelo Producto para procesar los datos.
     }
 } else {

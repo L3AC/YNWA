@@ -15,7 +15,7 @@ if ($pedido->setId($_GET['idPedido'])) {
         // Se inicia el reporte con el encabezado del documento.
         $pdf->startReport('Reporte de compra');
         $pdf->setFont('Arial', 'B', 10);
-        $pdf->cell(0, 0, 'A nombre de: ' . $rowOne['cliente'], 0, 1, 'C');
+        $pdf->cell(0, 0, 'A nombre de: ' . $pdf->encodeString($rowOne['cliente']), 0, 1, 'C');
         // Se agrega un salto de línea
         $pdf->ln(12);
         $pdf->setFont('Arial', 'B', 10);

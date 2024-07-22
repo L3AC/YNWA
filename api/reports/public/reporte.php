@@ -32,10 +32,10 @@ if ($pedido->setId($_GET['idPedido'])) {
             $pdf->setFont('Arial', 'B', 11);
             // Se imprimen las celdas con los encabezados.
 
-            $pdf->cell(80, 10, 'Modelo', 'B', 0, 'C', 1);
-            $pdf->cell(40, 10, 'Talla', 'B', 0, 'C', 1);
-            $pdf->cell(30, 10, 'Cantidad', 'B', 0, 'C', 1);
-            $pdf->cell(40, 10, 'Precio', 'B', 1, 'C', 1);
+            $pdf->cell(78.24, 10, 'Modelo', 'B', 0, 'C', 1);
+            $pdf->cell(39.12, 10, 'Talla', 'B', 0, 'C', 1);
+            $pdf->cell(29.34, 10, 'Cantidad', 'B', 0, 'C', 1);
+            $pdf->cell(39.12, 10, 'Precio', 'B', 1, 'C', 1);
             // Se establece la fuente para los datos de los productos.
             $pdf->setFont('Arial', '', 11);
             $total = 0;
@@ -49,14 +49,14 @@ if ($pedido->setId($_GET['idPedido'])) {
                 $total += $subtotal;
 
                 // Se imprimen las celdas con los datos de los productos.
-                $pdf->cell(80, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'TB', 0, 'C');
-                $pdf->cell(40, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
-                $pdf->cell(30, 10, $pdf->encodeString($rowP['cantidad_detalle_pedido']), 'TB', 0, 'C');
-                $pdf->cell(40, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 1, 'C');
+                $pdf->cell(78.24, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'TB', 0, 'C');
+                $pdf->cell(39.12, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
+                $pdf->cell(29.34, 10, $pdf->encodeString($rowP['cantidad_detalle_pedido']), 'TB', 0, 'C');
+                $pdf->cell(39.12, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 1, 'C');
             }
 
             // Se imprime una línea separadora
-            $pdf->cell(160, 10, '', 'T', 0, 'C', 1);
+            $pdf->cell(155, 10, '', 'T', 0, 'C', 1);
 
             // Se imprime el total
             $pdf->setFont('Arial', 'B', 11);

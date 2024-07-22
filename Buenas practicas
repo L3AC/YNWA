@@ -1,0 +1,40 @@
+1- Uso de require_once para incluir archivos necesarios:
+
+require_once('../../helpers/report.php');
+require_once('../../models/data/8clientes_data.php');
+require_once('../../models/data/4pedidos_data.php');
+Utilizar require_once en lugar de require o include evita la inclusión múltiple del mismo archivo, lo que previene errores y asegura que el archivo se cargue una sola vez.
+
+2- Verificación de la existencia de parámetros $_GET antes de procesarlos:
+
+if (isset($_GET['idCliente'])) {
+    // ...código...
+} else {
+    print('Debe seleccionar un cliente');
+}
+Verificar la existencia de parámetros evita errores al intentar acceder a valores que no existen en la solicitud, lo que mejora la robustez del código.
+
+3- Uso de métodos para validar y configurar objetos:
+
+if ($cliente->setId($_GET['idCliente']) && $pedido->setIdCliente($_GET['idCliente'])) {
+    // ...código...
+} else {
+    print('Cliente incorrecta');
+}
+Encapsular la lógica de validación y configuración dentro de métodos de la clase mejora la modularidad y la reutilización del código.
+
+4- Validación de resultados antes de proceder:
+
+if ($rowOne = $cliente->readOne()) {
+    // ...código...
+} else {
+    print('Cliente inexistente');
+}
+Validar el resultado de una operación antes de proceder con el procesamiento evita errores y asegura que solo se opere con datos válidos.
+
+5- Separación de responsabilidades y uso de clases para estructurar el código:
+
+$pdf = new Report;
+$cliente = new ClienteData;
+$pedido = new PedidoData;
+Utilizar clases para encapsular lógica y datos específicos de diferentes entidades (como Report, ClienteData y PedidoData) mejora la organización del código, la legibilidad y la capacidad de mantenimiento.

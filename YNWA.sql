@@ -2,90 +2,38 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
+
 /*SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,CONCAT(nombre_cliente," ",apellido_cliente) as nombre,
                 apellido_cliente,email_cliente,estado_cliente,direccion_cliente,lat,lon
                 from prc_clientes
                 WHERE id_cliente = 1
 
-WITH ventas AS (
-    SELECT 
-        DATE_FORMAT(p.fecha_pedido, '%Y-%m') AS mes, 
-        ROUND(SUM(dp.cantidad_detalle_pedido * mt.precio_modelo_talla), 2) AS ventas_mensuales,
-        CASE
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '01' THEN 'Enero'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '02' THEN 'Febrero'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '03' THEN 'Marzo'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '04' THEN 'Abril'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '05' THEN 'Mayo'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '06' THEN 'Junio'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '07' THEN 'Julio'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '08' THEN 'Agosto'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '09' THEN 'Septiembre'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '10' THEN 'Octubre'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '11' THEN 'Noviembre'
-            WHEN DATE_FORMAT(p.fecha_pedido, '%m') = '12' THEN 'Diciembre'
-        END AS nombre_mes,
-        ROW_NUMBER() OVER (ORDER BY DATE_FORMAT(p.fecha_pedido, '%Y-%m')) AS mes_indice
-    FROM prc_pedidos p
-    JOIN prc_detalle_pedidos dp ON p.id_pedido = dp.id_pedido
-    JOIN prc_modelo_tallas mt ON dp.id_modelo_talla = mt.id_modelo_talla
-    WHERE p.estado_pedido = 'Finalizado'
-    GROUP BY DATE_FORMAT(p.fecha_pedido, '%Y-%m')
-    ORDER BY DATE_FORMAT(p.fecha_pedido, '%Y-%m') DESC
-    LIMIT 5
-),
-coeficientes AS (
-    SELECT 
-        COUNT(*) AS n,
-        SUM(mes_indice) AS sum_x,
-        SUM(ventas_mensuales) AS sum_y,
-        SUM(mes_indice * ventas_mensuales) AS sum_xy,
-        SUM(mes_indice * mes_indice) AS sum_xx
-    FROM ventas
-),
-calculos AS (
-    SELECT 
-        (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x) AS slope,
-        (sum_y - ((n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x)) * sum_x) / n AS intercept
-    FROM coeficientes
-),
-prediccion AS (
-    SELECT 
-        ROUND(c.slope * (MAX(v.mes_indice) + 1) + c.intercept, 2) AS prediccion_siguiente_mes,
-        CASE
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '01' THEN 'Enero'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '02' THEN 'Febrero'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '03' THEN 'Marzo'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '04' THEN 'Abril'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '05' THEN 'Mayo'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '06' THEN 'Junio'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '07' THEN 'Julio'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '08' THEN 'Agosto'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '09' THEN 'Septiembre'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '10' THEN 'Octubre'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '11' THEN 'Noviembre'
-            WHEN DATE_FORMAT(ADDDATE(MAX(p.fecha_pedido), INTERVAL 1 MONTH), '%m') = '12' THEN 'Diciembre'
-        END AS nombre_siguiente_mes
-    FROM ventas v
-    JOIN prc_pedidos p ON DATE_FORMAT(p.fecha_pedido, '%Y-%m') = v.mes
-    CROSS JOIN calculos c
-)
-SELECT 
-    v.mes, 
-    v.ventas_mensuales,
-    v.nombre_mes,
-    p.prediccion_siguiente_mes,
-    p.nombre_siguiente_mes
-FROM ventas v 
-CROSS JOIN prediccion p
-order by mes asc;
+SELECT m.id_modelo, m.descripcion_modelo, SUM(d.cantidad_detalle_pedido) AS total_cantidad_comprada
+FROM prc_pedidos p
+JOIN prc_detalle_pedidos d USING(id_pedido)
+JOIN prc_modelo_tallas mt USING(id_modelo_talla)
+JOIN prc_modelos m USING(id_modelo)
+WHERE p.estado_pedido = 'Finalizado'
+GROUP BY m.id_modelo, m.descripcion_modelo
+ORDER BY total_cantidad_comprada DESC LIMIT 10;
 
-select * from prc_pedidos;
+SELECT m.id_modelo, m.descripcion_modelo, ROUND(SUM(d.cantidad_detalle_pedido) * 100.0 / total_comprados.total_cantidad, 1) AS porcentaje_comprado
+FROM prc_pedidos p
+JOIN prc_detalle_pedidos d USING(id_pedido)
+JOIN prc_modelo_tallas mt USING(id_modelo_talla)
+JOIN prc_modelos m USING(id_modelo)
+JOIN (SELECT SUM(d.cantidad_detalle_pedido) AS total_cantidad FROM prc_pedidos p JOIN prc_detalle_pedidos d USING(id_pedido)
+WHERE p.estado_pedido = 'Finalizado') AS total_comprados
+WHERE p.estado_pedido = 'Finalizado'
+GROUP BY m.id_modelo, m.descripcion_modelo, total_comprados.total_cantidad
+ORDER BY porcentaje_comprado DESC LIMIT 10;
+
 
 update prc_pedidos set fecha_pedido='2024-03-10'  where id_pedido=1;
 update prc_pedidos set fecha_pedido='2024-04-10'  where id_pedido=2;
 update prc_pedidos set fecha_pedido='2024-05-10'  where id_pedido=3;
 update prc_pedidos set fecha_pedido='2024-06-10'  where id_pedido=4;
+update prc_pedidos set fecha_pedido='2024-07-10'  where id_pedido=5;
 */
 
 

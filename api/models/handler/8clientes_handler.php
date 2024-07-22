@@ -217,7 +217,7 @@ class ClienteHandler
     }
     public function topClientesR()
     {
-
+        $this->id = $this->id === null ? 20 :$this->id;
         $sql = 'SELECT id_cliente,CONCAT(nombre_cliente," ", apellido_cliente) AS cliente, email_cliente, 
         SUM(cantidad_detalle_pedido) AS total_productos_comprados
         FROM prc_clientes 

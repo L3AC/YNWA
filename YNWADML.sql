@@ -114,14 +114,19 @@ INSERT INTO prc_modelo_tallas (id_talla, id_modelo, stock_modelo_talla, precio_m
 (6, 16, 10, 99.99),(6, 17, 5, 129.99),(6, 18, 15, 89.99),(7, 19, 8, 79.99),(7, 20, 3, 109.99),
 (7, 21, 12, 69.99),(8, 22, 20, 79.99),(8, 23, 10, 99.99),(8, 24, 18, 69.99),(9, 25, 6, 89.99);
 
-INSERT INTO prc_pedidos (id_cliente, forma_pago_pedido, estado_pedido) VALUES
-(1, 'Efectivo', 'Pendiente'),(2, 'Transferencia', 'Pendiente'),(3, 'Efectivo', 'Pendiente'),(4, 'Transferencia', 'Pendiente'),
-(5, 'Efectivo', 'Pendiente'),(6, 'Transferencia', 'Pendiente'),(7, 'Efectivo', 'Pendiente'),(8, 'Transferencia', 'Pendiente'),
-(9, 'Efectivo', 'Pendiente'),(10, 'Transferencia', 'Pendiente'),(11, 'Efectivo', 'Pendiente'),(12, 'Transferencia', 'Pendiente'),
-(13, 'Efectivo', 'Pendiente'),(14, 'Transferencia', 'Pendiente'),(15, 'Efectivo', 'Pendiente'),(16, 'Transferencia', 'Pendiente'),
-(17, 'Efectivo', 'Pendiente'),(18, 'Transferencia', 'Pendiente'),(19, 'Efectivo', 'Pendiente'),(20, 'Transferencia', 'Pendiente'),
-(21, 'Efectivo', 'Pendiente'),(22, 'Transferencia', 'Pendiente'),(23, 'Efectivo', 'Pendiente'),(24, 'Transferencia', 'Pendiente'),
-(25, 'Efectivo', 'Pendiente');
+INSERT INTO prc_pedidos (id_cliente, forma_pago_pedido, estado_pedido,fecha_pedido) VALUES
+(1, 'Efectivo', 'Finalizado','2023-07-10'),(2, 'Transferencia', 'Finalizado','2023-08-10'),
+(3, 'Efectivo', 'Finalizado','2023-09-10'),(4, 'Transferencia', 'Finalizado','2023-10-10'),
+(5, 'Efectivo', 'Finalizado','2023-11-10'),(6, 'Transferencia', 'Finalizado','2023-12-10'),
+(7, 'Efectivo', 'Finalizado','2024-01-10'),(8, 'Transferencia', 'Finalizado','2024-02-10'),
+(9, 'Efectivo', 'Finalizado','2024-03-10'),(10, 'Transferencia', 'Finalizado','2024-04-10'),
+(11, 'Efectivo', 'Finalizado','2024-05-10'),(12, 'Transferencia', 'Finalizado','2024-06-10'),
+(13, 'Efectivo', 'Finalizado','2024-07-10'),(14, 'Transferencia', 'Finalizado',now()),
+(15, 'Efectivo', 'Finalizado',now()),(16, 'Transferencia', 'Finalizado',now()),
+(17, 'Efectivo', 'Pendiente',now()),(18, 'Transferencia', 'Pendiente',now()),(19, 'Efectivo', 'Pendiente',now()),
+(20, 'Transferencia', 'Pendiente',now()),(21, 'Efectivo', 'Pendiente',now()),
+(22, 'Transferencia', 'Pendiente',now()),(23, 'Efectivo', 'Pendiente',now()),
+(24, 'Transferencia', 'Pendiente',now()),(25, 'Efectivo', 'Pendiente',now());
 
 INSERT INTO prc_detalle_pedidos (id_pedido, id_modelo_talla, cantidad_detalle_pedido) VALUES
 (1, 1, 2),(2, 2, 1),(3, 12, 1),(4, 14, 2),(5, 20, 1),(6, 25, 2),(7, 6, 2),(8, 11, 1),

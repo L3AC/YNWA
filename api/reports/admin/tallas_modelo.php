@@ -24,18 +24,18 @@ if (isset($_GET['idModelo'])) {
                 // Se establece la fuente para los encabezados.
                 $pdf->setFont('Arial', 'B', 12);
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(120, 10, 'Talla', 'B', 0, 'C', 1);
-                $pdf->cell(30, 10, 'Precio', 'B', 0, 'C', 1);
-                $pdf->cell(35, 10, 'Estado', 'B', 1, 'C', 1);
+                $pdf->cell(62, 10, 'Talla', 'B', 0, 'C', 1);
+                $pdf->cell(62, 10, 'Precio', 'B', 0, 'C', 1);
+                $pdf->cell(62, 10, 'Estado', 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 11);
                 // Se recorren los registros fila por fila.
                 foreach ($dataP as $rowP) {
                     $estado = $rowP['estado_marca'] ? 'Activo' : 'Inactivo';
                     // Se imprimen las celdas con los datos de los productos.
-                    $pdf->cell(120, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
-                    $pdf->cell(30, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 0, 'C');
-                    $pdf->cell(35, 10, $estado, 'TB', 1, 'C');
+                    $pdf->cell(62, 10, $pdf->encodeString($rowP['descripcion_talla']), 'TB', 0, 'C');
+                    $pdf->cell(62, 10, $pdf->encodeString($rowP['precio_modelo_talla']), 'TB', 0, 'C');
+                    $pdf->cell(62, 10, $estado, 'TB', 1, 'C');
                 }
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No ha realizado pedidos'), 'T', 1);

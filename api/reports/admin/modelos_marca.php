@@ -17,17 +17,17 @@ if (isset($_GET['idMarca'])) {
         if ($rowOne = $marca->readOne()) {
             // Se inicia el reporte con el encabezado del documento.
             $pdf->startReport('Modelos disponibles de la marca ' . $rowOne['descripcion_marca']);
-            
+
             // Se verifica si existen registros para mostrar, de lo contrario se imprime un mensaje.
             if ($dataP = $marca->modelosByMarca()) {
                 $count = 0;
                 // Se establece el color de fondo para las celdas del encabezado y del total (blanco).
-                $pdf->setFillColor(204, 200, 170); 
+                $pdf->setFillColor(204, 200, 170);
                 // Se establece la fuente para los encabezados.
                 $pdf->setFont('Arial', 'B', 12);
                 // Se imprimen las celdas con los encabezados.
-                $pdf->cell(126, 10, 'Modelo', 'B', 0, 'C', 1);
-                $pdf->cell(60, 10, 'Estado', 'B', 1, 'C', 1);
+                $pdf->cell(155, 10, 'Modelo', 'B', 0, 'C', 1);
+                $pdf->cell(31, 10, 'Estado', 'B', 1, 'C', 1);
                 // Se establece la fuente para los datos de los productos.
                 $pdf->setFont('Arial', '', 11);
                 // Se recorren los registros fila por fila.
@@ -35,10 +35,11 @@ if (isset($_GET['idMarca'])) {
                     $count += 1;
                     $estado = $rowP['estado_modelo'] ? 'Activo' : 'Inactivo';
                     // Se imprimen las celdas con los datos de los productos.
-                    $pdf->cell(126, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'T', 0, 'C');
-                    $pdf->cell(60, 10, $estado, 'T', 1, 'C');
+                    $pdf->cell(155, 10, $pdf->encodeString($rowP['descripcion_modelo']), 'T', 0, 'C');
+                    $pdf->cell(31 , 10, $estado, 'T', 1, 'C');
                 }
                 $pdf->cell(186, 10, '', 'T', 0, 'C', 1);
+                $pdf->setFont('Arial', 'B', 11);
                 $pdf->cell(0, 10, $pdf->encodeString('Total : ' . $count . '  '), 'T', 1, 'R');
             } else {
                 $pdf->cell(0, 10, $pdf->encodeString('No hay modelos en esta marca'), 'T', 1);

@@ -105,6 +105,7 @@ class Report extends FPDF
         $this->ln(7);
     }
 
+
     /*
     *   Se sobrescribe el método de la librería para establecer la plantilla del pie de los reportes.
     *   Se llama automáticamente en el método output()

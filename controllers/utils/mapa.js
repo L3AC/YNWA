@@ -20,7 +20,7 @@ function inicializarMapa() {
         // Obtener las coordenadas del clic
         var latitud = e.latlng.lat;
         var longitud = e.latlng.lng;
-        
+        console.log(latitud)
         // Mostrar un marcador en las coordenadas clicadas
         mostrarUbicacion(latitud, longitud);
         
@@ -143,6 +143,7 @@ function habilitarVerCalles(bool=false) {
         document.getElementById('direccionCliente').value = 'Latitud: ' + latitud + ', Longitud: ' + longitud;
     });
 }
+
 
 // Llamar a la función inicializarMapa() al cargar la página
 inicializarMapa();

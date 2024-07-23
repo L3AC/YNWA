@@ -424,6 +424,7 @@ const horBarGraph = (canvas, legends, values, title) => {
         data: {
             labels: legends,
             datasets: [{
+                label: '',
                 data: values,
                 backgroundColor: colors,
                 borderColor: colors,
@@ -443,7 +444,10 @@ const horBarGraph = (canvas, legends, values, title) => {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'right',
+                    display: false, // Deshabilitar el cuadro de leyenda (legend)
+                },
+                tooltip: {
+                    enabled: false, // Deshabilitar el cuadro de filtrado (tooltip)
                 },
                 title: {
                     display: true,
@@ -453,6 +457,7 @@ const horBarGraph = (canvas, legends, values, title) => {
         },
     });
 }
+
 
 
 

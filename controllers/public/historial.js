@@ -152,13 +152,13 @@ const fillSubTable = async () => {
             
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             SUBTABLE_BODY.innerHTML += `
-            <div class="card mb-3 col-12 card-custom" id="detalle" style="background-color: #F1EFEF;">
+            <div class="card mb-3 col-12 card-custom" id="detalle" style="background-color: #000;">
                 <div class="row g-0" style="background-color: #F1EFEF;">
-                    <div class="col-12 text-center">
+                    <div class="col-6 text-center ">
                         <img height="auto" width="70%" src="${SERVER_URL}images/modelos/${row.foto_modelo}"
                             class="img-fluid rounded-top" alt="${row.descripcion_modelo}">
                     </div>
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="card-body">
                             <input type="hidden" id="idModelo" name="idModelo" value="${row.id_modelo}">
                             <h5 class="card-title text-center" style="font-size: 30px;">${row.descripcion_modelo}</h5>

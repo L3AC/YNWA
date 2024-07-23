@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { SERVER } from '../../contexts/Network';
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
@@ -160,11 +161,15 @@ export default function PerfilScreen() {
         >
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="black" />
+                    <Ionicons name="arrow-back" size={30} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.title}>Perfil</Text>
+
             </View>
+
             <View style={styles.form}>
+                <View style={styles.cabezaPerfil}>
+                    <FontAwesome5 style={styles.icono2} name="user-tie" size={65} color="black" />
+                </View>
                 <Text style={styles.label}>Nombre</Text>
                 <TextInput
                     style={styles.input}
@@ -232,6 +237,7 @@ const styles = StyleSheet.create({
         marginTop: 45,
         justifyContent: 'center',
         position: 'relative',
+        backgroundColor: '#fff'
     },
     backButton: {
         position: 'absolute',
@@ -242,21 +248,40 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
     },
+    cabezaPerfil: {
+        backgroundColor: '#fff',
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        position: 'relative',
+        alignSelf: 'center'
+    },
+    icono2:{
+        alignSelf: 'center',
+        marginTop:15
+    },
     form: {
-        marginBottom: 30,
+        marginBottom: 20,
+        backgroundColor: '#2F2C2C',
+        padding: 12,
+        borderRadius: 20,
+        borderColor: '#fff',
+        borderWidth: 2,
+        width: '100%'
     },
     label: {
         fontSize: 16,
-        color: '#3e3e3e',
+        color: '#fff',
         marginBottom: 5,
     },
     input: {
         borderBottomWidth: 1,
-        borderBottomColor: '#3e3e3e',
+        borderBottomColor: '#fff',
         paddingVertical: 5,
-        marginBottom: 20,
+        marginBottom: 30,
         fontSize: 16,
-        color: '#3e3e3e',
+        color: '#fff',
+        fontFamily: 'QuickSand',
         flex: 1,
     },
     multilineInput: {
@@ -270,6 +295,8 @@ const styles = StyleSheet.create({
     },
     clearButton: {
         backgroundColor: '#0000',
+        borderColor: '#fff',
+        borderWidth: 2,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -277,17 +304,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     clearButtonText: {
-        color: 'black',
+        color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: 'QuickSand'
     },
     map: {
         width: '100%',
         height: 200,
         marginBottom: 20,
+        borderRadius: 20
     },
     button: {
-        backgroundColor: '#3e3e3e',
+        backgroundColor: '#2F2C2C',
         borderRadius: 5,
         paddingVertical: 10,
         alignItems: 'center',
@@ -295,5 +324,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 18,
+        fontFamily: 'QuickSand'
     },
 });

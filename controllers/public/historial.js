@@ -60,8 +60,7 @@ SAVE_FORM2.addEventListener('submit', async (event) => {
     if (DATA.status) {
         SAVE_MODAL2.hide();
         sweetAlert(1, DATA.message, false);
-        readDetail();
-
+        readDetail(estado_busqueda);
     } else if (DATA.session) {
         console.log(2);
         sweetAlert(2, DATA.error, false);
@@ -500,7 +499,7 @@ async function openDelete(id) {
         if (DATA.status) {
             await sweetAlert(1, DATA.message, true);
             // Se carga nuevamente la tabla para visualizar los cambios.
-            readDetail();
+            readDetail(estado_busqueda);
         } else {
             sweetAlert(2, DATA.error, false);
         }

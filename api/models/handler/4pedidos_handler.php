@@ -428,11 +428,11 @@ class PedidoHandler
         ),
         coeficientes AS (
             SELECT 
-                COUNT(*) AS n,
-                SUM(mes_indice) AS sum_x,
-                SUM(ventas_mensuales) AS sum_y,
-                SUM(mes_indice * ventas_mensuales) AS sum_xy,
-                SUM(mes_indice * mes_indice) AS sum_xx
+                COUNT(*) AS n, #Cuenta el número de meses (n).#
+                SUM(mes_indice) AS sum_x, #Suma de los índices de los meses (sum_x).#
+                SUM(ventas_mensuales) AS sum_y, #Suma de las ventas mensuales (sum_y).#
+                SUM(mes_indice * ventas_mensuales) AS sum_xy, #Suma del producto de índices de meses y ventas mensuales (sum_xy).
+                SUM(mes_indice * mes_indice) AS sum_xx #Suma del cuadrado de los índices de meses (sum_xx).
             FROM ventas
         ),
         calculos AS (

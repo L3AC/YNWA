@@ -47,6 +47,7 @@ class ClienteHandler
             $this->usuario = $data['usuario_cliente'];
             $this->estado = $data['estado_cliente'];
             $this->email = $data['email_cliente'];
+            $_SESSION['usuarioc'] = $data['usuario_cliente'];
             return true;
         } else {
             return false;

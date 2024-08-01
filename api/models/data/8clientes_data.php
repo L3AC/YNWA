@@ -102,6 +102,17 @@ class ClienteData extends ClienteHandler
             return false;
         }
     }
+    public function setPin($value)
+    {
+        // Valida que el teléfono tenga el formato correcto.
+        if (Validator::validatePin($value)) {
+            $this->pin = $value;
+            return true;
+        } else {
+            $this->data_error = 'El pin contiene caractéres inválidos';
+            return false;
+        }
+    }
     public function setDireccion($value)
     {
         if (!Validator::validateString($value)) {

@@ -10,6 +10,7 @@ class ClienteHandler
      *  Declaración de atributos para el manejo de datos.
      */
     protected $id = null;
+    protected $pin = null;
     protected $latitud = null;
     protected $longitud = null;
     protected $search = null;
@@ -97,7 +98,7 @@ class ClienteHandler
         $sql = 'UPDATE prc_clientes
                 SET clave_cliente = ?
                 WHERE id_cliente = ?';
-        $params = array($this->clave, $_SESSION['idCliente']);
+        $params = array($this->clave, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -179,6 +180,28 @@ class ClienteHandler
                 WHERE id_cliente = ?';
         $params = array($this->id);
         return Database::getRow($sql, $params);
+    }
+    public function verifUs()
+    {
+        $sql = 'SELECT *
+        from prc_clientes 
+        WHERE usuario_cliente = ?';
+        $params = array($this->usuario);
+        return Database::getRow($sql, $params);
+    }
+    public function verifPin()
+    {
+        $sql = 'SELECT * from prc_clientes 
+        WHERE pin_cliente = ? AND id_cliente = ?';
+        $params = array($this->pin,$_SESSION['clienteRecup']);
+        return Database::getRow($sql, $params);
+    }
+    public function updatePin()
+    {
+        $sql = 'update prc_clientes set pin_cliente=?
+         where id_cliente=?;';
+        $params = array($this->generarPin(),$_SESSION['clienteRecup']);
+        return Database::executeRow($sql, $params);
     }
     public function readExist($username)
     {

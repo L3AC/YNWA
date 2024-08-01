@@ -88,7 +88,7 @@ const Login = () => {
             </TouchableOpacity>
           </View>
           {error ? <Text style={styles.error}>{error}</Text> : null}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
             <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleLogin}>

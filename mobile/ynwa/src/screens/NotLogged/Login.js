@@ -6,6 +6,9 @@ import { SERVER } from '../../contexts/Network';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de claves
+import Input from '../../components/inputs/Input';
+import Confirm from '../../components/buttons/Confirm';
 
 const Login = () => {
   const { setIsLoggedIn } = useAuth(); // Hook para manejar el estado de autenticación
@@ -67,33 +70,23 @@ const Login = () => {
       >
         <View style={styles.content}>
           <Text style={styles.title}>Inicio de sesión</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Usuario"
-            placeholderTextColor="#000"
-            onChangeText={setUsername}
-            value={username}
+          <Input placeHolder='Usuario' value={username} onChangeText={setUsername} />
+
+          <InputLogin
+            placeHolder='Contraseña'
+            value={password}
+            onChangeText={setPassword}
+            clave={showPassword}
+            isContra={true}
+            setIsContra={setShowPassword}
           />
-          <View style={styles.passwordContainer}>
-            <TextInput
-              style={[styles.input, styles.passwordInput]}
-              placeholder="Contraseña"
-              placeholderTextColor="#000"
-              onChangeText={setPassword}
-              value={password}
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-              <Icon name={showPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
-            </TouchableOpacity>
-          </View>
+
+          
           {error ? <Text style={styles.error}>{error}</Text> : null}
           <TouchableOpacity onPress={() => navigation.navigate('VerifUs')}>
             <Text style={styles.forgotPassword}>¿Olvidó su contraseña?</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Confirmar</Text>
-          </TouchableOpacity>
+          <Confirm onPress={handleLogin} tittle={'Confirmar'}/>
           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.signUp}>¿No tienes una cuenta?</Text>
           </TouchableOpacity>
@@ -165,17 +158,16 @@ const styles = StyleSheet.create({
     fontFamily: 'QuickSandBold',
   },
   forgotPassword: {
-    marginTop: 10,
     marginBottom: 20,
     color: '#000',
     fontFamily: 'QuickSand',
-    fontSize: 16
+    fontSize: 18
   },
   signUp: {
     marginTop: 20,
     color: '#000',
     fontFamily: 'QuickSand',
-    fontSize: 16
+    fontSize: 18
   },
   error: {
     color: 'red',

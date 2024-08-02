@@ -5,7 +5,10 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import PhoneInput from '../../components/inputs/PhoneInput';
 import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
 import ModalMensaje from '../../components/alerts/ModalMensaje';
 import { useUser } from '../../contexts/UserContext';
 
@@ -63,7 +66,6 @@ const Modelo = () => {
       setRefreshing(false); // Termina el refresco de la página
     }
   };
-
   // Función para obtener las tallas disponibles del modelo desde el servidor
   const fetchTallas = async () => {
     try {
@@ -91,7 +93,6 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   // Función para obtener los detalles de una talla específica desde el servidor
   const fetchTallaDetalles = async (idTalla) => {
     try {
@@ -111,32 +112,27 @@ const Modelo = () => {
       console.error('Error:', error);
     }
   };
-
   // Función para refrescar la página
   const onRefresh = () => {
     setRefreshing(true);
     fetchModelo();
     fetchTallas();
   };
-
   // Maneja la selección de una talla y abre el modal con los detalles de la talla seleccionada
   const handleTallaPress = async (talla) => {
     setSelectedTalla(talla);
     setModalVisible(true);
     await fetchTallaDetalles(talla.id_modelo_talla);
   };
-
   // Maneja el cambio de la cantidad seleccionada
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
-
   // Cierra el modal
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
-
   // Crea un detalle del pedido con la cantidad y talla seleccionadas
   const createDetail = async () => {
     try {
@@ -189,7 +185,6 @@ const Modelo = () => {
       setTimeout(() => setAlertVisible(false), 500); // 3 segundos
     }
   };
-
   // Verifica si hay comentarios disponibles para el modelo y navega a la pantalla de comentarios
   const verifComent = async () => {
     try {
@@ -214,12 +209,10 @@ const Modelo = () => {
       setRefreshing(false);
     }
   };
-
   // Muestra un indicador de carga mientras los datos están siendo cargados
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
-
   // Muestra un mensaje si no se encontraron detalles para el modelo
   if (!modelo) {
     return (
@@ -240,12 +233,7 @@ const Modelo = () => {
       }
     >
       {alertVisible && <ModalMensaje mensaje={mensajeEmergente} />}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.title}>{modelo.descripcion_modelo}</Text>
-      </View>
+      <Header onPress={() => navigation.goBack()} titulo={modelo.descripcion_modelo} />
       <View style={styles.contenedorImg}>
         <Image source={{ uri: `${SERVER}images/modelos/${modelo.foto_modelo}` }} style={styles.image} />
         <Text style={styles.subtitle}>{modelo.marca}</Text>
@@ -283,20 +271,17 @@ const Modelo = () => {
                     <Text style={styles.modalHeader}>Talla: {tallaDetalles.talla}</Text>
                     <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
                     <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-                    <TextInput
-                      style={[styles.input, cantidadError && styles.inputError]}
-                      placeholder="Ingrese la cantidad"
-                      keyboardType="numeric"
+
+                    <PhoneInput
+                      type={'custom'}
+                      format={'9'}
                       value={cantidad}
                       onChangeText={handleCantidadChange}
+                      placeHolder='Cantidad'
+                      alert={cantidadError && styles.inputError}
                     />
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    <TouchableOpacity
-                      style={styles.finalizarButton}
-                      onPress={createDetail}
-                    >
-                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
-                    </TouchableOpacity>
+                    <Confirm onPress={createDetail} tittle={'Agregar'} />
                   </>
                 ) : (
                   <ActivityIndicator size="large" color="#0000ff" />
@@ -352,6 +337,7 @@ const styles = StyleSheet.create({
     width: '95%',
     height: 250,
     marginBottom: 20,
+    marginTop: 30,
     borderColor: '#000',
     borderWidth: 1,
     alignSelf: 'center'

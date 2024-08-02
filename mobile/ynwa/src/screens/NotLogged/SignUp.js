@@ -3,16 +3,19 @@ import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, Touchabl
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de claves
+import Input from '../../components/inputs/Input';
 import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
+
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
-
 export default function SignUp() {
   // Estado para controlar la actualización de la interfaz
   const [refreshing, setRefreshing] = useState(false);
-
   // Estados para almacenar los datos del formulario de registro
   const [nombreCliente, setNombreCliente] = useState('');
   const [apellidoCliente, setApellidoCliente] = useState('');
@@ -21,11 +24,9 @@ export default function SignUp() {
   const [claveCliente, setClaveCliente] = useState('');
   const [confirmarClave, setConfirmarClave] = useState('');
   const [direccionCliente, setDireccionCliente] = useState('');
-
   // Estados para controlar la visibilidad de las contraseñas
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [isContra, setIsContra] = useState(true);
+  const [isContra2, setIsContra2] = useState(true);
   // Estado para almacenar la ubicación actual del usuario
   const [location, setLocation] = useState({
     latitude: 13.69294,  // Latitud de San Salvador, El Salvador
@@ -33,16 +34,13 @@ export default function SignUp() {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
-
   const navigation = useNavigation(); // Hook para manejar la navegación
   const mapRef = React.useRef(null); // Referencia al mapa
-
   // Función para refrescar la interfaz
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
-
   // Función para manejar el registro del usuario
   const signin = async () => {
     try {
@@ -74,7 +72,6 @@ export default function SignUp() {
       Alert.alert('Error', 'Error al registrar'); // Muestra un mensaje de error
     }
   };
-
   // Función para manejar el evento de presionar el mapa
   const handleMapPress = async (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
@@ -103,7 +100,6 @@ export default function SignUp() {
       setDireccionCliente('Error al obtener la dirección');
     }
   };
-
   // Función para manejar la búsqueda de direcciones
   const handleSearchAddress = async (text) => {
     try {
@@ -124,12 +120,10 @@ export default function SignUp() {
       console.error('Error al buscar la dirección:', error);
     }
   };
-
   // Función para manejar el cambio en el campo de dirección
   const handleAddressChange = (text) => {
     setDireccionCliente(text);
   };
-
   // Función para limpiar la dirección
   const handleClearAddress = () => {
     setDireccionCliente('');
@@ -142,7 +136,6 @@ export default function SignUp() {
     setLocation(newRegion);
     mapRef.current.animateToRegion(newRegion, 500);  // Anima el mapa al lugar por defecto
   };
-
   return (
     <ScrollView
       contentContainerStyle={styles.container}
@@ -150,77 +143,35 @@ export default function SignUp() {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.flecha}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Registro</Text>
-      </View>
+      <Header onPress={() => navigation.goBack()} titulo={'Registro'} />
       <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          value={nombreCliente}
-          onChangeText={setNombreCliente}
-          placeholder='Nombre'
+        <Input placeHolder='Nombre' value={nombreCliente} onChangeText={setNombreCliente} />
+        <Input placeHolder='Apellido' value={apellidoCliente} onChangeText={setApellidoCliente} />
+        <Input placeHolder='Correo' value={correoCliente} onChangeText={setCorreoCliente} keyboardType="email-address" />
+        <Input placeHolder='Usuario' value={usuarioCliente} onChangeText={setUsuarioCliente} />
+
+        <InputLogin
+          placeHolder='Contraseña'
+          value={claveCliente}
+          onChangeText={setClaveCliente}
+          clave={isContra}
+          isContra={true}
+          setIsContra={setIsContra}
         />
-
-        <TextInput
-          style={styles.input}
-          value={apellidoCliente}
-          onChangeText={setApellidoCliente}
-          placeholder='Apellido'
+        <InputLogin
+          placeHolder='Confirmar contraseña'
+          value={confirmarClave}
+          onChangeText={setConfirmarClave}
+          clave={isContra2}
+          isContra={true}
+          setIsContra={setIsContra2}
         />
-
-        <TextInput
-          style={styles.input}
-          value={correoCliente}
-          onChangeText={setCorreoCliente}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          placeholder='Correo'
-        />
-
-        <TextInput
-          style={styles.input}
-          value={usuarioCliente}
-          onChangeText={setUsuarioCliente}
-          autoCapitalize="none"
-          placeholder='Usuario'
-        />
-
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[styles.input, styles.passwordInput]}
-            value={claveCliente}
-            onChangeText={setClaveCliente}
-            secureTextEntry={!showPassword}
-            placeholder='Contraseña'
-          />
-          <TouchableOpacity style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-            <Icon name={showPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[styles.input, styles.passwordInput]}
-            value={confirmarClave}
-            onChangeText={setConfirmarClave}
-            secureTextEntry={!showConfirmPassword}
-            placeholder='Confirmar contraseña'
-          />
-          <TouchableOpacity style={styles.eyeButton} onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-            <Icon name={showConfirmPassword ? 'eye-slash' : 'eye'} type="font-awesome" size={20} color="#000" />
-          </TouchableOpacity>
-        </View>
-
         <Text style={styles.label}>Dirección</Text>
         <View style={styles.addressContainer}>
           <TextInput
             style={[styles.input2, styles.multilineInput]}
             value={direccionCliente}
             onChangeText={handleAddressChange}
-            onSubmitEditing={() => handleSearchAddress(direccionCliente)}
             multiline={true}
           />
           <TouchableOpacity style={styles.clearButton} onPress={handleClearAddress}>
@@ -237,9 +188,7 @@ export default function SignUp() {
           <Marker coordinate={location} />
         </MapView>
       </View>
-      <TouchableOpacity style={styles.button} onPress={signin}>
-        <Text style={styles.buttonText}>Guardar</Text>
-      </TouchableOpacity>
+      <Confirm onPress={signin} tittle={'Confirmar'}/>
     </ScrollView>
   );
 }
@@ -269,12 +218,14 @@ const styles = StyleSheet.create({
     fontFamily: 'QuickSand',
   },
   form: {
-    marginBottom: 30,
+    marginBottom: 10,
+    marginTop: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#3e3e3e',
     marginBottom: 5,
+    marginTop:10,
     fontFamily: 'QuickSand',
   },
   input: {
@@ -292,7 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-    width: '60%',
+    width: '70%',
     paddingVertical: 10,
     fontSize: 18,
     color: '#000',
@@ -353,7 +304,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'QuickSand',
   },
-  flecha:{
+  flecha: {
     fontSize: 30
   }
 });

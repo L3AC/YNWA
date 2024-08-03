@@ -3,6 +3,9 @@ import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity, RefreshCon
 import { SERVER } from '../../contexts/Network';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
+import PhoneInput from '../../components/inputs/PhoneInput';
 
 const CartScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -49,7 +52,6 @@ const CartScreen = () => {
       setRefreshing(false);
     }
   };
-
   const readOne = async (idModeloTalla, cantidad, idDetalle) => {
     try {
       setLoadingModal(true);
@@ -81,7 +83,6 @@ const CartScreen = () => {
       setLoadingModal(false);
     }
   };
-
   const updateDetalle = async () => {
     try {
       const stockDisponible = tallaDetalles.stock_modelo_talla;
@@ -123,7 +124,6 @@ const CartScreen = () => {
       Alert.alert('Error en la consulta');
     }
   };
-
   const deleteDetalle = async (idDetallePedido) => {
     Alert.alert(
       "Confirmar eliminación",
@@ -169,7 +169,6 @@ const CartScreen = () => {
       { cancelable: false }
     );
   };
-
   const finishOrder = async () => {
     Alert.alert(
       "Confirmar",
@@ -212,33 +211,27 @@ const CartScreen = () => {
       { cancelable: false }
     );
   };
-
   // useEffect para obtener los datos del menú cuando se monta el componente
   useEffect(() => {
     fetchMenuData();
   }, []);
-
   // useFocusEffect para obtener los datos del menú cuando la pantalla está enfocada
   useFocusEffect(
     useCallback(() => {
       fetchMenuData();
     }, [])
   );
-
   const onRefresh = () => {
     setRefreshing(true);
     fetchMenuData();
   };
-
   const handleCerrarModal = () => {
     setModalVisible(false);
   };
-
   const handleCantidadChange = (value) => {
     setCantidad(value);
     setCantidadError('');
   };
-
   // Calcular el total a pagar y la dirección del cliente
   const totalToPay = cartItems.reduce((total, item) => total + (item.precio_modelo_talla * item.cantidad_detalle_pedido), 0);
   const direc = cartItems.map((item) => item.direccion_cliente).join(', ');
@@ -249,7 +242,20 @@ const CartScreen = () => {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <Text style={styles.header}>Carrito de compras</Text>
-
+      <Confirm onPress={() => finishOrder()} tittle={'Agregar'} />
+      <View style={styles.footer}>
+        <View style={styles.orderSummary}>
+          <Text style={styles.totalText}>Total a pagar:</Text>
+          <Text style={styles.totalText2}> ${totalToPay.toFixed(2)}</Text>
+        </View>
+        <View style={styles.orderSummary2}>
+          <Text style={styles.addressLabel}>Dirección: </Text>
+          <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
+            <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
+            <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
@@ -277,23 +283,8 @@ const CartScreen = () => {
           </View>
         ))
       )}
-      <View style={styles.footer}>
-        <View style={styles.orderSummary}>
-          <Text style={styles.totalText}>Total a pagar:</Text>
-          <Text style={styles.totalText2}> ${totalToPay.toFixed(2)}</Text>
-        </View>
-        <View style={styles.orderSummary2}>
-          <Text style={styles.addressLabel}>Dirección: </Text>
-          <TouchableOpacity onPress={() => setShowFullAddress(!showFullAddress)}>
-            <Text style={styles.addressText} numberOfLines={showFullAddress ? 0 : 2}>{direc}</Text>
-            <Text style={styles.showMoreText}>{showFullAddress ? 'Ver menos' : 'Ver más'}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      
 
-      <TouchableOpacity style={styles.finalizeButton} onPress={finishOrder}>
-        <Text style={styles.finalizeButtonText}>Finalizar Pedido</Text>
-      </TouchableOpacity>
 
       {/* Modal para editar detalles del producto */}
       <Modal
@@ -312,20 +303,19 @@ const CartScreen = () => {
                     <Text style={styles.modalRow}>Talla: {tallaDetalles.talla}</Text>
                     <Text style={styles.modalRow}>Precio: ${tallaDetalles.precio_modelo_talla}</Text>
                     <Text style={styles.modalRow}>Stock disponible: {tallaDetalles.stock_modelo_talla}</Text>
-                    <TextInput
-                      style={[styles.input, cantidadError && styles.inputError]}
-                      placeholder="Ingrese la cantidad"
-                      keyboardType="numeric"
+                    
+                    <PhoneInput
+                      type={'custom'}
+                      format={'9'}
                       value={cantidad}
                       onChangeText={handleCantidadChange}
+                      placeHolder='Cantidad'
+                      alert={cantidadError && styles.inputError}
                     />
                     {cantidadError ? <Text style={styles.errorText}>{cantidadError}</Text> : null}
-                    <TouchableOpacity
-                      style={styles.finalizarButton}
-                      onPress={() => updateDetalle()}
-                    >
-                      <Text style={styles.finalizarButtonText}>Añadir al pedido</Text>
-                    </TouchableOpacity>
+                    
+
+                    <Confirm onPress={() => updateDetalle()} tittle={'Agregar'} />
                   </>
                 ) : (
                   <ActivityIndicator size="large" color="#0000ff" />
@@ -353,9 +343,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 40,
+    marginTop: 50,
     fontFamily: 'QuickSand',
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#000',
   },
   finalizeButton: {

@@ -2,16 +2,15 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const SearchBar = ({ placeholder, onChangeText, value, onSubmitEditing }) => {
+const SearchBar = ({ placeholder, onChangeText, value}) => {
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor="#888"
+        placeholderTextColor="#FFFF"
         onChangeText={onChangeText}
         value={value}
-        onSubmitEditing={onSubmitEditing}
       />
       <Ionicons name="search" size={20} color="#fff" style={styles.icon} />
     </View>
@@ -28,13 +27,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
     alignSelf: 'center',
-    height: 40
+    height: 50,
   },
   input: {
     flex: 1,
     color: '#fff',
     paddingVertical: 8,
-    fontFamily: 'QuickSand'
+    fontFamily: 'QuickSand',
+    fontSize:18,
   },
   icon: {
     marginLeft: 10,

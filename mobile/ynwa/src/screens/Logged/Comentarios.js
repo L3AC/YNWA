@@ -4,7 +4,8 @@ import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, RefreshC
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
-import HeadBack from '../../components/containers/HeadBack'; // Use default import without braces
+import Header from '../../components/containers/Header';
+import SearchBar from '../../components/inputs/searchBar';
 
 const ComentariosScreen = () => {
   const [comentarios, setComentarios] = useState([]);
@@ -76,18 +77,14 @@ const renderItem = ({ item }) => (
 // Renderizado del componente
 return (
   <View style={styles.container}>
-    <HeadBack
-      titulo="Comentarios"
-      onPress={() => navigation.goBack()}
-    />
+    <Header onPress={() => navigation.goBack()} titulo={'Comentarios'} />
     <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Buscar..."
-        value={search}
+        <SearchBar
+        placeholder="Buscar comentarios..."
         onChangeText={handleSearch}
+        value={search}
+        onSubmitEditing={() => fetchComentarios()}
       />
-      <Icon name="search" size={24} style={styles.searchIcon} />
     </View>
     <FlatList
       data={comentarios}
@@ -106,7 +103,7 @@ return (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D9D3BE',
+    backgroundColor: '#cdc4a3',
     padding: 16,
   },
   backButton: {
@@ -125,6 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C2B2B',
     borderRadius: 20,
     paddingHorizontal: 10,
+    marginTop:25,
   },
   searchInput: {
     flex: 1,

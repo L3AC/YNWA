@@ -2,9 +2,13 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { SERVER } from '../../contexts/Network';
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de login
+import Input from '../../components/inputs/Input';
+import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -27,7 +31,6 @@ export default function PerfilScreen() {
         longitudeDelta: 0.0421,
     });
     const mapRef = useRef(null); // Referencia al mapa para animaciones y actualizaciones
-
     // Función para obtener los datos del perfil del usuario desde el servidor
     const fetchProfileData = async () => {
         try {
@@ -55,7 +58,6 @@ export default function PerfilScreen() {
             Alert.alert('Error', 'Ocurrió un error al obtener los datos del perfil'); // Muestra un alerta en caso de error
         }
     };
-
     // Maneja el evento de presionar en el mapa, actualiza la ubicación y obtiene la dirección correspondiente
     const handleMapPress = async (event) => {
         const { latitude, longitude } = event.nativeEvent.coordinate;
@@ -92,7 +94,6 @@ export default function PerfilScreen() {
             }));
         }
     };
-
     // Limpia la dirección del perfil y restablece la ubicación por defecto
     const handleClearAddress = () => {
         setProfileData((prevData) => ({
@@ -108,7 +109,6 @@ export default function PerfilScreen() {
         setLocation(newRegion);
         mapRef.current.animateToRegion(newRegion, 500);  // Anima el mapa al lugar por defecto
     };
-
     // Función para editar el perfil del usuario y enviar los datos al servidor
     const editP = async () => {
         try {
@@ -140,18 +140,15 @@ export default function PerfilScreen() {
             Alert.alert('Error', 'Error al registrar');
         }
     };
-
     // Efecto para cargar los datos del perfil cuando el componente se monta
     useEffect(() => {
         fetchProfileData();
     }, []);
-
     // Función para refrescar los datos del perfil
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         fetchProfileData().then(() => setRefreshing(false));
     }, []);
-
     return (
         <ScrollView
             contentContainerStyle={styles.container}
@@ -159,42 +156,26 @@ export default function PerfilScreen() {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
         >
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={30} color="black" />
-                </TouchableOpacity>
-
-            </View>
+            <Header onPress={() => navigation.goBack()} titulo={'Perfil'} />
 
             <View style={styles.form}>
                 <View style={styles.cabezaPerfil}>
                     <FontAwesome5 style={styles.icono2} name="user-tie" size={65} color="black" />
                 </View>
                 <Text style={styles.label}>Nombre</Text>
-                <TextInput
-                    style={styles.input}
-                    value={profileData.nombre_cliente}
-                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, nombre_cliente: text }))}
-                />
-
+                <Input placeHolder='Nombre' value={profileData.nombre_cliente} color='white'
+                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, nombre_cliente: text }))} />
                 <Text style={styles.label}>Apellido</Text>
-                <TextInput
-                    style={styles.input}
-                    value={profileData.apellido_cliente}
-                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, apellido_cliente: text }))}
-                />
+                <Input placeHolder='Apellido' value={profileData.apellido_cliente} color='white'
+                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, apellido_cliente: text }))} />
+
                 <Text style={styles.label}>Correo</Text>
-                <TextInput
-                    style={styles.input}
-                    value={profileData.email_cliente}
+                <Input placeHolder='Correo' value={profileData.email_cliente} color='white'
                     onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, email_cliente: text }))}
-                />
+                    keyboardType="email-address" />
                 <Text style={styles.label}>Usuario</Text>
-                <TextInput
-                    style={styles.input}
-                    value={profileData.usuario_cliente}
-                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, usuario_cliente: text }))}
-                />
+                <Input placeHolder='Usuario' value={profileData.usuario_cliente} color='white'
+                    onChangeText={(text) => setProfileData((prevData) => ({ ...prevData, usuario_cliente: text }))} />
                 <Text style={styles.label}>Dirección</Text>
                 <View style={styles.addressContainer}>
                     <TextInput
@@ -217,9 +198,7 @@ export default function PerfilScreen() {
                     <Marker coordinate={location} />
                 </MapView>
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => editP()}>
-                <Text style={styles.buttonText}>Guardar</Text>
-            </TouchableOpacity>
+            <Confirm onPress={() => editP()} tittle={'Confirmar'}/>
         </ScrollView>
     );
 }
@@ -256,12 +235,13 @@ const styles = StyleSheet.create({
         position: 'relative',
         alignSelf: 'center'
     },
-    icono2:{
+    icono2: {
         alignSelf: 'center',
-        marginTop:15
+        marginTop: 15
     },
     form: {
         marginBottom: 20,
+        marginTop: 20,
         backgroundColor: '#2F2C2C',
         padding: 12,
         borderRadius: 20,

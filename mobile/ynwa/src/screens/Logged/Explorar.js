@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Card from '../../components/containers/Card';
-import SearchBar from '../../components/inputs/searchBar';
 import { SERVER } from '../../contexts/Network';
+import { Icon } from 'react-native-elements';
+import { useFonts } from 'expo-font';
+import SearchBar from '../../components/inputs/searchBar';
+import Card from '../../components/containers/Card';
 
 const Explorar = () => {
-  const [data, setData] = useState([]); // Estado para almacenar los datos de los productos
-  const [loading, setLoading] = useState(true); // Estado para controlar el indicador de carga
-  const [search, setSearch] = useState(''); // Estado para el texto de búsqueda
-  const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
-  const navigation = useNavigation(); // Hook de navegación
+  const [data, setData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [isOdd, setIsOdd] = useState(false);
 
-  // useEffect que se ejecuta cuando el componente se monta
+  const navigation = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    QuickSand: require("../../../assets/fonts/Quicksand-Regular.ttf"),
+    QuickSandBold: require("../../../assets/fonts/Quicksand-Bold.ttf"),
+  });
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(search);
+  }, [search]);
 
-  // Función para obtener los datos de los productos desde el servidor
   const fetchData = async (query = '') => {
     try {
       setLoading(true);
@@ -35,9 +42,10 @@ const Explorar = () => {
       const data = await response.json();
 
       if (response.ok && data.status === 1) {
-        setData(data.dataset);
+        setData(data.dataset || []);
+        setIsOdd(data.dataset.length % 2 !== 0);
       } else {
-        console.error('Error fetching data:', data.message);
+        Alert.alert('Error', data.message);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -47,93 +55,70 @@ const Explorar = () => {
     }
   };
 
-  // Función para manejar el cambio en el texto de búsqueda
   const handleSearchChange = (text) => {
     setSearch(text);
     fetchData(text);
   };
 
-  // Función para manejar la acción de "tirar para actualizar"
   const onRefresh = () => {
     setRefreshing(true);
     fetchData(search);
   };
 
-  // Función para renderizar cada item de la lista
-  const renderItem = ({ item }) => (
-    <Card item={item} onPress={(id) => navigation.navigate('Modelo', { idModelo: id })} />
-  );
-
-  // Componente de encabezado de la lista
-  const ListHeaderComponent = () => (
-    <View style={styles.header}>
-      <Text style={styles.title}>Explorar</Text>
-      <SearchBar
-        placeholder="Buscar modelos..."
-        onChangeText={handleSearchChange}
-        value={search}
-        onSubmitEditing={() => fetchData(search)}
-      />
-      <Text style={styles.subtitle}>Modelos</Text>
-    </View>
+  const renderCard = (item, index) => (
+    <Card key={index} item={item} onPress={(id) => navigation.navigate('Modelo', { idModelo: id })} />
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id_modelo.toString()}
-        numColumns={2}
-        columnWrapperStyle={styles.column}
-        contentContainerStyle={styles.flatListContent}
-        ListHeaderComponent={ListHeaderComponent}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-      />
-      {loading && <Text style={styles.loading}>Cargando...</Text>}
-    </View>
+    <ScrollView
+      contentContainerStyle={[styles.container, { flexGrow: 1 }]}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
+      <View style={styles.searchBarContainer}>
+        <SearchBar
+          placeholder="Buscar modelos..."
+          onChangeText={handleSearchChange}
+          value={search}
+        />
+      </View>
+      <Text style={styles.title}>Explorar Modelos</Text>
+      <View style={styles.menuContainer}>
+        {loading ? (
+          <Text>Cargando...</Text>
+        ) : (
+          data.map(renderCard)
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#cdc4a3',
-  },
-  header: {
     padding: 16,
-    paddingTop: 50,
     backgroundColor: '#cdc4a3',
+    flexGrow: 1,
+  },
+  searchBarContainer: {
+    marginBottom: 30,
+    marginTop:50,
+  },
+  searchIcon: {
+    marginLeft: 8,
   },
   title: {
     fontSize: 24,
-    marginBottom: 8,
+    fontWeight: 'bold',
+    marginBottom: 16,
     textAlign: 'center',
+    fontFamily: 'QuickSandBold',
     color: '#333',
-    fontFamily: 'QuickSandBold'
   },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 8,
-    textAlign: 'center',
-    color: '#333',
-    fontFamily: 'QuickSand'
-  },
-  column: {
+  menuContainer: {
+    paddingBottom: 70,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-  },
-  flatListContent: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  loading: {
-    textAlign: 'center',
-    marginTop: 16,
   },
 });
 

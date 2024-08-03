@@ -26,7 +26,7 @@ const Header = ({ onPress,titulo}) => {
 
 const styles = StyleSheet.create({
     topBackground: {
-      height: 100, // Ajusta esta altura según sea necesario
+      height: 80, // Ajusta esta altura según sea necesario
       backgroundColor: '#cdc4a3', // Color de fondo para la parte superior
     },
     iconoHeader: {

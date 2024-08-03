@@ -3,11 +3,11 @@ import { View, Text, ScrollView, RefreshControl, StyleSheet, TextInput, Touchabl
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps';
-import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de claves
 import Input from '../../components/inputs/Input';
 import { SERVER } from '../../contexts/Network';
 import Header from '../../components/containers/Header';
 import Confirm from '../../components/buttons/Confirm';
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de claves
 
 
 const wait = (timeout) => {

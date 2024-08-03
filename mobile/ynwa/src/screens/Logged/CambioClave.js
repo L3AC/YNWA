@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, RefreshControl, Image,Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, RefreshControl, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network';
+import Header from '../../components/containers/Header';
+import Confirm from '../../components/buttons/Confirm';
+import InputLogin from '../../components/inputs/InputLogin'; // Llama a la plantilla para input de claves
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -71,70 +74,38 @@ const ChangePasswordScreen = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      {/* Encabezado de la pantalla con un botón para volver y el título */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-left" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Cambio de contraseña</Text>
-      </View>
+      <Header onPress={() => navigation.goBack()} titulo={'Cambio de clave'} />
 
       <View style={styles.content}>
         {/* Icono para la pantalla de cambio de contraseña */}
         <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/61/61457.png' }} style={styles.icon} />
 
-        {/* Campo para la contraseña actual */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Ingrese su actual contraseña</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              secureTextEntry={!showCurrentPassword}
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-            />
-            <TouchableOpacity onPress={() => setShowCurrentPassword(!showCurrentPassword)}>
-              <Icon name={showCurrentPassword ? 'eye' : 'eye-slash'} size={20} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <InputLogin
+          placeHolder='Clave actual'
+          value={currentPassword}
+          onChangeText={setCurrentPassword}
+          clave={showCurrentPassword}
+          isContra={true}
+          setIsContra={setShowCurrentPassword}
+        />
+        <InputLogin
+          placeHolder='Nueva clave'
+          value={newPassword}
+          onChangeText={setNewPassword}
+          clave={showNewPassword}
+          isContra={true}
+          setIsContra={setShowNewPassword}
+        />
+        <InputLogin
+          placeHolder='Confirmar clave'
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          clave={showConfirmPassword}
+          isContra={true}
+          setIsContra={setShowConfirmPassword}
+        />
 
-        {/* Campo para la nueva contraseña */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Ingrese su nueva contraseña</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              secureTextEntry={!showNewPassword}
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-            <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
-              <Icon name={showNewPassword ? 'eye' : 'eye-slash'} size={20} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Campo para confirmar la nueva contraseña */}
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Confirmar contraseña</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              secureTextEntry={!showConfirmPassword}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-              <Icon name={showConfirmPassword ? 'eye' : 'eye-slash'} size={20} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* Botón para confirmar el cambio de contraseña */}
-        <TouchableOpacity style={styles.button} onPress={changeP}>
-          <Text style={styles.buttonText}>Confirmar</Text>
-        </TouchableOpacity>
+        <Confirm onPress={changeP} tittle={'Confirmar'} />
       </View>
     </ScrollView>
   );
@@ -144,7 +115,7 @@ const ChangePasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#d8d3b6',
+    backgroundColor: '#cdc4a3',
     padding: 20,
   },
   header: {
@@ -166,6 +137,7 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 30,
   },
   icon: {
     width: 60,

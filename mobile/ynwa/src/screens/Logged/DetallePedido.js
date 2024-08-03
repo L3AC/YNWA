@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
 import DetalleCard from '../../components/containers/DetalleCard';
 import { Icon } from 'react-native-elements';
+import Header from '../../components/containers/Header';
 
 const OrderDetailScreen = () => {
   const [refreshing, setRefreshing] = useState(false); // Estado para controlar la actualización
@@ -66,12 +67,8 @@ const OrderDetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-          <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Detalle del pedido</Text>
-      </View>
+      <Header onPress={() => navigation.goBack()} titulo={'Detalle del pedido'} />
+
       <Text style={styles.totalText}>Total: ${total}</Text>
       <ScrollView
         contentContainerStyle={styles.container}
@@ -97,8 +94,9 @@ const OrderDetailScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#d4d2b6',
+    backgroundColor: '#cdc4a3',
     padding: 16,
+    mareginTop: 0,
   },
   backButton: {
     padding: 16,
@@ -131,6 +129,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     marginVertical: 8,
+    marginTop: 30
   },
 });
 

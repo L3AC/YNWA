@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
 import { MaterialIcons } from 'react-native-vector-icons';
+import Header from '../../components/containers/Header';
 
 const Historial = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -79,12 +80,7 @@ const Historial = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
-          <Icon name="arrow-left" type="font-awesome" size={35} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Historial</Text>
-      </View>
+      <Header onPress={() => navigation.goBack()} titulo={'Historial'} />
       <View style={styles.filterContainer}>
         <RNPickerSelect
           onValueChange={handleFechaChange}
@@ -147,6 +143,7 @@ const styles = StyleSheet.create({
   },
   filterContainer: {
     marginBottom: 16,
+    marginTop: 30,
   },
   picker: {
     height: 50,

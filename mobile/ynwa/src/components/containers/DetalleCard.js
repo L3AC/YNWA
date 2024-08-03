@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SERVER } from '../../contexts/Network';
+import Confirm from '../buttons/Confirm';
 
 const DetalleCard = ({ item }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -50,7 +51,7 @@ const DetalleCard = ({ item }) => {
                 body: formData,
             });
             const data = await response.json();
-            if (response.ok && data.status === 1 ) {
+            if (response.ok && data.status === 1) {
                 Alert.alert('Éxito', 'Comentario agregado correctamente');
                 setModalVisible(false);
             } else {
@@ -120,9 +121,7 @@ const DetalleCard = ({ item }) => {
                             editable={isCommentEditable}
                         />
                         {isCommentEditable && (
-                            <TouchableOpacity style={styles.confirmButton} onPress={() => insertComent()}>
-                                <Text style={styles.confirmButtonText}>Confirmar</Text>
-                            </TouchableOpacity>
+                            <Confirm onPress={() => insertComent()} tittle={'Confirmar'} />
                         )}
                     </TouchableOpacity>
                 </TouchableOpacity>

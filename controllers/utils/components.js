@@ -2,8 +2,8 @@
 *   CONTROLADOR DE USO GENERAL EN TODAS LAS PÁGINAS WEB.
 */
 // Constante para establecer la ruta base del servidor.
-const SERVER_URL = 'http://localhost/YNWA/api/';
-
+//const SERVER_URL = 'http://localhost/YNWA/api/';
+const SERVER_URL = 'http://ynwa.000.pe/YNWA/api/';
 /*
 *   Función para mostrar un mensaje de confirmación. Requiere la librería sweetalert para funcionar.
 *   Parámetros: message (mensaje de confirmación).
@@ -235,11 +235,20 @@ const doughnutGraph = (canvas, legends, values, title) => {
                 title: {
                     display: true,
                     text: title
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let value = context.raw || 0;
+                            return `${value} %`;
+                        }
+                    }
                 }
             }
         }
     });
 }
+
 /*
 *   Función para generar un gráfico de líneas. Requiere la librería chart.js para funcionar.
 *   Parámetros: canvas (identificador de la etiqueta canvas), legends (valores para las etiquetas), values (valores de los datos) y title (título del gráfico).

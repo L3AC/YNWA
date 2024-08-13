@@ -224,3 +224,4 @@ class UsuarioHandler
         return Database::executeRow($sql, $params);
     }
 }
+?>

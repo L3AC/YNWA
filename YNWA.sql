@@ -2,43 +2,6 @@ DROP DATABASE IF EXISTS db_ynwa;
 CREATE DATABASE db_ynwa;
 USE db_ynwa;
 
-
-/*SELECT id_cliente,usuario_cliente,clave_cliente,nombre_cliente,CONCAT(nombre_cliente," ",apellido_cliente) as nombre,
-                apellido_cliente,email_cliente,estado_cliente,direccion_cliente,lat,lon
-                from prc_clientes
-                WHERE id_cliente = 1
-
-SELECT m.id_modelo, m.descripcion_modelo, SUM(d.cantidad_detalle_pedido) AS total_cantidad_comprada
-FROM prc_pedidos p
-JOIN prc_detalle_pedidos d USING(id_pedido)
-JOIN prc_modelo_tallas mt USING(id_modelo_talla)
-JOIN prc_modelos m USING(id_modelo)
-WHERE p.estado_pedido = 'Finalizado'
-GROUP BY m.id_modelo, m.descripcion_modelo
-ORDER BY total_cantidad_comprada DESC LIMIT 10;
-
-SELECT m.id_modelo, m.descripcion_modelo, ROUND(SUM(d.cantidad_detalle_pedido) * 100.0 / total_comprados.total_cantidad, 1) AS porcentaje_comprado
-FROM prc_pedidos p
-JOIN prc_detalle_pedidos d USING(id_pedido)
-JOIN prc_modelo_tallas mt USING(id_modelo_talla)
-JOIN prc_modelos m USING(id_modelo)
-JOIN (SELECT SUM(d.cantidad_detalle_pedido) AS total_cantidad FROM prc_pedidos p JOIN prc_detalle_pedidos d USING(id_pedido)
-WHERE p.estado_pedido = 'Finalizado') AS total_comprados
-WHERE p.estado_pedido = 'Finalizado'
-GROUP BY m.id_modelo, m.descripcion_modelo, total_comprados.total_cantidad
-ORDER BY porcentaje_comprado DESC LIMIT 10;
-
-
-update prc_pedidos set fecha_pedido='2024-03-10'  where id_pedido=1;
-update prc_pedidos set fecha_pedido='2024-04-10'  where id_pedido=2;
-update prc_pedidos set fecha_pedido='2024-05-10'  where id_pedido=3;
-update prc_pedidos set fecha_pedido='2024-06-10'  where id_pedido=4;
-update prc_pedidos set fecha_pedido='2024-07-10'  where id_pedido=5;
-*/
-
-
-
-
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
 descripcion_opc VARCHAR(40) NOT NULL,

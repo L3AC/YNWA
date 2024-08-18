@@ -155,9 +155,17 @@ class UsuarioHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario
-        FROM sec_usuarios';
-        return Database::getRows($sql);
+        try {
+            $sql = 'SELECT id_usuario, nombre_usuario, apellido_usuario, email_usuario, usuario_usuario FROM sec_usuarios';
+            $result = Database::getRows($sql);
+            if ($result) {
+                return $result;
+            } else {
+                echo "No se encontraron resultados.";
+            }
+        } catch (Exception $e) {
+            echo "Error en la consulta: " . $e->getMessage();
+        }
     }
     public function readAllA()
     {

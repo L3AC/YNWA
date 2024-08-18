@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS db_ynwa;
-CREATE DATABASE db_ynwa;
-USE db_ynwa;
+/*DROP DATABASE IF EXISTS db_ynwa;
+CREATE DATABASE db_ynwa;*/
+USE defaultdb;
 
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,
@@ -150,6 +150,7 @@ CREATE TABLE prc_comentarios (
     FOREIGN KEY (id_detalle) REFERENCES prc_detalle_pedidos(id_detalle)
     ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 
 

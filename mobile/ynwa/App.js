@@ -7,6 +7,7 @@ import StackMain from './src/navigation/StackMain';
 import StackAuth from './src/navigation/StackAuth';
 import { SERVER } from './src/contexts/Network';
 import AnimatedSplashScreen from './src/navigation/AnimatedSplashScreen'; // Asegúrate de que la ruta sea correcta
+import axios from 'axios';
 
 const Stack = createStackNavigator();
 
@@ -20,8 +21,23 @@ const App = () => {
   // Definición de un estado local para controlar la visibilidad de la pantalla de splash
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
-  // Función para obtener la sesión del usuario desde el servidor
   const getSession = async () => {
+      try {
+          const response = await axios.post(`${SERVER}services/public/cliente.php?action=getUser`);
+          const data = response.data;
+  
+          if (data.status) {
+              setIsLoggedIn(true);
+          } else {
+              setIsLoggedIn(false);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          setError('Error');
+      }
+  };
+  // Función para obtener la sesión del usuario desde el servidor
+  /*const getSession = async () => {
     try {
       const response = await fetch(`${SERVER}services/public/cliente.php?action=getUser`, {
         method: 'POST',
@@ -38,7 +54,7 @@ const App = () => {
       console.error('Error:', error);
       setError('Error');
     }
-  };
+  };*/
 
   // useEffect para llamar a getSession cuando el componente se monta
   useEffect(() => {

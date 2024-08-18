@@ -198,7 +198,7 @@ if (isset($_GET['action'])) {
             case 'readUsers':
                 if ($usuario->readAll()) {
                     $result['status'] = 1;
-                    //$result['message'] = 'Debe autenticarse para ingresar';
+                    $result['message'] = 'Debe autenticarse para ingresar';
                 } else {
                     $result['error'] = 'Debe crear un usuario para comenzar';
                 }
@@ -219,7 +219,7 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Usuario registrado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al registrar el usuario';
+                    $result['error'] =  $usuario->getDataError()/*'Ocurrió un problema al registrar el usuario'*/;
                 }
                 break;
             case 'logIn':

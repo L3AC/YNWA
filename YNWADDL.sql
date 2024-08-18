@@ -1,4 +1,6 @@
-USE db_ynwa;
+#USE db_ynwa;
+#USE defaultdb;
+use freedb_db_ynwa;
 /*TRIGGER*/
 DELIMITER //
 CREATE TRIGGER actualizar_stock AFTER INSERT ON prc_detalle_pedidos

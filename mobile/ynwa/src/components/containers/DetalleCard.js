@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { SERVER } from '../../contexts/Network';
-import Confirm from '../buttons/Confirm';
+import { Ionicons } from '@expo/vector-icons';  // Importa el ícono de Ionicons
+import { SERVER } from '../../contexts/Network';  // Importa la constante SERVER para las peticiones
+import Confirm from '../buttons/Confirm';  // Importa el componente Confirm para el botón de confirmación
 
+// Componente funcional DetalleCard que recibe un prop: item
 const DetalleCard = ({ item }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState('');
-    const [isCommentEditable, setIsCommentEditable] = useState(true);
-    const [isCommentAvailable, setIsCommentAvailable] = useState(false);
+    // Definición de estados locales
+    const [modalVisible, setModalVisible] = useState(false);  // Controla la visibilidad del modal
+    const [rating, setRating] = useState(0);  // Guarda la calificación seleccionada
+    const [comment, setComment] = useState('');  // Guarda el comentario del usuario
+    const [isCommentEditable, setIsCommentEditable] = useState(true);  // Controla si el comentario es editable
+    const [isCommentAvailable, setIsCommentAvailable] = useState(false);  // Indica si ya existe un comentario
 
+    // Maneja la selección de la calificación
     const handleRatingPress = (value) => {
         setRating(value);
     };
 
+    // Verifica si ya existe un comentario para el item y lo carga si es necesario
     const verfiComent = async () => {
         try {
             const formData = new FormData();
@@ -25,21 +29,23 @@ const DetalleCard = ({ item }) => {
             });
             const data = await response.json();
             if (response.ok && data.status === 1 && data.dataset) {
-                setRating(parseInt(data.dataset[0].puntuacion_comentario));
-                setComment(data.dataset[0].contenido_comentario);
-                setIsCommentEditable(false);
-                setIsCommentAvailable(true);
+                setRating(parseInt(data.dataset[0].puntuacion_comentario));  // Carga la calificación existente
+                setComment(data.dataset[0].contenido_comentario);  // Carga el comentario existente
+                setIsCommentEditable(false);  // Desactiva la edición del comentario
+                setIsCommentAvailable(true);  // Indica que existe un comentario
             } else {
                 console.log(2);
                 setRating(1);
                 setComment('');
-                setIsCommentEditable(true);
-                setIsCommentAvailable(false);
+                setIsCommentEditable(true);  // Activa la edición del comentario
+                setIsCommentAvailable(false);  // Indica que no hay comentario disponible
             }
         } catch (error) {
             console.error('Error:', error);
         }
     };
+
+    // Inserta un nuevo comentario en la base de datos
     const insertComent = async () => {
         try {
             const formData = new FormData();
@@ -53,7 +59,7 @@ const DetalleCard = ({ item }) => {
             const data = await response.json();
             if (response.ok && data.status === 1) {
                 Alert.alert('Éxito', 'Comentario agregado correctamente');
-                setModalVisible(false);
+                setModalVisible(false);  // Cierra el modal al agregar el comentario
             } else {
                 Alert.alert('Error', 'No se pudo agregar el comentario');
             }
@@ -67,35 +73,40 @@ const DetalleCard = ({ item }) => {
         <View key={item.id_detalle ? item.id_detalle.toString() : Math.random().toString()} style={styles.orderItem}>
             <View style={styles.header}>
                 <Text style={styles.itemName}>{item.descripcion_modelo}</Text>
+                {/* Ícono de comentario que abre el modal */}
                 <Ionicons name="chatbubble-outline" size={24} color="white" onPress={() => {
-                    verfiComent();
-                    setModalVisible(true);
+                    verfiComent();  // Verifica si existe un comentario antes de mostrar el modal
+                    setModalVisible(true);  // Muestra el modal
                 }} />
             </View>
             <View style={styles.content}>
+                {/* Muestra la imagen del producto */}
                 <Image
                     source={{ uri: `${SERVER}images/modelos/${item.foto_modelo}` }}
                     style={styles.image}
                 />
                 <View style={styles.details}>
+                    {/* Muestra detalles del producto */}
                     <Text style={styles.text}>Marca: {item.descripcion_marca}</Text>
                     <Text style={styles.text}>Talla: {item.descripcion_talla}</Text>
                     <Text style={styles.text}>Cantidad: {item.cantidad_detalle_pedido}</Text>
                     <Text style={styles.text}>Precio: ${item.precio_modelo_talla}</Text>
                 </View>
-                <Text style={styles.price}>${item.subtotal}</Text>
+                <Text style={styles.price}>${item.subtotal}</Text>  {/* Muestra el subtotal del producto */}
             </View>
 
-            {/* Modal Component */}
+            {/* Modal para agregar o ver el comentario */}
             <Modal
                 transparent={true}
                 animationType="fade"
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}
             >
+                {/* Fondo del modal que permite cerrarlo al hacer clic fuera del contenido */}
                 <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPressOut={() => setModalVisible(false)}>
                     <TouchableOpacity style={styles.modalContent} activeOpacity={1}>
                         <Text style={styles.modalTitle}>{isCommentAvailable ? 'Comentario' : 'Agregar comentario'}</Text>
+                        {/* Estrellas para la calificación */}
                         <View style={styles.stars}>
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <TouchableOpacity key={star} onPress={() => isCommentEditable && handleRatingPress(star)}>
@@ -108,6 +119,7 @@ const DetalleCard = ({ item }) => {
                             ))}
                         </View>
                         <Text style={styles.commentLabel}>Comentario</Text>
+                        {/* Campo de texto para el comentario */}
                         <TextInput
                             style={[
                                 styles.textArea,
@@ -120,6 +132,7 @@ const DetalleCard = ({ item }) => {
                             onChangeText={setComment}
                             editable={isCommentEditable}
                         />
+                        {/* Botón de confirmación para guardar el comentario */}
                         {isCommentEditable && (
                             <Confirm onPress={() => insertComent()} tittle={'Confirmar'} />
                         )}
@@ -129,7 +142,6 @@ const DetalleCard = ({ item }) => {
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     orderItem: {
         backgroundColor: '#333333',

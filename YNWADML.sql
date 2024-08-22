@@ -5,33 +5,6 @@ VALUES('Admin',true,true,true,true,true,true,true,true,true,true,true),
 ('Vendedor',true,false,true,false,true,false,false,true,false,false,false),
 ('Asistente',true,true,true,true,false,false,false,true,true,false,false);
 
-/*
-INSERT INTO sec_usuarios (id_rol, usuario_usuario, clave_usuario, nombre_usuario, apellido_usuario, email_usuario, pin_usuario, estado_usuario) VALUES
-(1, 'admin01', '$2y$10$aP8t6cRWFw29VBpgbNrLWuwDvQVME1O8kRzquocN8h/YgNKVtm/je', 'Adriana', 'Hernández', 'adriana.hernandez@example.com', '123456', 1),
-(2, 'emp01', 'claveEmp01', 'Emilio', 'Pérez', 'emilio.perez@example.com', '234567', 1),
-(2, 'emp02', 'claveEmp02', 'Elena', 'Sánchez', 'elena.sanchez@example.com', '345678', 1),
-(3, 'vendedor01', 'claveVend01', 'Valentina', 'García', 'valentina.garcia@example.com', '456789', 1),
-(3, 'vendedor02', 'claveVend02', 'Víctor', 'López', 'victor.lopez@example.com', '567890', 1),
-(3, 'vendedor03', 'claveVend03', 'Verónica', 'Martínez', 'veronica.martinez@example.com', '678901', 1),
-(4, 'asist01', 'claveAsist01', 'Andrea', 'Rodríguez', 'andrea.rodriguez@example.com', '789012', 1),
-(4, 'asist02', 'claveAsist02', 'Alejandro', 'Gómez', 'alejandro.gomez@example.com', '890123', 1),
-(4, 'asist03', 'claveAsist03', 'Ana', 'Torres', 'ana.torres@example.com', '901234', 1),
-(2, 'emp03', 'claveEmp03', 'Esteban', 'Ramírez', 'esteban.ramirez@example.com', '012345', 0),
-(3, 'vendedor04', 'claveVend04', 'Vanessa', 'Herrera', 'vanessa.herrera@example.com', '123450', 1),
-(2, 'emp04', 'claveEmp04', 'Eva', 'González', 'eva.gonzalez@example.com', '345612', 1),
-(3, 'vendedor05', 'claveVend05', 'Vicente', 'Díaz', 'vicente.diaz@example.com', '456123', 1),
-(4, 'asist04', 'claveAsist04', 'Amanda', 'Soto', 'amanda.soto@example.com', '561234', 1),
-(4, 'asist05', 'claveAsist05', 'Arturo', 'Herrera', 'arturo.herrera@example.com', '612345', 1),
-(2, 'emp05', 'claveEmp05', 'Elisa', 'Cabrera', 'elisa.cabrera@example.com', '123456', 1),
-(3, 'vendedor06', 'claveVend06', 'Valentín', 'Montes', 'valentin.montes@example.com', '234567', 1),
-(2, 'emp06', 'claveEmp06', 'Enrique', 'Ortega', 'enrique.ortega@example.com', '456789', 1),
-(3, 'vendedor07', 'claveVend07', 'Victoria', 'Cortés', 'victoria.cortes@example.com', '567890', 1),
-(4, 'asist06', 'claveAsist06', 'Andrés', 'Santos', 'andres.santos@example.com', '678901', 1),
-(4, 'asist07', 'claveAsist07', 'Alma', 'Cruz', 'alma.cruz@example.com', '789012', 1),
-(2, 'emp07', 'claveEmp07', 'Eduardo', 'Ríos', 'eduardo.rios@example.com', '890123', 1),
-(3, 'vendedor08', 'claveVend08', 'Vanesa', 'Iglesias', 'vanesa.iglesias@example.com', '901234', 1),
-(2, 'emp08', 'claveEmp08', 'Antonio', 'Luna', 'antonio.luna@example.com', '234561', 1),
-(2, 'emp09', 'claveEmp09', 'Angela', 'Mendoza', 'angela.mendoza@example.com', '345678', 1);*/
 
 INSERT INTO prc_clientes (direccion_cliente,usuario_cliente, clave_cliente,nombre_cliente, apellido_cliente, email_cliente, pin_cliente, estado_cliente) VALUES
 ('Avenida calle poniente #4', 'cliente01', 'claveCliente01', 'Ana', 'González', 'ana.gonzalez@example.com', '123456', 1),

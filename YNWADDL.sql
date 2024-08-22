@@ -1,7 +1,5 @@
-#USE db_ynwa;
-#USE defaultdb;
-use freedb_db_ynwa;
-/*TRIGGER*/
+USE db_ynwa;
+
 DELIMITER //
 CREATE TRIGGER actualizar_stock AFTER INSERT ON prc_detalle_pedidos
 FOR EACH ROW
@@ -47,7 +45,6 @@ BEGIN
 END;
 //DELIMITER ;
 
-/*FUNCION PARA SELECCIONAR EL PRIMER REGISTRO*/
 DELIMITER //
 CREATE FUNCTION idmin(tabla VARCHAR(255))
 RETURNS INT
@@ -64,11 +61,10 @@ BEGIN
     END CASE;
 
     RETURN min_id;
-END//
-DELIMITER ;
+END;
+//DELIMITER ;
 
-/*PROCEDMIENTO PARA INSERTAR UN MODELO*/
-DELIMITER $$
+DELIMITER //
 CREATE PROCEDURE insertar_modelo(
     IN nombre_marca VARCHAR(255),
     IN descripcion_modelo VARCHAR(255),
@@ -85,8 +81,8 @@ BEGIN
     VALUES (id_marca_param, descripcion_modelo, foto_modelo);
 
     SELECT LAST_INSERT_ID() AS id_modelo;
-END$$
-DELIMITER ;
+END;
+//DELIMITER ;
 
 /*VISTA DE GRAFICO DE PREDICCION*/
 

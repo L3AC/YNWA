@@ -1,6 +1,6 @@
-/*DROP DATABASE IF EXISTS db_ynwa;
-CREATE DATABASE db_ynwa;*/
-USE defaultdb;
+DROP DATABASE IF EXISTS db_ynwa;
+CREATE DATABASE db_ynwa;
+USE db_ynwa;
 
 CREATE TABLE sec_roles(
 id_rol INT UNSIGNED AUTO_INCREMENT,

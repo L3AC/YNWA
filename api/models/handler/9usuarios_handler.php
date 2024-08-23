@@ -161,7 +161,7 @@ class UsuarioHandler
             if ($result) {
                 return $result;
             } else {
-                echo "No se encontraron resultados.";
+                return false;
             }
         } catch (Exception $e) {
             echo "Error en la consulta: " . $e->getMessage();

@@ -8,6 +8,9 @@ import StackAuth from './src/navigation/StackAuth';
 import { SERVER } from './src/contexts/Network';
 import AnimatedSplashScreen from './src/navigation/AnimatedSplashScreen'; // Asegúrate de que la ruta sea correcta
 import axios from 'axios';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
+
 
 const Stack = createStackNavigator();
 
@@ -36,25 +39,6 @@ const App = () => {
           setError('Error');
       }
   };
-  // Función para obtener la sesión del usuario desde el servidor
-  /*const getSession = async () => {
-    try {
-      const response = await fetch(`${SERVER}services/public/cliente.php?action=getUser`, {
-        method: 'POST',
-      });
-      const data = await response.json();
-
-      // Si la respuesta es exitosa, se actualiza el estado de autenticación
-      if (data.status) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Error');
-    }
-  };*/
 
   // useEffect para llamar a getSession cuando el componente se monta
   useEffect(() => {

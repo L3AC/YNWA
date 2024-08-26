@@ -7,6 +7,7 @@ import SignUp from '../screens/NotLogged/SignUp';
 import NuevaClave from '../screens/NotLogged/Recup/NuevaClave';
 import VerifCode from '../screens/NotLogged/Recup/VerifCode';
 import VerifUs from '../screens/NotLogged/Recup/VerifUs';
+import Prueba from '../screens/NotLogged/prueba';
 
 const Stack = createStackNavigator();
 

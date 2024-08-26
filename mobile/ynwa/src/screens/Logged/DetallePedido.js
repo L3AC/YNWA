@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SERVER } from '../../contexts/Network'; // Reemplaza con la URL de tu servidor
 import DetalleCard from '../../components/containers/DetalleCard';
-import { Icon } from 'react-native-elements';
 import Header from '../../components/containers/Header';
 
 const OrderDetailScreen = () => {
@@ -67,9 +66,12 @@ const OrderDetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Header onPress={() => navigation.goBack()} titulo={'Detalle del pedido'} />
+      <Header onPress={handleBackPress} titulo={'Detalle del pedido'} />
+      
+      <View style={styles.totalContainer}>
+        <Text style={styles.totalText}>Total: ${total}</Text>
+      </View>
 
-      <Text style={styles.totalText}>Total: ${total}</Text>
       <ScrollView
         contentContainerStyle={styles.container}
         refreshControl={
@@ -96,33 +98,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#cdc4a3',
     padding: 16,
-    mareginTop: 0,
-  },
-  backButton: {
-    padding: 16,
-  },
-  backButtonText: {
-    fontSize: 40,
-    color: 'black',
+    marginTop: 0,
   },
   container: {
     paddingTop: 16,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 40,
-    marginTop: 45,
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  backButton: {
-    position: 'absolute',
-    left: 0,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  totalContainer: {
+    alignItems: 'flex-end',
+    marginBottom: 16,
   },
   totalText: {
     fontSize: 20,

@@ -7,7 +7,7 @@ MENSAJEDIV = document.getElementById('mensajeDiv'),
 MENSAJEMAIL = document.getElementById('mensajeMail'),
 IDGUARDAR = document.getElementById('idGuardar');
 // Llamada a la función para establecer la mascara del campo teléfono.
-
+let latitud,longitud;
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {

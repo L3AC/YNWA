@@ -66,6 +66,8 @@ IDGUARDAR.addEventListener('click', async (event) => {
     event.preventDefault();
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(PROFILE_FORM);
+    FORM.append('lat',13.69294);
+    FORM.append('lon',-89.21819);
     // Petición para actualizar los datos personales del usuario.
     const DATA = await fetchData(USER_API, 'editProfile', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.

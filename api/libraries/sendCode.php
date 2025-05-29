@@ -46,8 +46,8 @@ try {
     $mail->Host = "smtp.gmail.com"; //"smtp.office365.com"; // servidor smtp, para este caso es el de office, se podria cambiar al de gmail o yahoo
     //Set the SMTP port number - likely to be 25, 465 or 587
     $mail->Port = 465; // 587; //puerto
-    $mail->Username = "leac.2xy@gmail.com"; //nombre usuario
-    $mail->Password = "achzpgqiuozwabhd"; //contraseña
+    $mail->Username = ""; //nombre usuario
+    $mail->Password = ""; //contraseña
 
     //Set who the message is to be sent to
     $mail->addAddress($email/*"email de los destinatarios", "nombre para que se refleje en el correo"*/); //destinatario
